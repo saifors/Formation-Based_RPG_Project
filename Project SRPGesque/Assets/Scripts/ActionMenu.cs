@@ -41,26 +41,31 @@ public class ActionMenu : MonoBehaviour {
 			else if(axis > 0)
 			{
 				SelectPreviousCommand();
-				SetDefendScroll();
+				
 			}
 		}
 	}
 
 	public void SelectNextCommand()
 	{
-		command++;
+		if(command >= command[].Length)command++;
 		switch (command)
 		{
 			case CommandSelection.Attack:
 				SetAttackScroll();
+				break;
 			case CommandSelection.Defend:
 				SetDefendScroll();
+				break;
 			case CommandSelection.Move:
 				SetMoveScroll();
+				break;
 			case CommandSelection.Item:
 				SetItemScroll();
+				break;
 			case CommandSelection.Run:
 				SetRunScroll();
+				break;
 			default:
 				break;
 		}
@@ -68,19 +73,25 @@ public class ActionMenu : MonoBehaviour {
 
 	public void SelectPreviousCommand()
 	{
-		command--;
+		if(command > 0) command--;
+		else command = command[].Length;
 		switch (command)
 		{
 			case CommandSelection.Attack:
 				SetAttackScroll();
+				break;
 			case CommandSelection.Defend:
 				SetDefendScroll();
+				break;
 			case CommandSelection.Move:
 				SetMoveScroll();
+				break;
 			case CommandSelection.Item:
 				SetItemScroll();
+				break;
 			case CommandSelection.Run:
 				SetRunScroll();
+				break;
 			default:
 				break;
 		}

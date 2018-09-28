@@ -16,7 +16,7 @@ public class CharacterStats : MonoBehaviour {
 		
 	}
 
-	public void CreateCharacterStats(char charID, int hp, int mp, int atk, int def, int spd)
+	public void CreateCharacterStats(string charID, int hp, int mp, int atk, int def, int spd)
 	{
 		PlayerPrefs.SetInt(charID + "Hp", hp);
 		PlayerPrefs.SetInt(charID + "Mp", mp);
