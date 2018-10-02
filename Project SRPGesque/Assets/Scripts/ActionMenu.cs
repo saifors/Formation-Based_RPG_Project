@@ -48,7 +48,7 @@ public class ActionMenu : MonoBehaviour {
 
 	public void SelectNextCommand()
 	{
-		if(command >= command[].Length)command++;
+		/*if(command >= command[].Length)command++;
 		switch (command)
 		{
 			case CommandSelection.Attack:
@@ -69,11 +69,12 @@ public class ActionMenu : MonoBehaviour {
 			default:
 				break;
 		}
+		*/
 	}
 
 	public void SelectPreviousCommand()
 	{
-		if(command > 0) command--;
+		/*if(command > 0) command--;
 		else command = command[].Length;
 		switch (command)
 		{
@@ -95,6 +96,7 @@ public class ActionMenu : MonoBehaviour {
 			default:
 				break;
 		}
+		*/
 	}
 
 	public void ConfirmSelectedCommand()

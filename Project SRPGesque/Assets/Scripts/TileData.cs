@@ -6,6 +6,8 @@ public class TileData : MonoBehaviour {
 
     public Transform tileTrans;
 
+    public TileScript tileScript;
+
     private float x;
     private float y;
 
@@ -28,6 +30,7 @@ public class TileData : MonoBehaviour {
     void Start()
     {
         rend = GetComponent<Renderer>();
+        tileScript = GameObject.FindGameObjectWithTag("TileManager").GetComponent<TileScript>();
     }
 
     // Update is called once per frame
@@ -36,7 +39,7 @@ public class TileData : MonoBehaviour {
 
     }
 
-    public void Init(int xS, int yS, int ID)
+    public void Init(int xS, int yS, int ID, int tileSum)
     {
         xSquare = xS;
         ySquare = yS;
@@ -44,7 +47,7 @@ public class TileData : MonoBehaviour {
         tileID = ID;
         this.name = "Tile_" + (tileID+1);
 
-        if (tileID <= 9) SetAlliance(2);
+        if (tileID <= tileSum/2 - 1) SetAlliance(2);
         else SetAlliance(1);
 
         x = 0.5f - xSquare;

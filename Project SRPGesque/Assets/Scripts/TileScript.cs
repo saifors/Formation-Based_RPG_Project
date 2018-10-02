@@ -15,17 +15,17 @@ public class TileScript : MonoBehaviour {
     void Start ()
     {
 
-        tiles = new TileData[tileAmount];
-        //hacer un for dentro de un for uno para vertical otro horizontal y recorrer el array Instanciar la prefab y y llamar la Init
+        tileAmount = xTiles * yTiles; //automatically calculate the amount of tiles.
+        
 
         for(int iX = 0; iX < xTiles;  iX++)
         {
             for(int iY = 0; iY < yTiles; iY++)
             {
+                //double for one for columns and one for rows
                 
-                
-                GameObject obj = Instantiate(tilePrefab);
-                obj.GetComponent<TileData>().Init(iX,iY, id);
+                GameObject obj = Instantiate(tilePrefab); 
+                obj.GetComponent<TileData>().Init(iX,iY, id, tileAmount);
                 id++;
 
             }
