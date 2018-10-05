@@ -10,6 +10,9 @@ public class ActionMenu : MonoBehaviour {
 	public float axis;
 	public bool selectingAction;
 
+	public float scrollCooldownCounter;
+	public float scrollCooldown;
+
 	[Header("Images behind the selections")]
 	public CanvasGroup AttackImage;
 	public CanvasGroup DefenseImage;
@@ -22,6 +25,7 @@ public class ActionMenu : MonoBehaviour {
 	{
 		//To test menu stuff.
 		selectingAction = true;
+		scrollCooldown = 0.3f ;
 		SetAttackScroll();
 
 	}
@@ -30,18 +34,20 @@ public class ActionMenu : MonoBehaviour {
 	void Update () 
 	{
 		axis = Input.GetAxis("Vertical");
-
+		scrollCooldownCounter += Time.deltaTime; 
 		if(selectingAction)
 		{
-			if(axis < 0)
+			//Put in a timeCounter so it doesn't read every frame
+			if(axis < 0 && scrollCooldownCounter >= scrollCooldown)
 			{
 				SelectNextCommand();
+				scrollCooldownCounter = 0;
 				
 			}
-			else if(axis > 0)
+			else if(axis > 0 && scrollCooldownCounter >= scrollCooldown)
 			{
 				SelectPreviousCommand();
-				
+				scrollCooldownCounter = 0;
 			}
 		}
 	}

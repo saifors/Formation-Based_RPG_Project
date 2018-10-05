@@ -2517,7 +2517,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &791541436
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2623,7 +2623,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &807025696
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3859,7 +3859,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1252881910
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3898,6 +3898,8 @@ MonoBehaviour:
   command: 0
   axis: 0
   selectingAction: 0
+  scrollCooldownCounter: 0
+  scrollCooldown: 0.3
   AttackImage: {fileID: 825527494}
   DefenseImage: {fileID: 1772822358}
   MoveImage: {fileID: 1890717631}
