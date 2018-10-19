@@ -56,7 +56,7 @@ public class TileData : MonoBehaviour {
         tileTrans.position = new Vector3(x, 0, y);
     }
 
-    public void SetAlliance(int alliance)
+    public void SetAlliance(int alliance) //Change this to use only one Material and have the Color changed with SetColor on the MaterialPropertyBlock
     {
         if (alliance == 0)
         {
