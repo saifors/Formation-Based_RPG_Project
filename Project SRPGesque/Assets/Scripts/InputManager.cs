@@ -2,15 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InputManager : MonoBehaviour {
+public class InputManager : MonoBehaviour
+{
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    private OWPlayerController playerController;
+    public Vector2 inputAxis;
+
+    void Start()
+    {
+        playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<OWPlayerController>();
+    }
+
+    void Update()
+    {
+        inputAxis.x = Input.GetAxis("Horizontal");
+        inputAxis.y = Input.GetAxis("Vertical");
+        playerController.SetAxis(inputAxis);
+    }
+
+
 }
+
