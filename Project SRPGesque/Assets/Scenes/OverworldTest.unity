@@ -270,6 +270,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   axis: {x: 0, y: 0}
   facing: 0
+  speed: 1
 --- !u!1 &536868079
 GameObject:
   m_ObjectHideFlags: 0

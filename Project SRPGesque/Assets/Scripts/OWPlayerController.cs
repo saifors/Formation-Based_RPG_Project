@@ -6,12 +6,24 @@ public class OWPlayerController : MonoBehaviour
 {
 
     public Vector2 axis;
+    private Vector2 previousAxis;
     public enum FacingDirection { North, NorthWest, West, SouthWest, South, SouthEast, East, NorthEast};
     public FacingDirection facing;
     Quaternion targetRotation;
     Transform trans;
+    public float speed;
 
     float directionalAngle;
+    #region
+    float angle_N = 45;
+    float angle_NW = 90;
+    float angle_NE = 0;
+    float angle_S = 225;
+    float angle_SW = 180;
+    float angle_SE = 270;
+    float angle_W = 135;
+    float angle_E = 315;
+    #endregion
 
     // Use this for initialization
     void Start ()
@@ -27,13 +39,13 @@ public class OWPlayerController : MonoBehaviour
 
         Rotate();
 
-        if (axis.x !=0 || axis.y != 0)
+        if (axis.x != 0 || axis.y != 0 && (((axis.x >= previousAxis.x && axis.x > 0) || (axis.y >= previousAxis.y && axis.y > 0)) || ((axis.x <= previousAxis.x && axis.x < 0) || (axis.y <= previousAxis.y && axis.y < 0))) ) // How to minimize slide (Input Lag?)?
         {
-            transform.Translate(Vector3.forward * Time.deltaTime, Space.Self);
+            trans.position += trans.forward * speed * Time.deltaTime;
         }
 
 
-
+        previousAxis = axis; //Store axis of last frame
     }
 
     void DetermineDirection()
@@ -43,17 +55,17 @@ public class OWPlayerController : MonoBehaviour
             if (axis.y > 0)
             {
                 facing = FacingDirection.NorthWest;
-                directionalAngle = 90;
+                directionalAngle = angle_NW;
             }
             else if (axis.y < 0)
             {
                 facing = FacingDirection.SouthWest;
-                directionalAngle = 180;
+                directionalAngle = angle_SW;
             }
             else
             {
                 facing = FacingDirection.West;
-                directionalAngle = 135;
+                directionalAngle = angle_W;
             }
         }
         else if (axis.x < 0)
@@ -61,17 +73,17 @@ public class OWPlayerController : MonoBehaviour
             if (axis.y > 0)
             {
                 facing = FacingDirection.NorthEast;
-                directionalAngle = 0;
+                directionalAngle = angle_NE;
             }
             else if (axis.y < 0)
             {
                 facing = FacingDirection.SouthEast;
-                directionalAngle = 270;
+                directionalAngle = angle_SE;
             }
             else
             {
                 facing = FacingDirection.East;
-                directionalAngle = 315;
+                directionalAngle = angle_E;
             }
         }
         else
@@ -79,12 +91,12 @@ public class OWPlayerController : MonoBehaviour
             if (axis.y > 0)
             {
                 facing = FacingDirection.North;
-                directionalAngle = 45;
+                directionalAngle = angle_N;
             }
             else if (axis.y < 0)
             {
                 facing = FacingDirection.South;
-                directionalAngle = 225;
+                directionalAngle = angle_S;
             }
         }
     }
@@ -97,7 +109,7 @@ public class OWPlayerController : MonoBehaviour
     void Rotate()
     {
         targetRotation = Quaternion.Euler(0, directionalAngle, 0);
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 10 * Time.deltaTime);
+        trans.rotation = Quaternion.Slerp(trans.rotation, targetRotation, 10 * Time.deltaTime);
     }
 
 
