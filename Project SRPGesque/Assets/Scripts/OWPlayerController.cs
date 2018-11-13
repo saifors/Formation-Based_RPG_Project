@@ -27,34 +27,9 @@ public class OWPlayerController : MonoBehaviour
 
         Rotate();
 
-        if (axis.x !=0 && axis.y != 0)
+        if (axis.x !=0 || axis.y != 0)
         {
-            switch (facing)
-            {
-                case FacingDirection.North:
-                    trans.position += new Vector3(10,0,10) * Time.deltaTime;
-                    break;
-                case FacingDirection.NorthWest:
-                    trans.position += Vector3.right * Time.deltaTime;
-                    break;
-                case FacingDirection.West:
-                    break;
-                case FacingDirection.SouthWest:
-                    trans.position += Vector3.back * Time.deltaTime;
-                    break;
-                case FacingDirection.South:                    
-                    break;
-                case FacingDirection.SouthEast:
-                    trans.position += Vector3.left * Time.deltaTime;
-                    break;
-                case FacingDirection.East:
-                    break;
-                case FacingDirection.NorthEast:
-                    trans.position += Vector3.forward * Time.deltaTime;
-                    break;
-                default:
-                    break;
-            }
+            transform.Translate(Vector3.forward * Time.deltaTime, Space.Self);
         }
 
 
