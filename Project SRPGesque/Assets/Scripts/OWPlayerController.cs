@@ -16,7 +16,8 @@ public class OWPlayerController : MonoBehaviour
     public bool isMoving;
 
     float directionalAngle;
-    #region
+    //Could this be done as an enum?
+    #region 
     float angle_N = 45;
     float angle_NW = 90;
     float angle_NE = 0;
@@ -36,7 +37,7 @@ public class OWPlayerController : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-        DetermineDirection();
+        
         
         Rotate();
 
@@ -51,56 +52,53 @@ public class OWPlayerController : MonoBehaviour
         previousAxis = axis; //Store axis of last frame
     }
 
-    void DetermineDirection()
+    public void DetermineDirection(InputFlag inputDirection) //problem is now that due to axis being immediately auto set to 0 when decelerating 
     {
-        if (axis.x > 0)
+        if ((inputDirection & InputFlag.N) != 0)
         {
-            if (axis.y > 0)
+            if ((inputDirection & InputFlag.W) != 0)
             {
                 facing = FacingDirection.NorthWest;
                 directionalAngle = angle_NW;
             }
-            else if (axis.y < 0)
-            {
-                facing = FacingDirection.SouthWest;
-                directionalAngle = angle_SW;
-            }
-            else
-            {
-                facing = FacingDirection.West;
-                directionalAngle = angle_W;
-            }
-        }
-        else if (axis.x < 0)
-        {
-            if (axis.y > 0)
+            else if ((inputDirection & InputFlag.E) != 0)
             {
                 facing = FacingDirection.NorthEast;
                 directionalAngle = angle_NE;
             }
-            else if (axis.y < 0)
+            else
+            {
+                facing = FacingDirection.North;
+                directionalAngle = angle_N;
+            }
+        }
+        else if ((inputDirection & InputFlag.S) != 0)
+        {
+            if ((inputDirection & InputFlag.W) != 0)
+            {
+                facing = FacingDirection.SouthWest;
+                directionalAngle = angle_SW;
+            }
+            else if ((inputDirection & InputFlag.E) != 0)
             {
                 facing = FacingDirection.SouthEast;
                 directionalAngle = angle_SE;
             }
             else
             {
-                facing = FacingDirection.East;
-                directionalAngle = angle_E;
-            }
-        }
-        else
-        {
-            if (axis.y > 0)
-            {
-                facing = FacingDirection.North;
-                directionalAngle = angle_N;
-            }
-            else if (axis.y < 0)
-            {
                 facing = FacingDirection.South;
                 directionalAngle = angle_S;
             }
+        }
+        else if ((inputDirection & InputFlag.W) != 0)
+        {
+            facing = FacingDirection.West;
+            directionalAngle = angle_W;
+        }
+        else if ((inputDirection & InputFlag.E) != 0)
+        {
+            facing = FacingDirection.East;
+            directionalAngle = angle_E;
         }
     }
 
