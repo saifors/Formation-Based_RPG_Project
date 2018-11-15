@@ -7,6 +7,7 @@ The player and enemy both have a a half of the battlefield and have to position 
 The game will be displayed from an isometric camera angle.
 ## The team:
 ![logo](https://github.com/saifors/Formation-Based_RPG_Project/blob/master/WikiResources/wish%20boundarycdscaso.png)
+
 **Member** | **Roles**
 --- | ---
 Dion Schreuder | Main Programmer, Game Designer, some Concept art
