@@ -12,9 +12,8 @@ public class OWPlayerController : MonoBehaviour
     Quaternion targetRotation;
     public Transform trans;
     public float speed;
-    public float turnSpeed;
+    public float turnSpeed = 20;
     public bool isMoving;
-    public bool isDecelerating;
 
     float directionalAngle;
     #region
@@ -37,18 +36,11 @@ public class OWPlayerController : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-
-	if((axis.x < previousAxis.x && previousAxis.x > 0) || (axis.y < previousAxis.y && previousAxis.y > 0) || (axis.x > previousAxis.x && previousAxis.x < 0) || (axis.y > previousAxis.y && previousAxis.y < 0) ||) //Solo funciona para deceleracion, no para rotar.
-	{
-	isDecelarting = true;
-	}
-	else isDecelerating = false;
-
         DetermineDirection();
-
+        
         Rotate();
 
-        if (axis.x != 0 || axis.y != 0 && !isDecelerating) // How to minimize slide (Input Lag?)?
+        if (axis.x != 0 || axis.y != 0) // How to minimize slide (Input Lag?)?
         {
             trans.position += trans.forward * speed * Time.deltaTime;
             isMoving = true;

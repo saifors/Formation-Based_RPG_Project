@@ -243,8 +243,9 @@ MonoBehaviour:
   facing: 0
   trans: {fileID: 0}
   speed: 2.15
-  turnSpeed: 40
+  turnSpeed: 20
   isMoving: 0
+  isDecelerating: 0
 --- !u!1 &536868079
 GameObject:
   m_ObjectHideFlags: 0
