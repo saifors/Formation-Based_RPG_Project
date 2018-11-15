@@ -12,6 +12,7 @@ public class OWPlayerController : MonoBehaviour
     Quaternion targetRotation;
     public Transform trans;
     public float speed;
+    public float turnSpeed;
     public bool isMoving;
 
     float directionalAngle;
@@ -112,7 +113,7 @@ public class OWPlayerController : MonoBehaviour
     void Rotate()
     {
         targetRotation = Quaternion.Euler(0, directionalAngle, 0);
-        trans.rotation = Quaternion.Slerp(trans.rotation, targetRotation, 10 * Time.deltaTime);
+        trans.rotation = Quaternion.Slerp(trans.rotation, targetRotation, turnSpeed * Time.deltaTime);
     }
 
 

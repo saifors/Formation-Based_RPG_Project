@@ -242,7 +242,8 @@ MonoBehaviour:
   axis: {x: 0, y: 0}
   facing: 0
   trans: {fileID: 0}
-  speed: 2
+  speed: 2.15
+  turnSpeed: 40
   isMoving: 0
 --- !u!1 &536868079
 GameObject:
