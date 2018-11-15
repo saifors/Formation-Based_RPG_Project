@@ -10,8 +10,9 @@ public class OWPlayerController : MonoBehaviour
     public enum FacingDirection { North, NorthWest, West, SouthWest, South, SouthEast, East, NorthEast};
     public FacingDirection facing;
     Quaternion targetRotation;
-    Transform trans;
+    public Transform trans;
     public float speed;
+    public bool isMoving;
 
     float directionalAngle;
     #region
@@ -42,7 +43,9 @@ public class OWPlayerController : MonoBehaviour
         if (axis.x != 0 || axis.y != 0 && (((axis.x >= previousAxis.x && axis.x > 0) || (axis.y >= previousAxis.y && axis.y > 0)) || ((axis.x <= previousAxis.x && axis.x < 0) || (axis.y <= previousAxis.y && axis.y < 0))) ) // How to minimize slide (Input Lag?)?
         {
             trans.position += trans.forward * speed * Time.deltaTime;
+            isMoving = true;
         }
+        else isMoving = false;
 
 
         previousAxis = axis; //Store axis of last frame
