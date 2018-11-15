@@ -5,6 +5,18 @@
 [Bb]uilds/
 Assets/AssetStoreTools*
 
+/Assets/ProBuilder Saved Assets*
+/Assets/ProCore/ProGrids*
+/Assets/Shaderforge*
+/Assets/AssetStoreTools*
+/Assets/Debug*
+/Assets/EditorVR*
+/Assets/OVR*
+/Assets/SteamVR*
+/Assets/Plugins*
+/Assets/TextMesh\ Pro*
+/Assets/ConsolePro*
+
 # Visual Studio cache directory
 .vs/
 
@@ -34,3 +46,4 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+*.sublime-workspace
