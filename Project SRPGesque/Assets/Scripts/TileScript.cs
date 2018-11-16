@@ -5,6 +5,7 @@ using UnityEngine;
 public class TileScript : MonoBehaviour {
 
     public GameObject tilePrefab;
+
     public TileData[] tiles;
     public int tileAmount;
     public int xTiles;
@@ -27,6 +28,7 @@ public class TileScript : MonoBehaviour {
                 GameObject obj = Instantiate(tilePrefab); 
                 obj.GetComponent<TileData>().Init(iX,iY, id, tileAmount);
                 id++;
+                obj.transform.parent = this.transform;//Only works becasue it's inside tilemanager, if that were to change things will have to change.
 
             }
         }
