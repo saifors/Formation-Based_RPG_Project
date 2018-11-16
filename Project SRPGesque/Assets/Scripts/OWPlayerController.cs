@@ -48,20 +48,20 @@ public class OWPlayerController : MonoBehaviour
         }
         else isMoving = false;
 
-
+        DetermineDirection();
         previousAxis = axis; //Store axis of last frame
     }
 
-    public void DetermineDirection(InputFlag inputDirection) //problem is now that due to axis being immediately auto set to 0 when decelerating 
+    public void DetermineDirection() //problem is now that due to axis being immediately auto set to 0 when decelerating 
     {
-        if ((inputDirection & InputFlag.N) != 0)
+        if (axis.y > 0)
         {
-            if ((inputDirection & InputFlag.W) != 0)
+            if (axis.x > 0)
             {
                 facing = FacingDirection.NorthWest;
                 directionalAngle = angle_NW;
             }
-            else if ((inputDirection & InputFlag.E) != 0)
+            else if (axis.x < 0)
             {
                 facing = FacingDirection.NorthEast;
                 directionalAngle = angle_NE;
@@ -72,14 +72,14 @@ public class OWPlayerController : MonoBehaviour
                 directionalAngle = angle_N;
             }
         }
-        else if ((inputDirection & InputFlag.S) != 0)
+        else if (axis.y < 0)
         {
-            if ((inputDirection & InputFlag.W) != 0)
+            if (axis.x > 0)
             {
                 facing = FacingDirection.SouthWest;
                 directionalAngle = angle_SW;
             }
-            else if ((inputDirection & InputFlag.E) != 0)
+            else if (axis.x < 0)
             {
                 facing = FacingDirection.SouthEast;
                 directionalAngle = angle_SE;
@@ -90,12 +90,12 @@ public class OWPlayerController : MonoBehaviour
                 directionalAngle = angle_S;
             }
         }
-        else if ((inputDirection & InputFlag.W) != 0)
+        else if (axis.x > 0)
         {
             facing = FacingDirection.West;
             directionalAngle = angle_W;
         }
-        else if ((inputDirection & InputFlag.E) != 0)
+        else if (axis.x < 0)
         {
             facing = FacingDirection.East;
             directionalAngle = angle_E;

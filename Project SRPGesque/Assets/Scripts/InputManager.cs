@@ -2,14 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum InputFlag : byte
-    {
-        Null = 0, // 0000 0000
-        N = 1, // 0000 0001
-        W = 2, // 0000 0010
-        S = 4, // 0000 0100
-        E = 8 // 0000 1000
-    }
+
 public class InputManager : MonoBehaviour
 {
 
@@ -17,8 +10,6 @@ public class InputManager : MonoBehaviour
     public Vector2 inputAxis;
     public Vector2 previousAxis;
 
-    
-    private InputFlag inputFlag;
 
     void Start()
     {
@@ -27,7 +18,8 @@ public class InputManager : MonoBehaviour
 
     void Update()
     {
-        inputAxis.x = Input.GetAxis("Horizontal");
+        inputAxis.x = Input.GetAxisRaw("Horizontal");
+        /*
         if ((inputAxis.x < previousAxis.x && previousAxis.x > 0) || (inputAxis.x > previousAxis.x && previousAxis.x < 0))
         {
             inputAxis.x = 0;
@@ -42,8 +34,9 @@ public class InputManager : MonoBehaviour
             inputFlag |= InputFlag.S;
         }
         else inputFlag ^= InputFlag.S;
-
-        inputAxis.y = Input.GetAxis("Vertical");
+        */
+        inputAxis.y = Input.GetAxisRaw("Vertical");
+        /*
         if ((inputAxis.y < previousAxis.y && previousAxis.y > 0) || (inputAxis.y > previousAxis.y && previousAxis.y < 0))
         {
             inputAxis.y = 0;
@@ -58,9 +51,8 @@ public class InputManager : MonoBehaviour
             inputFlag |= InputFlag.E;
         }
         else inputFlag ^= InputFlag.E;
-
+        */
         playerController.SetAxis(inputAxis);
-        playerController.DetermineDirection(inputFlag);
         previousAxis = inputAxis;
     }
 
