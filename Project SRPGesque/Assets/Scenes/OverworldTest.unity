@@ -243,9 +243,8 @@ MonoBehaviour:
   facing: 0
   trans: {fileID: 0}
   speed: 2.15
-  turnSpeed: 20
+  turnSpeed: 50
   isMoving: 0
-  isDecelerating: 0
 --- !u!1 &536868079
 GameObject:
   m_ObjectHideFlags: 0
@@ -275,6 +274,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputAxis: {x: 0, y: 0}
+  previousAxis: {x: 0, y: 0}
 --- !u!4 &536868081
 Transform:
   m_ObjectHideFlags: 0
@@ -301,6 +301,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cam_T: {fileID: 0}
   playerController: {fileID: 0}
+  camSet: 0
 --- !u!1 &1140195591
 GameObject:
   m_ObjectHideFlags: 0

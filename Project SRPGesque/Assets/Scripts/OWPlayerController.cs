@@ -15,6 +15,8 @@ public class OWPlayerController : MonoBehaviour
     public float turnSpeed = 20;
     public bool isMoving;
 
+    bool isRotating;// make it so it can't move when rotating and only starts moving when completed rotation.
+
     float directionalAngle;
     //Could this be done as an enum?
     #region 
@@ -38,10 +40,15 @@ public class OWPlayerController : MonoBehaviour
 	void Update ()
     {
         
-        
-        Rotate();
+        if(trans.rotation != targetRotation)
+        {
+            isRotating = true;
+        }
+        else isRotating = false;
 
-        if (axis.x != 0 || axis.y != 0) // How to minimize slide (Input Lag?)?
+        Rotate();
+//Still has some kinks to work out
+        if ((axis.x != 0 || axis.y != 0) && !isRotating) // How to minimize slide (Input Lag?)?
         {
             trans.position += trans.forward * speed * Time.deltaTime;
             isMoving = true;
