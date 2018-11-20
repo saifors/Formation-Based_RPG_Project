@@ -11,6 +11,7 @@ public class OWPlayerController : MonoBehaviour
     public FacingDirection facing;
     Quaternion targetRotation;
     public Transform trans;
+    public Vector3 movementIndicator;
     public float speed;
     public float turnSpeed = 20;
     public bool isMoving;
@@ -28,6 +29,14 @@ public class OWPlayerController : MonoBehaviour
     float angle_SE = 270;
     float angle_W = 135;
     float angle_E = 315;
+    Vector3 movement_N = new Vector3(1,0,1);
+    Vector3 movement_NW = new Vector3(1,0,0);
+    Vector3 movement_NE = new Vector3(0,0,1);
+    Vector3 movement_S = new Vector3(-1,0,-1);
+    Vector3 movement_SW = new Vector3(0,0,-1);
+    Vector3 movement_SE = new Vector3(-1,0,0);
+    Vector3 movement_W = new Vector3(1,0,-1);
+    Vector3 movement_E = new Vector3(-1,0,1);
     #endregion
 
     // Use this for initialization
@@ -48,9 +57,9 @@ public class OWPlayerController : MonoBehaviour
 
         Rotate();
         //Still has some kinks to work out
-        if ((axis.x != 0 || axis.y != 0) && !isRotating) // How to minimize slide (Input Lag?)?
+        if ((axis.x != 0 || axis.y != 0) ) // How to minimize slide (Input Lag?)?
         {
-            trans.position += trans.forward * speed * Time.deltaTime;
+            trans.position += movementIndicator * speed * Time.deltaTime;
             isMoving = true;
         }
         else isMoving = false;
@@ -66,16 +75,19 @@ public class OWPlayerController : MonoBehaviour
             if (axis.x > 0)
             {
                 facing = FacingDirection.NorthWest;
+                movementIndicator = movement_NW;
                 directionalAngle = angle_NW;
             }
             else if (axis.x < 0)
             {
                 facing = FacingDirection.NorthEast;
+                movementIndicator = movement_NE;
                 directionalAngle = angle_NE;
             }
             else
             {
                 facing = FacingDirection.North;
+                movementIndicator = movement_N;
                 directionalAngle = angle_N;
             }
         }
@@ -84,27 +96,32 @@ public class OWPlayerController : MonoBehaviour
             if (axis.x > 0)
             {
                 facing = FacingDirection.SouthWest;
+                movementIndicator = movement_SW;
                 directionalAngle = angle_SW;
             }
             else if (axis.x < 0)
             {
                 facing = FacingDirection.SouthEast;
+                movementIndicator = movement_SE;
                 directionalAngle = angle_SE;
             }
             else
             {
                 facing = FacingDirection.South;
+                movementIndicator = movement_S;
                 directionalAngle = angle_S;
             }
         }
         else if (axis.x > 0)
         {
             facing = FacingDirection.West;
+            movementIndicator = movement_W;
             directionalAngle = angle_W;
         }
         else if (axis.x < 0)
         {
             facing = FacingDirection.East;
+            movementIndicator = movement_E;
             directionalAngle = angle_E;
         }
     }
