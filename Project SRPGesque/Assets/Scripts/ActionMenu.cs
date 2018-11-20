@@ -33,7 +33,6 @@ public class ActionMenu : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-		axis = Input.GetAxisRaw("Vertical");
 		scrollCooldownCounter += Time.deltaTime; 
 		if(selectingAction)
 		{
@@ -51,6 +50,11 @@ public class ActionMenu : MonoBehaviour {
 			}
 		}
 	}
+
+    public void SetAxis(float inputAxis)
+    {
+        axis = inputAxis;
+    }
 
 	public void SelectNextCommand()
 	{

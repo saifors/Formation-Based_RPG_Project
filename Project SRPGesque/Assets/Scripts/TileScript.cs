@@ -11,11 +11,14 @@ public class TileScript : MonoBehaviour {
     public int xTiles;
     public int yTiles;
     private int id = 0;
+    private Transform tileCenter;
+    public Transform battlefield;
 
     // Use this for initialization
     void Start ()
     {
-
+        battlefield = GameObject.FindGameObjectWithTag("Battlefield").GetComponent<Transform>();
+        tileCenter = this.transform;
         tileAmount = xTiles * yTiles; //automatically calculate the amount of tiles.
         
 
@@ -28,17 +31,18 @@ public class TileScript : MonoBehaviour {
                 GameObject obj = Instantiate(tilePrefab); 
                 obj.GetComponent<TileData>().Init(iX,iY, id, tileAmount);
                 id++;
-                obj.transform.parent = this.transform;//Only works becasue it's inside tilemanager, if that were to change things will have to change.
+                obj.transform.parent = tileCenter;//Only works becasue it's inside tilemanager, if that were to change things will have to change.
 
             }
         }
 
-        
+        tileCenter.position = new Vector3(battlefield.position.x, battlefield.position.y + 0.001f, battlefield.position.z);
 	}
 	
 	// Update is called once per frame
 	void Update ()
     {
-		
-	}
+        
+    }
 }
+

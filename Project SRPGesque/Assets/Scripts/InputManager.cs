@@ -7,52 +7,34 @@ public class InputManager : MonoBehaviour
 {
 
     private OWPlayerController playerController;
+    private ActionMenu actionMenu;
     public Vector2 inputAxis;
     public Vector2 previousAxis;
+    public GameManager gameManager;
 
 
     void Start()
     {
         playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<OWPlayerController>();
+        actionMenu = GameObject.FindGameObjectWithTag("UI").GetComponent<ActionMenu>();
+        gameManager = GetComponent<GameManager>();
     }
 
     void Update()
     {
         inputAxis.x = Input.GetAxisRaw("Horizontal");
-        /*
-        if ((inputAxis.x < previousAxis.x && previousAxis.x > 0) || (inputAxis.x > previousAxis.x && previousAxis.x < 0))
-        {
-            inputAxis.x = 0;
-        }
-        if(inputAxis.x > 0)
-        {
-            inputFlag |= InputFlag.N;
-        }
-        else inputFlag ^= InputFlag.N;
-        if (inputAxis.x < 0)
-        {
-            inputFlag |= InputFlag.S;
-        }
-        else inputFlag ^= InputFlag.S;
-        */
+        
         inputAxis.y = Input.GetAxisRaw("Vertical");
-        /*
-        if ((inputAxis.y < previousAxis.y && previousAxis.y > 0) || (inputAxis.y > previousAxis.y && previousAxis.y < 0))
+        
+        if(gameManager.gameState == GameManager.GameState.Overworld)
         {
-            inputAxis.y = 0;
+            playerController.SetAxis(inputAxis);
         }
-        if (inputAxis.y > 0)
+        else if(gameManager.gameState == GameManager.GameState.Battle)
         {
-            inputFlag |= InputFlag.W;
+            actionMenu.SetAxis(inputAxis.y);
         }
-        else inputFlag ^= InputFlag.W;
-        if (inputAxis.y < 0)
-        {
-            inputFlag |= InputFlag.E;
-        }
-        else inputFlag ^= InputFlag.E;
-        */
-        playerController.SetAxis(inputAxis);
+        
         previousAxis = inputAxis;
     }
 

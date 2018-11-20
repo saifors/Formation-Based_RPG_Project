@@ -47,7 +47,7 @@ public class OWPlayerController : MonoBehaviour
         else isRotating = false;
 
         Rotate();
-//Still has some kinks to work out
+        //Still has some kinks to work out
         if ((axis.x != 0 || axis.y != 0) && !isRotating) // How to minimize slide (Input Lag?)?
         {
             trans.position += trans.forward * speed * Time.deltaTime;
@@ -59,7 +59,7 @@ public class OWPlayerController : MonoBehaviour
         previousAxis = axis; //Store axis of last frame
     }
 
-    public void DetermineDirection() //problem is now that due to axis being immediately auto set to 0 when decelerating 
+    public void DetermineDirection()  
     {
         if (axis.y > 0)
         {

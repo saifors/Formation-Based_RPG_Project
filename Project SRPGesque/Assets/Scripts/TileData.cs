@@ -21,17 +21,9 @@ public class TileData : MonoBehaviour {
     public enum Terrain { Normal, Tree, Rock};
     public Terrain terrain;
     //public int terrain;
-    public Material neutralMat;
-    public Material playerMat;
-    public Material enemyMat;
     public Renderer rend;
+    private Transform gridCenter;
 
-    // Use this for initialization
-    void Start()
-    {
-        rend = GetComponent<Renderer>();
-        tileScript = GameObject.FindGameObjectWithTag("TileManager").GetComponent<TileScript>();
-    }
 
     // Update is called once per frame
     void Update()
@@ -41,6 +33,10 @@ public class TileData : MonoBehaviour {
 
     public void Init(int xS, int yS, int ID, int tileSum)
     {
+        rend = GetComponent<Renderer>();
+        tileTrans = transform;
+        tileScript = GameObject.FindGameObjectWithTag("TileManager").GetComponent<TileScript>();
+        gridCenter = tileScript.transform;
         xSquare = xS;
         ySquare = yS;
 
@@ -56,21 +52,30 @@ public class TileData : MonoBehaviour {
         tileTrans.position = new Vector3(x, 0, y);
     }
 
-    public void SetAlliance(int alliance) //Change this to use only one Material and have the Color changed with SetColor on the MaterialPropertyBlock
+    public void SetAlliance(int alliance) 
     {
         if (alliance == 0)
         {
-            rend.material = neutralMat;
+            MaterialPropertyBlock block = new MaterialPropertyBlock();
+            rend.GetPropertyBlock(block);
+            block.SetColor(Shader.PropertyToID("_Color"), Color.blue);
+            rend.SetPropertyBlock(block);
             ally = Alliance.Neutral;
         }
         else if (alliance == 1)
         {
-            rend.material = playerMat;
+            MaterialPropertyBlock block = new MaterialPropertyBlock();
+            rend.GetPropertyBlock(block);
+            block.SetColor(Shader.PropertyToID("_Color"), Color.cyan);
+            rend.SetPropertyBlock(block);
             ally = Alliance.Player;
         }
         else if (alliance == 2)
         {
-            rend.material = enemyMat;
+            MaterialPropertyBlock block = new MaterialPropertyBlock();
+            rend.GetPropertyBlock(block);
+            block.SetColor(Shader.PropertyToID("_Color"), Color.red);
+            rend.SetPropertyBlock(block);
             ally = Alliance.Enemy;
         }
     }
