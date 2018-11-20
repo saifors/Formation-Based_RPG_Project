@@ -46,8 +46,8 @@ public class TileData : MonoBehaviour {
         if (tileID <= tileSum/2 - 1) SetAlliance(2);
         else SetAlliance(1);
 
-        x = 0.5f - xSquare;
-        y = 0.5f - ySquare;
+        x = 0.5f * (tileScript.xTiles - 1) - xSquare;
+        y = 0.5f * (tileScript.yTiles - 1) - ySquare;
 
         tileTrans.position = new Vector3(x, 0, y);
     }

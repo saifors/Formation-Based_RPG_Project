@@ -8,6 +8,7 @@ TagManager:
   - CamTarget
   - Battlefield
   - UI
+  - Manager
   layers:
   - Default
   - TransparentFX

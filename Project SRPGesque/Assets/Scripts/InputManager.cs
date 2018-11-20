@@ -25,6 +25,14 @@ public class InputManager : MonoBehaviour
         inputAxis.x = Input.GetAxisRaw("Horizontal");
         
         inputAxis.y = Input.GetAxisRaw("Vertical");
+
+        if(Input.GetKeyDown(KeyCode.Z))
+        {
+            if(gameManager.gameState == GameManager.GameState.Battle)
+            {
+                actionMenu.ConfirmSelectedCommand();
+            }
+        }
         
         if(gameManager.gameState == GameManager.GameState.Overworld)
         {

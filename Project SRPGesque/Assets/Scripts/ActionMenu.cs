@@ -12,6 +12,7 @@ public class ActionMenu : MonoBehaviour {
 
 	public float scrollCooldownCounter;
 	public float scrollCooldown;
+	private GameManager gameManager;
 
 	[Header("Images behind the selections")]
 	public CanvasGroup AttackImage;
@@ -26,6 +27,9 @@ public class ActionMenu : MonoBehaviour {
 		//To test menu stuff.
 		selectingAction = true;
 		scrollCooldown = 0.3f ;
+
+		gameManager = GameObject.FindGameObjectWithTag("Manager").GetComponent<GameManager>();
+
 		SetAttackScroll();
 
 	}
@@ -131,6 +135,7 @@ public class ActionMenu : MonoBehaviour {
 		else if(command == CommandSelection.Run)
 		{
 			//Execute Running away
+			gameManager.RunFromBattle();
 		}
 		else 
 		{

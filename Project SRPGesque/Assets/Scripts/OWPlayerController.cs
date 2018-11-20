@@ -16,6 +16,8 @@ public class OWPlayerController : MonoBehaviour
     public float turnSpeed = 20;
     public bool isMoving;
 
+    private GameManager gameManager;
+
     bool isRotating;// make it so it can't move when rotating and only starts moving when completed rotation.
 
     float directionalAngle;
@@ -43,29 +45,34 @@ public class OWPlayerController : MonoBehaviour
     void Start ()
     {
         trans = transform;
+        gameManager = GameObject.FindGameObjectWithTag("Manager").GetComponent<GameManager>();
     }
 	
 	// Update is called once per frame
 	void Update ()
     {
+        if(gameManager.gameState == GameManager.GameState.Overworld)
+        {
+            if(trans.rotation != targetRotation)
+            {
+                isRotating = true;
+            }
+            else isRotating = false;
+
+            Rotate();
+            //Still has some kinks to work out
+            if ((axis.x != 0 || axis.y != 0) ) // How to minimize slide (Input Lag?)?
+            {
+                trans.position += movementIndicator * speed * Time.deltaTime;
+                isMoving = true;
+            }
+            else isMoving = false;
+
+
+            DetermineDirection();
+            previousAxis = axis; //Store axis of last frame
+        }
         
-        if(trans.rotation != targetRotation)
-        {
-            isRotating = true;
-        }
-        else isRotating = false;
-
-        Rotate();
-        //Still has some kinks to work out
-        if ((axis.x != 0 || axis.y != 0) ) // How to minimize slide (Input Lag?)?
-        {
-            trans.position += movementIndicator * speed * Time.deltaTime;
-            isMoving = true;
-        }
-        else isMoving = false;
-
-        DetermineDirection();
-        previousAxis = axis; //Store axis of last frame
     }
 
     public void DetermineDirection()  
