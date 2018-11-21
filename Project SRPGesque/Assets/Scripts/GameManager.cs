@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour 
 {
+	public bool debug;
 	public float timeCounter;
 	public Transform cam_T;
 	public OWPlayerController playerController;
@@ -13,6 +14,7 @@ public class GameManager : MonoBehaviour
 	public bool randomEcountersOn;
 	public float encounterMinimumPercent = 100;
 	public GameObject BattleMenu;
+	public GameObject debugMenu;
 	
 	// Use this for initialization
 	void Start () 
@@ -28,6 +30,8 @@ public class GameManager : MonoBehaviour
 	void Update () 
 	{
         
+
+
 		if(gameState == GameState.Overworld)
 		{
 			if(camSet == CameraSetting.OverworldCam)
@@ -57,10 +61,21 @@ public class GameManager : MonoBehaviour
 					
 				}
 			}
+
+			//Las mierdas de debug.
+			if(debug)
+			{
+
+			}
 		}
 		if(gameState == GameState.Battle)
 		{
+			
 
+			if(debug)
+			{
+
+			}
 		}
         
 		
@@ -87,6 +102,22 @@ public class GameManager : MonoBehaviour
 		{
 			EndBattle();
 		}
+		else if(debug)
+		{
+			EndBattle();
+		}
 		//else failed to run.
+	}
+
+	public void ToggleDebug()
+	{
+		debug = !debug;
+		if(debug == true) debugMenu.SetActive(true);
+		else debugMenu.SetActive(false);
+	}
+
+	public void ToggleEncounterRate()
+	{
+		randomEcountersOn = !randomEcountersOn;
 	}
 }

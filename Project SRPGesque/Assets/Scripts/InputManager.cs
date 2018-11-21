@@ -13,11 +13,15 @@ public class InputManager : MonoBehaviour
     public GameManager gameManager;
 
 
+    
+
     void Start()
     {
         playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<OWPlayerController>();
         actionMenu = GameObject.FindGameObjectWithTag("UI").GetComponent<ActionMenu>();
         gameManager = GetComponent<GameManager>();
+        
+       
     }
 
     void Update()
@@ -25,6 +29,8 @@ public class InputManager : MonoBehaviour
         inputAxis.x = Input.GetAxisRaw("Horizontal");
         
         inputAxis.y = Input.GetAxisRaw("Vertical");
+        if(Input.GetKey(KeyCode.LeftShift)) playerController.isRunning = true;
+        else playerController.isRunning = false;
 
         if(Input.GetKeyDown(KeyCode.Z))
         {
@@ -44,8 +50,16 @@ public class InputManager : MonoBehaviour
         }
         
         previousAxis = inputAxis;
-    }
 
+        //Konami Code for debug
+        if(Input.GetKeyDown(KeyCode.L)) gameManager.ToggleDebug();
+        if(gameManager.debug)
+        {
+            if(Input.GetKeyDown(KeyCode.B)) gameManager.InitializeEncounter();
+            if(Input.GetKeyDown(KeyCode.N)) gameManager.randomEcountersOn = !gameManager.randomEcountersOn;
+        }
+
+    }
 
 }
 

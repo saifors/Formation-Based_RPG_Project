@@ -12,9 +12,12 @@ public class OWPlayerController : MonoBehaviour
     Quaternion targetRotation;
     public Transform trans;
     public Vector3 movementIndicator;
-    public float speed;
+    private float speed;
+    public float walkSpeed;
+    public float runSpeed;
     public float turnSpeed = 20;
     public bool isMoving;
+    public bool isRunning;
 
     private GameManager gameManager;
 
@@ -51,6 +54,9 @@ public class OWPlayerController : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
+        if(isRunning) speed = runSpeed;
+        else speed = walkSpeed;
+
         if(gameManager.gameState == GameManager.GameState.Overworld)
         {
             if(trans.rotation != targetRotation)
