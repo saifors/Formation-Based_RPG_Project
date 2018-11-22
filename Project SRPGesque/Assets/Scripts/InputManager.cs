@@ -7,7 +7,7 @@ public class InputManager : MonoBehaviour
 {
 
     private OWPlayerController playerController;
-    private ActionMenu actionMenu;
+    private BattleUI actionMenu;
     public Vector2 inputAxis;
     public Vector2 previousAxis;
     public GameManager gameManager;
@@ -18,7 +18,7 @@ public class InputManager : MonoBehaviour
     void Start()
     {
         playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<OWPlayerController>();
-        actionMenu = GameObject.FindGameObjectWithTag("UI").GetComponent<ActionMenu>();
+        actionMenu = GameObject.FindGameObjectWithTag("UI").GetComponent<BattleUI>();
         gameManager = GetComponent<GameManager>();
         
        

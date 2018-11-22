@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     public GameState gameState;
 	public bool randomEcountersOn;
 	public float encounterMinimumPercent = 100;
+	public BattleUI battleUI;
 	public GameObject BattleMenu;
 	public GameObject debugMenu;
 	
@@ -22,6 +23,7 @@ public class GameManager : MonoBehaviour
 		cam_T = GameObject.FindGameObjectWithTag("CamTarget").GetComponent<Transform>();
 		playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<OWPlayerController>();
         gameState = GameState.Overworld;
+		battleUI = GameObject.FindGameObjectWithTag("UI").GetComponent<BattleUI>();
 		randomEcountersOn = true;//Depending on the area.
 	}
 	//Other possibility (better) have battle and overworld in the same scene and just seperated from each other and only one active at the same time, that way you also wo't have to reload scenes and remember things like player position.
@@ -87,6 +89,7 @@ public class GameManager : MonoBehaviour
 		camSet = CameraSetting.BattleCam;
 		cam_T.position = new Vector3(0,0,-85);
 		BattleMenu.SetActive(true);
+		battleUI.ChangeNotifText("Encountered an enemy!");
 	}
 	public void EndBattle()
 	{
@@ -107,6 +110,12 @@ public class GameManager : MonoBehaviour
 			EndBattle();
 		}
 		//else failed to run.
+		else FailedToRun();
+	}
+
+	public void FailedToRun()
+	{
+		battleUI.ChangeNotifText("Failed to run!");
 	}
 
 	public void ToggleDebug()

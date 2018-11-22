@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class ActionMenu : MonoBehaviour {
+public class BattleUI : MonoBehaviour {
 
 	public enum CommandSelection {Attack, Defend, Move, Item, Run};
 	public CommandSelection command;
@@ -15,11 +16,13 @@ public class ActionMenu : MonoBehaviour {
 	private GameManager gameManager;
 
 	[Header("Images behind the selections")]
-	public CanvasGroup AttackImage;
-	public CanvasGroup DefenseImage;
-	public CanvasGroup MoveImage;
-	public CanvasGroup ItemImage;
-	public CanvasGroup RunImage;
+	public CanvasGroup selectionImage;
+	public Transform selectionImage_trans;
+	public Text battleNotificationText;
+	private Color fontColor_Opague;
+	private Color fontColor_Transparent;
+	private float textFadeCounter;
+
 
 	// Use this for initialization
 	void Start () 
@@ -29,6 +32,10 @@ public class ActionMenu : MonoBehaviour {
 		scrollCooldown = 0.3f ;
 
 		gameManager = GameObject.FindGameObjectWithTag("Manager").GetComponent<GameManager>();
+		selectionImage_trans = selectionImage.GetComponent<RectTransform>();
+
+		fontColor_Opague = new Color(255,255,255,255);
+		fontColor_Transparent = new Color(255,255,255,0);
 
 		SetAttackScroll();
 
@@ -51,6 +58,15 @@ public class ActionMenu : MonoBehaviour {
 			{
 				SelectPreviousCommand();
 				scrollCooldownCounter = 0;
+			}
+		}
+		if(battleNotificationText.color != fontColor_Transparent)
+		{
+			textFadeCounter += Time.deltaTime;
+			if(textFadeCounter >= 4)
+			{
+				
+				battleNotificationText.color = Color.Lerp(fontColor_Opague, fontColor_Transparent, Mathf.PingPong(Time.time, 1)); // Attention this is where you left off.
 			}
 		}
 	}
@@ -147,47 +163,46 @@ public class ActionMenu : MonoBehaviour {
 	{
 
 	}
-	public void SetCommandAlphaToZero()
+
+	public void ChangeNotifText(string notifText)
 	{
-		AttackImage.alpha = 0;
-		DefenseImage.alpha = 0;
-		MoveImage.alpha = 0;
-		ItemImage.alpha = 0;
-		RunImage.alpha = 0;
+		battleNotificationText.text = notifText;
+		battleNotificationText.color = fontColor_Opague;
 	}
+
 
 	#region Sets
 
 	void SetAttackScroll()
 	{
 		
-		SetCommandAlphaToZero();
-		AttackImage.alpha = 1;
+		selectionImage_trans.localPosition = new Vector2( 0 , 63.8f );
+		
 		
 	}
 	void SetDefendScroll()
 	{
 		
-		SetCommandAlphaToZero();
-		DefenseImage.alpha = 1;
+		selectionImage_trans.localPosition = new Vector2( 0 , 31.8f );
+		
 	}
 	void SetMoveScroll()
 	{
+		selectionImage_trans.localPosition = new Vector2( 0 , 0 );
 		
-		SetCommandAlphaToZero();
-		MoveImage.alpha = 1;
+		
 	}
 	void SetItemScroll()
 	{
 		
-		SetCommandAlphaToZero();
-		ItemImage.alpha = 1;
+		selectionImage_trans.localPosition = new Vector2( 0 , -32.2f );
+		
 	}
 	void SetRunScroll()
 	{
 		
-		SetCommandAlphaToZero();
-		RunImage.alpha = 1;
+		selectionImage_trans.localPosition = new Vector2( 0 , -64.19f );
+		
 	}
 
 	#endregion
