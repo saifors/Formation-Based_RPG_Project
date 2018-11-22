@@ -13,4 +13,3 @@ The game will be displayed from an isometric camera angle.
 Dion Schreuder | Main Programmer, Game Designer, some Concept art
 David Nicolas | Game Designer, Concept artist, Assistant Programmer
 Mireia Zuluaga | Concept Artist, 3D Modelling
-Ferran Tamayo | Sound Design, 3D Modelling
