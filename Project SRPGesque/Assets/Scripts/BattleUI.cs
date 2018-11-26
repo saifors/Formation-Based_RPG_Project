@@ -19,9 +19,13 @@ public class BattleUI : MonoBehaviour {
 	public CanvasGroup selectionImage;
 	public Transform selectionImage_trans;
 	public Text battleNotificationText;
-	private Color fontColor_Opague;
-	private Color fontColor_Transparent;
+    public Image battleNotificationBg;
+    private Color notifTextColor;
+	private Color notifBgColor;
 	private float textFadeCounter;
+    public float notifAlpha;
+    public bool notifShown;
+    public GameObject notifPanel;
 
 
 	// Use this for initialization
@@ -33,11 +37,10 @@ public class BattleUI : MonoBehaviour {
 
 		gameManager = GameObject.FindGameObjectWithTag("Manager").GetComponent<GameManager>();
 		selectionImage_trans = selectionImage.GetComponent<RectTransform>();
+        notifTextColor = battleNotificationText.color;
+        notifBgColor = battleNotificationBg.color;
 
-		fontColor_Opague = new Color(255,255,255,255);
-		fontColor_Transparent = new Color(255,255,255,0);
-
-		SetAttackScroll();
+        SetAttackScroll();
 
 	}
 	
@@ -60,14 +63,23 @@ public class BattleUI : MonoBehaviour {
 				scrollCooldownCounter = 0;
 			}
 		}
-		if(battleNotificationText.color != fontColor_Transparent)
+		if(notifShown)
 		{
 			textFadeCounter += Time.deltaTime;
-			if(textFadeCounter >= 4)
+			if(textFadeCounter >= 3)
 			{
-				
-				battleNotificationText.color = Color.Lerp(fontColor_Opague, fontColor_Transparent, Mathf.PingPong(Time.time, 1)); // Attention this is where you left off.
-			}
+                notifAlpha -=  Time.deltaTime;
+                notifTextColor.a = notifAlpha; 
+                notifBgColor.a = notifAlpha/2;
+                battleNotificationText.color = notifTextColor;
+                battleNotificationBg.color = notifBgColor;
+                if (notifAlpha <= 0)
+                {
+                    notifAlpha = 0;
+                    notifShown = false;
+                    notifPanel.SetActive(false);
+                }
+            }
 		}
 	}
 
@@ -166,8 +178,16 @@ public class BattleUI : MonoBehaviour {
 
 	public void ChangeNotifText(string notifText)
 	{
-		battleNotificationText.text = notifText;
-		battleNotificationText.color = fontColor_Opague;
+		notifShown = true;
+        notifPanel.SetActive(true);
+        battleNotificationText.text = notifText;
+        notifTextColor.a = 1;
+        notifBgColor.a = 0.5f;
+        battleNotificationText.color = notifTextColor;
+        battleNotificationBg.color = notifBgColor;
+        textFadeCounter = 0;
+        notifAlpha = 1;
+        
 	}
 
 

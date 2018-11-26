@@ -941,7 +941,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &500298186
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1356,6 +1356,10 @@ MonoBehaviour:
   selectionImage: {fileID: 1821864059}
   selectionImage_trans: {fileID: 0}
   battleNotificationText: {fileID: 1654926146}
+  battleNotificationBg: {fileID: 1194538684}
+  notifAlpha: 0
+  notifShown: 0
+  notifPanel: {fileID: 500298185}
 --- !u!1 &720631785
 GameObject:
   m_ObjectHideFlags: 0
@@ -2569,7 +2573,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1476578920
 RectTransform:
   m_ObjectHideFlags: 0
