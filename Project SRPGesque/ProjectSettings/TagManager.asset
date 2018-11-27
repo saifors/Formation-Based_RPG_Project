@@ -9,6 +9,7 @@ TagManager:
   - Battlefield
   - UI
   - Manager
+  - B_Char_00
   layers:
   - Default
   - TransparentFX

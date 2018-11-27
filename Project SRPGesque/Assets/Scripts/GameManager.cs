@@ -16,6 +16,12 @@ public class GameManager : MonoBehaviour
 	public BattleUI battleUI;
 	public GameObject BattleMenu;
 	public GameObject debugMenu;
+	public GameObject BattleCharacterPrefab;
+
+	public int partyMembers;
+	private CharacterStats charStats;
+
+	public TileScript tileScript;
 	
 	// Use this for initialization
 	void Start () 
@@ -24,9 +30,18 @@ public class GameManager : MonoBehaviour
 		playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<OWPlayerController>();
         gameState = GameState.Overworld;
 		battleUI = GameObject.FindGameObjectWithTag("UI").GetComponent<BattleUI>();
+		charStats = GetComponent<CharacterStats>();
+
+		tileScript = GameObject.FindGameObjectWithTag("TileManager").GetComponent<TileScript>();
+
 		randomEcountersOn = true;//Depending on the area.
+		partyMembers = 0;
+
+		charStats.CreateCharacterStats("0", 10, 10, 5, 3, 2, 4); //PLACHEOLDER;
+		charStats.setTileOccupied("0", 5); //PLACEHOLDER
+		
 	}
-	//Other possibility (better) have battle and overworld in the same scene and just seperated from each other and only one active at the same time, that way you also wo't have to reload scenes and remember things like player position.
+	
 	
 	// Update is called once per frame
 	void Update () 
@@ -80,7 +95,7 @@ public class GameManager : MonoBehaviour
 			}
 		}
         
-		
+	
 	}
 	public void InitializeEncounter()
 	{
@@ -88,6 +103,17 @@ public class GameManager : MonoBehaviour
 		gameState = GameState.Battle;
 		camSet = CameraSetting.BattleCam;
 		cam_T.position = new Vector3(0,0,-85);
+
+		for(int i = 0; i <= partyMembers;  i++)
+		{
+			GameObject obj = Instantiate(BattleCharacterPrefab);
+			obj.name = "Battle_Char_" + i;				
+			obj.GetComponent<CharControl_Battle>().Init(i.ToString()); 
+			//Trying to getit´s position to be that of the tile it occupies.
+			//obj.transform.position = tileScript.tileTransform[PlayerPrefs.GetInt(i + "TileID")].position;
+
+		}
+
 		BattleMenu.SetActive(true);
 		battleUI.ChangeNotifText("Encountered an enemy!");
 	}
