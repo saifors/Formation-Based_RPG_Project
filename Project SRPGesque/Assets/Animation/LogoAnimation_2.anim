@@ -303,8 +303,8 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_GenerateMotionCurves: 0
   m_Events:
-  - time: 1.3333334
-    functionName: 
+  - time: 1.3166667
+    functionName: GoToTitle
     data: 
     objectReferenceParameter: {fileID: 11500000, guid: 0288c14bbed0b2e4786613e8ff0c569c,
       type: 3}

@@ -47,7 +47,7 @@ public class BattleUI : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-		scrollCooldownCounter += Time.deltaTime; 
+		if(scrollCooldownCounter <= scrollCooldown + 0.5f) scrollCooldownCounter += Time.deltaTime; 
 		if(selectingAction)
 		{
 			//Put in a timeCounter so it doesn't read every frame
@@ -196,32 +196,32 @@ public class BattleUI : MonoBehaviour {
 	void SetAttackScroll()
 	{
 		
-		selectionImage_trans.localPosition = new Vector2( 0 , 63.8f );
+		selectionImage_trans.localPosition = new Vector2( 0 , 138.3f );
 		
 		
 	}
 	void SetDefendScroll()
 	{
 		
-		selectionImage_trans.localPosition = new Vector2( 0 , 31.8f );
+		selectionImage_trans.localPosition = new Vector2( 0 , 65.3f );
 		
 	}
 	void SetMoveScroll()
 	{
-		selectionImage_trans.localPosition = new Vector2( 0 , 0 );
+		selectionImage_trans.localPosition = new Vector2( 0 , -7.79f );
 		
 		
 	}
 	void SetItemScroll()
 	{
 		
-		selectionImage_trans.localPosition = new Vector2( 0 , -32.2f );
+		selectionImage_trans.localPosition = new Vector2( 0 , -80.8f );
 		
 	}
 	void SetRunScroll()
 	{
 		
-		selectionImage_trans.localPosition = new Vector2( 0 , -64.19f );
+		selectionImage_trans.localPosition = new Vector2( 0 , -153.9f );
 		
 	}
 
