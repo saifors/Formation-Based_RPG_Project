@@ -14,14 +14,12 @@ public TransitionManager transition;
 	// Update is called once per frame
 	void Update () 
 	{
-		if(transition.isFaded_B)
-		{
-
-		}
+		
 	}
 	public void GoToTitle()
 	{
+		//Debug.Log("Commencing GoToTitle");
 		transition.FadeToSceneChange(false,1);//Fade to black to title screen.
-		
+		gameObject.SetActive(false);
 	}
 }

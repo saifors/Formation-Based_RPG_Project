@@ -548,19 +548,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db5af2e05086e6e46bbe1957d30db147, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isFaded_B: 0
-  isFaded_W: 0
-  isFading_B: 0
-  isFading_W: 0
-  fadingFrom_B: 0
-  fadingFrom_W: 0
+  isFaded: 0
+  isFading: 0
+  fadingFrom: 0
   IsNotFaded: 0
-  timeCounter: 0
   isCounting: 0
+  timeCounter: 0
   fadeToSceneChange: 0
   canvas: {fileID: 0}
-  blackTransitionScreen: {fileID: 0}
-  whiteTransitionScreen: {fileID: 0}
+  TransitionScreen: {fileID: 0}
+  Screen_Img: {fileID: 0}
+  Screen_Color: {r: 0.5377358, g: 0.21560162, b: 0.21560162, a: 0.5372549}
+  transitionSceneID: 0
 --- !u!4 &1756382431
 Transform:
   m_ObjectHideFlags: 0

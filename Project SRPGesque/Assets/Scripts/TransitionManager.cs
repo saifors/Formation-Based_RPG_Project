@@ -7,120 +7,132 @@ using UnityEngine.SceneManagement;
 public class TransitionManager : MonoBehaviour 
 {
 
-	public bool isFaded_B;
-	public bool isFaded_W;
-	public bool isFading_B;
-	public bool isFading_W;
-	public bool fadingFrom_B;
-	public bool fadingFrom_W;
+	public bool isFaded;
+	public bool isFading;
+	public bool fadingFrom;
 	public bool IsNotFaded;
+
 	public float timeCounter;
-	public bool isCounting;
 
 	public bool fadeToSceneChange;
 	public GameObject canvas;
 
-	public GameObject blackTransitionScreen;
-	public GameObject whiteTransitionScreen;
-	Image blackScreen_Img;
-	Color blackScreen_Color;
-	Image whiteScreen_Img;
-	Color whiteScreen_Color;
+	public GameObject TransitionScreen;
+	public Image Screen_Img;
+	public Color Screen_Color;
+
+	public int transitionSceneID;
 
 	// Use this for initialization
 	void Start () 
 	{
 		canvas = GameObject.FindGameObjectWithTag("UI");
 
-		blackTransitionScreen = new GameObject("blackScreen");
-		blackTransitionScreen.AddComponent<RectTransform>();
-		RectTransform blackScreen_Trans = blackTransitionScreen.GetComponent<RectTransform>();		
-		blackScreen_Trans.parent = canvas.transform;
-		blackScreen_Trans.localPosition = Vector2.zero;
-		blackScreen_Trans.sizeDelta = new Vector2(643,362);
-		blackTransitionScreen.AddComponent<Image>();
-		blackScreen_Img = blackTransitionScreen.GetComponent<Image>();
-		blackScreen_Color = Color.black; 		
-		blackScreen_Color.a = 0;
-		blackScreen_Img.color = blackScreen_Color;
-		blackTransitionScreen.SetActive(false);
+		TransitionScreen = new GameObject("transitionScreen");
+		TransitionScreen.AddComponent<RectTransform>();
+		RectTransform Screen_Trans = TransitionScreen.GetComponent<RectTransform>();		
+		Screen_Trans.parent = canvas.transform;
+		Screen_Trans.localPosition = Vector2.zero;
+		Screen_Trans.sizeDelta = new Vector2(643,362);
+		TransitionScreen.AddComponent<Image>();
+		Screen_Img = TransitionScreen.GetComponent<Image>();
+		if(PlayerPrefs.GetInt("fadeisBlack", 1) == 0) Screen_Color = Color.white; 		// ABSOLUTE SHIT, PlayerPrefs are stored in memory so it doesn´t reset each time you restart the game.
+		else Screen_Color = Color.black; 		
+		if(PlayerPrefs.GetInt("fadedFrom",0) == 0) PlayerPrefs.SetInt("fadedFrom", 0);
+		if(PlayerPrefs.GetInt("fadedFrom") == 1) FadeFrom();
+		else Screen_Color.a = 0;
+		Screen_Img.color = Screen_Color;
+		
+	
 
-		whiteTransitionScreen = new GameObject("whiteScreen");
-		whiteTransitionScreen.AddComponent<RectTransform>();
-		RectTransform whiteScreen_Trans = whiteTransitionScreen.GetComponent<RectTransform>();		
-		whiteScreen_Trans.parent = canvas.transform;
-		whiteScreen_Trans.localPosition = Vector2.zero;
-		whiteScreen_Trans.sizeDelta = new Vector2(643,362);
-		whiteTransitionScreen.AddComponent<Image>();
-		whiteScreen_Img = whiteTransitionScreen.GetComponent<Image>();
-		whiteScreen_Color = Color.white; 		
-		whiteScreen_Color.a = 0;
-		whiteScreen_Img.color = blackScreen_Color;
-		whiteTransitionScreen.SetActive(false);
+
 	}
 	
 	// Update is called once per frame
 	void Update () 
 	{
-		if(isCounting)
+		
+		if(isFading)
 		{
 			timeCounter += Time.deltaTime;
-		}
-		if(isFading_B)
-		{
-			blackScreen_Color.a += 0.3f * timeCounter;
-			if(blackScreen_Color.a >= 1)
+			Screen_Color.a = timeCounter * 0.5f;
+			Screen_Img.color = Screen_Color;
+			//Debug.Log("Is fading");
+			if(Screen_Color.a >= 1)
 			{
-				isFaded_B = true;
-				blackScreen_Color.a = 1;
-				isFading_B = false;
-				isCounting = false;
+				isFaded = true;
+				Screen_Color.a = 1;
+				isFading = false;	
 			}
 		}
-		if(fadeToSceneChange && isFaded_B)
+		if(fadeToSceneChange && isFaded)
 		{
-
+			//Debug.Log("scene change");
+			PlayerPrefs.SetInt("fadedFrom", 1);
+			if(Screen_Color == Color.black) PlayerPrefs.SetInt("fadeisBlack", 1);
+			else PlayerPrefs.SetInt("fadeisBlack", 0);
+			SceneManager.LoadScene(transitionSceneID);
+		}
+		if(fadingFrom)
+		{
+			
+			Screen_Color.a -= Time.deltaTime * 0.5f;
+			Screen_Img.color = Screen_Color;
+			//Debug.Log("Is fading");
+			if(Screen_Color.a <= 0)
+			{
+				
+				Screen_Color.a = 0;
+				fadingFrom = false;	
+			}
 		}
 	}
-	public void FadeToBlack()
+	public void FadeTo(Color color)
 	{
-		isFaded_B = false;
-		isFading_B = true;
-		blackTransitionScreen.SetActive(true);
+		isFaded = false;
+		isFading = true;
+		Screen_Color = color;
+		Screen_Color.a = 0;
+		Screen_Img.color = Screen_Color;
+		TransitionScreen.SetActive(true);
 
-		isCounting = true;
+		
 	}
-	public void FadeToWhite()
+
+	public void FadeFrom()
 	{
-		isFaded_W = false;
-		isFading_W = true;
-		whiteTransitionScreen.SetActive(true);
+		fadingFrom = true;
+		isFaded = false;
+		isFading = false;
+		Screen_Color.a = 1;
+		Screen_Img.color = Screen_Color;
+		TransitionScreen.SetActive(true);
 
-		isCounting = true;
+		
 	}
-	public void FadeFromBlack()
-	{
-		fadingFrom_B = true;
 
-		isCounting = true;
-	}
-	public void FadeFromWhite()
-	{
-		fadingFrom_W = true;
-
-		isCounting = true;
-	}
 	public void FadeToSceneChange(bool fadeColor, int sceneNum)
 	{
-		if(fadeColor = false)
-		{
-			FadeToBlack();
-			SceneManager.LoadScene(sceneNum);
+		//Debug.Log("FadeToSceneChanged" + fadeColor + sceneNum);
+		if(fadeColor == false)
+		{			
+			FadeTo(Color.black);
+			//Debug.Log("Fade To Black");
+			fadeToSceneChange = true;
+			transitionSceneID = sceneNum;
 		}
 		else
 		{
-			FadeToWhite();
-			SceneManager.LoadScene(sceneNum);
+			FadeTo(Color.white);
+			//Debug.Log("Fade To white");
+			fadeToSceneChange = true;
+			transitionSceneID = sceneNum;
 		}
+	}
+
+	void OnApplicationQuit()
+	{
+		PlayerPrefs.SetInt("fadeisBlack", 1); //This is to reset the two transition "booleans" upon exitting the game to avoid weird shit.
+		PlayerPrefs.SetInt("fadedFrom",0);
 	}
 }
