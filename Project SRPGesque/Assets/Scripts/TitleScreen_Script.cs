@@ -22,11 +22,20 @@ public class TitleScreen_Script : MonoBehaviour
     public enum TitleState { Title, Load, Options};
     public TitleState state;
 
+    public int resolutionOption;
+    public Text resolutionText;
+    public string[] resolutions;
+    public int qualityOption;
+    public Text qualityText;
+    public string[] qualities;
+
     // Use this for initialization
     void Start () {
         selectionImageGroup = GameObject.FindGameObjectWithTag("TitleScreenOptions");
         selectionImage = selectionImageGroup.GetComponentsInChildren<Image>();
         transition = GameObject.FindGameObjectWithTag("Manager").GetComponent<TransitionManager>();
+
+        
 
         unselectedColor = new Color(0.66f, 0.66f, 0.66f, 0.75f);
 
@@ -131,5 +140,35 @@ public class TitleScreen_Script : MonoBehaviour
         selectionImageGroup.SetActive(true);
         optionsPanel.SetActive(false);
         loadGamePanel.SetActive(false);
+    }
+    public void ChangeResolution(bool whichArrow)
+    {
+        if(whichArrow)
+        {
+            resolutionOption++;
+            if(resolutionOption >= resolutions.Length) resolutionOption = 0;
+        }
+        else
+        {
+            resolutionOption--;
+            if(resolutionOption <= -1) resolutionOption = resolutions.Length - 1;
+        }
+        resolutionText.text = resolutions[resolutionOption];
+
+    }
+    public void ChangeQuality(bool whichArrow)
+    {
+        if(whichArrow)
+        {
+            qualityOption++;
+            if(qualityOption >= qualities.Length) qualityOption = 0;
+        }
+        else
+        {
+            qualityOption--;
+            if(qualityOption <= -1) qualityOption = qualities.Length - 1;
+        }
+        qualityText.text = qualities[qualityOption];
+
     }
 }
