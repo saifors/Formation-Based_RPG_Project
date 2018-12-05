@@ -10,6 +10,9 @@ public class TitleScreen_Script : MonoBehaviour
     public GameObject optionsPanel;
     public Image[] selectionImage;
     public int titleSelection;
+    public int fileSelection;
+
+    public int optionSelection;
     public Color unselectedColor;
     public float inputAxis;
     public float scrollCooldown = 0.25f;
@@ -60,10 +63,28 @@ public class TitleScreen_Script : MonoBehaviour
         else if(state == TitleState.Load)
         {
             if (Input.GetKey(KeyCode.X)) CancelSelection();
+
+            if (inputAxis <= -1)
+                {
+                    
+                }
+            else if (inputAxis >= 1)
+            {
+                
+            }
         }
         else if (state == TitleState.Options)
         {
             if (Input.GetKey(KeyCode.X)) CancelSelection();
+
+            if (inputAxis <= -1)
+                {
+                    
+                }
+            else if (inputAxis >= 1)
+            {
+                
+            }
         }
 
     }

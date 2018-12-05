@@ -33,14 +33,18 @@ public class TransitionManager : MonoBehaviour
 		RectTransform Screen_Trans = TransitionScreen.GetComponent<RectTransform>();		
 		Screen_Trans.parent = canvas.transform;
 		Screen_Trans.localPosition = Vector2.zero;
-		Screen_Trans.sizeDelta = new Vector2(643,362);
+		Screen_Trans.sizeDelta = new Vector2(1920,1080);
 		TransitionScreen.AddComponent<Image>();
 		Screen_Img = TransitionScreen.GetComponent<Image>();
 		if(PlayerPrefs.GetInt("fadeisBlack", 1) == 0) Screen_Color = Color.white; 		// ABSOLUTE SHIT, PlayerPrefs are stored in memory so it doesn´t reset each time you restart the game.
 		else Screen_Color = Color.black; 		
 		if(PlayerPrefs.GetInt("fadedFrom",0) == 0) PlayerPrefs.SetInt("fadedFrom", 0);
 		if(PlayerPrefs.GetInt("fadedFrom") == 1) FadeFrom();
-		else Screen_Color.a = 0;
+		else 
+		{
+			Screen_Color.a = 0;
+			TransitionScreen.SetActive(false);
+		}
 		Screen_Img.color = Screen_Color;
 		
 	
@@ -84,6 +88,7 @@ public class TransitionManager : MonoBehaviour
 				
 				Screen_Color.a = 0;
 				fadingFrom = false;	
+				TransitionScreen.SetActive(false);
 			}
 		}
 	}

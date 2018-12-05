@@ -52,7 +52,7 @@ public class InputManager : MonoBehaviour
         previousAxis = inputAxis;
 
         //Konami Code for debug
-        if(Input.GetKeyDown(KeyCode.L)) gameManager.ToggleDebug();
+        if(Input.GetKeyDown(KeyCode.F10)) gameManager.ToggleDebug();
         if(gameManager.debug)
         {
             if(Input.GetKeyDown(KeyCode.B)) gameManager.InitializeEncounter();
