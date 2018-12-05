@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3387,6 +3387,7 @@ GameObject:
   - component: {fileID: 1888884844}
   - component: {fileID: 1888884846}
   - component: {fileID: 1888884847}
+  - component: {fileID: 1888884848}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Manager
@@ -3459,6 +3460,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad2ae7ac1ec63ae418218778a8a3b6c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1888884848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1888884843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db5af2e05086e6e46bbe1957d30db147, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isFaded: 0
+  isFading: 0
+  fadingFrom: 0
+  IsNotFaded: 0
+  timeCounter: 0
+  fadeToSceneChange: 0
+  canvas: {fileID: 0}
+  TransitionScreen: {fileID: 0}
+  Screen_Img: {fileID: 0}
+  Screen_Color: {r: 0, g: 0, b: 0, a: 0}
+  transitionSceneID: 0
 --- !u!1 &1892885525
 GameObject:
   m_ObjectHideFlags: 0

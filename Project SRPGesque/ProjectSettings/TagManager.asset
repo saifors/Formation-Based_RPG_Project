@@ -10,6 +10,7 @@ TagManager:
   - UI
   - Manager
   - B_Char_00
+  - TitleScreenOptions
   layers:
   - Default
   - TransparentFX
