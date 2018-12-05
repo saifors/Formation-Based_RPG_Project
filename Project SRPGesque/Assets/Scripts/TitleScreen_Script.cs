@@ -6,6 +6,8 @@ using UnityEngine.UI;
 public class TitleScreen_Script : MonoBehaviour
 {
     public GameObject selectionImageGroup;
+    public GameObject loadGamePanel;
+    public GameObject optionsPanel;
     public Image[] selectionImage;
     public int titleSelection;
     public Color unselectedColor;
@@ -14,6 +16,8 @@ public class TitleScreen_Script : MonoBehaviour
     public float scrollCooldownCounter;
     public int NewGameSceneID;
     private TransitionManager transition;
+    public enum TitleState { Title, Load, Options};
+    public TitleState state;
 
     // Use this for initialization
     void Start () {
@@ -23,7 +27,8 @@ public class TitleScreen_Script : MonoBehaviour
 
         unselectedColor = new Color(0.66f, 0.66f, 0.66f, 0.75f);
 
-        
+        state = TitleState.Title;
+        CancelSelection();
         SelectOption(0);
 	}
 	
@@ -32,23 +37,35 @@ public class TitleScreen_Script : MonoBehaviour
     {
         inputAxis = Input.GetAxisRaw("Vertical");
 
-        if (scrollCooldownCounter >= scrollCooldown)
+        if(state == TitleState.Title) //Update for Normal title selection
         {
-            if (inputAxis <= -1)
+            if (scrollCooldownCounter >= scrollCooldown)
             {
-                if (titleSelection >= selectionImage.Length - 1) SelectOption(0);
-                else SelectOption(titleSelection + 1);
-                scrollCooldownCounter = 0;
+                if (inputAxis <= -1)
+                {
+                    if (titleSelection >= selectionImage.Length - 1) SelectOption(0);
+                    else SelectOption(titleSelection + 1);
+                    scrollCooldownCounter = 0;
+                }
+                else if (inputAxis >= 1)
+                {
+                    if (titleSelection <= 0) SelectOption(3);
+                    else SelectOption(titleSelection - 1);
+                    scrollCooldownCounter = 0;
+                }
             }
-            else if (inputAxis >= 1)
-            {
-                if (titleSelection <= 0) SelectOption(3);
-                else SelectOption(titleSelection - 1);
-                scrollCooldownCounter = 0;
-            }
+            else scrollCooldownCounter += Time.deltaTime;
+            if (Input.GetKey(KeyCode.Z)) ConfirmSelection(titleSelection);
         }
-        else scrollCooldownCounter += Time.deltaTime;
-        if (Input.GetKey(KeyCode.Z)) ConfirmSelection(titleSelection);
+        else if(state == TitleState.Load)
+        {
+            if (Input.GetKey(KeyCode.X)) CancelSelection();
+        }
+        else if (state == TitleState.Options)
+        {
+            if (Input.GetKey(KeyCode.X)) CancelSelection();
+        }
+
     }
         
     
@@ -71,6 +88,27 @@ public class TitleScreen_Script : MonoBehaviour
     public void ConfirmSelection(int optionNum)
     {
         if (optionNum == 0) transition.FadeToSceneChange(false, NewGameSceneID);
+        else if (optionNum == 1)
+        {
+            selectionImageGroup.SetActive(false);
+            optionsPanel.SetActive(false);
+            loadGamePanel.SetActive(true);
+            state = TitleState.Load;
+        }
+        else if (optionNum == 2)
+        {
+            selectionImageGroup.SetActive(false);
+            optionsPanel.SetActive(true);
+            loadGamePanel.SetActive(false);
+            state = TitleState.Options;
+        }
+        else if (optionNum == 3) Application.Quit();
     }
-
+    public void CancelSelection()
+    {
+        state = TitleState.Title;
+        selectionImageGroup.SetActive(true);
+        optionsPanel.SetActive(false);
+        loadGamePanel.SetActive(false);
+    }
 }
