@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CharControl_Battle : MonoBehaviour 
 {
-	public string charID;
+	public int charID;
 	public int hp;
 	public int mp;
 	public int atk;
@@ -32,7 +32,7 @@ public class CharControl_Battle : MonoBehaviour
 		def = PlayerPrefs.GetInt(charID + "Defense");
 		res = PlayerPrefs.GetInt(charID + "Resistance");
 		spd = PlayerPrefs.GetInt(charID + "Speed");
-		tileID =  PlayerPrefs.GetInt(charID + "TileID");
+		tileID =  PlayerPrefs.GetInt(charID + "TileID",0);
 		//transform.position = 
 	}
 }

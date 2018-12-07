@@ -21,7 +21,10 @@ public class GameManager : MonoBehaviour
 	public int partyMembers;
 	private CharacterStats charStats;
 
+    public GameObject[] characters;
+
 	public TileScript tileScript;
+    public Transform battlefield;
 	
 	// Use this for initialization
 	void Start () 
@@ -33,12 +36,14 @@ public class GameManager : MonoBehaviour
 		charStats = GetComponent<CharacterStats>();
 
 		tileScript = GameObject.FindGameObjectWithTag("TileManager").GetComponent<TileScript>();
+        battlefield = GameObject.FindGameObjectWithTag("Battlefield").GetComponent<Transform>();
 
-		randomEcountersOn = true;//Depending on the area.
-		partyMembers = 0;
+        randomEcountersOn = true;//Depending on the area.
+		partyMembers = 1;
+        characters = new GameObject[partyMembers];
 
-		charStats.CreateCharacterStats("0", 10, 10, 5, 3, 2, 4); //PLACHEOLDER;
-		charStats.setTileOccupied("0", 5); //PLACEHOLDER
+		charStats.CreateCharacterStats(0, 10, 10, 5, 3, 2, 4); //PLACHEOLDER;
+        MoveFormation(0, 36); //PLACEHOLDER
 		
 	}
 	
@@ -102,17 +107,17 @@ public class GameManager : MonoBehaviour
 		playerController.isMoving = false;
 		gameState = GameState.Battle;
 		camSet = CameraSetting.BattleCam;
-		cam_T.position = new Vector3(0,0,-85);
+		cam_T.position = battlefield.position;
 
-		for(int i = 0; i <= partyMembers;  i++)
+		for(int i = 0; i < partyMembers;  i++)
 		{
-			GameObject obj = Instantiate(BattleCharacterPrefab);
-			obj.name = "Battle_Char_" + i;				
-			obj.GetComponent<CharControl_Battle>().Init(i.ToString()); 
-			//Trying to getit´s position to be that of the tile it occupies.
-			//obj.transform.position = tileScript.tileTransform[PlayerPrefs.GetInt(i + "TileID")].position;
+			characters[i] = Instantiate(BattleCharacterPrefab);
+            characters[i].name = "Battle_Char_" + i;
+            characters[i].GetComponent<CharControl_Battle>().Init(i.ToString());
+            PlaceCharacterOnTheirTile(i);
 
-		}
+
+        }
 
 		BattleMenu.SetActive(true);
 		battleUI.ChangeNotifText("Encountered an enemy!");
@@ -125,6 +130,15 @@ public class GameManager : MonoBehaviour
 		BattleMenu.SetActive(false);
 	}
 
+    public void MoveFormation(int charID, int tileID)
+    {
+        charStats.setTileOccupied(charID, tileID);
+        PlaceCharacterOnTheirTile(charID);
+    }
+    public void PlaceCharacterOnTheirTile(int charID)
+    {
+        characters[charID].transform.position = tileScript.tileTransform[PlayerPrefs.GetInt(charID + "_TileID") - 1].position;
+    }
 	public void RunFromBattle()
 	{
 		if(Random.Range(0,3) >= 2)
@@ -155,4 +169,5 @@ public class GameManager : MonoBehaviour
 	{
 		randomEcountersOn = !randomEcountersOn;
 	}
+
 }

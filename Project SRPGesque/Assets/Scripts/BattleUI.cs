@@ -154,7 +154,8 @@ public class BattleUI : MonoBehaviour {
 		}
 		else if(command == CommandSelection.Move)
 		{
-			//Go to move menu
+            //Go to move menu
+            gameManager.MoveFormation(0,5);
 		}
 		else if(command == CommandSelection.Item)
 		{
