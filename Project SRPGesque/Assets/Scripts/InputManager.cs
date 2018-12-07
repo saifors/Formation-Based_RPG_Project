@@ -46,7 +46,7 @@ public class InputManager : MonoBehaviour
         }
         else if(gameManager.gameState == GameManager.GameState.Battle)
         {
-            actionMenu.SetAxis(inputAxis.y);
+            actionMenu.SetAxis(inputAxis);
         }
         
         previousAxis = inputAxis;

@@ -8,8 +8,9 @@ public class BattleUI : MonoBehaviour {
 	public enum CommandSelection {Attack, Defend, Move, Item, Run};
 	public CommandSelection command;
 
-	public float axis;
-	public bool selectingAction;
+	public Vector2 axis;
+    public enum SelectingMenu { selectingAction, selectingAttack, selectingMove};
+    public SelectingMenu selecting;
 
 	public float scrollCooldownCounter;
 	public float scrollCooldown;
@@ -32,7 +33,7 @@ public class BattleUI : MonoBehaviour {
 	void Start () 
 	{
 		//To test menu stuff.
-		selectingAction = true;
+		selecting = SelectingMenu.selectingAction;
 		scrollCooldown = 0.3f ;
 
 		gameManager = GameObject.FindGameObjectWithTag("Manager").GetComponent<GameManager>();
@@ -47,22 +48,32 @@ public class BattleUI : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-		if(scrollCooldownCounter <= scrollCooldown + 0.5f) scrollCooldownCounter += Time.deltaTime; 
-		if(selectingAction)
+		if(scrollCooldownCounter <= scrollCooldown + 0.5f) scrollCooldownCounter += Time.deltaTime;
+        //Selecting action Command
+        if (selecting == SelectingMenu.selectingAction)
 		{
 			//Put in a timeCounter so it doesn't read every frame
-			if(axis < 0 && scrollCooldownCounter >= scrollCooldown)
+			if(axis.y < 0 && scrollCooldownCounter >= scrollCooldown)
 			{
 				SelectNextCommand();
 				scrollCooldownCounter = 0;
 				
 			}
-			else if(axis > 0 && scrollCooldownCounter >= scrollCooldown)
+			else if(axis.y > 0 && scrollCooldownCounter >= scrollCooldown)
 			{
 				SelectPreviousCommand();
 				scrollCooldownCounter = 0;
 			}
 		}
+        else if (selecting == SelectingMenu.selectingMove)
+        {
+            if(axis.x > 0) //Controls for moving around the selected tiles.
+            {
+
+            }
+        }
+
+        //Notification fades after a while
 		if(notifShown)
 		{
 			textFadeCounter += Time.deltaTime;
@@ -83,7 +94,7 @@ public class BattleUI : MonoBehaviour {
 		}
 	}
 
-    public void SetAxis(float inputAxis)
+    public void SetAxis(Vector2 inputAxis)
     {
         axis = inputAxis;
     }
@@ -155,7 +166,8 @@ public class BattleUI : MonoBehaviour {
 		else if(command == CommandSelection.Move)
 		{
             //Go to move menu
-            gameManager.MoveFormation(0,5);
+            selecting = SelectingMenu.selectingMove;
+            //gameManager.MoveFormation(0,5);
 		}
 		else if(command == CommandSelection.Item)
 		{
@@ -174,7 +186,7 @@ public class BattleUI : MonoBehaviour {
 
 	public void ReturnToCommandSelection()
 	{
-
+        selecting = SelectingMenu.selectingAction;
 	}
 
 	public void ChangeNotifText(string notifText)
