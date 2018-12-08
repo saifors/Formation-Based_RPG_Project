@@ -20,8 +20,8 @@ public class GameManager : MonoBehaviour
 
 	public int partyMembers;
 	private CharacterStats charStats;
-
     public GameObject[] characters;
+    public CharControl_Battle[] charControl;
 
 	public TileScript tileScript;
     public Transform battlefield;
@@ -36,14 +36,21 @@ public class GameManager : MonoBehaviour
 		charStats = GetComponent<CharacterStats>();
 
 		tileScript = GameObject.FindGameObjectWithTag("TileManager").GetComponent<TileScript>();
+        tileScript.Init();
         battlefield = GameObject.FindGameObjectWithTag("Battlefield").GetComponent<Transform>();
 
         randomEcountersOn = true;//Depending on the area.
 		partyMembers = 1;
         characters = new GameObject[partyMembers];
+        charControl = new CharControl_Battle[partyMembers];
 
-		charStats.CreateCharacterStats(0, 10, 10, 5, 3, 2, 4); //PLACHEOLDER;
-        MoveFormation(0, 36); //PLACEHOLDER
+        battleUI.tileCollumnSize = tileScript.yTiles ;
+        battleUI.tileRowSize = tileScript.xTiles ;
+        battleUI.tileAmount = tileScript.tileAmount -1;
+
+        charStats.CreateCharacterStats(0, 10, 10, 5, 3, 2, 4); //PLACHEOLDER;
+        charControl[0].tileID = 20;
+        MoveFormation(0, charControl[0].tileID); //PLACEHOLDER
 		
 	}
 	
@@ -113,7 +120,8 @@ public class GameManager : MonoBehaviour
 		{
 			characters[i] = Instantiate(BattleCharacterPrefab);
             characters[i].name = "Battle_Char_" + i;
-            characters[i].GetComponent<CharControl_Battle>().Init(i.ToString());
+            charControl[i] = characters[i].GetComponent<CharControl_Battle>();
+            charControl[i].Init(i.ToString());
             PlaceCharacterOnTheirTile(i);
 
 
@@ -132,12 +140,12 @@ public class GameManager : MonoBehaviour
 
     public void MoveFormation(int charID, int tileID)
     {
-        charStats.setTileOccupied(charID, tileID);
+        charStats.SetTileOccupied(charID, tileID);
         PlaceCharacterOnTheirTile(charID);
     }
     public void PlaceCharacterOnTheirTile(int charID)
     {
-        characters[charID].transform.position = tileScript.tileTransform[PlayerPrefs.GetInt(charID + "_TileID") - 1].position;
+        characters[charID].transform.position = tileScript.tileTransform[PlayerPrefs.GetInt(charID + "_TileID") ].position;
     }
 	public void RunFromBattle()
 	{

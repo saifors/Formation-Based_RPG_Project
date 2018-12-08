@@ -27,7 +27,7 @@ public class CharacterStats : MonoBehaviour {
 		PlayerPrefs.SetInt(charID + "Speed", spd);
 	}
 
-	public void setTileOccupied(int charID, int tileID)
+	public void SetTileOccupied(int charID, int tileID)
 	{
 		PlayerPrefs.SetInt(charID + "_TileID", tileID);
 	}

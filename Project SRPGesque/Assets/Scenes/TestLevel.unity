@@ -1085,6 +1085,91 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!1 &622932878
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 622932882}
+  - component: {fileID: 622932881}
+  - component: {fileID: 622932880}
+  - component: {fileID: 622932879}
+  m_Layer: 0
+  m_Name: SelectedTileIndicator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!65 &622932879
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 622932878}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &622932880
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 622932878}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
+  m_Materials:
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!33 &622932881
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 622932878}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &622932882
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 622932878}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.5275664, y: -6.47, z: -85.39329}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &643757440
 GameObject:
   m_ObjectHideFlags: 0
@@ -1349,17 +1434,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   command: 0
-  axis: 0
-  selectingAction: 0
+  axis: {x: 0, y: 0}
+  selecting: 0
   scrollCooldownCounter: 0
   scrollCooldown: 0
+  notifAlpha: 0
+  notifShown: 0
+  notifPanel: {fileID: 500298185}
+  actionMenu: {fileID: 255947598}
+  tileCollumnSize: 0
+  tileAmount: 0
+  selectedTile: 0
+  tileSelectCooldownCounter: 0
+  selectedTileIndicator: {fileID: 622932882}
   selectionImage: {fileID: 1821864059}
   selectionImage_trans: {fileID: 0}
   battleNotificationText: {fileID: 1654926146}
   battleNotificationBg: {fileID: 1194538684}
-  notifAlpha: 0
-  notifShown: 0
-  notifPanel: {fileID: 500298185}
 --- !u!1 &720631785
 GameObject:
   m_ObjectHideFlags: 0
@@ -3420,7 +3511,10 @@ MonoBehaviour:
   BattleCharacterPrefab: {fileID: 1542637486942168, guid: d5258dd58b4531e478789f5a3bdfdf86,
     type: 2}
   partyMembers: 0
+  characters: []
+  charControl: []
   tileScript: {fileID: 0}
+  battlefield: {fileID: 0}
 --- !u!4 &1888884845
 Transform:
   m_ObjectHideFlags: 0

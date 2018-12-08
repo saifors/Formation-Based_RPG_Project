@@ -7,7 +7,7 @@ public class InputManager : MonoBehaviour
 {
 
     private OWPlayerController playerController;
-    private BattleUI actionMenu;
+    private BattleUI battleUI;
     public Vector2 inputAxis;
     public Vector2 previousAxis;
     public GameManager gameManager;
@@ -18,7 +18,7 @@ public class InputManager : MonoBehaviour
     void Start()
     {
         playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<OWPlayerController>();
-        actionMenu = GameObject.FindGameObjectWithTag("UI").GetComponent<BattleUI>();
+        battleUI = GameObject.FindGameObjectWithTag("UI").GetComponent<BattleUI>();
         gameManager = GetComponent<GameManager>();
         
        
@@ -32,13 +32,18 @@ public class InputManager : MonoBehaviour
         if(Input.GetKey(KeyCode.LeftShift)) playerController.isRunning = true;
         else playerController.isRunning = false;
 
-        if(Input.GetKeyDown(KeyCode.Z))
+        if (Input.GetKeyDown(KeyCode.Z))
         {
-            if(gameManager.gameState == GameManager.GameState.Battle)
+            if (gameManager.gameState == GameManager.GameState.Battle)
             {
-                actionMenu.ConfirmSelectedCommand();
+                if (battleUI.selecting == BattleUI.SelectingMenu.selectingAction) battleUI.ConfirmSelectedCommand();
+                else if(battleUI.selecting == BattleUI.SelectingMenu.selectingMove)
+                {
+                    gameManager.MoveFormation(0,battleUI.selectedTile);
+                }
             }
         }
+        else if (Input.GetKey(KeyCode.X)) battleUI.ReturnToCommandSelection();
         
         if(gameManager.gameState == GameManager.GameState.Overworld)
         {
@@ -46,7 +51,7 @@ public class InputManager : MonoBehaviour
         }
         else if(gameManager.gameState == GameManager.GameState.Battle)
         {
-            actionMenu.SetAxis(inputAxis);
+            battleUI.SetAxis(inputAxis);
         }
         
         previousAxis = inputAxis;

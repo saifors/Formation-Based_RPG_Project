@@ -16,18 +16,27 @@ public class BattleUI : MonoBehaviour {
 	public float scrollCooldown;
 	private GameManager gameManager;
 
-	[Header("Images behind the selections")]
-	public CanvasGroup selectionImage;
-	public Transform selectionImage_trans;
-	public Text battleNotificationText;
-    public Image battleNotificationBg;
+	
     private Color notifTextColor;
 	private Color notifBgColor;
 	private float textFadeCounter;
     public float notifAlpha;
     public bool notifShown;
     public GameObject notifPanel;
+    public GameObject actionMenu; //May be better to get a Game Object array that takes in all the children of batle menu.
 
+    public int tileCollumnSize;
+    public int tileRowSize;
+    public int tileAmount;
+    public int selectedTile;
+    public float tileSelectCooldownCounter;
+    public Transform selectedTileIndicator;
+
+    [Header("Images behind the selections")]
+	public CanvasGroup selectionImage;
+	public Transform selectionImage_trans;
+	public Text battleNotificationText;
+    public Image battleNotificationBg;
 
 	// Use this for initialization
 	void Start () 
@@ -40,6 +49,7 @@ public class BattleUI : MonoBehaviour {
 		selectionImage_trans = selectionImage.GetComponent<RectTransform>();
         notifTextColor = battleNotificationText.color;
         notifBgColor = battleNotificationBg.color;
+        
 
         SetAttackScroll();
 
@@ -67,9 +77,82 @@ public class BattleUI : MonoBehaviour {
 		}
         else if (selecting == SelectingMenu.selectingMove)
         {
-            if(axis.x > 0) //Controls for moving around the selected tiles.
+            if(tileSelectCooldownCounter < 1) tileSelectCooldownCounter += Time.deltaTime;
+            //Controls for moving around the selected tiles.
+            if(tileSelectCooldownCounter >= 0.75f)
             {
+                if (axis.x > 0) //Right
+                {
+                    if (axis.y > 0) //Upright
+                    {
+                        //tile - ytiles
+                        selectedTile -= tileCollumnSize;
+                        if (selectedTile > tileAmount || selectedTile < 0) selectedTile += tileCollumnSize;
 
+                    }
+                    else if(axis.y < 0) //DownRight
+                    {
+                        //tile + 1
+                        //HELP ME
+                        if (selectedTile % (tileCollumnSize +1*(Mathf.FloorToInt(selectedTile/tileRowSize))) == 0 && selectedTile != 0) { }
+                        else selectedTile++;
+                        
+                        //if (selectedTile > tileAmount - 1 || selectedTile < 0) selectedTile--;
+                    }
+                    else //Right
+                    {
+                        //tile - ytiles + 1
+                        if (selectedTile % (tileCollumnSize - 1) == 0 && selectedTile != 0) { }
+                        else selectedTile = selectedTile - tileCollumnSize + 1;
+                        //This one loops for some reason.
+                        if (selectedTile > tileAmount  || selectedTile < 0) selectedTile = selectedTile + tileCollumnSize - 1;
+                    }
+                }
+                else if (axis.x < 0) //Left
+                {
+                    if (axis.y > 0) //UpLeft
+                    {
+                        //tile - 1
+                        selectedTile--;
+                        if (selectedTile > tileAmount  || selectedTile < 0) selectedTile++;
+                    }
+                    else if (axis.y < 0) //DownLeft
+                    {
+                        // tile + ytiles 
+                        selectedTile += tileCollumnSize;
+                        if (selectedTile > tileAmount || selectedTile < 0) selectedTile -= tileCollumnSize;
+                    }
+                    else //Left
+                    {
+                        //tile + ytiles - 1
+                        selectedTile = selectedTile + tileCollumnSize - 1;
+                        //This one loops for some reason.
+                        if (selectedTile > tileAmount  || selectedTile < 0) selectedTile = selectedTile - tileCollumnSize + 1;
+                    }
+                }
+                else if (axis.y > 0) //Up
+                {
+                    //tile - ytiles - 1
+                    selectedTile = selectedTile - tileCollumnSize - 1;
+                    //This one loops for some reason.
+                    if (selectedTile > tileAmount || selectedTile < 0) selectedTile = selectedTile + tileCollumnSize + 1;
+                }
+                else if (axis.y < 0) //Down
+                {
+                    //tile + ytiles + 1
+                    if (selectedTile % (tileCollumnSize - 1) == 0 && selectedTile != 0) { }
+                    else selectedTile = selectedTile + tileCollumnSize + 1;
+                    //This one loops for some reason.
+                    if (selectedTile > tileAmount || selectedTile < 0) selectedTile = selectedTile - tileCollumnSize - 1;
+                }
+
+                if (axis.x != 0 || axis.y != 0)
+                {
+                    gameManager.charControl[0].tileID = selectedTile;
+                    tileSelectCooldownCounter = 0;
+                    selectedTileIndicator.position = gameManager.tileScript.tileTransform[selectedTile].position;
+                    //gameManager.MoveFormation(0, selectedTile);
+                }
             }
         }
 
@@ -167,6 +250,8 @@ public class BattleUI : MonoBehaviour {
 		{
             //Go to move menu
             selecting = SelectingMenu.selectingMove;
+            selectedTile = gameManager.charControl[0].tileID; //0 is a placeholder for now 
+            actionMenu.SetActive(false);
             //gameManager.MoveFormation(0,5);
 		}
 		else if(command == CommandSelection.Item)
@@ -187,6 +272,7 @@ public class BattleUI : MonoBehaviour {
 	public void ReturnToCommandSelection()
 	{
         selecting = SelectingMenu.selectingAction;
+        actionMenu.SetActive(true);
 	}
 
 	public void ChangeNotifText(string notifText)

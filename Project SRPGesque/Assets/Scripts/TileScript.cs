@@ -16,7 +16,7 @@ public class TileScript : MonoBehaviour {
     public Transform battlefield;
 
     // Use this for initialization
-    void Start ()
+    public void Init ()
     {
         battlefield = GameObject.FindGameObjectWithTag("Battlefield").GetComponent<Transform>();
         tileCenter = this.transform;
@@ -46,10 +46,6 @@ public class TileScript : MonoBehaviour {
         tileCenter.position = new Vector3(battlefield.position.x, battlefield.position.y + 0.001f, battlefield.position.z);
 	}
 	
-	// Update is called once per frame
-	void Update ()
-    {
-        
-    }
+
 }
 

@@ -41,7 +41,7 @@ public class TileData : MonoBehaviour {
         ySquare = yS;
 
         tileID = ID;
-        this.name = "Tile_" + (tileID+1);
+        this.name = "Tile_" + (tileID);
 
         if (tileID <= tileSum/2 - 1) SetAlliance(2);
         else SetAlliance(1);
