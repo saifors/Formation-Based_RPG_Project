@@ -27,8 +27,11 @@ public class BattleUI : MonoBehaviour {
 
     public int tileCollumnSize;
     public int tileRowSize;
+    public Vector2 startLimit;
+    public Vector2 endLimit;
     public int tileAmount;
     public int selectedTile;
+    public Vector2 tileSelection;
     public int calculationTile;
     public float tileSelectCooldownCounter;
     public Transform selectedTileIndicator;
@@ -80,39 +83,38 @@ public class BattleUI : MonoBehaviour {
         {
             if(tileSelectCooldownCounter < 1) tileSelectCooldownCounter += Time.deltaTime;
             //Controls for moving around the selected tiles.
-            if(tileSelectCooldownCounter >= 0.75f)
+            if(tileSelectCooldownCounter >= 0.25f) // This section below is utter prefection don't touch
             {
                 if (axis.x > 0) //Right
                 {
                     if (axis.y > 0) //Upright
                     {
                         //tile - ytiles
-                        selectedTile -= tileCollumnSize;
-                        //if (selectedTile > tileAmount || selectedTile < 0) selectedTile += tileRowSize;
-
+                        tileSelection.x--;
+                        
+                        if(tileSelection.x < startLimit.x) tileSelection.x++;
+                        
                     }
-                    else if(axis.y < 0) //DownRight
+                    else
+                    if (axis.y < 0) //DownRight
                     {
                         //tile + 1
-                        
-                        //if (selectedTile % (tileCollumnSize +1*(Mathf.FloorToInt(selectedTile/tileRowSize))) == 0 && selectedTile != 0) { }
-                        
                         //I don't even know anymore
-                        selectedTile++;
-                        int whichRow;
-                        whichRow = Mathf.FloorToInt((selectedTile) /(tileRowSize));
+                        tileSelection.y++;
                         
-                        Debug.Log(whichRow);
-                        calculationTile = (selectedTile * whichRow) + (whichRow-1);
-                        if (selectedTile > tileAmount - 1 || calculationTile % tileRowSize == 0) selectedTile--;
+                        if (tileSelection.y >= endLimit.y) tileSelection.y--;
                     }
                     else //Right
                     {
                         //tile - ytiles + 1
-                        if (selectedTile % (tileCollumnSize - 1) == 0 && selectedTile != 0) { }
-                        else selectedTile = selectedTile - tileCollumnSize + 1;
-                        //This one loops for some reason.
-                        //if (selectedTile > tileAmount  || selectedTile < 0) selectedTile = selectedTile + tileRowSize - 1;
+                        tileSelection.x--;
+                        tileSelection.y++;
+                        if (tileSelection.x < startLimit.x || tileSelection.y >= endLimit.y)
+                        {
+                            tileSelection.x++;
+                            tileSelection.y--;
+                        }
+
                     }
                 }
                 else if (axis.x < 0) //Left
@@ -120,44 +122,62 @@ public class BattleUI : MonoBehaviour {
                     if (axis.y > 0) //UpLeft
                     {
                         //tile - 1
-                        selectedTile--;
-                        //if (selectedTile > tileAmount  || selectedTile < 0) selectedTile++;
+                        tileSelection.y--;
+
+                        if (tileSelection.y < startLimit.y) tileSelection.y++;
+
                     }
                     else if (axis.y < 0) //DownLeft
                     {
                         // tile + ytiles 
-                        selectedTile += tileCollumnSize;
-                        //if (selectedTile > tileAmount || selectedTile < 0) selectedTile -= tileRowSize;
-                    }
+                        tileSelection.x++;
+                        if (tileSelection.x >= endLimit.x) tileSelection.x--;
+                
+                        }
                     else //Left
                     {
                         //tile + ytiles - 1
-                        selectedTile = selectedTile + tileCollumnSize - 1;
-                        //This one loops for some reason.
-                        //if (selectedTile > tileAmount  || selectedTile < 0) selectedTile = selectedTile - tileRowSize + 1;
+                        tileSelection.x++;
+                        tileSelection.y--;
+                        if (tileSelection.x >= endLimit.x || tileSelection.y < startLimit.y)
+                        {
+                            tileSelection.x--;
+                            tileSelection.y++;
+                        }
+                        
                     }
                 }
                 else if (axis.y > 0) //Up
                 {
                     //tile - ytiles - 1
-                    selectedTile = selectedTile - tileCollumnSize - 1;
-                    //This one loops for some reason.
-                    //if (selectedTile > tileAmount || selectedTile < 0) selectedTile = selectedTile + tileRowSize + 1;
+                    tileSelection.x--;
+                    tileSelection.y--;
+                    if (tileSelection.x < startLimit.x || tileSelection.y < startLimit.y)
+                    {
+                        tileSelection.x++;
+                        tileSelection.y++;
+                    }
+
                 }
                 else if (axis.y < 0) //Down
                 {
                     //tile + ytiles + 1
-                    if (selectedTile % (tileCollumnSize - 1) == 0 && selectedTile != 0) { }
-                    else selectedTile = selectedTile + tileRowSize + 1;
-                    //This one loops for some reason.
-                    //if (selectedTile > tileAmount || selectedTile < 0) selectedTile = selectedTile - tileRowSize - 1;
+                    tileSelection.x++;
+                    tileSelection.y++;
+                    if (tileSelection.x >= endLimit.x || tileSelection.y >= endLimit.y)
+                    {
+                        tileSelection.x--;
+                        tileSelection.y--;
+                    }
+
                 }
 
                 if (axis.x != 0 || axis.y != 0)
                 {
-                    gameManager.charControl[0].tileID = selectedTile;
-                    tileSelectCooldownCounter = 0;
+                    selectedTile = Mathf.FloorToInt(tileSelection.y + (tileSelection.x * tileRowSize));
                     selectedTileIndicator.position = gameManager.tileScript.tileTransform[selectedTile].position;
+
+                    tileSelectCooldownCounter = 0;
                     //gameManager.MoveFormation(0, selectedTile);
                 }
             }
@@ -257,7 +277,10 @@ public class BattleUI : MonoBehaviour {
 		{
             //Go to move menu
             selecting = SelectingMenu.selectingMove;
-            selectedTile = gameManager.charControl[0].tileID; //0 is a placeholder for now 
+            
+            tileSelection = gameManager.charControl[0].tile; //0 is a placeholder for now Will be replaced with an Int indicating the active character when that's a thing            
+            selectedTile = Mathf.FloorToInt(tileSelection.y + (tileSelection.x * tileRowSize));
+            selectedTileIndicator.position = gameManager.tileScript.tileTransform[selectedTile].position;
             actionMenu.SetActive(false);
             //gameManager.MoveFormation(0,5);
 		}

@@ -9,7 +9,6 @@ public class InputManager : MonoBehaviour
     private OWPlayerController playerController;
     private BattleUI battleUI;
     public Vector2 inputAxis;
-    public Vector2 previousAxis;
     public GameManager gameManager;
 
 
@@ -39,7 +38,7 @@ public class InputManager : MonoBehaviour
                 if (battleUI.selecting == BattleUI.SelectingMenu.selectingAction) battleUI.ConfirmSelectedCommand();
                 else if(battleUI.selecting == BattleUI.SelectingMenu.selectingMove)
                 {
-                    gameManager.MoveFormation(0,battleUI.selectedTile);
+                    gameManager.MoveFormation(0,battleUI.tileSelection);
                 }
             }
         }
@@ -54,7 +53,7 @@ public class InputManager : MonoBehaviour
             battleUI.SetAxis(inputAxis);
         }
         
-        previousAxis = inputAxis;
+        
 
         //Konami Code for debug
         if(Input.GetKeyDown(KeyCode.F10)) gameManager.ToggleDebug();

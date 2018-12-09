@@ -44,13 +44,27 @@ public class GameManager : MonoBehaviour
         characters = new GameObject[partyMembers];
         charControl = new CharControl_Battle[partyMembers];
 
+        for (int i = 0; i < partyMembers; i++)
+        {
+            characters[i] = Instantiate(BattleCharacterPrefab);
+            characters[i].name = "Battle_Char_" + i;
+            charControl[i] = characters[i].GetComponent<CharControl_Battle>();
+
+            charStats.CreateCharacterStats(0, 10, 12, 5, 3, 2, 4); //PLACHEOLDER;
+            charStats.SetTileOccupied(0, new Vector2(3,4), tileScript.yTiles);
+
+            charControl[i].Init(i.ToString());
+            PlaceCharacterOnTheirTile(i);
+        }
+
         battleUI.tileCollumnSize = tileScript.xTiles ; //these two ar numbers not counting zero as a part of em
         battleUI.tileRowSize = tileScript.yTiles ;
         battleUI.tileAmount = tileScript.tileAmount -1;
+        battleUI.startLimit = new Vector2(battleUI.tileCollumnSize/2, 0);
+        battleUI.endLimit = new Vector2(battleUI.tileCollumnSize, battleUI.tileRowSize);
 
-        charStats.CreateCharacterStats(0, 10, 10, 5, 3, 2, 4); //PLACHEOLDER;
-        charControl[0].tileID = 20;
-        MoveFormation(0, charControl[0].tileID); //PLACEHOLDER
+        
+        MoveFormation(0, charControl[0].tile); //PLACEHOLDER
 		
 	}
 	
@@ -116,16 +130,7 @@ public class GameManager : MonoBehaviour
 		camSet = CameraSetting.BattleCam;
 		cam_T.position = battlefield.position;
 
-		for(int i = 0; i < partyMembers;  i++)
-		{
-			characters[i] = Instantiate(BattleCharacterPrefab);
-            characters[i].name = "Battle_Char_" + i;
-            charControl[i] = characters[i].GetComponent<CharControl_Battle>();
-            charControl[i].Init(i.ToString());
-            PlaceCharacterOnTheirTile(i);
-
-
-        }
+		
 
 		BattleMenu.SetActive(true);
 		battleUI.ChangeNotifText("Encountered an enemy!");
@@ -138,9 +143,9 @@ public class GameManager : MonoBehaviour
 		BattleMenu.SetActive(false);
 	}
 
-    public void MoveFormation(int charID, int tileID)
+    public void MoveFormation(int charID, Vector2 tiles)
     {
-        charStats.SetTileOccupied(charID, tileID);
+        charStats.SetTileOccupied(charID, tiles, tileScript.yTiles);
         PlaceCharacterOnTheirTile(charID);
     }
     public void PlaceCharacterOnTheirTile(int charID)
