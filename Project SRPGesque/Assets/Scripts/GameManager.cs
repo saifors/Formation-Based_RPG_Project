@@ -44,8 +44,8 @@ public class GameManager : MonoBehaviour
         characters = new GameObject[partyMembers];
         charControl = new CharControl_Battle[partyMembers];
 
-        battleUI.tileCollumnSize = tileScript.yTiles ;
-        battleUI.tileRowSize = tileScript.xTiles ;
+        battleUI.tileCollumnSize = tileScript.xTiles ; //these two ar numbers not counting zero as a part of em
+        battleUI.tileRowSize = tileScript.yTiles ;
         battleUI.tileAmount = tileScript.tileAmount -1;
 
         charStats.CreateCharacterStats(0, 10, 10, 5, 3, 2, 4); //PLACHEOLDER;

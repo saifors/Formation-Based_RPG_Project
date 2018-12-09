@@ -29,6 +29,7 @@ public class BattleUI : MonoBehaviour {
     public int tileRowSize;
     public int tileAmount;
     public int selectedTile;
+    public int calculationTile;
     public float tileSelectCooldownCounter;
     public Transform selectedTileIndicator;
 
@@ -87,17 +88,23 @@ public class BattleUI : MonoBehaviour {
                     {
                         //tile - ytiles
                         selectedTile -= tileCollumnSize;
-                        if (selectedTile > tileAmount || selectedTile < 0) selectedTile += tileCollumnSize;
+                        //if (selectedTile > tileAmount || selectedTile < 0) selectedTile += tileRowSize;
 
                     }
                     else if(axis.y < 0) //DownRight
                     {
                         //tile + 1
-                        //HELP ME
-                        if (selectedTile % (tileCollumnSize +1*(Mathf.FloorToInt(selectedTile/tileRowSize))) == 0 && selectedTile != 0) { }
-                        else selectedTile++;
                         
-                        //if (selectedTile > tileAmount - 1 || selectedTile < 0) selectedTile--;
+                        //if (selectedTile % (tileCollumnSize +1*(Mathf.FloorToInt(selectedTile/tileRowSize))) == 0 && selectedTile != 0) { }
+                        
+                        //I don't even know anymore
+                        selectedTile++;
+                        int whichRow;
+                        whichRow = Mathf.FloorToInt((selectedTile) /(tileRowSize));
+                        
+                        Debug.Log(whichRow);
+                        calculationTile = (selectedTile * whichRow) + (whichRow-1);
+                        if (selectedTile > tileAmount - 1 || calculationTile % tileRowSize == 0) selectedTile--;
                     }
                     else //Right
                     {
@@ -105,7 +112,7 @@ public class BattleUI : MonoBehaviour {
                         if (selectedTile % (tileCollumnSize - 1) == 0 && selectedTile != 0) { }
                         else selectedTile = selectedTile - tileCollumnSize + 1;
                         //This one loops for some reason.
-                        if (selectedTile > tileAmount  || selectedTile < 0) selectedTile = selectedTile + tileCollumnSize - 1;
+                        //if (selectedTile > tileAmount  || selectedTile < 0) selectedTile = selectedTile + tileRowSize - 1;
                     }
                 }
                 else if (axis.x < 0) //Left
@@ -114,20 +121,20 @@ public class BattleUI : MonoBehaviour {
                     {
                         //tile - 1
                         selectedTile--;
-                        if (selectedTile > tileAmount  || selectedTile < 0) selectedTile++;
+                        //if (selectedTile > tileAmount  || selectedTile < 0) selectedTile++;
                     }
                     else if (axis.y < 0) //DownLeft
                     {
                         // tile + ytiles 
                         selectedTile += tileCollumnSize;
-                        if (selectedTile > tileAmount || selectedTile < 0) selectedTile -= tileCollumnSize;
+                        //if (selectedTile > tileAmount || selectedTile < 0) selectedTile -= tileRowSize;
                     }
                     else //Left
                     {
                         //tile + ytiles - 1
                         selectedTile = selectedTile + tileCollumnSize - 1;
                         //This one loops for some reason.
-                        if (selectedTile > tileAmount  || selectedTile < 0) selectedTile = selectedTile - tileCollumnSize + 1;
+                        //if (selectedTile > tileAmount  || selectedTile < 0) selectedTile = selectedTile - tileRowSize + 1;
                     }
                 }
                 else if (axis.y > 0) //Up
@@ -135,15 +142,15 @@ public class BattleUI : MonoBehaviour {
                     //tile - ytiles - 1
                     selectedTile = selectedTile - tileCollumnSize - 1;
                     //This one loops for some reason.
-                    if (selectedTile > tileAmount || selectedTile < 0) selectedTile = selectedTile + tileCollumnSize + 1;
+                    //if (selectedTile > tileAmount || selectedTile < 0) selectedTile = selectedTile + tileRowSize + 1;
                 }
                 else if (axis.y < 0) //Down
                 {
                     //tile + ytiles + 1
                     if (selectedTile % (tileCollumnSize - 1) == 0 && selectedTile != 0) { }
-                    else selectedTile = selectedTile + tileCollumnSize + 1;
+                    else selectedTile = selectedTile + tileRowSize + 1;
                     //This one loops for some reason.
-                    if (selectedTile > tileAmount || selectedTile < 0) selectedTile = selectedTile - tileCollumnSize - 1;
+                    //if (selectedTile > tileAmount || selectedTile < 0) selectedTile = selectedTile - tileRowSize - 1;
                 }
 
                 if (axis.x != 0 || axis.y != 0)
