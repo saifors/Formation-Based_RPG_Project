@@ -38,7 +38,12 @@ public class InputManager : MonoBehaviour
                 if (battleUI.selecting == BattleUI.SelectingMenu.selectingAction) battleUI.ConfirmSelectedCommand();
                 else if(battleUI.selecting == BattleUI.SelectingMenu.selectingMove)
                 {
-                    gameManager.MoveFormation(0,battleUI.tileSelection);
+                    if (!gameManager.tileScript.tiles[battleUI.selectedTile].isOccupied)
+                    {
+                        gameManager.tileScript.tiles[gameManager.charControl[0].tileID].isOccupied = false;//this one first before its tile gets changed
+                        gameManager.MoveFormation(0, battleUI.tileSelection);
+                        gameManager.tileScript.tiles[battleUI.selectedTile].isOccupied = true;
+                    }
                 }
             }
         }

@@ -49,12 +49,15 @@ public class GameManager : MonoBehaviour
             characters[i] = Instantiate(BattleCharacterPrefab);
             characters[i].name = "Battle_Char_" + i;
             charControl[i] = characters[i].GetComponent<CharControl_Battle>();
+            charControl[i].rowSize = tileScript.yTiles;
 
             charStats.CreateCharacterStats(0, 10, 12, 5, 3, 2, 4); //PLACHEOLDER;
             charStats.SetTileOccupied(0, new Vector2(3,4), tileScript.yTiles);
 
             charControl[i].Init(i.ToString());
+            charControl[i].UpdateTileID();
             PlaceCharacterOnTheirTile(i);
+            tileScript.tiles[charControl[i].tileID].isOccupied = true;
         }
 
         battleUI.tileCollumnSize = tileScript.xTiles ; //these two ar numbers not counting zero as a part of em
@@ -146,6 +149,7 @@ public class GameManager : MonoBehaviour
     public void MoveFormation(int charID, Vector2 tiles)
     {
         charStats.SetTileOccupied(charID, tiles, tileScript.yTiles);
+        charControl[charID].UpdateTileID();
         PlaceCharacterOnTheirTile(charID);
     }
     public void PlaceCharacterOnTheirTile(int charID)

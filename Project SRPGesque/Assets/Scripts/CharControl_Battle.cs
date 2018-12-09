@@ -13,6 +13,7 @@ public class CharControl_Battle : MonoBehaviour
 	public int spd;
     public Vector2 tile;
 	public int tileID;
+    public int rowSize;
 
 	// Use this for initialization
 	void Start () 
@@ -35,7 +36,13 @@ public class CharControl_Battle : MonoBehaviour
 		spd = PlayerPrefs.GetInt(charID + "Speed");
 		tile.x = PlayerPrefs.GetFloat(charID + "_TileX");
 		tile.y = PlayerPrefs.GetFloat(charID + "_TileY");
-        tileID = Mathf.FloorToInt(tile.x + tile.y*6);
+        tileID = Mathf.FloorToInt(tile.y + tile.x* rowSize);
         //transform.position = 
+    }
+    public void UpdateTileID()
+    {
+        tile.x = PlayerPrefs.GetFloat(charID + "_TileX");
+        tile.y = PlayerPrefs.GetFloat(charID + "_TileY");
+        tileID = Mathf.FloorToInt(tile.y + tile.x * rowSize);
     }
 }
