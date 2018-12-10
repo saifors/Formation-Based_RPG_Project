@@ -145,7 +145,7 @@ public class GameManager : MonoBehaviour
 		cam_T.position = playerController.trans.position;
 		BattleMenu.SetActive(false);
 	}
-
+    
     public void MoveFormation(int charID, Vector2 tiles)
     {
         charStats.SetTileOccupied(charID, tiles, tileScript.yTiles);

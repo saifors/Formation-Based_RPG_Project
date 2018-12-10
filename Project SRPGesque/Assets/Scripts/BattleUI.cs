@@ -32,7 +32,6 @@ public class BattleUI : MonoBehaviour {
     public int tileAmount;
     public int selectedTile;
     public Vector2 tileSelection;
-    public int calculationTile;
     public float tileSelectCooldownCounter;
     public GameObject cursor;
     private Transform selectedTileIndicator;
@@ -92,6 +91,10 @@ public class BattleUI : MonoBehaviour {
             {
                 FormationMovement();
             }
+        }
+        else if(selecting == SelectingMenu.selectingAttack)
+        {
+
         }
 
         //Notification fades after a while
