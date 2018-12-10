@@ -25,6 +25,7 @@ public class TitleScreen_Script : MonoBehaviour
     public Text resolutionText;
     public Text qualityText;
     public OptionsManager options;
+    public CharacterStats charStats;
 
     // Use this for initialization
     void Start ()
@@ -33,6 +34,7 @@ public class TitleScreen_Script : MonoBehaviour
         selectionImage = selectionImageGroup.GetComponentsInChildren<Image>();
         transition = GameObject.FindGameObjectWithTag("Manager").GetComponent<TransitionManager>();
         options = transition.GetComponent<OptionsManager>();
+        charStats = transition.GetComponent<CharacterStats>();
         UpdateVideoSettingsText();
 
         unselectedColor = new Color(0.66f, 0.66f, 0.66f, 0.75f);
@@ -115,7 +117,14 @@ public class TitleScreen_Script : MonoBehaviour
     }
     public void ConfirmSelection(int optionNum)
     {
-        if (optionNum == 0) transition.FadeToSceneChange(false, NewGameSceneID);
+        if (optionNum == 0) //New Game
+        {
+            // Set up first character for New game.
+            charStats.CreateCharacterStats(0, 70, 35, 15, 10, 5, 20);
+            charStats.SetTileOccupied(0, new Vector2(1, 1), 8);
+
+            transition.FadeToSceneChange(false, NewGameSceneID);
+        }
         else if (optionNum == 1)
         {
             selectionImageGroup.SetActive(false);
@@ -140,36 +149,7 @@ public class TitleScreen_Script : MonoBehaviour
         optionsPanel.SetActive(false);
         loadGamePanel.SetActive(false);
     }
-    /*public void ChangeResolution(bool whichArrow)
-    {
-        if(whichArrow)
-        {
-            resolutionOption++;
-            if(resolutionOption >= resolutions.Length) resolutionOption = 0;
-        }
-        else
-        {
-            resolutionOption--;
-            if(resolutionOption <= -1) resolutionOption = resolutions.Length - 1;
-        }
-        resolutionText.text = resolutions[resolutionOption];
-
-    }
-    public void ChangeQuality(bool whichArrow)
-    {
-        if(whichArrow)
-        {
-            qualityOption++;
-            if(qualityOption >= qualities.Length) qualityOption = 0;
-        }
-        else
-        {
-            qualityOption--;
-            if(qualityOption <= -1) qualityOption = qualities.Length - 1;
-        }
-        qualityText.text = qualities[qualityOption];
-
-    }*/
+    
     public void UpdateVideoSettingsText()
     {
         resolutionText.text = options.resolutions[options.resolutionOption];

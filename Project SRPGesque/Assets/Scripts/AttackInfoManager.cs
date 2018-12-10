@@ -19,9 +19,29 @@ public class AttackInfoManager : MonoBehaviour
 		attackDescriptions = new string[attacks];
         attackStrengths = new int[attacks];
 		attackMpCosts = new int[attacks];
-        SetAttack(0, "Fire Arrow I",20, 10);
-        SetAttackDescription(0, true, "Unleashes a single powerful fireball to one foe");
-	}
+
+        //Attack 1
+        SetAttack(0, "Fire Bolt",20, 10);
+        SetAttackDescription(0, true, "Summons an arrow of fire from above to pierce through the foe's body.");
+        //Attack 2
+        SetAttack(1, "Ice Pike", 20, 10);
+        SetAttackDescription(1, true, "Frozen pikes rize from the ground catching the enemy off guard.");
+        //Attack 3
+        SetAttack(2, "I", 20, 10);
+        SetAttackDescription(2, true, "idk");
+        //Attack 4
+        SetAttack(3, "II", 20, 10);
+        SetAttackDescription(3, true, "idk2");
+        //Attack 5
+        SetAttack(4, "III", 20, 10);
+        SetAttackDescription(4, true, "idk3");
+        //Attack 6
+        SetAttack(5, "IV", 20, 10);
+        SetAttackDescription(5, true, "idk4");
+        //Attack 7
+        SetAttack(6, "V", 20, 10);
+        SetAttackDescription(6, true, "idk5");
+    }
 	
 	// Update is called once per frame
 	void Update () {

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CharControl_Battle : MonoBehaviour 
 {
-	public int charID;
+	public int charId;
 	public int hp;
 	public int mp;
 	public int atk;
@@ -13,8 +13,8 @@ public class CharControl_Battle : MonoBehaviour
 	public int spd;
 
     public int[] attacks;
-    public int attacksAmount;
-    public int maxAttacks;
+    public int attacksAmount; //How many attacks does this character have.
+    public int maxAttacks = 6;
 
     public Vector2 tile;
 	public int tileID;
@@ -23,7 +23,9 @@ public class CharControl_Battle : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
-        attacks = new int[attacksAmount];
+        
+        
+        
 	}
 	
 	// Update is called once per frame
@@ -31,7 +33,7 @@ public class CharControl_Battle : MonoBehaviour
 		
 	}
 
-	public void Init(string charID)
+	public void Init(int charID)
 	{
 		hp = PlayerPrefs.GetInt(charID + "Hp");
 		mp = PlayerPrefs.GetInt(charID + "Mp");
@@ -39,15 +41,25 @@ public class CharControl_Battle : MonoBehaviour
 		def = PlayerPrefs.GetInt(charID + "Defense");
 		res = PlayerPrefs.GetInt(charID + "Resistance");
 		spd = PlayerPrefs.GetInt(charID + "Speed");
-		tile.x = PlayerPrefs.GetFloat(charID + "_TileX");
+
+        CalculateAttackNumber(charID);
+
+        tile.x = PlayerPrefs.GetFloat(charID + "_TileX");
 		tile.y = PlayerPrefs.GetFloat(charID + "_TileY");
         tileID = Mathf.FloorToInt(tile.y + tile.x* rowSize);
         //transform.position = 
     }
     public void UpdateTileID()
     {
-        tile.x = PlayerPrefs.GetFloat(charID + "_TileX");
-        tile.y = PlayerPrefs.GetFloat(charID + "_TileY");
+        tile.x = PlayerPrefs.GetFloat(charId + "_TileX");
+        tile.y = PlayerPrefs.GetFloat(charId + "_TileY");
         tileID = Mathf.FloorToInt(tile.y + tile.x * rowSize);
+    }
+    public void CalculateAttackNumber(int charID)
+    {
+        maxAttacks = 6;
+        attacksAmount = PlayerPrefs.GetInt(charID + "AtkNum", 1);
+        if (attacksAmount > maxAttacks) attacksAmount = maxAttacks; PlayerPrefs.SetInt(charID + "AtkNum", maxAttacks);
+        attacks = new int[attacksAmount];
     }
 }

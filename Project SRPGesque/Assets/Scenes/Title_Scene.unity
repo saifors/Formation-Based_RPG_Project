@@ -1893,6 +1893,7 @@ MonoBehaviour:
   resolutionText: {fileID: 2121480938}
   qualityText: {fileID: 368490298}
   options: {fileID: 0}
+  charStats: {fileID: 0}
 --- !u!1 &1222586930
 GameObject:
   m_ObjectHideFlags: 0
@@ -2743,6 +2744,7 @@ GameObject:
   - component: {fileID: 1808555131}
   - component: {fileID: 1808555130}
   - component: {fileID: 1808555132}
+  - component: {fileID: 1808555133}
   m_Layer: 5
   m_Name: Manager
   m_TagString: Manager
@@ -2765,13 +2767,8 @@ MonoBehaviour:
   isFading: 0
   fadingFrom: 0
   IsNotFaded: 0
-  timeCounter: 0
   fadeToSceneChange: 0
-  canvas: {fileID: 0}
-  TransitionScreen: {fileID: 0}
-  Screen_Img: {fileID: 0}
   Screen_Color: {r: 0, g: 0, b: 0, a: 0}
-  transitionSceneID: 0
 --- !u!4 &1808555131
 Transform:
   m_ObjectHideFlags: 0
@@ -2807,6 +2804,17 @@ MonoBehaviour:
   - GOOD
   - GREAT
   - ULTRA
+--- !u!114 &1808555133
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1808555129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad2ae7ac1ec63ae418218778a8a3b6c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1863977228
 GameObject:
   m_ObjectHideFlags: 0

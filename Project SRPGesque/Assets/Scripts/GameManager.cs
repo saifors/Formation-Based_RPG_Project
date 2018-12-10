@@ -57,7 +57,7 @@ public class GameManager : MonoBehaviour
             charStats.CreateCharacterStats(0, 10, 12, 5, 3, 2, 4); //PLACHEOLDER;
             charStats.SetTileOccupied(0, new Vector2(3,4), tileScript.yTiles);
 
-            charControl[i].Init(i.ToString());
+            charControl[i].Init(i);
             charControl[i].UpdateTileID();
             PlaceCharacterOnTheirTile(i);
             tileScript.tiles[charControl[i].tileID].isOccupied = true;
