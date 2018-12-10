@@ -11,6 +11,7 @@ TagManager:
   - Manager
   - B_Char_00
   - TitleScreenOptions
+  - BattleMenu
   layers:
   - Default
   - TransparentFX

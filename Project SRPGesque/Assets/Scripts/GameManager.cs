@@ -5,26 +5,27 @@ using UnityEngine;
 public class GameManager : MonoBehaviour 
 {
 	public bool debug;
-	public float timeCounter;
-	public Transform cam_T;
-	public OWPlayerController playerController;
+	private float timeCounter;
+	private Transform cam_T;
+	private OWPlayerController playerController;
     public enum CameraSetting { OverworldCam, BattleCam, CutsceneCam}; public CameraSetting camSet;
     public enum GameState { Overworld, Battle, GameMenu};
     public GameState gameState;
 	public bool randomEcountersOn;
 	public float encounterMinimumPercent = 100;
-	public BattleUI battleUI;
-	public GameObject BattleMenu;
+	private BattleUI battleUI;
+	public GameObject battleMenu;
 	public GameObject debugMenu;
 	public GameObject BattleCharacterPrefab;
 
 	public int partyMembers;
 	private CharacterStats charStats;
     public GameObject[] characters;
-    public CharControl_Battle[] charControl;
+    [HideInInspector] public CharControl_Battle[] charControl;
+	[HideInInspector] public AttackInfoManager attackInfo;
 
-	public TileScript tileScript;
-    public Transform battlefield;
+	[HideInInspector] public TileScript tileScript;
+    private Transform battlefield;
 	
 	// Use this for initialization
 	void Start () 
@@ -33,7 +34,9 @@ public class GameManager : MonoBehaviour
 		playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<OWPlayerController>();
         gameState = GameState.Overworld;
 		battleUI = GameObject.FindGameObjectWithTag("UI").GetComponent<BattleUI>();
+		
 		charStats = GetComponent<CharacterStats>();
+		attackInfo = GetComponent<AttackInfoManager>();
 
 		tileScript = GameObject.FindGameObjectWithTag("TileManager").GetComponent<TileScript>();
         tileScript.Init();
@@ -135,7 +138,7 @@ public class GameManager : MonoBehaviour
 
 		
 
-		BattleMenu.SetActive(true);
+		battleMenu.SetActive(true);
 		battleUI.ChangeNotifText("Encountered an enemy!");
 	}
 	public void EndBattle()
@@ -143,7 +146,7 @@ public class GameManager : MonoBehaviour
 		gameState = GameState.Overworld;
 		camSet = CameraSetting.OverworldCam;
 		cam_T.position = playerController.trans.position;
-		BattleMenu.SetActive(false);
+		battleMenu.SetActive(false);
 	}
     
     public void MoveFormation(int charID, Vector2 tiles)

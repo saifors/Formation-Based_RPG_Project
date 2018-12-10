@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BattleUI : MonoBehaviour {
-
-	public enum CommandSelection {Attack, Defend, Move, Item, Run};
+public class BattleUI : MonoBehaviour 
+{
+	private Vector2 axis;
+    public enum SelectingMenu { selectingAction, selectingAttack, selectingTarget, selectingMove};
+    public SelectingMenu selecting;
+    
+    public enum CommandSelection {Attack, Defend, Move, Item, Run};
 	public CommandSelection command;
 
-	public Vector2 axis;
-    public enum SelectingMenu { selectingAction, selectingAttack, selectingMove};
-    public SelectingMenu selecting;
-
-	public float scrollCooldownCounter;
+	private float scrollCooldownCounter;
 	public float scrollCooldown;
 	private GameManager gameManager;
 
@@ -20,25 +20,41 @@ public class BattleUI : MonoBehaviour {
     private Color notifTextColor;
 	private Color notifBgColor;
 	private float textFadeCounter;
-    public float notifAlpha;
+    private float notifAlpha;
     public bool notifShown;
     public GameObject notifPanel;
-    public GameObject actionMenu; //May be better to get a Game Object array that takes in all the children of batle menu.
-
-    public int tileCollumnSize;
-    public int tileRowSize;
-    public Vector2 startLimit;
-    public Vector2 endLimit;
+    [Header("Menus")]
+    public GameObject battleMenu;
+    public GameObject actionMenu;
+    public GameObject attackMenu;
+    public GameObject partyInfo;
+    
+    [Header("Everything for tiles with movement")]
+    
     public int tileAmount;
     public int selectedTile;
     public Vector2 tileSelection;
-    public float tileSelectCooldownCounter;
+    private float tileSelectCooldownCounter;
     public GameObject cursor;
     private Transform selectedTileIndicator;
+    [HideInInspector] public int tileCollumnSize;
+    [HideInInspector] public int tileRowSize;
+    [HideInInspector] public Vector2 startLimit;
+    [HideInInspector] public Vector2 endLimit;
+
+    [Header("Attack Menu")]
+    public GameObject attackNames;
+    public Text[] attackName;
+    private Transform[] attackNamePos;
+    public Vector2 atkSelVector;
+    public int attackSelected;
+    public Text SelectedAttackDescription;
+    public Text SelectedAttackStats;
 
     [Header("Images behind the selections")]
 	public CanvasGroup selectionImage;
 	public Transform selectionImage_trans;
+    public Transform attackSelection;
 	public Text battleNotificationText;
     public Image battleNotificationBg;
 
@@ -53,11 +69,25 @@ public class BattleUI : MonoBehaviour {
 		selectionImage_trans = selectionImage.GetComponent<RectTransform>();
         notifTextColor = battleNotificationText.color;
         notifBgColor = battleNotificationBg.color;
-
+        
+        
         GameObject obj;
         obj = Instantiate(cursor);
         selectedTileIndicator = obj.GetComponent<Transform>();
         selectedTileIndicator.gameObject.SetActive(false);
+
+        attackName = attackNames.GetComponentsInChildren<Text>();
+        attackNamePos = new Transform[attackName.Length];
+        for(int i = 0; i < attackNamePos.Length; i++) 
+        {
+            attackNamePos[i] = attackName[i].GetComponent<Transform>();
+        }
+        attackSelected = Mathf.FloorToInt(atkSelVector.y + (atkSelVector.x * 2));
+        attackSelection.position = attackNamePos[attackSelected].position;
+    
+        attackMenu.SetActive(false);
+        battleMenu.SetActive(false);
+        
 
         SetAttackScroll();
 
@@ -94,7 +124,36 @@ public class BattleUI : MonoBehaviour {
         }
         else if(selecting == SelectingMenu.selectingAttack)
         {
-
+            if(scrollCooldownCounter >= scrollCooldown)
+            {
+                if(axis.y > 0)
+                {
+                    atkSelVector.y--; 
+                    if(atkSelVector.y < 0) atkSelVector.y++;               
+                }
+                else if(axis.y < 0)
+                {
+                    atkSelVector.y++; 
+                    if(atkSelVector.y >=3) atkSelVector.y--;
+                }
+                if(axis.x > 0)
+                {
+                    atkSelVector.x++;
+                    if(atkSelVector.x >= 2) atkSelVector.x--;
+                }
+                else if(axis.x < 0 )
+                {
+                    atkSelVector.x--;
+                    if(atkSelVector.x < 0) atkSelVector.x++;
+                }
+                if(axis != Vector2.zero)
+                {
+                    attackSelected = Mathf.FloorToInt(atkSelVector.x + (atkSelVector.y * 2));
+                    attackSelection.position = attackNamePos[attackSelected].position;
+                    //UpdateAttackInfo(character.attack[attackSelected]); // Make it get the attackID of the characters selected attack
+                    scrollCooldownCounter = 0;
+                }
+            }
         }
 
         //Notification fades after a while
@@ -121,6 +180,17 @@ public class BattleUI : MonoBehaviour {
     public void SetAxis(Vector2 inputAxis)
     {
         axis = inputAxis;
+    }
+
+    public void UpdateAttackInfo(int attack)
+    {
+        //Todo: Change Displayed Description to selected attacks description
+        /*SelectedAttackDescription.text = gameManager.attackInfo.attackDescriptions[attackSelected];
+
+        //Change displayed Power and MP to that of the attack
+        SelectedAttackStats.text = "Power: " + gameManager.attackInfo.attackStrengths[attackSelected] + System.Environment.NewLine + "MP: " + gameManager.attackInfo.attackMpCosts[attackSelected];
+*/
+        //Hard: Change Displayed range/AoE of attack 
     }
 
 	public void SelectNextCommand()
@@ -182,6 +252,12 @@ public class BattleUI : MonoBehaviour {
 		if(command == CommandSelection.Attack)
 		{
 			//Go to attack menu
+            selecting = SelectingMenu.selectingAttack;
+            atkSelVector = Vector2.zero;
+            attackSelected = Mathf.FloorToInt(atkSelVector.y + (atkSelVector.x * 2));
+            //UpdateAttackInfo(character.attack[attackSelected]);
+            partyInfo.SetActive(false);
+            attackMenu.SetActive(true);
 		}
 		else if(command == CommandSelection.Defend)
 		{
@@ -218,6 +294,8 @@ public class BattleUI : MonoBehaviour {
 	{
         selecting = SelectingMenu.selectingAction;
         selectedTileIndicator.gameObject.SetActive(false);
+        attackMenu.SetActive(false);
+        partyInfo.SetActive(true);
         actionMenu.SetActive(true);
 	}
 

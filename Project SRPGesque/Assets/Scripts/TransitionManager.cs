@@ -7,21 +7,21 @@ using UnityEngine.SceneManagement;
 public class TransitionManager : MonoBehaviour 
 {
 
-	public bool isFaded;
-	public bool isFading;
-	public bool fadingFrom;
-	public bool IsNotFaded;
+	[HideInInspector] public bool isFaded;
+	[HideInInspector] public bool isFading;
+	[HideInInspector] public bool fadingFrom;
+	[HideInInspector] public bool IsNotFaded;
 
-	public float timeCounter;
+	private float timeCounter;
 
-	public bool fadeToSceneChange;
-	public GameObject canvas;
+	[HideInInspector] public bool fadeToSceneChange;
+	private GameObject canvas;
 
-	public GameObject TransitionScreen;
-	public Image Screen_Img;
+	private GameObject TransitionScreen;
+	private Image Screen_Img;
 	public Color Screen_Color;
 
-	public int transitionSceneID;
+	private int transitionSceneID;
 
 	// Use this for initialization
 	void Start () 

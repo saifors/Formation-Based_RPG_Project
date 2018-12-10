@@ -9,7 +9,7 @@ public class InputManager : MonoBehaviour
     private OWPlayerController playerController;
     private BattleUI battleUI;
     public Vector2 inputAxis;
-    public GameManager gameManager;
+    private GameManager gameManager;
 
 
     
