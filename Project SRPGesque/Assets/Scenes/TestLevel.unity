@@ -1097,7 +1097,7 @@ GameObject:
   - component: {fileID: 622932880}
   - component: {fileID: 622932879}
   m_Layer: 0
-  m_Name: SelectedTileIndicator
+  m_Name: CursorGraphic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1163,12 +1163,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 622932878}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.5275664, y: -6.47, z: -85.39329}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_Father: {fileID: 1159669594}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &643757440
 GameObject:
@@ -1443,8 +1443,13 @@ MonoBehaviour:
   notifPanel: {fileID: 500298185}
   actionMenu: {fileID: 255947598}
   tileCollumnSize: 0
+  tileRowSize: 0
+  startLimit: {x: 0, y: 0}
+  endLimit: {x: 0, y: 0}
   tileAmount: 0
   selectedTile: 0
+  tileSelection: {x: 0, y: 0}
+  calculationTile: 0
   tileSelectCooldownCounter: 0
   selectedTileIndicator: {fileID: 622932882}
   selectionImage: {fileID: 1821864059}
@@ -2106,6 +2111,35 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!1 &1159669593
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1159669594}
+  m_Layer: 0
+  m_Name: Tile_Cursor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1159669594
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1159669593}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 622932882}
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1164137484
 GameObject:
   m_ObjectHideFlags: 0
@@ -3541,7 +3575,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputAxis: {x: 0, y: 0}
-  previousAxis: {x: 0, y: 0}
   gameManager: {fileID: 1888884844}
 --- !u!114 &1888884847
 MonoBehaviour:

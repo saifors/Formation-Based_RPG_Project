@@ -34,7 +34,8 @@ public class BattleUI : MonoBehaviour {
     public Vector2 tileSelection;
     public int calculationTile;
     public float tileSelectCooldownCounter;
-    public Transform selectedTileIndicator;
+    public GameObject cursor;
+    private Transform selectedTileIndicator;
 
     [Header("Images behind the selections")]
 	public CanvasGroup selectionImage;
@@ -53,7 +54,11 @@ public class BattleUI : MonoBehaviour {
 		selectionImage_trans = selectionImage.GetComponent<RectTransform>();
         notifTextColor = battleNotificationText.color;
         notifBgColor = battleNotificationBg.color;
-        
+
+        GameObject obj;
+        obj = Instantiate(cursor);
+        selectedTileIndicator = obj.GetComponent<Transform>();
+        selectedTileIndicator.gameObject.SetActive(false);
 
         SetAttackScroll();
 
@@ -85,101 +90,7 @@ public class BattleUI : MonoBehaviour {
             //Controls for moving around the selected tiles.
             if(tileSelectCooldownCounter >= 0.25f) // This section below is utter prefection don't touch
             {
-                if (axis.x > 0) //Right
-                {
-                    if (axis.y > 0) //Upright
-                    {
-                        //tile - ytiles
-                        tileSelection.x--;
-                        
-                        if(tileSelection.x < startLimit.x) tileSelection.x++;
-                        
-                    }
-                    else
-                    if (axis.y < 0) //DownRight
-                    {
-                        //tile + 1
-                        //I don't even know anymore
-                        tileSelection.y++;
-                        
-                        if (tileSelection.y >= endLimit.y) tileSelection.y--;
-                    }
-                    else //Right
-                    {
-                        //tile - ytiles + 1
-                        tileSelection.x--;
-                        tileSelection.y++;
-                        if (tileSelection.x < startLimit.x || tileSelection.y >= endLimit.y)
-                        {
-                            tileSelection.x++;
-                            tileSelection.y--;
-                        }
-
-                    }
-                }
-                else if (axis.x < 0) //Left
-                {
-                    if (axis.y > 0) //UpLeft
-                    {
-                        //tile - 1
-                        tileSelection.y--;
-
-                        if (tileSelection.y < startLimit.y) tileSelection.y++;
-
-                    }
-                    else if (axis.y < 0) //DownLeft
-                    {
-                        // tile + ytiles 
-                        tileSelection.x++;
-                        if (tileSelection.x >= endLimit.x) tileSelection.x--;
-                
-                        }
-                    else //Left
-                    {
-                        //tile + ytiles - 1
-                        tileSelection.x++;
-                        tileSelection.y--;
-                        if (tileSelection.x >= endLimit.x || tileSelection.y < startLimit.y)
-                        {
-                            tileSelection.x--;
-                            tileSelection.y++;
-                        }
-                        
-                    }
-                }
-                else if (axis.y > 0) //Up
-                {
-                    //tile - ytiles - 1
-                    tileSelection.x--;
-                    tileSelection.y--;
-                    if (tileSelection.x < startLimit.x || tileSelection.y < startLimit.y)
-                    {
-                        tileSelection.x++;
-                        tileSelection.y++;
-                    }
-
-                }
-                else if (axis.y < 0) //Down
-                {
-                    //tile + ytiles + 1
-                    tileSelection.x++;
-                    tileSelection.y++;
-                    if (tileSelection.x >= endLimit.x || tileSelection.y >= endLimit.y)
-                    {
-                        tileSelection.x--;
-                        tileSelection.y--;
-                    }
-
-                }
-
-                if (axis.x != 0 || axis.y != 0)
-                {
-                    selectedTile = Mathf.FloorToInt(tileSelection.y + (tileSelection.x * tileRowSize));
-                    selectedTileIndicator.position = gameManager.tileScript.tileTransform[selectedTile].position;
-
-                    tileSelectCooldownCounter = 0;
-                    //gameManager.MoveFormation(0, selectedTile);
-                }
+                FormationMovement();
             }
         }
 
@@ -280,6 +191,7 @@ public class BattleUI : MonoBehaviour {
             
             tileSelection = gameManager.charControl[0].tile; //0 is a placeholder for now Will be replaced with an Int indicating the active character when that's a thing            
             selectedTile = Mathf.FloorToInt(tileSelection.y + (tileSelection.x * tileRowSize));
+            selectedTileIndicator.gameObject.SetActive(true);
             selectedTileIndicator.position = gameManager.tileScript.tileTransform[selectedTile].position;
             actionMenu.SetActive(false);
             //gameManager.MoveFormation(0,5);
@@ -302,6 +214,7 @@ public class BattleUI : MonoBehaviour {
 	public void ReturnToCommandSelection()
 	{
         selecting = SelectingMenu.selectingAction;
+        selectedTileIndicator.gameObject.SetActive(false);
         actionMenu.SetActive(true);
 	}
 
@@ -318,6 +231,104 @@ public class BattleUI : MonoBehaviour {
         notifAlpha = 1;
         
 	}
+    public void FormationMovement()
+    {
+        if (axis.x > 0) //Right
+        {
+            if (axis.y > 0) //Upright
+            {
+                //tile - ytiles
+                tileSelection.x--;
+
+                if (tileSelection.x < startLimit.x) tileSelection.x++;
+
+            }
+            else
+            if (axis.y < 0) //DownRight
+            {
+                //tile + 1
+                //I don't even know anymore
+                tileSelection.y++;
+
+                if (tileSelection.y >= endLimit.y) tileSelection.y--;
+            }
+            else //Right
+            {
+                //tile - ytiles + 1
+                tileSelection.x--;
+                tileSelection.y++;
+                if (tileSelection.x < startLimit.x || tileSelection.y >= endLimit.y)
+                {
+                    tileSelection.x++;
+                    tileSelection.y--;
+                }
+
+            }
+        }
+        else if (axis.x < 0) //Left
+        {
+            if (axis.y > 0) //UpLeft
+            {
+                //tile - 1
+                tileSelection.y--;
+
+                if (tileSelection.y < startLimit.y) tileSelection.y++;
+
+            }
+            else if (axis.y < 0) //DownLeft
+            {
+                // tile + ytiles 
+                tileSelection.x++;
+                if (tileSelection.x >= endLimit.x) tileSelection.x--;
+
+            }
+            else //Left
+            {
+                //tile + ytiles - 1
+                tileSelection.x++;
+                tileSelection.y--;
+                if (tileSelection.x >= endLimit.x || tileSelection.y < startLimit.y)
+                {
+                    tileSelection.x--;
+                    tileSelection.y++;
+                }
+
+            }
+        }
+        else if (axis.y > 0) //Up
+        {
+            //tile - ytiles - 1
+            tileSelection.x--;
+            tileSelection.y--;
+            if (tileSelection.x < startLimit.x || tileSelection.y < startLimit.y)
+            {
+                tileSelection.x++;
+                tileSelection.y++;
+            }
+
+        }
+        else if (axis.y < 0) //Down
+        {
+            //tile + ytiles + 1
+            tileSelection.x++;
+            tileSelection.y++;
+            if (tileSelection.x >= endLimit.x || tileSelection.y >= endLimit.y)
+            {
+                tileSelection.x--;
+                tileSelection.y--;
+            }
+
+        }
+
+        if (axis.x != 0 || axis.y != 0)
+        {
+            selectedTile = Mathf.FloorToInt(tileSelection.y + (tileSelection.x * tileRowSize));
+            selectedTileIndicator.position = gameManager.tileScript.tileTransform[selectedTile].position;
+
+            tileSelectCooldownCounter = 0;
+            //gameManager.MoveFormation(0, selectedTile);
+        }
+    }
 
 
 	#region Sets
