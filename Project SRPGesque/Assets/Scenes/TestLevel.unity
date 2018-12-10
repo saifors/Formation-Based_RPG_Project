@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -4058,6 +4058,7 @@ GameObject:
   - component: {fileID: 1888884846}
   - component: {fileID: 1888884847}
   - component: {fileID: 1888884848}
+  - component: {fileID: 1888884849}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Manager
@@ -4088,6 +4089,7 @@ MonoBehaviour:
   partyMembers: 0
   characters: []
   charControl: []
+  attackInfo: {fileID: 0}
   tileScript: {fileID: 0}
 --- !u!4 &1888884845
 Transform:
@@ -4143,6 +4145,21 @@ MonoBehaviour:
   IsNotFaded: 0
   fadeToSceneChange: 0
   Screen_Color: {r: 0, g: 0, b: 0, a: 0}
+--- !u!114 &1888884849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1888884843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d10b75a48c5b9c4eb4dc890a9b24c56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attacks: 0
+  attackDescriptions: []
+  attackStrengths: 
+  attackMpCosts: 
 --- !u!1 &1892449245
 GameObject:
   m_ObjectHideFlags: 0

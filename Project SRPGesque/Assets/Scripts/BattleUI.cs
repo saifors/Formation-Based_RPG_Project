@@ -84,6 +84,7 @@ public class BattleUI : MonoBehaviour
         }
         attackSelected = Mathf.FloorToInt(atkSelVector.y + (atkSelVector.x * 2));
         attackSelection.position = attackNamePos[attackSelected].position;
+        //attackName[0].text = gameManager.attackInfo.attackNames[0];
     
         attackMenu.SetActive(false);
         battleMenu.SetActive(false);
@@ -150,8 +151,9 @@ public class BattleUI : MonoBehaviour
                 {
                     attackSelected = Mathf.FloorToInt(atkSelVector.x + (atkSelVector.y * 2));
                     attackSelection.position = attackNamePos[attackSelected].position;
-                    //UpdateAttackInfo(character.attack[attackSelected]); // Make it get the attackID of the characters selected attack
                     scrollCooldownCounter = 0;
+                    UpdateAttackInfo(attackSelected); // Make it get the attackID of the characters selected attack
+                    
                 }
             }
         }
@@ -185,11 +187,12 @@ public class BattleUI : MonoBehaviour
     public void UpdateAttackInfo(int attack)
     {
         //Todo: Change Displayed Description to selected attacks description
-        /*SelectedAttackDescription.text = gameManager.attackInfo.attackDescriptions[attackSelected];
+        
+        SelectedAttackDescription.text = gameManager.attackInfo.attackDescriptions[0];
 
-        //Change displayed Power and MP to that of the attack
-        SelectedAttackStats.text = "Power: " + gameManager.attackInfo.attackStrengths[attackSelected] + System.Environment.NewLine + "MP: " + gameManager.attackInfo.attackMpCosts[attackSelected];
-*/
+        //Change displayed Power and MP to that of the attack 
+        SelectedAttackStats.text = "Power: " + gameManager.attackInfo.attackStrengths[0] + System.Environment.NewLine + "MP: " + gameManager.attackInfo.attackMpCosts[0];
+
         //Hard: Change Displayed range/AoE of attack 
     }
 

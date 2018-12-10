@@ -11,6 +11,11 @@ public class CharControl_Battle : MonoBehaviour
 	public int def;
 	public int res;
 	public int spd;
+
+    public int[] attacks;
+    public int attacksAmount;
+    public int maxAttacks;
+
     public Vector2 tile;
 	public int tileID;
     public int rowSize;
@@ -18,7 +23,7 @@ public class CharControl_Battle : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
-
+        attacks = new int[attacksAmount];
 	}
 	
 	// Update is called once per frame
