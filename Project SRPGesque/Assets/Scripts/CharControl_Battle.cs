@@ -12,7 +12,7 @@ public class CharControl_Battle : MonoBehaviour
 	public int res;
 	public int spd;
 
-    public int[] attacks;
+    public int[] attacksLearned;
     public int attacksAmount; //How many attacks does this character have.
     public int maxAttacks = 6;
 
@@ -58,8 +58,9 @@ public class CharControl_Battle : MonoBehaviour
     public void CalculateAttackNumber(int charID)
     {
         maxAttacks = 6;
-        attacksAmount = PlayerPrefs.GetInt(charID + "AtkNum", 1);
+        //attacksAmount = PlayerPrefs.GetInt(charID + "AtkNum", 1);
+		attacksAmount = 3; //PLACEHOLDER
         if (attacksAmount > maxAttacks) attacksAmount = maxAttacks; PlayerPrefs.SetInt(charID + "AtkNum", maxAttacks);
-        attacks = new int[attacksAmount];
+        attacksLearned = new int[attacksAmount];
     }
 }

@@ -49,6 +49,8 @@ public class BattleUI : MonoBehaviour
     public Vector2 atkSelVector;
     public int atkHorizontalLimit;//depending on atkSelVector.y and attacksAmount of charControl is either 1 or 2.
     public int atkVerticalLimit; // depenidng on atkSelVector.x and attacksAmount of charControl is between 1 and three
+    public int currentAtkHorizontalLimit; 
+    public int currentAtkVerticalLimit; 
     public int attackAmount;
     public int attackSelected;
     public Text SelectedAttackDescription;
@@ -145,12 +147,12 @@ public class BattleUI : MonoBehaviour
                 else if(axis.y < 0)
                 {
                     atkSelVector.y++; 
-                    if(atkSelVector.y >= atkVerticalLimit) atkSelVector.y--;
+                    if(atkSelVector.y >= currentAtkVerticalLimit) atkSelVector.y--;
                 }
                 if(axis.x > 0) //This one needs limits depending on attacksAmoun
                 {
                     atkSelVector.x++;
-                    if(atkSelVector.x >= atkHorizontalLimit) atkSelVector.x--;
+                    if(atkSelVector.x >= currentAtkHorizontalLimit) atkSelVector.x--;
                 }
                 else if(axis.x < 0 )
                 {
@@ -197,31 +199,45 @@ public class BattleUI : MonoBehaviour
     public void UpdateAttackInfo(int attack)
     {
         //Todo: Change Displayed Description to selected attacks description
-        
-        SelectedAttackDescription.text = gameManager.attackInfo.attackDescriptions[0];
+        //Check these a bit more in depth.
+        SelectedAttackDescription.text = gameManager.attackInfo.attackDescriptions[gameManager.charControl[gameManager.activeCharacter].attacksLearned[attack]];
 
         //Change displayed Power and MP to that of the attack 
-        SelectedAttackStats.text = "Power: " + gameManager.attackInfo.attackStrengths[0] + System.Environment.NewLine + "MP: " + gameManager.attackInfo.attackMpCosts[0];
+        SelectedAttackStats.text = "Power: " + gameManager.attackInfo.attackStrengths[gameManager.charControl[gameManager.activeCharacter].attacksLearned[attack]] + System.Environment.NewLine + "MP: " + gameManager.attackInfo.attackMpCosts[gameManager.charControl[gameManager.activeCharacter].attacksLearned[attack]];
 
         //Hard: Change Displayed range/AoE of attack 
     }
-    public void CalculateAttackSelectionLimits()
+    public void CalculateAttackSelectionLimits() // Complete, now even takes attacksAmount in account. 
     {
         if(attackAmount % 2 == 0) //is multiple of 2 (0, 2, 4, 6)
+        {
+            //Consistent atkHorizontalLimit, always the same, 
+            currentAtkHorizontalLimit = 2;
+            //and atkVerticalLimit doesn't change regardless of the atkSelVector.x
+            currentAtkVerticalLimit = attackAmount / 2; // because thats the absolute max Horizontal limit as ther are only 2 collumns.
+        }
+        else // for attack amount of 1, 3 and 5.
+        {
+            //Horizontal limit is dependant on relation between attack amount and atkSelVector.y
+            atkHorizontalLimit = 2; 
+            
+            //This shit is wrong
+            if(attackAmount == 1) atkVerticalLimit = 1;
+            else if(attackAmount == 3) atkVerticalLimit = 2;
+            else if(attackAmount == 5) atkVerticalLimit = 3;   
+
+            if(atkSelVector.x == 0) currentAtkVerticalLimit = atkVerticalLimit;
+            else currentAtkVerticalLimit = atkVerticalLimit - 1;   
+
+            if(atkSelVector.y < atkVerticalLimit-1)
             {
-                //Consistent atkHorizontalLimit, always the same, 
-                atkHorizontalLimit = 2;
-                //and atkVerticalLimit doesn't change regardless of the atkSelVector.x
-                atkVerticalLimit = attackAmount / 2; // because thats the absolute max Horizontal limit as ther are only 2 collumns.
+                currentAtkHorizontalLimit = atkHorizontalLimit;
             }
-            else // for attack amount of 1, 3 and 5.
+            else 
             {
-                //Horizontal limit is dependant on relation between attack amount and atkSelVector.y
-                atkHorizontalLimit = 1; 
-                if(attackAmount == 1) atkVerticalLimit = 1;
-                else if(attackAmount == 3) atkVerticalLimit = 2;
-                else if(attackAmount == 5) atkVerticalLimit = 3;                
+                currentAtkHorizontalLimit = atkHorizontalLimit - 1;
             }
+        }
     }
 
 	public void SelectNextCommand()
@@ -284,9 +300,24 @@ public class BattleUI : MonoBehaviour
 		{
 			//Go to attack menu
             selecting = SelectingMenu.selectingAttack;
+
             atkSelVector = Vector2.zero;
             attackSelected = Mathf.FloorToInt(atkSelVector.y + (atkSelVector.x * 2));
-            //UpdateAttackInfo(character.attack[attackSelected]);
+            attackSelection.position = attackNamePos[attackSelected].position;
+            UpdateAttackInfo(attackSelected); // placeholder, attack selected will take the attack from attack array in charControl to get everything right
+
+            for(int i = 0; i < gameManager.charControl[gameManager.activeCharacter].maxAttacks; i++)
+            {
+                attackName[i].gameObject.SetActive(false);
+            }
+            for(int i = 0; i < attackAmount; i++)
+            {
+                attackName[i].gameObject.SetActive(true);
+                //Fix this?
+                attackName[i].text = gameManager.attackInfo.attackNames[gameManager.charControl[gameManager.activeCharacter].attacksLearned[i]];
+            }
+            
+            
             partyInfo.SetActive(false);
             attackMenu.SetActive(true);
 		}
