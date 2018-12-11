@@ -45,6 +45,10 @@ public class InputManager : MonoBehaviour
                         gameManager.tileScript.tiles[battleUI.selectedTile].isOccupied = true;
                     }
                 }
+                else if (battleUI.selecting == BattleUI.SelectingMenu.selectingAttack)
+                {
+                    battleUI.ConfirmAttackSelection();
+                }
             }
         }
         else if (Input.GetKey(KeyCode.X)) battleUI.ReturnToCommandSelection();

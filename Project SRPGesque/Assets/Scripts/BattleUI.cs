@@ -55,6 +55,8 @@ public class BattleUI : MonoBehaviour
     public int attackSelected;
     public Text SelectedAttackDescription;
     public Text SelectedAttackStats;
+    public Vector2 selectedTargetVector;
+    public Vector2[] selectedTargets;
 
     [Header("Images behind the selections")]
 	public CanvasGroup selectionImage;
@@ -169,6 +171,16 @@ public class BattleUI : MonoBehaviour
                 }
             }
         }
+        else if(selecting == SelectingMenu.selectingTarget)
+        {
+            if (tileSelectCooldownCounter < 1) tileSelectCooldownCounter += Time.deltaTime;
+            //Controls for moving around the selected tiles.
+            if (tileSelectCooldownCounter >= 0.25f) // This section below is utter prefection don't touch
+            {
+                AttackTargetMovement();
+            }
+            
+        }
 
         //Notification fades after a while
 		if(notifShown)
@@ -200,7 +212,7 @@ public class BattleUI : MonoBehaviour
     {
         //Todo: Change Displayed Description to selected attacks description
         //Check these a bit more in depth.
-        SelectedAttackDescription.text = gameManager.attackInfo.attackDescriptions[gameManager.charControl[gameManager.activeCharacter].attacksLearned[attack]];
+        SelectedAttackDescription.text = gameManager.attackInfo.attackDescriptions[ gameManager.charControl[gameManager.activeCharacter].attacksLearned[attack] ];
 
         //Change displayed Power and MP to that of the attack 
         SelectedAttackStats.text = "Power: " + gameManager.attackInfo.attackStrengths[gameManager.charControl[gameManager.activeCharacter].attacksLearned[attack]] + System.Environment.NewLine + "MP: " + gameManager.attackInfo.attackMpCosts[gameManager.charControl[gameManager.activeCharacter].attacksLearned[attack]];
@@ -352,6 +364,12 @@ public class BattleUI : MonoBehaviour
 		}
 	}
 
+    public void ConfirmAttackSelection()
+    {
+        //attackSelected;
+        selecting = SelectingMenu.selectingTarget;
+    }
+
 	public void ReturnToCommandSelection()
 	{
         selecting = SelectingMenu.selectingAction;
@@ -473,6 +491,104 @@ public class BattleUI : MonoBehaviour
         }
     }
 
+    public void AttackTargetMovement()
+    {
+        if (axis.x > 0) //Right
+        {
+            if (axis.y > 0) //Upright
+            {
+                //tile - ytiles
+                selectedTargetVector.x--;
+
+                if (selectedTargetVector.x < startLimit.x) selectedTargetVector.x++;
+
+            }
+            else
+            if (axis.y < 0) //DownRight
+            {
+                //tile + 1
+                //I don't even know anymore
+                selectedTargetVector.y++;
+
+                if (selectedTargetVector.y >= endLimit.y) selectedTargetVector.y--;
+            }
+            else //Right
+            {
+                //tile - ytiles + 1
+                selectedTargetVector.x--;
+                selectedTargetVector.y++;
+                if (selectedTargetVector.x < startLimit.x || selectedTargetVector.y >= endLimit.y)
+                {
+                    selectedTargetVector.x++;
+                    selectedTargetVector.y--;
+                }
+
+            }
+        }
+        else if (axis.x < 0) //Left
+        {
+            if (axis.y > 0) //UpLeft
+            {
+                //tile - 1
+                selectedTargetVector.y--;
+
+                if (selectedTargetVector.y < startLimit.y) selectedTargetVector.y++;
+
+            }
+            else if (axis.y < 0) //DownLeft
+            {
+                // tile + ytiles 
+                selectedTargetVector.x++;
+                if (selectedTargetVector.x >= endLimit.x) selectedTargetVector.x--;
+
+            }
+            else //Left
+            {
+                //tile + ytiles - 1
+                selectedTargetVector.x++;
+                selectedTargetVector.y--;
+                if (selectedTargetVector.x >= endLimit.x || selectedTargetVector.y < startLimit.y)
+                {
+                    selectedTargetVector.x--;
+                    selectedTargetVector.y++;
+                }
+
+            }
+        }
+        else if (axis.y > 0) //Up
+        {
+            //tile - ytiles - 1
+            selectedTargetVector.x--;
+            selectedTargetVector.y--;
+            if (selectedTargetVector.x < startLimit.x || selectedTargetVector.y < startLimit.y)
+            {
+                selectedTargetVector.x++;
+                selectedTargetVector.y++;
+            }
+
+        }
+        else if (axis.y < 0) //Down
+        {
+            //tile + ytiles + 1
+            selectedTargetVector.x++;
+            selectedTargetVector.y++;
+            if (selectedTargetVector.x >= endLimit.x || selectedTargetVector.y >= endLimit.y)
+            {
+                selectedTargetVector.x--;
+                selectedTargetVector.y--;
+            }
+
+        }
+
+        if (axis.x != 0 || axis.y != 0)
+        {
+            //selectedTargets = Mathf.FloorToInt(selectedTargetVector.y + (selectedTargetVector.x * tileRowSize));
+            //selectedTileIndicator.position = gameManager.tileScript.tileTransform[selectedTile].position;
+
+            tileSelectCooldownCounter = 0;
+            //gameManager.MoveFormation(0, selectedTile);
+        }
+    }
 
 	#region Sets
 

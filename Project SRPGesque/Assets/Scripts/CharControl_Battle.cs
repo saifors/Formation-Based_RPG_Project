@@ -15,6 +15,7 @@ public class CharControl_Battle : MonoBehaviour
     public int[] attacksLearned;
     public int attacksAmount; //How many attacks does this character have.
     public int maxAttacks = 6;
+    public AttackInfoManager attackInfo;
 
     public Vector2 tile;
 	public int tileID;
@@ -42,6 +43,7 @@ public class CharControl_Battle : MonoBehaviour
 		res = PlayerPrefs.GetInt(charID + "Resistance");
 		spd = PlayerPrefs.GetInt(charID + "Speed");
 
+        attackInfo = GameObject.FindGameObjectWithTag("Manager").GetComponent<AttackInfoManager>();
         CalculateAttackNumber(charID);
 
         tile.x = PlayerPrefs.GetFloat(charID + "_TileX");
@@ -62,5 +64,8 @@ public class CharControl_Battle : MonoBehaviour
 		attacksAmount = 3; //PLACEHOLDER
         if (attacksAmount > maxAttacks) attacksAmount = maxAttacks; PlayerPrefs.SetInt(charID + "AtkNum", maxAttacks);
         attacksLearned = new int[attacksAmount];
+        attacksLearned[0] = 0;//Placheolders
+        attacksLearned[1] = 1;
+        attacksLearned[2] = 2;
     }
 }

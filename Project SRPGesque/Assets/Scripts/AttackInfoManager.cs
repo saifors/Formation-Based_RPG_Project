@@ -14,7 +14,7 @@ public class AttackInfoManager : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
-        attacks = 1;
+        attacks = 7;
 		attackNames = new string[attacks];
 		attackDescriptions = new string[attacks];
         attackStrengths = new int[attacks];
@@ -24,11 +24,11 @@ public class AttackInfoManager : MonoBehaviour
         SetAttack(0, "Fire Bolt",20, 10);
         SetAttackDescription(0, true, "Summons an arrow of fire from above to pierce through the foe's body.");
         //Attack 2
-        SetAttack(1, "Ice Pike", 20, 10);
+        SetAttack(1, "Ice Pike", 23, 12);
         SetAttackDescription(1, true, "Frozen pikes rize from the ground catching the enemy off guard.");
         //Attack 3
-        SetAttack(2, "I", 20, 10);
-        SetAttackDescription(2, true, "idk");
+        SetAttack(2, "Dab", 7, 5);
+        SetAttackDescription(2, false, "Kills off the user's brain cells to leave the enemy in pain");
         //Attack 4
         SetAttack(3, "II", 20, 10);
         SetAttackDescription(3, true, "idk2");
