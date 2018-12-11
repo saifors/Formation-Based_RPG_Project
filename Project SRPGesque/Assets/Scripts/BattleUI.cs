@@ -47,6 +47,9 @@ public class BattleUI : MonoBehaviour
     public Text[] attackName;
     private Transform[] attackNamePos;
     public Vector2 atkSelVector;
+    public int atkHorizontalLimit;//depending on atkSelVector.y and attacksAmount of charControl is either 1 or 2.
+    public int atkVerticalLimit; // depenidng on atkSelVector.x and attacksAmount of charControl is between 1 and three
+    public int attackAmount;
     public int attackSelected;
     public Text SelectedAttackDescription;
     public Text SelectedAttackStats;
@@ -125,9 +128,16 @@ public class BattleUI : MonoBehaviour
         }
         else if(selecting == SelectingMenu.selectingAttack)
         {
+            
+            
             if(scrollCooldownCounter >= scrollCooldown)
             {
-                if(axis.y > 0)
+                if(axis != Vector2.zero)
+                {
+                    CalculateAttackSelectionLimits();
+                }
+
+                if(axis.y > 0) //This one needs limits depending on attacksAmoun
                 {
                     atkSelVector.y--; 
                     if(atkSelVector.y < 0) atkSelVector.y++;               
@@ -135,12 +145,12 @@ public class BattleUI : MonoBehaviour
                 else if(axis.y < 0)
                 {
                     atkSelVector.y++; 
-                    if(atkSelVector.y >=3) atkSelVector.y--;
+                    if(atkSelVector.y >= atkVerticalLimit) atkSelVector.y--;
                 }
-                if(axis.x > 0)
+                if(axis.x > 0) //This one needs limits depending on attacksAmoun
                 {
                     atkSelVector.x++;
-                    if(atkSelVector.x >= 2) atkSelVector.x--;
+                    if(atkSelVector.x >= atkHorizontalLimit) atkSelVector.x--;
                 }
                 else if(axis.x < 0 )
                 {
@@ -194,6 +204,24 @@ public class BattleUI : MonoBehaviour
         SelectedAttackStats.text = "Power: " + gameManager.attackInfo.attackStrengths[0] + System.Environment.NewLine + "MP: " + gameManager.attackInfo.attackMpCosts[0];
 
         //Hard: Change Displayed range/AoE of attack 
+    }
+    public void CalculateAttackSelectionLimits()
+    {
+        if(attackAmount % 2 == 0) //is multiple of 2 (0, 2, 4, 6)
+            {
+                //Consistent atkHorizontalLimit, always the same, 
+                atkHorizontalLimit = 2;
+                //and atkVerticalLimit doesn't change regardless of the atkSelVector.x
+                atkVerticalLimit = attackAmount / 2; // because thats the absolute max Horizontal limit as ther are only 2 collumns.
+            }
+            else // for attack amount of 1, 3 and 5.
+            {
+                //Horizontal limit is dependant on relation between attack amount and atkSelVector.y
+                atkHorizontalLimit = 1; 
+                if(attackAmount == 1) atkVerticalLimit = 1;
+                else if(attackAmount == 3) atkVerticalLimit = 2;
+                else if(attackAmount == 5) atkVerticalLimit = 3;                
+            }
     }
 
 	public void SelectNextCommand()

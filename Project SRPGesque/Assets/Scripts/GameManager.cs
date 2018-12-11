@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
 	public int partyMembers;
 	private CharacterStats charStats;
     public GameObject[] characters;
+	public int activeCharacter; 
     [HideInInspector] public CharControl_Battle[] charControl;
 	[HideInInspector] public AttackInfoManager attackInfo;
 
@@ -135,6 +136,7 @@ public class GameManager : MonoBehaviour
 		gameState = GameState.Battle;
 		camSet = CameraSetting.BattleCam;
 		cam_T.position = battlefield.position;
+		battleUI.attackAmount = charControl[activeCharacter].attacksAmount;
 
 		
 
