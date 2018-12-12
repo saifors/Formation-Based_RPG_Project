@@ -1695,9 +1695,21 @@ MonoBehaviour:
   attackNames: {fileID: 452839161}
   attackName: []
   atkSelVector: {x: 0, y: 0}
+  atkHorizontalLimit: 0
+  atkVerticalLimit: 0
+  currentAtkHorizontalLimit: 0
+  currentAtkVerticalLimit: 0
+  attackAmount: 0
   attackSelected: 0
+  startTargetLimit: {x: 0, y: 0}
+  endTargetLimit: {x: 0, y: 0}
   SelectedAttackDescription: {fileID: 428528973}
   SelectedAttackStats: {fileID: 1892449247}
+  selectedTargetVector: {x: 0, y: 0}
+  targetCursor: {fileID: 1483354850765374, guid: 6045aaa1e5898a3488922882648e4754,
+    type: 2}
+  selectedTarget: 0
+  selectedTargetsTransform: {fileID: 0}
   selectionImage: {fileID: 1821864059}
   selectionImage_trans: {fileID: 0}
   attackSelection: {fileID: 1905569299}
@@ -4084,11 +4096,16 @@ MonoBehaviour:
   encounterMinimumPercent: 80
   battleMenu: {fileID: 1476578919}
   debugMenu: {fileID: 2045106482}
-  BattleCharacterPrefab: {fileID: 1542637486942168, guid: d5258dd58b4531e478789f5a3bdfdf86,
-    type: 2}
+  battleCharacterPrefab: {fileID: 0}
+  battleEnemyPrefab: {fileID: 0}
   partyMembers: 0
   characters: []
+  activeCharacter: 0
   charControl: []
+  initialEnemyAmount: 0
+  enemyAmount: 0
+  enemies: []
+  enemyControl: []
   attackInfo: {fileID: 0}
   tileScript: {fileID: 0}
 --- !u!4 &1888884845

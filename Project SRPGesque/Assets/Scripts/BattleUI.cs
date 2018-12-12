@@ -365,6 +365,14 @@ public class BattleUI : MonoBehaviour
         selecting = SelectingMenu.selectingTarget;
     }
 
+    public void ConfirmAttackTarget()
+    {
+        for(int i = 0; i < gameManager.enemyAmount; i++) //4 is a placeholder for enemy amount
+        {
+
+        }
+    }
+
 	public void ReturnToCommandSelection()
 	{
         selecting = SelectingMenu.selectingAction;

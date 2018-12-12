@@ -16,16 +16,26 @@ public class GameManager : MonoBehaviour
 	private BattleUI battleUI;
 	public GameObject battleMenu;
 	public GameObject debugMenu;
-	public GameObject BattleCharacterPrefab;
+	public GameObject battleCharacterPrefab;
+	public GameObject battleEnemyPrefab;
 
-	public int partyMembers;
+    public int partyMembers;
 	private CharacterStats charStats;
     public GameObject[] characters;
 	public int activeCharacter; 
     [HideInInspector] public CharControl_Battle[] charControl;
+
+    public int initialEnemyAmount;
+    public int enemyAmount;
+    public GameObject[] enemies;
+    public EnemyControl_Battle[] enemyControl;
+
 	[HideInInspector] public AttackInfoManager attackInfo;
 
-	[HideInInspector] public TileScript tileScript;
+    
+
+
+    [HideInInspector] public TileScript tileScript;
     private Transform battlefield;
 	
 	// Use this for initialization
@@ -44,13 +54,17 @@ public class GameManager : MonoBehaviour
         battlefield = GameObject.FindGameObjectWithTag("Battlefield").GetComponent<Transform>();
 
         randomEcountersOn = true;//Depending on the area.
-		partyMembers = 1;
+		partyMembers = 1; //PLACHEOLDER
         characters = new GameObject[partyMembers];
         charControl = new CharControl_Battle[partyMembers];
 
+        enemyAmount = 1; //PLACHEOLDER
+        enemies = new GameObject[enemyAmount];
+        enemyControl = new EnemyControl_Battle[enemyAmount];
+
         for (int i = 0; i < partyMembers; i++)
         {
-            characters[i] = Instantiate(BattleCharacterPrefab);
+            characters[i] = Instantiate(battleCharacterPrefab);
             characters[i].name = "Battle_Char_" + i;
             charControl[i] = characters[i].GetComponent<CharControl_Battle>();
             charControl[i].rowSize = tileScript.yTiles;
@@ -62,6 +76,26 @@ public class GameManager : MonoBehaviour
             charControl[i].UpdateTileID();
             PlaceCharacterOnTheirTile(i);
             tileScript.tiles[charControl[i].tileID].isOccupied = true;
+        }
+
+        for(int i = 0; i < enemyAmount; i++)
+        {
+            enemies[i] = Instantiate(battleEnemyPrefab);
+            enemies[i].name = "Battle_Enemy_" + i;
+            enemyControl[i] = enemies[i].GetComponent<EnemyControl_Battle>();
+            enemyControl[i].rowSize = tileScript.yTiles;
+
+            //charStats.CreateCharacterStats(0, 10, 12, 5, 3, 2, 4); //PLACHEOLDER;
+            //charStats.SetTileOccupied(0, new Vector2(3, 4), tileScript.yTiles);
+
+
+            // THIS NEEDS SOME WORK
+
+
+            enemyControl[i].Init(i);
+            enemyControl[i].UpdateTileID();
+            PlaceCharacterOnTheirTile(i);
+            tileScript.tiles[enemyControl[i].tileID].isOccupied = true;
         }
 
         battleUI.tileCollumnSize = tileScript.xTiles ; //these two ar numbers not counting zero as a part of em

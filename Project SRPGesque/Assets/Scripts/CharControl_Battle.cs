@@ -5,7 +5,9 @@ using UnityEngine;
 public class CharControl_Battle : MonoBehaviour 
 {
 	public int charId;
-	public int hp;
+    public int currentHp;
+    public int currentMp;
+    public int hp;
 	public int mp;
 	public int atk;
 	public int def;
@@ -42,6 +44,11 @@ public class CharControl_Battle : MonoBehaviour
 		def = PlayerPrefs.GetInt(charID + "Defense");
 		res = PlayerPrefs.GetInt(charID + "Resistance");
 		spd = PlayerPrefs.GetInt(charID + "Speed");
+
+        currentHp = PlayerPrefs.GetInt(charID + "Current Hp");
+        currentMp = PlayerPrefs.GetInt(charID + "Current Mp");
+        if (currentHp > hp) currentHp = hp;
+        if (currentMp > mp) currentMp = mp;
 
         attackInfo = GameObject.FindGameObjectWithTag("Manager").GetComponent<AttackInfoManager>();
         CalculateAttackNumber(charID);

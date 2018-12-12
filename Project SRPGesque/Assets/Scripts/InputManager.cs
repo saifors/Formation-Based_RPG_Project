@@ -49,6 +49,10 @@ public class InputManager : MonoBehaviour
                 {
                     battleUI.ConfirmAttackSelection();
                 }
+                else if(battleUI.selecting == BattleUI.SelectingMenu.selectingTarget)
+                {
+                    battleUI.ConfirmAttackTarget();
+                }
             }
         }
         else if (Input.GetKeyDown(KeyCode.X))

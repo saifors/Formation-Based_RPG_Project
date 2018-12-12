@@ -3,7 +3,15 @@ guid: fa27419a674efbf43bb24fb9e49a1dd6
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - battleMenu: {instanceID: 0}
+  - debugMenu: {instanceID: 0}
+  - battleCharacterPrefab: {fileID: 1542637486942168, guid: d5258dd58b4531e478789f5a3bdfdf86,
+      type: 2}
+  - battleEnemyPrefab: {fileID: 1542637486942168, guid: 51ea4118b8059774abc20c264d6167dd,
+      type: 2}
+  - attackInfo: {instanceID: 0}
+  - tileScript: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
