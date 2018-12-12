@@ -21,6 +21,10 @@ public class CharControl_Battle : MonoBehaviour
     public int maxAttacks = 6;
     public AttackInfoManager attackInfo;
 
+    public GameManager gameManager;
+
+    public bool isDead;
+
     public Vector2 tile;
 	public int tileID;
     public int rowSize;
@@ -28,7 +32,7 @@ public class CharControl_Battle : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
-        
+        gameManager = GameObject.FindGameObjectWithTag("Manager").GetComponent<GameManager>();
         
         
 	}
@@ -86,5 +90,33 @@ public class CharControl_Battle : MonoBehaviour
         attacksLearned[0] = 0;//Placheolders
         attacksLearned[1] = 1;
         attacksLearned[2] = 2;
+    }
+
+    public void Damage(int attackPower)
+    {
+        currentHp -= attackPower/2;
+        if (currentHp <= 0) Die();
+    }
+
+    public void Die()
+    {
+        currentHp = 0;
+        isDead = true;
+        gameManager.tileScript.tiles[tileID].isOccupied = false;
+        gameObject.SetActive(false);
+        if(alliance == 1)//if enemy
+        {
+            for(int i = 0; i < gameManager.enemyAmount; i++)
+            {
+                if(gameManager.enemyControl[i].isDead == true)
+                {
+                    gameManager.enemyDefeated++;
+                }
+            }
+            if(gameManager.enemyDefeated >= gameManager.enemyAmount)
+            {
+                gameManager.Victory();
+            }
+        }
     }
 }

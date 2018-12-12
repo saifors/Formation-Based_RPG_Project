@@ -25,7 +25,10 @@ public class CharacterStats : MonoBehaviour {
 		PlayerPrefs.SetInt(alliance + charID + "Defense", def);
 		PlayerPrefs.SetInt(alliance + charID + "Resistance", res);
 		PlayerPrefs.SetInt(alliance + charID + "Speed", spd);
-	}
+
+        PlayerPrefs.SetInt(alliance + charID + "Current Hp", hp);
+        PlayerPrefs.SetInt(alliance + charID + "Current Mp", mp);
+    }
     public void CreateCharacterStats(string alliance, int charID, int hp, int mp, int atk, int def, int res, int spd, Vector2 tiles)
     {
 

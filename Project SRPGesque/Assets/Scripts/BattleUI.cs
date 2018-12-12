@@ -367,10 +367,19 @@ public class BattleUI : MonoBehaviour
 
     public void ConfirmAttackTarget()
     {
-        for(int i = 0; i < gameManager.enemyAmount; i++) //4 is a placeholder for enemy amount
+        if(gameManager.tileScript.tiles[selectedTarget].isOccupied)
         {
+            Debug.Log("Attack Confirmed");
+            for (int i = 0; i < gameManager.enemyAmount; i++) //4 is a placeholder for enemy amount
+            {
+                if(gameManager.enemyControl[i].tileID == selectedTarget)
+                {
+                    gameManager.enemyControl[i].Damage(gameManager.attackInfo.attackStrengths[gameManager.charControl[gameManager.activeCharacter].attacksLearned[attackSelected]]);
+                }
 
+            }
         }
+        
     }
 
 	public void ReturnToCommandSelection()

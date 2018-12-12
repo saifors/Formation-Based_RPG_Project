@@ -29,8 +29,9 @@ public class GameManager : MonoBehaviour
     public int enemyAmount;
     public GameObject[] enemies;
     public EnemyControl_Battle[] enemyControl;
+    public int enemyDefeated;
 
-	[HideInInspector] public AttackInfoManager attackInfo;
+    [HideInInspector] public AttackInfoManager attackInfo;
 
     
 
@@ -62,6 +63,14 @@ public class GameManager : MonoBehaviour
         enemies = new GameObject[enemyAmount];
         enemyControl = new EnemyControl_Battle[enemyAmount];
 
+
+        charStats.CreateCharacterStats("Player", 0, 10, 12, 5, 3, 2, 4); //PLACHEOLDER;
+        charStats.SetTileOccupied("Player", 0, new Vector2(3,4), tileScript.yTiles);
+
+        charStats.CreateCharacterStats("Enemy", 0, 70, 12, 5, 3, 2, 4); //PLACHEOLDER;
+        charStats.SetTileOccupied("Enemy", 0, new Vector2(2, 2), tileScript.yTiles);
+
+
         for (int i = 0; i < partyMembers; i++)
         {
             characters[i] = Instantiate(battleCharacterPrefab);
@@ -69,14 +78,14 @@ public class GameManager : MonoBehaviour
             charControl[i] = characters[i].GetComponent<CharControl_Battle>();
             charControl[i].rowSize = tileScript.yTiles;
 
-            charStats.CreateCharacterStats("Player", 0, 10, 12, 5, 3, 2, 4); //PLACHEOLDER;
-            charStats.SetTileOccupied("Player", 0, new Vector2(3,4), tileScript.yTiles);
+            
 
             charControl[i].Init(i, true);
             charControl[i].UpdateTileID("Player");
             PlaceCharacterOnTheirTile("Player",i);
             tileScript.tiles[charControl[i].tileID].isOccupied = true;
         }
+        
 
         for(int i = 0; i < enemyAmount; i++)
         {
@@ -84,9 +93,6 @@ public class GameManager : MonoBehaviour
             enemies[i].name = "Battle_Enemy_" + i;
             enemyControl[i] = enemies[i].GetComponent<EnemyControl_Battle>();
             enemyControl[i].rowSize = tileScript.yTiles;
-
-            charStats.CreateCharacterStats("Enemy", 0, 10, 12, 5, 3, 2, 4); //PLACHEOLDER;
-            charStats.SetTileOccupied("Enemy", 0, new Vector2(2, 2), tileScript.yTiles);
 
 
             // THIS NEEDS SOME WORK
@@ -173,7 +179,7 @@ public class GameManager : MonoBehaviour
 		camSet = CameraSetting.BattleCam;
 		cam_T.position = battlefield.position;
 		battleUI.attackAmount = charControl[activeCharacter].attacksAmount;
-
+        enemyDefeated = 0;
 		
 
 		battleMenu.SetActive(true);
@@ -216,6 +222,11 @@ public class GameManager : MonoBehaviour
 	{
 		battleUI.ChangeNotifText("Failed to run!");
 	}
+
+    public void Victory()
+    {
+        EndBattle();
+    }
 
 	public void ToggleDebug()
 	{
