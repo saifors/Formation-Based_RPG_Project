@@ -86,7 +86,7 @@ public class GameManager : MonoBehaviour
             enemyControl[i].rowSize = tileScript.yTiles;
 
             charStats.CreateCharacterStats("Enemy", 0, 10, 12, 5, 3, 2, 4); //PLACHEOLDER;
-            charStats.SetTileOccupied("Enemy", 0, new Vector2(3, 4), tileScript.yTiles);
+            charStats.SetTileOccupied("Enemy", 0, new Vector2(2, 2), tileScript.yTiles);
 
 
             // THIS NEEDS SOME WORK
@@ -195,7 +195,8 @@ public class GameManager : MonoBehaviour
     }
     public void PlaceCharacterOnTheirTile(string alliance, int charID)
     {
-        characters[charID].transform.position = tileScript.tileTransform[PlayerPrefs.GetInt(alliance + charID + "_TileID") ].position;
+        if(alliance == "Player")characters[charID].transform.position = tileScript.tileTransform[PlayerPrefs.GetInt(alliance + charID + "_TileID") ].position;
+        else if(alliance == "Enemy")enemies[charID].transform.position = tileScript.tileTransform[PlayerPrefs.GetInt(alliance + charID + "_TileID")].position;
     }
 	public void RunFromBattle()
 	{
