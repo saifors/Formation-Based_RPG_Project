@@ -3,7 +3,24 @@ guid: 09d80ae054c46844a9f8e6690269de6d
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - notifPanel: {instanceID: 0}
+  - battleMenu: {instanceID: 0}
+  - actionMenu: {instanceID: 0}
+  - attackMenu: {instanceID: 0}
+  - partyInfo: {instanceID: 0}
+  - cursor: {fileID: 1483354850765374, guid: 43cacd41c2b3d72448ccf2443039dca2, type: 2}
+  - attackNames: {instanceID: 0}
+  - SelectedAttackDescription: {instanceID: 0}
+  - SelectedAttackStats: {instanceID: 0}
+  - targetCursor: {fileID: 1483354850765374, guid: 6045aaa1e5898a3488922882648e4754,
+      type: 2}
+  - selectedTargetsTransform: {instanceID: 0}
+  - selectionImage: {instanceID: 0}
+  - selectionImage_trans: {instanceID: 0}
+  - attackSelection: {instanceID: 0}
+  - battleNotificationText: {instanceID: 0}
+  - battleNotificationBg: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

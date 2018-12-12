@@ -69,8 +69,10 @@ public class GameManager : MonoBehaviour
         battleUI.tileAmount = tileScript.tileAmount -1;
         battleUI.startLimit = new Vector2(battleUI.tileCollumnSize/2, 0);
         battleUI.endLimit = new Vector2(battleUI.tileCollumnSize, battleUI.tileRowSize);
+        battleUI.startTargetLimit = new Vector2(0, 0);
+        battleUI.endTargetLimit = new Vector2(battleUI.tileCollumnSize/2, battleUI.tileRowSize);
 
-        
+
         MoveFormation(0, charControl[0].tile); //PLACEHOLDER
 		
 	}

@@ -53,10 +53,15 @@ public class BattleUI : MonoBehaviour
     public int currentAtkVerticalLimit; 
     public int attackAmount;
     public int attackSelected;
+    [HideInInspector] public Vector2 startTargetLimit;
+    [HideInInspector] public Vector2 endTargetLimit;
     public Text SelectedAttackDescription;
     public Text SelectedAttackStats;
-    public Vector2 selectedTargetVector;
-    public Vector2[] selectedTargets;
+    public Vector2 selectedTargetVector; //will be an array late
+    //insert some vector2 to indicate the size of the target to adapt the limits once we got range working
+    public GameObject targetCursor;
+    public int selectedTarget; //Will be an array later
+    public Transform selectedTargetsTransform; //will be an array later
 
     [Header("Images behind the selections")]
 	public CanvasGroup selectionImage;
@@ -82,6 +87,11 @@ public class BattleUI : MonoBehaviour
         obj = Instantiate(cursor);
         selectedTileIndicator = obj.GetComponent<Transform>();
         selectedTileIndicator.gameObject.SetActive(false);
+
+        GameObject target;
+        target = Instantiate(targetCursor);
+        selectedTargetsTransform = target.GetComponent<Transform>();
+        selectedTargetsTransform.gameObject.SetActive(false);
 
         attackName = attackNames.GetComponentsInChildren<Text>();
         attackNamePos = new Transform[attackName.Length];
@@ -310,29 +320,9 @@ public class BattleUI : MonoBehaviour
 	{
 		if(command == CommandSelection.Attack)
 		{
-			//Go to attack menu
-            selecting = SelectingMenu.selectingAttack;
+            InitiateAttackSelection();
 
-            atkSelVector = Vector2.zero;
-            attackSelected = Mathf.FloorToInt(atkSelVector.y + (atkSelVector.x * 2));
-            attackSelection.position = attackNamePos[attackSelected].position;
-            UpdateAttackInfo(attackSelected); // placeholder, attack selected will take the attack from attack array in charControl to get everything right
-
-            for(int i = 0; i < gameManager.charControl[gameManager.activeCharacter].maxAttacks; i++)
-            {
-                attackName[i].gameObject.SetActive(false);
-            }
-            for(int i = 0; i < attackAmount; i++)
-            {
-                attackName[i].gameObject.SetActive(true);
-                //Fix this?
-                attackName[i].text = gameManager.attackInfo.attackNames[gameManager.charControl[gameManager.activeCharacter].attacksLearned[i]];
-            }
-            
-            
-            partyInfo.SetActive(false);
-            attackMenu.SetActive(true);
-		}
+        }
 		else if(command == CommandSelection.Defend)
 		{
 			//Go to Select defend
@@ -366,7 +356,12 @@ public class BattleUI : MonoBehaviour
 
     public void ConfirmAttackSelection()
     {
-        //attackSelected;
+        //This is all going to change once it's an array of course
+        selectedTargetVector = Vector2.zero;
+        selectedTarget = 0;
+        selectedTargetsTransform.gameObject.SetActive(true);
+        selectedTargetsTransform.position = gameManager.tileScript.tileTransform[selectedTarget].position;
+        attackMenu.SetActive(false);
         selecting = SelectingMenu.selectingTarget;
     }
 
@@ -379,7 +374,41 @@ public class BattleUI : MonoBehaviour
         actionMenu.SetActive(true);
 	}
 
-	public void ChangeNotifText(string notifText)
+    public void ReturnToAttackSelect()
+    {
+        InitiateAttackSelection(); 
+    }
+
+    public void InitiateAttackSelection()
+    {
+        selecting = SelectingMenu.selectingAttack;
+
+        atkSelVector = Vector2.zero;
+        attackSelected = Mathf.FloorToInt(atkSelVector.y + (atkSelVector.x * 2));
+        attackSelection.position = attackNamePos[attackSelected].position;
+        UpdateAttackInfo(attackSelected); // placeholder, attack selected will take the attack from attack array in charControl to get everything right
+
+        for (int i = 0; i < gameManager.charControl[gameManager.activeCharacter].maxAttacks; i++)
+        {
+            attackName[i].gameObject.SetActive(false);
+        }
+        for (int i = 0; i < attackAmount; i++)
+        {
+            attackName[i].gameObject.SetActive(true);
+            //Fix this?
+            attackName[i].text = gameManager.attackInfo.attackNames[gameManager.charControl[gameManager.activeCharacter].attacksLearned[i]];
+        }
+
+        selectedTarget = 0;
+        selectedTargetsTransform.position = gameManager.tileScript.tileTransform[selectedTarget].position;
+        selectedTargetsTransform.gameObject.SetActive(false);
+        
+        partyInfo.SetActive(false);
+        attackMenu.SetActive(true);
+    }
+
+
+    public void ChangeNotifText(string notifText)
 	{
 		notifShown = true;
         notifPanel.SetActive(true);
@@ -500,7 +529,7 @@ public class BattleUI : MonoBehaviour
                 //tile - ytiles
                 selectedTargetVector.x--;
 
-                if (selectedTargetVector.x < startLimit.x) selectedTargetVector.x++;
+                if (selectedTargetVector.x < startTargetLimit.x) selectedTargetVector.x++;
 
             }
             else
@@ -510,14 +539,14 @@ public class BattleUI : MonoBehaviour
                 //I don't even know anymore
                 selectedTargetVector.y++;
 
-                if (selectedTargetVector.y >= endLimit.y) selectedTargetVector.y--;
+                if (selectedTargetVector.y >= endTargetLimit.y) selectedTargetVector.y--;
             }
             else //Right
             {
                 //tile - ytiles + 1
                 selectedTargetVector.x--;
                 selectedTargetVector.y++;
-                if (selectedTargetVector.x < startLimit.x || selectedTargetVector.y >= endLimit.y)
+                if (selectedTargetVector.x < startTargetLimit.x || selectedTargetVector.y >= endTargetLimit.y)
                 {
                     selectedTargetVector.x++;
                     selectedTargetVector.y--;
@@ -532,14 +561,14 @@ public class BattleUI : MonoBehaviour
                 //tile - 1
                 selectedTargetVector.y--;
 
-                if (selectedTargetVector.y < startLimit.y) selectedTargetVector.y++;
+                if (selectedTargetVector.y < startTargetLimit.y) selectedTargetVector.y++;
 
             }
             else if (axis.y < 0) //DownLeft
             {
                 // tile + ytiles 
                 selectedTargetVector.x++;
-                if (selectedTargetVector.x >= endLimit.x) selectedTargetVector.x--;
+                if (selectedTargetVector.x >= endTargetLimit.x) selectedTargetVector.x--;
 
             }
             else //Left
@@ -547,7 +576,7 @@ public class BattleUI : MonoBehaviour
                 //tile + ytiles - 1
                 selectedTargetVector.x++;
                 selectedTargetVector.y--;
-                if (selectedTargetVector.x >= endLimit.x || selectedTargetVector.y < startLimit.y)
+                if (selectedTargetVector.x >= endTargetLimit.x || selectedTargetVector.y < startTargetLimit.y)
                 {
                     selectedTargetVector.x--;
                     selectedTargetVector.y++;
@@ -560,7 +589,7 @@ public class BattleUI : MonoBehaviour
             //tile - ytiles - 1
             selectedTargetVector.x--;
             selectedTargetVector.y--;
-            if (selectedTargetVector.x < startLimit.x || selectedTargetVector.y < startLimit.y)
+            if (selectedTargetVector.x < startTargetLimit.x || selectedTargetVector.y < startTargetLimit.y)
             {
                 selectedTargetVector.x++;
                 selectedTargetVector.y++;
@@ -572,7 +601,7 @@ public class BattleUI : MonoBehaviour
             //tile + ytiles + 1
             selectedTargetVector.x++;
             selectedTargetVector.y++;
-            if (selectedTargetVector.x >= endLimit.x || selectedTargetVector.y >= endLimit.y)
+            if (selectedTargetVector.x >= endTargetLimit.x || selectedTargetVector.y >= endTargetLimit.y)
             {
                 selectedTargetVector.x--;
                 selectedTargetVector.y--;
@@ -582,11 +611,11 @@ public class BattleUI : MonoBehaviour
 
         if (axis.x != 0 || axis.y != 0)
         {
-            //selectedTargets = Mathf.FloorToInt(selectedTargetVector.y + (selectedTargetVector.x * tileRowSize));
-            //selectedTileIndicator.position = gameManager.tileScript.tileTransform[selectedTile].position;
+            selectedTarget = Mathf.FloorToInt(selectedTargetVector.y + (selectedTargetVector.x * tileRowSize));
+            selectedTargetsTransform.position = gameManager.tileScript.tileTransform[selectedTarget].position;
 
             tileSelectCooldownCounter = 0;
-            //gameManager.MoveFormation(0, selectedTile);
+            
         }
     }
 

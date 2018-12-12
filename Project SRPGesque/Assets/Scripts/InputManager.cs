@@ -36,7 +36,7 @@ public class InputManager : MonoBehaviour
             if (gameManager.gameState == GameManager.GameState.Battle)
             {
                 if (battleUI.selecting == BattleUI.SelectingMenu.selectingAction) battleUI.ConfirmSelectedCommand();
-                else if(battleUI.selecting == BattleUI.SelectingMenu.selectingMove)
+                else if (battleUI.selecting == BattleUI.SelectingMenu.selectingMove)
                 {
                     if (!gameManager.tileScript.tiles[battleUI.selectedTile].isOccupied)
                     {
@@ -51,7 +51,11 @@ public class InputManager : MonoBehaviour
                 }
             }
         }
-        else if (Input.GetKey(KeyCode.X)) battleUI.ReturnToCommandSelection();
+        else if (Input.GetKeyDown(KeyCode.X))
+        {
+            if (battleUI.selecting != BattleUI.SelectingMenu.selectingTarget) battleUI.ReturnToCommandSelection();
+            else if (battleUI.selecting == BattleUI.SelectingMenu.selectingTarget) { battleUI.ReturnToAttackSelect(); }
+        }
         
         if(gameManager.gameState == GameManager.GameState.Overworld)
         {
