@@ -54,7 +54,8 @@ public class OWPlayerController : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-        if(isRunning) speed = runSpeed;
+        if (gameManager.isPaused) return;
+        if (isRunning) speed = runSpeed;
         else speed = walkSpeed;
 
         if(gameManager.gameState == GameManager.GameState.Overworld)

@@ -61,6 +61,11 @@ public class InputManager : MonoBehaviour
                 {
                     battleUI.ConfirmAttackTarget();
                 }
+                else if(battleUI.selecting == BattleUI.SelectingMenu.victoryScreen)
+                {
+                    battleUI.victoryPanel.SetActive(false);
+                    gameManager.EndBattle();
+                }
             }
         }
         else if (Input.GetKeyDown(KeyCode.X))

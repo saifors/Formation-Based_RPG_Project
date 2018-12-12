@@ -234,7 +234,8 @@ public class GameManager : MonoBehaviour
 
     public void Victory()
     {
-        EndBattle();
+        battleUI.victoryPanel.SetActive(true);
+        battleUI.selecting = BattleUI.SelectingMenu.victoryScreen;
     }
 
     public void PauseToggle()

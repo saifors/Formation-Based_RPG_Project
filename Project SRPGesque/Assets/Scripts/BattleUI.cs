@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class BattleUI : MonoBehaviour 
 {
 	private Vector2 axis;
-    public enum SelectingMenu { selectingAction, selectingAttack, selectingTarget, selectingMove};
+    public enum SelectingMenu { selectingAction, selectingAttack, selectingTarget, selectingMove, victoryScreen};
     public SelectingMenu selecting;
     
     public enum CommandSelection {Attack, Defend, Move, Item, Run};
@@ -28,6 +28,7 @@ public class BattleUI : MonoBehaviour
     public GameObject actionMenu;
     public GameObject attackMenu;
     public GameObject partyInfo;
+    public GameObject victoryPanel;
     
     [Header("Everything for tiles with movement")]
     
@@ -194,6 +195,10 @@ public class BattleUI : MonoBehaviour
                 AttackTargetMovement();
             }
             
+        }
+        else if(selecting == SelectingMenu.victoryScreen)
+        {
+
         }
 
         //Notification fades after a while
