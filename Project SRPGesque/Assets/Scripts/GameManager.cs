@@ -38,6 +38,8 @@ public class GameManager : MonoBehaviour
 
     [HideInInspector] public TileScript tileScript;
     private Transform battlefield;
+
+	public SoundPlayer soundPlayer;
 	
 	// Use this for initialization
 	void Start () 
@@ -49,6 +51,9 @@ public class GameManager : MonoBehaviour
 		
 		charStats = GetComponent<CharacterStats>();
 		attackInfo = GetComponent<AttackInfoManager>();
+
+		soundPlayer = gameObject.GetComponent<SoundPlayer>();
+		//soundPlayer.PlayMusic(0,1);
 
 		tileScript = GameObject.FindGameObjectWithTag("TileManager").GetComponent<TileScript>();
         tileScript.Init();

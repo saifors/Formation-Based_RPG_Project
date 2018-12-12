@@ -1894,6 +1894,7 @@ MonoBehaviour:
   qualityText: {fileID: 368490298}
   options: {fileID: 0}
   charStats: {fileID: 0}
+  soundPlayer: {fileID: 0}
 --- !u!1 &1222586930
 GameObject:
   m_ObjectHideFlags: 0
@@ -2745,6 +2746,7 @@ GameObject:
   - component: {fileID: 1808555130}
   - component: {fileID: 1808555132}
   - component: {fileID: 1808555133}
+  - component: {fileID: 1808555134}
   m_Layer: 5
   m_Name: Manager
   m_TagString: Manager
@@ -2815,6 +2817,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad2ae7ac1ec63ae418218778a8a3b6c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1808555134
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1808555129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8d9631edb6396d4eb9418743b11a8ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundClips:
+  - {fileID: 8300000, guid: e5851ee4b51e80246be1b29781456777, type: 3}
+  - {fileID: 8300000, guid: 5a7cda2761e4d9b4aa77a1694ea434b9, type: 3}
+  - {fileID: 8300000, guid: fe4246ec079e7bb41b2e2e8f1d6501dd, type: 3}
+  musicClips: []
 --- !u!1 &1863977228
 GameObject:
   m_ObjectHideFlags: 0
@@ -3254,7 +3272,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1914725249}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1808555129}
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1914725249

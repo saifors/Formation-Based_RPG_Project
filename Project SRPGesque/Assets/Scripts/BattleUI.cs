@@ -69,6 +69,7 @@ public class BattleUI : MonoBehaviour
     public Transform attackSelection;
 	public Text battleNotificationText;
     public Image battleNotificationBg;
+    public SoundPlayer soundPlayer;
 
 	// Use this for initialization
 	void Start () 
@@ -82,6 +83,7 @@ public class BattleUI : MonoBehaviour
         notifTextColor = battleNotificationText.color;
         notifBgColor = battleNotificationBg.color;
         
+        soundPlayer = gameManager.soundPlayer;
         
         GameObject obj;
         obj = Instantiate(cursor);
@@ -318,7 +320,8 @@ public class BattleUI : MonoBehaviour
 
 	public void ConfirmSelectedCommand()
 	{
-		if(command == CommandSelection.Attack)
+		soundPlayer.PlaySound(0,1, true);
+        if(command == CommandSelection.Attack)
 		{
             InitiateAttackSelection();
 
@@ -357,6 +360,7 @@ public class BattleUI : MonoBehaviour
     public void ConfirmAttackSelection()
     {
         //This is all going to change once it's an array of course
+        soundPlayer.PlaySound(0,1, true);
         selectedTargetVector = Vector2.zero;
         selectedTarget = 0;
         selectedTargetsTransform.gameObject.SetActive(true);
@@ -369,7 +373,7 @@ public class BattleUI : MonoBehaviour
     {
         if(gameManager.tileScript.tiles[selectedTarget].isOccupied)
         {
-            Debug.Log("Attack Confirmed");
+            soundPlayer.PlaySound(0,1, true);
             for (int i = 0; i < gameManager.enemyAmount; i++) //4 is a placeholder for enemy amount
             {
                 if(gameManager.enemyControl[i].tileID == selectedTarget)
@@ -379,11 +383,13 @@ public class BattleUI : MonoBehaviour
 
             }
         }
+        else soundPlayer.PlaySound(2,1, true);
         
     }
 
 	public void ReturnToCommandSelection()
 	{
+        soundPlayer.PlaySound(1,1, true);
         selecting = SelectingMenu.selectingAction;
         selectedTileIndicator.gameObject.SetActive(false);
         attackMenu.SetActive(false);
@@ -393,6 +399,7 @@ public class BattleUI : MonoBehaviour
 
     public void ReturnToAttackSelect()
     {
+        soundPlayer.PlaySound(1,1, true);
         InitiateAttackSelection(); 
     }
 
@@ -447,7 +454,11 @@ public class BattleUI : MonoBehaviour
                 //tile - ytiles
                 tileSelection.x--;
 
-                if (tileSelection.x < startLimit.x) tileSelection.x++;
+                if (tileSelection.x < startLimit.x) 
+                {
+                    tileSelection.x++;
+                    soundPlayer.PlaySound(2,1, true);
+                }
 
             }
             else
@@ -457,7 +468,11 @@ public class BattleUI : MonoBehaviour
                 //I don't even know anymore
                 tileSelection.y++;
 
-                if (tileSelection.y >= endLimit.y) tileSelection.y--;
+                if (tileSelection.y >= endLimit.y) 
+                {
+                    tileSelection.y--;
+                    soundPlayer.PlaySound(2,1, true);
+                }
             }
             else //Right
             {
@@ -468,6 +483,7 @@ public class BattleUI : MonoBehaviour
                 {
                     tileSelection.x++;
                     tileSelection.y--;
+                    soundPlayer.PlaySound(2,1, true);
                 }
 
             }
@@ -479,14 +495,22 @@ public class BattleUI : MonoBehaviour
                 //tile - 1
                 tileSelection.y--;
 
-                if (tileSelection.y < startLimit.y) tileSelection.y++;
+                if (tileSelection.y < startLimit.y) 
+                {
+                    tileSelection.y++;
+                    soundPlayer.PlaySound(2,1, true);
+                }
 
             }
             else if (axis.y < 0) //DownLeft
             {
                 // tile + ytiles 
                 tileSelection.x++;
-                if (tileSelection.x >= endLimit.x) tileSelection.x--;
+                if (tileSelection.x >= endLimit.x) 
+                {
+                    tileSelection.x--;
+                    soundPlayer.PlaySound(2,1, true);
+                }
 
             }
             else //Left
@@ -498,6 +522,7 @@ public class BattleUI : MonoBehaviour
                 {
                     tileSelection.x--;
                     tileSelection.y++;
+                    soundPlayer.PlaySound(2,1, true);
                 }
 
             }
@@ -511,6 +536,7 @@ public class BattleUI : MonoBehaviour
             {
                 tileSelection.x++;
                 tileSelection.y++;
+                soundPlayer.PlaySound(2,1, true);
             }
 
         }
@@ -523,6 +549,7 @@ public class BattleUI : MonoBehaviour
             {
                 tileSelection.x--;
                 tileSelection.y--;
+                soundPlayer.PlaySound(2,1, true);
             }
 
         }
@@ -546,7 +573,11 @@ public class BattleUI : MonoBehaviour
                 //tile - ytiles
                 selectedTargetVector.x--;
 
-                if (selectedTargetVector.x < startTargetLimit.x) selectedTargetVector.x++;
+                if (selectedTargetVector.x < startTargetLimit.x) 
+                {
+                    selectedTargetVector.x++;
+                    soundPlayer.PlaySound(2,1, true);
+                }
 
             }
             else
@@ -556,7 +587,11 @@ public class BattleUI : MonoBehaviour
                 //I don't even know anymore
                 selectedTargetVector.y++;
 
-                if (selectedTargetVector.y >= endTargetLimit.y) selectedTargetVector.y--;
+                if (selectedTargetVector.y >= endTargetLimit.y) 
+                {
+                    selectedTargetVector.y--;
+                    soundPlayer.PlaySound(2,1, true);
+                }
             }
             else //Right
             {
@@ -567,6 +602,7 @@ public class BattleUI : MonoBehaviour
                 {
                     selectedTargetVector.x++;
                     selectedTargetVector.y--;
+                    soundPlayer.PlaySound(2,1, true);
                 }
 
             }
@@ -578,14 +614,22 @@ public class BattleUI : MonoBehaviour
                 //tile - 1
                 selectedTargetVector.y--;
 
-                if (selectedTargetVector.y < startTargetLimit.y) selectedTargetVector.y++;
+                if (selectedTargetVector.y < startTargetLimit.y) 
+                {
+                    selectedTargetVector.y++;
+                    soundPlayer.PlaySound(2,1, true);
+                }
 
             }
             else if (axis.y < 0) //DownLeft
             {
                 // tile + ytiles 
                 selectedTargetVector.x++;
-                if (selectedTargetVector.x >= endTargetLimit.x) selectedTargetVector.x--;
+                if (selectedTargetVector.x >= endTargetLimit.x) 
+                {
+                    selectedTargetVector.x--;
+                    soundPlayer.PlaySound(2,1, true);
+                }
 
             }
             else //Left
@@ -597,6 +641,7 @@ public class BattleUI : MonoBehaviour
                 {
                     selectedTargetVector.x--;
                     selectedTargetVector.y++;
+                    soundPlayer.PlaySound(2,1, true);
                 }
 
             }
@@ -610,6 +655,7 @@ public class BattleUI : MonoBehaviour
             {
                 selectedTargetVector.x++;
                 selectedTargetVector.y++;
+                soundPlayer.PlaySound(2,1, true);
             }
 
         }
@@ -622,6 +668,7 @@ public class BattleUI : MonoBehaviour
             {
                 selectedTargetVector.x--;
                 selectedTargetVector.y--;
+                soundPlayer.PlaySound(2,1, true);
             }
 
         }

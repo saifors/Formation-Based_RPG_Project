@@ -26,6 +26,7 @@ public class TitleScreen_Script : MonoBehaviour
     public Text qualityText;
     public OptionsManager options;
     public CharacterStats charStats;
+    public SoundPlayer soundPlayer;
 
     // Use this for initialization
     void Start ()
@@ -35,6 +36,7 @@ public class TitleScreen_Script : MonoBehaviour
         transition = GameObject.FindGameObjectWithTag("Manager").GetComponent<TransitionManager>();
         options = transition.GetComponent<OptionsManager>();
         charStats = transition.GetComponent<CharacterStats>();
+        soundPlayer = transition.GetComponent<SoundPlayer>();
         UpdateVideoSettingsText();
 
         unselectedColor = new Color(0.66f, 0.66f, 0.66f, 0.75f);
@@ -71,7 +73,11 @@ public class TitleScreen_Script : MonoBehaviour
         }
         else if(state == TitleState.Load)
         {
-            if (Input.GetKey(KeyCode.X)) CancelSelection();
+            if (Input.GetKey(KeyCode.X)) 
+            {
+                CancelSelection();
+                soundPlayer.PlaySound(0, 1, true);
+            }
 
             if (inputAxis <= -1)
                 {
@@ -84,7 +90,11 @@ public class TitleScreen_Script : MonoBehaviour
         }
         else if (state == TitleState.Options)
         {
-            if (Input.GetKey(KeyCode.X)) CancelSelection();
+            if (Input.GetKey(KeyCode.X)) 
+            {
+                CancelSelection();
+                soundPlayer.PlaySound(0, 1, true);
+            }
 
             if (inputAxis <= -1)
                 {
@@ -117,6 +127,7 @@ public class TitleScreen_Script : MonoBehaviour
     }
     public void ConfirmSelection(int optionNum)
     {
+        soundPlayer.PlaySound(0, 1, true);
         if (optionNum == 0) //New Game
         {
             // Set up first character for New game.
@@ -134,6 +145,7 @@ public class TitleScreen_Script : MonoBehaviour
         }
         else if (optionNum == 2)
         {
+            
             selectionImageGroup.SetActive(false);
             optionsPanel.SetActive(true);
             loadGamePanel.SetActive(false);
@@ -144,6 +156,7 @@ public class TitleScreen_Script : MonoBehaviour
     }
     public void CancelSelection()
     {
+        
         state = TitleState.Title;
         selectionImageGroup.SetActive(true);
         optionsPanel.SetActive(false);

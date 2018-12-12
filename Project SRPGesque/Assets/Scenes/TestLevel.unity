@@ -2893,6 +2893,7 @@ MonoBehaviour:
   attackSelection: {fileID: 1905569299}
   battleNotificationText: {fileID: 1654926146}
   battleNotificationBg: {fileID: 1194538684}
+  soundPlayer: {fileID: 0}
 --- !u!1 &720631785
 GameObject:
   m_ObjectHideFlags: 0
@@ -7316,6 +7317,7 @@ GameObject:
   - component: {fileID: 1888884847}
   - component: {fileID: 1888884848}
   - component: {fileID: 1888884849}
+  - component: {fileID: 1888884850}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Manager
@@ -7356,6 +7358,7 @@ MonoBehaviour:
   enemyDefeated: 0
   attackInfo: {fileID: 0}
   tileScript: {fileID: 0}
+  soundPlayer: {fileID: 1888884850}
 --- !u!4 &1888884845
 Transform:
   m_ObjectHideFlags: 0
@@ -7426,6 +7429,23 @@ MonoBehaviour:
   attackDescriptions: []
   attackStrengths: 
   attackMpCosts: 
+--- !u!114 &1888884850
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1888884843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8d9631edb6396d4eb9418743b11a8ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundClips:
+  - {fileID: 8300000, guid: e5851ee4b51e80246be1b29781456777, type: 3}
+  - {fileID: 8300000, guid: 5a7cda2761e4d9b4aa77a1694ea434b9, type: 3}
+  - {fileID: 8300000, guid: fe4246ec079e7bb41b2e2e8f1d6501dd, type: 3}
+  musicClips:
+  - {fileID: 8300000, guid: d150306745c4521448e2aa4856406374, type: 3}
 --- !u!1 &1892449245
 GameObject:
   m_ObjectHideFlags: 0
