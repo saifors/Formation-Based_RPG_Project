@@ -13,37 +13,37 @@ public class CharacterStats : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-		
+        //Debug.Log(PlayerPrefs.GetInt("Player0_TileID"));
 	}
 
-	public void CreateCharacterStats(int charID, int hp, int mp, int atk, int def, int res, int spd)
+	public void CreateCharacterStats(string alliance, int charID, int hp, int mp, int atk, int def, int res, int spd)
 	{
 		
-		PlayerPrefs.SetInt(charID + "Hp", hp);
-		PlayerPrefs.SetInt(charID + "Mp", mp);
-		PlayerPrefs.SetInt(charID + "Attack", atk);
-		PlayerPrefs.SetInt(charID + "Defense", def);
-		PlayerPrefs.SetInt(charID + "Resistance", res);
-		PlayerPrefs.SetInt(charID + "Speed", spd);
+		PlayerPrefs.SetInt(alliance + charID + "Hp", hp);
+		PlayerPrefs.SetInt(alliance + charID + "Mp", mp);
+		PlayerPrefs.SetInt(alliance + charID + "Attack", atk);
+		PlayerPrefs.SetInt(alliance + charID + "Defense", def);
+		PlayerPrefs.SetInt(alliance + charID + "Resistance", res);
+		PlayerPrefs.SetInt(alliance + charID + "Speed", spd);
 	}
-    public void CreateCharacterStats(int charID, int hp, int mp, int atk, int def, int res, int spd, Vector2 tiles)
+    public void CreateCharacterStats(string alliance, int charID, int hp, int mp, int atk, int def, int res, int spd, Vector2 tiles)
     {
 
-        PlayerPrefs.SetInt(charID + "Hp", hp);
-        PlayerPrefs.SetInt(charID + "Mp", mp);
-        PlayerPrefs.SetInt(charID + "Attack", atk);
-        PlayerPrefs.SetInt(charID + "Defense", def);
-        PlayerPrefs.SetInt(charID + "Resistance", res);
-        PlayerPrefs.SetInt(charID + "Speed", spd);
-        PlayerPrefs.SetFloat(charID + "_TileX", tiles.x);
-        PlayerPrefs.SetFloat(charID + "_TileY", tiles.y);
+        PlayerPrefs.SetInt(alliance + charID + "Hp", hp);
+        PlayerPrefs.SetInt(alliance + charID + "Mp", mp);
+        PlayerPrefs.SetInt(alliance + charID + "Attack", atk);
+        PlayerPrefs.SetInt(alliance + charID + "Defense", def);
+        PlayerPrefs.SetInt(alliance + charID + "Resistance", res);
+        PlayerPrefs.SetInt(alliance + charID + "Speed", spd);
+        PlayerPrefs.SetFloat(alliance + charID + "_TileX", tiles.x);
+        PlayerPrefs.SetFloat(alliance + charID + "_TileY", tiles.y);
         //PlayerPrefs.SetInt(charID + "_TileID", Mathf.FloorToInt(tiles.y + tiles.x * rowSize));
     }
 
-    public void SetTileOccupied(int charID, Vector2 tiles, int rowSize)
+    public void SetTileOccupied(string alliance, int charID, Vector2 tiles, int rowSize)
 	{
-        PlayerPrefs.SetFloat (charID + "_TileX", tiles.x);
-        PlayerPrefs.SetFloat (charID + "_TileY", tiles.y);
-        PlayerPrefs.SetInt (charID + "_TileID", Mathf.FloorToInt(tiles.y + tiles.x * rowSize));
+        PlayerPrefs.SetFloat (alliance + charID + "_TileX", tiles.x);
+        PlayerPrefs.SetFloat (alliance + charID + "_TileY", tiles.y);
+        PlayerPrefs.SetInt (alliance + charID + "_TileID", Mathf.FloorToInt(tiles.y + tiles.x * rowSize));
     }
 }

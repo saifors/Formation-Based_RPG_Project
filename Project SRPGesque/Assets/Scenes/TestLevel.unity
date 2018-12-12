@@ -4096,8 +4096,10 @@ MonoBehaviour:
   encounterMinimumPercent: 80
   battleMenu: {fileID: 1476578919}
   debugMenu: {fileID: 2045106482}
-  battleCharacterPrefab: {fileID: 0}
-  battleEnemyPrefab: {fileID: 0}
+  battleCharacterPrefab: {fileID: 1542637486942168, guid: d5258dd58b4531e478789f5a3bdfdf86,
+    type: 2}
+  battleEnemyPrefab: {fileID: 1542637486942168, guid: 51ea4118b8059774abc20c264d6167dd,
+    type: 2}
   partyMembers: 0
   characters: []
   activeCharacter: 0

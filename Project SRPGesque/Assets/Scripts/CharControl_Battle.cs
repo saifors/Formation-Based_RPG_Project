@@ -5,6 +5,8 @@ using UnityEngine;
 public class CharControl_Battle : MonoBehaviour 
 {
 	public int charId;
+    public int alliance;
+    public string allianceString;
     public int currentHp;
     public int currentMp;
     public int hp;
@@ -36,32 +38,42 @@ public class CharControl_Battle : MonoBehaviour
 		
 	}
 
-	public void Init(int charID)
+	public void Init(int charID, bool isPlayer)
 	{
-		hp = PlayerPrefs.GetInt(charID + "Hp");
-		mp = PlayerPrefs.GetInt(charID + "Mp");
-		atk = PlayerPrefs.GetInt(charID + "Attack");
-		def = PlayerPrefs.GetInt(charID + "Defense");
-		res = PlayerPrefs.GetInt(charID + "Resistance");
-		spd = PlayerPrefs.GetInt(charID + "Speed");
+        if(isPlayer)
+        {
+            alliance = 0;
+            allianceString = "Player";
+        }
+        else
+        {
+            alliance = 1;
+            allianceString = "Enemy";
+        }
+        hp = PlayerPrefs.GetInt(allianceString + charID + "Hp");
+		mp = PlayerPrefs.GetInt(allianceString + charID + "Mp");
+		atk = PlayerPrefs.GetInt(allianceString + charID + "Attack");
+		def = PlayerPrefs.GetInt(allianceString + charID + "Defense");
+		res = PlayerPrefs.GetInt(allianceString + charID + "Resistance");
+		spd = PlayerPrefs.GetInt(allianceString + charID + "Speed");
 
-        currentHp = PlayerPrefs.GetInt(charID + "Current Hp");
-        currentMp = PlayerPrefs.GetInt(charID + "Current Mp");
+        currentHp = PlayerPrefs.GetInt(allianceString + charID + "Current Hp");
+        currentMp = PlayerPrefs.GetInt(allianceString + charID + "Current Mp");
         if (currentHp > hp) currentHp = hp;
         if (currentMp > mp) currentMp = mp;
 
         attackInfo = GameObject.FindGameObjectWithTag("Manager").GetComponent<AttackInfoManager>();
         CalculateAttackNumber(charID);
 
-        tile.x = PlayerPrefs.GetFloat(charID + "_TileX");
-		tile.y = PlayerPrefs.GetFloat(charID + "_TileY");
+        tile.x = PlayerPrefs.GetFloat(allianceString + charID + "_TileX");
+		tile.y = PlayerPrefs.GetFloat(allianceString + charID + "_TileY");
         tileID = Mathf.FloorToInt(tile.y + tile.x* rowSize);
         //transform.position = 
     }
-    public void UpdateTileID()
+    public void UpdateTileID(string allianceString)
     {
-        tile.x = PlayerPrefs.GetFloat(charId + "_TileX");
-        tile.y = PlayerPrefs.GetFloat(charId + "_TileY");
+        tile.x = PlayerPrefs.GetFloat(allianceString + charId + "_TileX");
+        tile.y = PlayerPrefs.GetFloat(allianceString + charId + "_TileY");
         tileID = Mathf.FloorToInt(tile.y + tile.x * rowSize);
     }
     public void CalculateAttackNumber(int charID)
@@ -69,7 +81,7 @@ public class CharControl_Battle : MonoBehaviour
         maxAttacks = 6;
         //attacksAmount = PlayerPrefs.GetInt(charID + "AtkNum", 1);
 		attacksAmount = 3; //PLACEHOLDER
-        if (attacksAmount > maxAttacks) attacksAmount = maxAttacks; PlayerPrefs.SetInt(charID + "AtkNum", maxAttacks);
+        if (attacksAmount > maxAttacks) attacksAmount = maxAttacks; PlayerPrefs.SetInt(allianceString + charID + "AtkNum", maxAttacks);
         attacksLearned = new int[attacksAmount];
         attacksLearned[0] = 0;//Placheolders
         attacksLearned[1] = 1;

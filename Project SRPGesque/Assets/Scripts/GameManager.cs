@@ -69,12 +69,12 @@ public class GameManager : MonoBehaviour
             charControl[i] = characters[i].GetComponent<CharControl_Battle>();
             charControl[i].rowSize = tileScript.yTiles;
 
-            charStats.CreateCharacterStats(0, 10, 12, 5, 3, 2, 4); //PLACHEOLDER;
-            charStats.SetTileOccupied(0, new Vector2(3,4), tileScript.yTiles);
+            charStats.CreateCharacterStats("Player", 0, 10, 12, 5, 3, 2, 4); //PLACHEOLDER;
+            charStats.SetTileOccupied("Player", 0, new Vector2(3,4), tileScript.yTiles);
 
-            charControl[i].Init(i);
-            charControl[i].UpdateTileID();
-            PlaceCharacterOnTheirTile(i);
+            charControl[i].Init(i, true);
+            charControl[i].UpdateTileID("Player");
+            PlaceCharacterOnTheirTile("Player",i);
             tileScript.tiles[charControl[i].tileID].isOccupied = true;
         }
 
@@ -85,16 +85,16 @@ public class GameManager : MonoBehaviour
             enemyControl[i] = enemies[i].GetComponent<EnemyControl_Battle>();
             enemyControl[i].rowSize = tileScript.yTiles;
 
-            //charStats.CreateCharacterStats(0, 10, 12, 5, 3, 2, 4); //PLACHEOLDER;
-            //charStats.SetTileOccupied(0, new Vector2(3, 4), tileScript.yTiles);
+            charStats.CreateCharacterStats("Enemy", 0, 10, 12, 5, 3, 2, 4); //PLACHEOLDER;
+            charStats.SetTileOccupied("Enemy", 0, new Vector2(3, 4), tileScript.yTiles);
 
 
             // THIS NEEDS SOME WORK
 
 
-            enemyControl[i].Init(i);
-            enemyControl[i].UpdateTileID();
-            PlaceCharacterOnTheirTile(i);
+            enemyControl[i].Init(i, false);
+            enemyControl[i].UpdateTileID("Enemy");
+            PlaceCharacterOnTheirTile("Enemy", i);
             tileScript.tiles[enemyControl[i].tileID].isOccupied = true;
         }
 
@@ -189,13 +189,13 @@ public class GameManager : MonoBehaviour
     
     public void MoveFormation(int charID, Vector2 tiles)
     {
-        charStats.SetTileOccupied(charID, tiles, tileScript.yTiles);
-        charControl[charID].UpdateTileID();
-        PlaceCharacterOnTheirTile(charID);
+        charStats.SetTileOccupied("Player", charID, tiles, tileScript.yTiles);
+        charControl[charID].UpdateTileID("Player");
+        PlaceCharacterOnTheirTile("Player",charID);
     }
-    public void PlaceCharacterOnTheirTile(int charID)
+    public void PlaceCharacterOnTheirTile(string alliance, int charID)
     {
-        characters[charID].transform.position = tileScript.tileTransform[PlayerPrefs.GetInt(charID + "_TileID") ].position;
+        characters[charID].transform.position = tileScript.tileTransform[PlayerPrefs.GetInt(alliance + charID + "_TileID") ].position;
     }
 	public void RunFromBattle()
 	{
