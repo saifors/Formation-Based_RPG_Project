@@ -25,12 +25,20 @@ public class InputManager : MonoBehaviour
 
     void Update()
     {
+        if(Input.GetKeyDown(KeyCode.P))
+        {
+            gameManager.PauseToggle();
+        }
+        if (gameManager.isPaused) return;
         inputAxis.x = Input.GetAxisRaw("Horizontal");
         
         inputAxis.y = Input.GetAxisRaw("Vertical");
         if(Input.GetKey(KeyCode.LeftShift)) playerController.isRunning = true;
         else playerController.isRunning = false;
 
+        
+
+         
         if (Input.GetKeyDown(KeyCode.Z))
         {
             if (gameManager.gameState == GameManager.GameState.Battle)
@@ -60,6 +68,7 @@ public class InputManager : MonoBehaviour
             if (battleUI.selecting != BattleUI.SelectingMenu.selectingTarget) battleUI.ReturnToCommandSelection();
             else if (battleUI.selecting == BattleUI.SelectingMenu.selectingTarget) { battleUI.ReturnToAttackSelect(); }
         }
+        
         
         if(gameManager.gameState == GameManager.GameState.Overworld)
         {

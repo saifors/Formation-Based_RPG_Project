@@ -116,7 +116,9 @@ public class BattleUI : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-		if(scrollCooldownCounter <= scrollCooldown + 0.5f) scrollCooldownCounter += Time.deltaTime;
+        if (gameManager.isPaused) return;
+
+        if (scrollCooldownCounter <= scrollCooldown + 0.5f) scrollCooldownCounter += Time.deltaTime;
         //Selecting action Command
         if (selecting == SelectingMenu.selectingAction)
 		{
