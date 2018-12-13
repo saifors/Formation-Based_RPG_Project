@@ -16,7 +16,7 @@ public class CharacterStats : MonoBehaviour {
         //Debug.Log(PlayerPrefs.GetInt("Player0_TileID"));
 	}
 
-	public void CreateCharacterStats(string alliance, int charID, int hp, int mp, int atk, int def, int res, int spd)
+	public void CreateCharacterStats(string alliance, int charID, int level, int hp, int mp, int atk, int def, int res, int spd)
 	{
 		
 		PlayerPrefs.SetInt(alliance + charID + "Hp", hp);
@@ -26,10 +26,12 @@ public class CharacterStats : MonoBehaviour {
 		PlayerPrefs.SetInt(alliance + charID + "Resistance", res);
 		PlayerPrefs.SetInt(alliance + charID + "Speed", spd);
 
+        PlayerPrefs.SetInt(alliance + charID + "Level", level);
+
         PlayerPrefs.SetInt(alliance + charID + "Current Hp", hp);
         PlayerPrefs.SetInt(alliance + charID + "Current Mp", mp);
     }
-    public void CreateCharacterStats(string alliance, int charID, int hp, int mp, int atk, int def, int res, int spd, Vector2 tiles)
+    public void CreateCharacterStats(string alliance, int charID, int level, int hp, int mp, int atk, int def, int res, int spd, Vector2 tiles)
     {
 
         PlayerPrefs.SetInt(alliance + charID + "Hp", hp);
@@ -38,6 +40,9 @@ public class CharacterStats : MonoBehaviour {
         PlayerPrefs.SetInt(alliance + charID + "Defense", def);
         PlayerPrefs.SetInt(alliance + charID + "Resistance", res);
         PlayerPrefs.SetInt(alliance + charID + "Speed", spd);
+
+        PlayerPrefs.SetInt(alliance + charID + "Level", level);
+
         PlayerPrefs.SetFloat(alliance + charID + "_TileX", tiles.x);
         PlayerPrefs.SetFloat(alliance + charID + "_TileY", tiles.y);
         //PlayerPrefs.SetInt(charID + "_TileID", Mathf.FloorToInt(tiles.y + tiles.x * rowSize));

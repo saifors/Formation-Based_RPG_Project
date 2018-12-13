@@ -77,6 +77,11 @@ public class BattleUI : MonoBehaviour
     public float maxEnemyBarPosX = 85;
     public GameObject enemyInfoPrefab;
     public EnemyInfoPopUp[] enemyInfoPopUp;
+    public Transform partyMemberInfoBoxes;
+    public float maxPlayerBarWidth = 235.59f;
+    public float maxPlayerBarPosX = 0;
+    public GameObject playerInfoPrefab;
+    public PlayerInfoBox[] playerInfoBox;
 
     // Use this for initialization
     public void Init () 
@@ -102,6 +107,8 @@ public class BattleUI : MonoBehaviour
         selectedTargetsTransform = target.GetComponent<Transform>();
         selectedTargetsTransform.gameObject.SetActive(false);
 
+        
+
         maxEnemyBarWidth = 170;
         maxEnemyBarPosX = 85;
         //This should be in it's own void that is called upon an initializeEnounter
@@ -112,14 +119,31 @@ public class BattleUI : MonoBehaviour
             
             obj.transform.SetParent(enemyBarParent);
             obj.transform.localScale = new Vector3(1,1,1);
+            obj.transform.localPosition = new Vector3(-118, 318, 0); //placehodler coordinates
             obj.name = "EnemyInfo_" + i;
             
             enemyInfoPopUp[i] = obj.GetComponent<EnemyInfoPopUp>();
+            enemyInfoPopUp[i].levelText.text = gameManager.enemyControl[i].level.ToString();
             
             //Debug.Log("Testing this shit");
 
         }
+
+        //PlaceHolder, will be in a for and it's own void later on
+        playerInfoBox = new PlayerInfoBox[gameManager.enemyAmount];
+        for(int i = 0; i < gameManager.partyMembers; i++)
+        {
+            GameObject obj = Instantiate(playerInfoPrefab);
+            obj.transform.SetParent(partyMemberInfoBoxes);
+            obj.transform.localScale = new Vector3(1, 1, 1);
+            obj.transform.localPosition = new Vector3(-559, -21.8f, 0); //placehodler coordinates
+            obj.name = "PlayerInfo_" + i;
+
+            playerInfoBox[i] = obj.GetComponent<PlayerInfoBox>();
+            playerInfoBox[i].levelNum.text = "Lv." + gameManager.charControl[i].level.ToString();
+        }
         
+
 
         attackName = attackNames.GetComponentsInChildren<Text>();
         attackNamePos = new Transform[attackName.Length];
@@ -481,6 +505,24 @@ public class BattleUI : MonoBehaviour
         //MP Bar
         enemyInfoPopUp[enemyID].barTransform[1].sizeDelta = new Vector2(mpWidth, 11.5f);
         
+    }
+    public void UpdatePlayerBar(int playerID)
+    {
+        float lifePercent = (gameManager.charControl[playerID].currentHp * 100) / gameManager.charControl[playerID].hp;
+        float mpPercent = (gameManager.charControl[playerID].currentMp * 100) / gameManager.charControl[playerID].mp;
+
+        float hpWidth = (lifePercent * maxPlayerBarWidth) / 100;
+        float hpPosX = ((maxPlayerBarPosX * lifePercent) / 100) - maxPlayerBarPosX;
+
+        float mpWidth = (mpPercent * maxPlayerBarWidth) / 100;
+        float mpPosX = ((maxPlayerBarPosX * mpPercent) / 100) - maxPlayerBarPosX;
+
+        //HP Bar 
+        playerInfoBox[playerID].barTransform[0].sizeDelta = new Vector2(hpWidth, 42.86f);
+        playerInfoBox[playerID].barTransform[0].localPosition = new Vector2(hpPosX, 0);
+        //MP Bar
+        playerInfoBox[playerID].barTransform[1].sizeDelta = new Vector2(mpWidth, 42.86f);
+        playerInfoBox[playerID].barTransform[1].localPosition = new Vector2(mpPosX, 0);
     }
 
     public void ChangeNotifText(string notifText)

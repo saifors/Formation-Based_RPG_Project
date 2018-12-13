@@ -7,6 +7,8 @@ public class CharControl_Battle : MonoBehaviour
 	public int charId;
     public int alliance;
     public string allianceString;
+
+    public int level;
     public int currentHp;
     public int currentMp;
     public int hp;
@@ -54,6 +56,9 @@ public class CharControl_Battle : MonoBehaviour
             alliance = 1;
             allianceString = "Enemy";
         }
+
+        level = PlayerPrefs.GetInt(allianceString + charID + "Level");
+
         hp = PlayerPrefs.GetInt(allianceString + charID + "Hp");
 		mp = PlayerPrefs.GetInt(allianceString + charID + "Mp");
 		atk = PlayerPrefs.GetInt(allianceString + charID + "Attack");

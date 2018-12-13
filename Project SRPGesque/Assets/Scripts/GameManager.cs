@@ -70,10 +70,10 @@ public class GameManager : MonoBehaviour
         enemyControl = new EnemyControl_Battle[enemyAmount];
 
 
-        charStats.CreateCharacterStats("Player", 0, 10, 12, 5, 3, 2, 4); //PLACHEOLDER;
+        charStats.CreateCharacterStats("Player", 0, 1, 10, 12, 5, 3, 2, 4); //PLACHEOLDER;
         charStats.SetTileOccupied("Player", 0, new Vector2(3, 4), tileScript.yTiles);
 
-        charStats.CreateCharacterStats("Enemy", 0, 70, 12, 5, 3, 2, 4); //PLACHEOLDER;
+        charStats.CreateCharacterStats("Enemy", 0, 4, 70, 12, 5, 3, 2, 4); //PLACHEOLDER;
         charStats.SetTileOccupied("Enemy", 0, new Vector2(2, 2), tileScript.yTiles);
 
 
