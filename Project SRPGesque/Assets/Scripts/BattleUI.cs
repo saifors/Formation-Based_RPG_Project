@@ -71,9 +71,15 @@ public class BattleUI : MonoBehaviour
 	public Text battleNotificationText;
     public Image battleNotificationBg;
     public SoundPlayer soundPlayer;
+    [Header("HP, MP and SP Bars")]
+    public Transform enemyBarParent;
+    public float maxEnemyBarWidth = 170;
+    public float maxEnemyBarPosX = 85;
+    public GameObject enemyInfoPrefab;
+    public EnemyInfoPopUp[] enemyInfoPopUp;
 
-	// Use this for initialization
-	void Start () 
+    // Use this for initialization
+    public void Init () 
 	{
 		//To test menu stuff.
 		selecting = SelectingMenu.selectingAction;
@@ -86,15 +92,34 @@ public class BattleUI : MonoBehaviour
         
         soundPlayer = gameManager.soundPlayer;
         
-        GameObject obj;
-        obj = Instantiate(cursor);
-        selectedTileIndicator = obj.GetComponent<Transform>();
+        GameObject objCursor;
+        objCursor = Instantiate(cursor);
+        selectedTileIndicator = objCursor.GetComponent<Transform>();
         selectedTileIndicator.gameObject.SetActive(false);
 
         GameObject target;
         target = Instantiate(targetCursor);
         selectedTargetsTransform = target.GetComponent<Transform>();
         selectedTargetsTransform.gameObject.SetActive(false);
+
+        maxEnemyBarWidth = 170;
+        maxEnemyBarPosX = 85;
+        //This should be in it's own void that is called upon an initializeEnounter
+        enemyInfoPopUp = new EnemyInfoPopUp[gameManager.enemyAmount];
+        for (int i = 0; i < gameManager.enemyAmount; i++)
+        {
+            GameObject obj = Instantiate(enemyInfoPrefab);
+            
+            obj.transform.SetParent(enemyBarParent);
+            obj.transform.localScale = new Vector3(1,1,1);
+            obj.name = "EnemyInfo_" + i;
+            
+            enemyInfoPopUp[i] = obj.GetComponent<EnemyInfoPopUp>();
+            
+            //Debug.Log("Testing this shit");
+
+        }
+        
 
         attackName = attackNames.GetComponentsInChildren<Text>();
         attackNamePos = new Transform[attackName.Length];
@@ -104,7 +129,7 @@ public class BattleUI : MonoBehaviour
         }
         attackSelected = Mathf.FloorToInt(atkSelVector.y + (atkSelVector.x * 2));
         attackSelection.position = attackNamePos[attackSelected].position;
-        //attackName[0].text = gameManager.attackInfo.attackNames[0];
+        
     
         attackMenu.SetActive(false);
         battleMenu.SetActive(false);
@@ -438,6 +463,25 @@ public class BattleUI : MonoBehaviour
         attackMenu.SetActive(true);
     }
 
+    public void UpdateEnemyBars(int enemyID)
+    {
+        //Percentage of life = (life*100)/MaxHP
+        float lifePercent = (gameManager.enemyControl[enemyID].currentHp*100)/ gameManager.enemyControl[enemyID].hp;
+        float mpPercent = (gameManager.enemyControl[enemyID].currentMp*100)/ gameManager.enemyControl[enemyID].mp;
+
+        float hpWidth = (lifePercent * maxEnemyBarWidth)/100;
+        float hpPosX = ((maxEnemyBarPosX * lifePercent) / 100) - maxEnemyBarPosX;
+
+        float mpWidth = (mpPercent * maxEnemyBarWidth)/100;
+        float mpPosX = ((maxEnemyBarPosX * mpPercent) / 100) - maxEnemyBarPosX;
+
+        //HP Bar 
+        enemyInfoPopUp[enemyID].barTransform[0].sizeDelta = new Vector2(hpWidth, 15.42f);
+        enemyInfoPopUp[enemyID].barTransform[0].localPosition = new Vector2(hpPosX, 0);
+        //MP Bar
+        enemyInfoPopUp[enemyID].barTransform[1].sizeDelta = new Vector2(mpWidth, 11.5f);
+        
+    }
 
     public void ChangeNotifText(string notifText)
 	{

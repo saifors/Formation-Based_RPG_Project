@@ -95,7 +95,9 @@ public class CharControl_Battle : MonoBehaviour
     public void Damage(int attackPower)
     {
         currentHp -= attackPower/2;
+        gameManager.battleUI.UpdateEnemyBars(charId);
         if (currentHp <= 0) Die();
+        
     }
 
     public void Die()
@@ -106,7 +108,8 @@ public class CharControl_Battle : MonoBehaviour
         gameObject.SetActive(false);
         if(alliance == 1)//if enemy
         {
-            for(int i = 0; i < gameManager.enemyAmount; i++)
+            gameManager.battleUI.enemyInfoPopUp[charId].gameObject.SetActive(false);
+            for (int i = 0; i < gameManager.enemyAmount; i++)
             {
                 if(gameManager.enemyControl[i].isDead == true)
                 {

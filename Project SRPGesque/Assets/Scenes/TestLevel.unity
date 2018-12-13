@@ -2968,6 +2968,39 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &709639447
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 709639448}
+  m_Layer: 5
+  m_Name: EnemyBars
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &709639448
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 709639447}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1476578920}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0.000061035, y: 0.022461}
+  m_SizeDelta: {x: 1920, y: 1080.8}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &711537383
 Prefab:
   m_ObjectHideFlags: 0
@@ -3172,6 +3205,12 @@ MonoBehaviour:
   battleNotificationText: {fileID: 1654926146}
   battleNotificationBg: {fileID: 1194538684}
   soundPlayer: {fileID: 0}
+  enemyBarParent: {fileID: 709639448}
+  maxEnemyBarWidth: 250
+  maxEnemyBarPosX: 125
+  enemyInfoPrefab: {fileID: 1856557771946256, guid: 01d196fd9a4f1df4fb4a5787c459a8dd,
+    type: 2}
+  enemyInfoPopUp: []
 --- !u!1 &720631785
 GameObject:
   m_ObjectHideFlags: 0
@@ -6408,6 +6447,7 @@ RectTransform:
   - {fileID: 1775945081}
   - {fileID: 500298186}
   - {fileID: 2139081314}
+  - {fileID: 709639448}
   m_Father: {fileID: 715253074}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -8253,6 +8293,7 @@ MonoBehaviour:
   gameState: 0
   randomEcountersOn: 1
   encounterMinimumPercent: 80
+  battleUI: {fileID: 0}
   battleMenu: {fileID: 1476578919}
   debugMenu: {fileID: 2045106482}
   battleCharacterPrefab: {fileID: 1542637486942168, guid: d5258dd58b4531e478789f5a3bdfdf86,

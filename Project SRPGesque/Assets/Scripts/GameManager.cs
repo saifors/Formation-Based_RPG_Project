@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     public GameState gameState;
     public bool randomEcountersOn;
     public float encounterMinimumPercent = 100;
-    private BattleUI battleUI;
+    public BattleUI battleUI;
     public GameObject battleMenu;
     public GameObject debugMenu;
     public GameObject battleCharacterPrefab;
@@ -120,7 +120,7 @@ public class GameManager : MonoBehaviour
 
 
         MoveFormation(0, charControl[0].tile); //PLACEHOLDER
-
+        battleUI.Init();
     }
 
 
