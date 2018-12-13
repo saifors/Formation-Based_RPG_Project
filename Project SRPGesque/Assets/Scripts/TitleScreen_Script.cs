@@ -70,13 +70,14 @@ public class TitleScreen_Script : MonoBehaviour
             }
             else scrollCooldownCounter += Time.deltaTime;
             if (Input.GetKey(KeyCode.Z)) ConfirmSelection(titleSelection);
+            if(Input.GetKeyDown(KeyCode.Z))soundPlayer.PlaySound(0, 1, true);
         }
         else if(state == TitleState.Load)
         {
             if (Input.GetKey(KeyCode.X)) 
             {
                 CancelSelection();
-                soundPlayer.PlaySound(0, 1, true);
+                soundPlayer.PlaySound(1, 1, true);
             }
 
             if (inputAxis <= -1)
@@ -93,7 +94,7 @@ public class TitleScreen_Script : MonoBehaviour
             if (Input.GetKey(KeyCode.X)) 
             {
                 CancelSelection();
-                soundPlayer.PlaySound(0, 1, true);
+                soundPlayer.PlaySound(1, 1, true);
             }
 
             if (inputAxis <= -1)
@@ -127,7 +128,7 @@ public class TitleScreen_Script : MonoBehaviour
     }
     public void ConfirmSelection(int optionNum)
     {
-        soundPlayer.PlaySound(0, 1, true);
+        
         if (optionNum == 0) //New Game
         {
             // Set up first character for New game.

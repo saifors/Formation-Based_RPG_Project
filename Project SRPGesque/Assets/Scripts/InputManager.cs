@@ -25,7 +25,8 @@ public class InputManager : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.Escape)) Application.Quit();
+        if (Input.GetKeyDown(KeyCode.P))
         {
             gameManager.PauseToggle();
         }
