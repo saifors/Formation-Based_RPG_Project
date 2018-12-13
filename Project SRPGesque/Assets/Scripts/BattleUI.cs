@@ -435,9 +435,11 @@ public class BattleUI : MonoBehaviour
                 if(gameManager.enemyControl[i].tileID == selectedTarget)
                 {
                     gameManager.enemyControl[i].Damage(gameManager.attackInfo.attackStrengths[gameManager.charControl[gameManager.activeCharacter].attacksLearned[attackSelected]]);
+                    
                 }
 
             }
+            //gameManager.charControl[gameManager.activeCharacter].UseMp(gameManager.attackInfo.attackMpCosts[gameManager.charControl[gameManager.activeCharacter].attacksLearned[attackSelected]]);
         }
         else soundPlayer.PlaySound(2,1, true);
         
@@ -506,7 +508,7 @@ public class BattleUI : MonoBehaviour
         enemyInfoPopUp[enemyID].barTransform[1].sizeDelta = new Vector2(mpWidth, 11.5f);
         
     }
-    public void UpdatePlayerBar(int playerID)
+    public void UpdatePlayerBars(int playerID)
     {
         float lifePercent = (gameManager.charControl[playerID].currentHp * 100) / gameManager.charControl[playerID].hp;
         float mpPercent = (gameManager.charControl[playerID].currentMp * 100) / gameManager.charControl[playerID].mp;

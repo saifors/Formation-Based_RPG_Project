@@ -97,10 +97,17 @@ public class CharControl_Battle : MonoBehaviour
         attacksLearned[2] = 2;
     }
 
+    public void UseMp(int mpAmount)
+    {
+        currentMp -= mpAmount;
+        //if(alliance == 0) gameManager.battleUI.UpdatePlayerBars(charId);
+    }
+
     public void Damage(int attackPower)
     {
         currentHp -= attackPower/2;
-        gameManager.battleUI.UpdateEnemyBars(charId);
+        if(alliance == 1) gameManager.battleUI.UpdateEnemyBars(charId);
+
         if (currentHp <= 0) Die();
         
     }
