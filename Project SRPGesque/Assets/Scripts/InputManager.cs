@@ -44,25 +44,25 @@ public class InputManager : MonoBehaviour
         {
             if (gameManager.gameState == GameManager.GameState.Battle)
             {
-                if (battleUI.selecting == BattleUI.SelectingMenu.selectingAction) battleUI.ConfirmSelectedCommand();
-                else if (battleUI.selecting == BattleUI.SelectingMenu.selectingMove)
+                if (gameManager.selecting == GameManager.SelectingMenu.selectingAction) gameManager.ConfirmSelectedCommand();
+                else if (gameManager.selecting == GameManager.SelectingMenu.selectingMove)
                 {
-                    if (!gameManager.tileScript.tiles[battleUI.selectedTile].isOccupied)
+                    if (!gameManager.tileScript.tiles[gameManager.selectedTile].isOccupied)
                     {
                         gameManager.tileScript.tiles[gameManager.charControl[0].tileID].isOccupied = false;//this one first before its tile gets changed
-                        gameManager.MoveFormation(0, battleUI.tileSelection);
-                        gameManager.tileScript.tiles[battleUI.selectedTile].isOccupied = true;
+                        gameManager.MoveFormation(0, gameManager.tileSelection);
+                        gameManager.tileScript.tiles[gameManager.selectedTile].isOccupied = true;
                     }
                 }
-                else if (battleUI.selecting == BattleUI.SelectingMenu.selectingAttack)
+                else if (gameManager.selecting == GameManager.SelectingMenu.selectingAttack)
                 {
-                    battleUI.ConfirmAttackSelection();
+                    gameManager.ConfirmAttackSelection();
                 }
-                else if(battleUI.selecting == BattleUI.SelectingMenu.selectingTarget)
+                else if(gameManager.selecting == GameManager.SelectingMenu.selectingTarget)
                 {
-                    battleUI.ConfirmAttackTarget();
+                    gameManager.ConfirmAttackTarget();
                 }
-                else if(battleUI.selecting == BattleUI.SelectingMenu.victoryScreen)
+                else if(gameManager.selecting == GameManager.SelectingMenu.victoryScreen)
                 {
                     battleUI.victoryPanel.SetActive(false);
                     gameManager.EndBattle();
@@ -71,8 +71,8 @@ public class InputManager : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.X))
         {
-            if (battleUI.selecting != BattleUI.SelectingMenu.selectingTarget) battleUI.ReturnToCommandSelection();
-            else if (battleUI.selecting == BattleUI.SelectingMenu.selectingTarget) { battleUI.ReturnToAttackSelect(); }
+            if (gameManager.selecting != GameManager.SelectingMenu.selectingTarget) gameManager.ReturnToCommandSelection();
+            else if (gameManager.selecting == GameManager.SelectingMenu.selectingTarget) { gameManager.ReturnToAttackSelect(); }
         }
         
         
