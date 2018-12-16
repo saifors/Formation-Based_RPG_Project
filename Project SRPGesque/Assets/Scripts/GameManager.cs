@@ -319,13 +319,9 @@ public class GameManager : MonoBehaviour
                 //tile - ytiles + 1
                 tileSelection.x--;
                 tileSelection.y++;
-                if (tileSelection.x < selectionLimit[0].x || tileSelection.y >= selectionLimit[1].y)
-                {
-                    tileSelection.x++;
-                    tileSelection.y--;
-                    soundPlayer.PlaySound(2,1, true);
-                }
-
+                if (tileSelection.x < selectionLimit[0].x && tileSelection.y >= selectionLimit[1].y) soundPlayer.PlaySound(2,1, true);
+                if (tileSelection.x < selectionLimit[0].x) tileSelection.x++;
+                if (tileSelection.y >= selectionLimit[1].y) tileSelection.y--;
             }
         }
         else if (axis.x < 0) //Left
@@ -358,12 +354,9 @@ public class GameManager : MonoBehaviour
                 //tile + ytiles - 1
                 tileSelection.x++;
                 tileSelection.y--;
-                if (tileSelection.x >= selectionLimit[1].x || tileSelection.y < selectionLimit[0].y)
-                {
-                    tileSelection.x--;
-                    tileSelection.y++;
-                    soundPlayer.PlaySound(2,1, true);
-                }
+                if (tileSelection.x >= selectionLimit[1].x && tileSelection.y < selectionLimit[0].y) soundPlayer.PlaySound(2,1, true);
+                if(tileSelection.x >= selectionLimit[1].x) tileSelection.x--;
+                if (tileSelection.y < selectionLimit[0].y) tileSelection.y++;
 
             }
         }
@@ -372,12 +365,9 @@ public class GameManager : MonoBehaviour
             //tile - ytiles - 1
             tileSelection.x--;
             tileSelection.y--;
-            if (tileSelection.x < selectionLimit[0].x || tileSelection.y < selectionLimit[0].y)
-            {
-                tileSelection.x++;
-                tileSelection.y++;
-                soundPlayer.PlaySound(2,1, true);
-            }
+            if (tileSelection.x < selectionLimit[0].x && tileSelection.y < selectionLimit[0].y) soundPlayer.PlaySound(2,1, true);
+            if(tileSelection.x < selectionLimit[0].x) tileSelection.x++;
+            if(tileSelection.y < selectionLimit[0].y) tileSelection.y++;
 
         }
         else if (axis.y < 0) //Down
@@ -385,12 +375,11 @@ public class GameManager : MonoBehaviour
             //tile + ytiles + 1
             tileSelection.x++;
             tileSelection.y++;
-            if (tileSelection.x >= selectionLimit[1].x || tileSelection.y >= selectionLimit[1].y)
-            {
-                tileSelection.x--;
-                tileSelection.y--;
-                soundPlayer.PlaySound(2,1, true);
-            }
+            if (tileSelection.y >= selectionLimit[1].y && tileSelection.x >= selectionLimit[1].x) soundPlayer.PlaySound(2, 1, true);
+
+            if (tileSelection.y >= selectionLimit[1].y) tileSelection.y--;    
+            if(tileSelection.x >= selectionLimit[1].x) tileSelection.x--;
+            
 
         }
 
