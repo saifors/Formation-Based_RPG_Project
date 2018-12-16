@@ -82,6 +82,7 @@ public class InputManager : MonoBehaviour
         }
         else if(gameManager.gameState == GameManager.GameState.Battle)
         {
+            gameManager.SetAxis(inputAxis);
             battleUI.SetAxis(inputAxis);
         }
         

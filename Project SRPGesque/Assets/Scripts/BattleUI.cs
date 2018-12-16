@@ -14,7 +14,7 @@ public class BattleUI : MonoBehaviour
 	public CommandSelection command;
 	
 	
-	private GameManager gameManager;
+	public GameManager gameManager;
 
 	[Header("Notifications")]
     public GameObject notifPanel;
@@ -84,39 +84,7 @@ public class BattleUI : MonoBehaviour
         soundPlayer = gameManager.soundPlayer;
         
         maxEnemyBarWidth = 170;
-        maxEnemyBarPosX = 85;
-        //This should be in it's own void that is called upon an initializeEnounter
-        enemyInfoPopUp = new EnemyInfoPopUp[gameManager.enemyAmount];
-        for (int i = 0; i < gameManager.enemyAmount; i++)
-        {
-            GameObject obj = Instantiate(enemyInfoPrefab);
-            
-            obj.transform.SetParent(enemyBarParent);
-            obj.transform.localScale = new Vector3(1,1,1);
-            obj.transform.localPosition = new Vector3(-118, 318, 0); //placehodler coordinates
-            obj.name = "EnemyInfo_" + i;
-            
-            enemyInfoPopUp[i] = obj.GetComponent<EnemyInfoPopUp>();
-            enemyInfoPopUp[i].levelText.text = gameManager.enemyControl[i].level.ToString();
-            
-            //Debug.Log("Testing this shit");
-
-        }
-
-        //PlaceHolder, will be in a for and it's own void later on
-        playerInfoBox = new PlayerInfoBox[gameManager.enemyAmount];
-        for(int i = 0; i < gameManager.partyMembers; i++)
-        {
-            GameObject obj = Instantiate(playerInfoPrefab);
-            obj.transform.SetParent(partyMemberInfoBoxes);
-            obj.transform.localScale = new Vector3(1, 1, 1);
-            obj.transform.localPosition = new Vector3(-559, -21.8f, 0); //placehodler coordinates
-            obj.name = "PlayerInfo_" + i;
-
-            playerInfoBox[i] = obj.GetComponent<PlayerInfoBox>();
-            playerInfoBox[i].levelNum.text = "Lv." + gameManager.charControl[i].level.ToString();
-        }
-        
+        maxEnemyBarPosX = 85;        
 
 
         attackName = attackNames.GetComponentsInChildren<Text>();
@@ -140,7 +108,7 @@ public class BattleUI : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-        if (gameManager.isPaused) return;
+        //if (gameManager.isPaused) return;
 
         if (scrollCooldownCounter <= scrollCooldown + 0.5f) scrollCooldownCounter += Time.deltaTime;
         //Selecting action Command
@@ -235,6 +203,39 @@ public class BattleUI : MonoBehaviour
     public void SetAxis(Vector2 inputAxis)
     {
         axis = inputAxis;
+    }
+
+    public void InitializeInfoBoxes()
+    {
+        enemyInfoPopUp = new EnemyInfoPopUp[gameManager.enemyAmount];
+        for (int i = 0; i < gameManager.enemyAmount; i++)
+        {
+            GameObject obj = Instantiate(enemyInfoPrefab);
+
+            obj.transform.SetParent(enemyBarParent);
+            obj.transform.localScale = new Vector3(1, 1, 1);
+            obj.transform.localPosition = new Vector3(-118, 318, 0); //placehodler coordinates
+            obj.name = "EnemyInfo_" + i;
+
+            enemyInfoPopUp[i] = obj.GetComponent<EnemyInfoPopUp>();
+            enemyInfoPopUp[i].levelText.text = gameManager.enemyControl[i].level.ToString();
+
+            //Debug.Log("Testing this shit");
+
+        }
+        
+        playerInfoBox = new PlayerInfoBox[gameManager.enemyAmount];
+        for (int i = 0; i < gameManager.partyMembers; i++)
+        {
+            GameObject obj = Instantiate(playerInfoPrefab);
+            obj.transform.SetParent(partyMemberInfoBoxes);
+            obj.transform.localScale = new Vector3(1, 1, 1);
+            obj.transform.localPosition = new Vector3(-559, -21.8f, 0); //placehodler coordinates
+            obj.name = "PlayerInfo_" + i;
+
+            playerInfoBox[i] = obj.GetComponent<PlayerInfoBox>();
+            playerInfoBox[i].levelNum.text = "Lv." + gameManager.charControl[i].level.ToString();
+        }
     }
 
     public void UpdateAttackInfo(int attack)
