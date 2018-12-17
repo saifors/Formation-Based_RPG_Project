@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -53,7 +53,8 @@ public class GameManager : MonoBehaviour
         private float tileSelectCooldownCounter;
         
     //Battle - Attack
-        public GameObject targetCursor; //Prefab    
+        public GameObject targetCursor; //Prefab
+        public int currentAttack;    
     //Tiles
         [HideInInspector] public TileScript tileScript;
         public int tileAmount;
@@ -63,12 +64,15 @@ public class GameManager : MonoBehaviour
         public Vector2[] selectionLimit = new Vector2[4]; //Start Limit and End Limit for Move and for Target.
         
         private Transform selectedTileIndicator;
+        
 
     //Target
         public int targetAmount; //How many Tiles are in the range of the attack
+        
+        public int[] selectedTargets; // All tileIDs affected by current attack;
         public Vector2[] selectedTargetVector; //X and Y of all tiles in range
-        public int[] selectedTarget; // All tileIDs affected by current attack;
         public Transform[] selectedTargetsTransform;
+        
     
 // Pause Stuff
     public bool isPaused;
@@ -185,6 +189,16 @@ public class GameManager : MonoBehaviour
                     FormationMovement();
                 }
             }
+            if(selecting == SelectingMenu.selectingTarget)
+            {
+                if(tileSelectCooldownCounter < 1) tileSelectCooldownCounter += Time.deltaTime;
+                
+                if(tileSelectCooldownCounter >= 0.25f) // This section below is utter prefection don't touch
+                {
+                    AttackTargetMovement();
+                    
+                }
+            }
 
             if (debug)
             {
@@ -247,6 +261,32 @@ public class GameManager : MonoBehaviour
         {
             //This is all going to change once it's an array of course
             soundPlayer.PlaySound(0,1, true);
+            GameObject[] objTarget;
+            
+            currentAttack = charControl[activeCharacter].attacksLearned[battleUI.attackOptionSelected];
+            
+            targetAmount = 0;
+            for(int i = 0; i < attackInfo.attackRangeSize[currentAttack].x * attackInfo.attackRangeSize[currentAttack].y; i++)
+            {
+                if(attackInfo.attackRangeActive[currentAttack][i] == 1) 
+                {
+                    targetAmount++;
+                }
+            }
+
+            objTarget = new GameObject[targetAmount];
+            selectedTargetsTransform = new Transform[targetAmount];
+
+            for (int i = 0; i < targetAmount; i++)
+            {
+                objTarget[i] = Instantiate(targetCursor);
+                objTarget[i].name = "TargetCursor_" + i;
+                selectedTargetsTransform[i] = objTarget[i].GetComponent<Transform>();
+            }
+            
+            TargetPlacement();
+
+
             //selectedTargetVector[0] = Vector2.zero;
             //selectedTarget[i] = selectedTargetVector[i].x + selectedTargetVector[i].y;
             //selectedTargetsTransform[i].gameObject.SetActive(true);
@@ -254,9 +294,16 @@ public class GameManager : MonoBehaviour
             battleUI.attackMenu.SetActive(false);
             selecting = SelectingMenu.selectingTarget;
         }
-            public void ReturnToAttackSelect()
+        public void ReturnToAttackSelect()
         {
             soundPlayer.PlaySound(1,1, true);
+
+            for(int i = 0; i < targetAmount; i++) //Eliminate the target cursors.
+            {
+                Destroy(selectedTargetsTransform[i].gameObject);
+            }
+            selectedTargetsTransform = new Transform[0];
+
             battleUI.InitiateAttackSelection(); 
         }
 
@@ -394,8 +441,31 @@ public class GameManager : MonoBehaviour
     }
     public void AttackTargetMovement()
     {
-        
+        //attackInfo.attackRangeSize[];
     }
+
+    public void TargetPlacement()
+    {
+        //Calculate which should be selected Targets using 
+        int targetsCounter = 0;
+        selectedTargets = new int[targetAmount];
+
+        for(int i = 0; i < attackInfo.attackRangeSize[currentAttack].x * attackInfo.attackRangeSize[currentAttack].y; i++) //For all of the attacks range size 
+        {
+            if(attackInfo.attackRangeActive[currentAttack][i] == 1) //Check  which ones are active
+            {
+                //To Do: Make it look at the given rangeSize.x  to determine on which row it is
+                selectedTargets[targetsCounter] = i; //Store this as a tileID for Selected targets
+                targetsCounter++;
+            }
+        }
+
+        for(int i = 0; i < targetAmount; i++)
+        {
+            selectedTargetsTransform[i].position = tileScript.tileTransform[selectedTargets[i]].position + new Vector3(0,0.01f,0);
+        }
+    }
+
     public void MoveFormation(int charID, Vector2 tiles)
     {
         charStats.SetTileOccupied("Player", charID, tiles, tileScript.yTiles);

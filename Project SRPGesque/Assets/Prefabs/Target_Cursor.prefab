@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 33812422807448066}
   - component: {fileID: 23478255076338474}
   - component: {fileID: 64184403457378448}
-  - component: {fileID: 95291293132765728}
+  - component: {fileID: 95698188650334626}
   m_Layer: 0
   m_Name: CursorGraphic
   m_TagString: Untagged
@@ -52,7 +52,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1483354850765374}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 94.188095, y: -13.0793915, z: 0}
+  m_LocalPosition: {x: 4.2038016, y: -5.4116482e-17, z: 10.167539}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4769396653985602}
@@ -128,7 +128,7 @@ MeshCollider:
   m_CookingOptions: 14
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
---- !u!95 &95291293132765728
+--- !u!95 &95698188650334626
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 1
@@ -137,7 +137,7 @@ Animator:
   m_GameObject: {fileID: 1023224980195060}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: c8083409bed1064438f62933e869e3c8, type: 2}
+  m_Controller: {fileID: 9100000, guid: 38b708e6367619f4489adf32a1f3018c, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
