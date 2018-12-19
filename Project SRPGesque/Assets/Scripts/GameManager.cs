@@ -453,23 +453,32 @@ public class GameManager : MonoBehaviour
 
         for(int i = 0; i < attackInfo.attackRangeSize[currentAttack].x * attackInfo.attackRangeSize[currentAttack].y; i++) //For all of the attacks range size 
         {
+            
             if(attackInfo.attackRangeActive[currentAttack][i] == 1) //Check  which ones are active
             {
                 int whatRow = 0;
                 //We Want to know which row (Y) this fucker is on.
-                if(i > attackInfo.attackRangeSize[currentAttack].x)
+                
+                for(int n = 0; n < 3; n++)
                 {
-                    whatRow++;
+                    if(i - (attackInfo.attackRangeSize[currentAttack].x * n) > attackInfo.attackRangeSize[currentAttack].x)
+                    {
+                        whatRow = n+1;
+                    
+                    }
                 }
-                whatRow = Mathf.FloorToInt(i/attackInfo.attackRangeSize[currentAttack].y);
+                
+                
                 
                 //To Do: Make it look at the given rangeSize.x  to determine on which row it is
-                selectedTargetVector[targetsCounter].x = i ;
+                selectedTargetVector[targetsCounter].x = i - whatRow * attackInfo.attackRangeSize[currentAttack].x;
                 selectedTargetVector[targetsCounter].y = whatRow;
 
-                selectedTargets[targetsCounter] = Mathf.FloorToInt(selectedTargetVector[targetsCounter].x + (selectedTargetVector[targetsCounter].y*tileVectorSize.x)); //Store this as a tileID for Selected targets
+                selectedTargets[targetsCounter] = Mathf.FloorToInt(selectedTargetVector[targetsCounter].x + (selectedTargetVector[targetsCounter].y*(tileVectorSize.x + 2))); //Store this as a tileID for Selected targets
+                
                 targetsCounter++;
             }
+            
         }
 
         for(int i = 0; i < targetAmount; i++)
