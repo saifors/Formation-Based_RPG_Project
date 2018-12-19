@@ -449,20 +449,32 @@ public class GameManager : MonoBehaviour
         //Calculate which should be selected Targets using 
         int targetsCounter = 0;
         selectedTargets = new int[targetAmount];
+        selectedTargetVector = new Vector2[targetAmount];
 
         for(int i = 0; i < attackInfo.attackRangeSize[currentAttack].x * attackInfo.attackRangeSize[currentAttack].y; i++) //For all of the attacks range size 
         {
             if(attackInfo.attackRangeActive[currentAttack][i] == 1) //Check  which ones are active
             {
+                int whatRow = 0;
+                //We Want to know which row (Y) this fucker is on.
+                if(i > attackInfo.attackRangeSize[currentAttack].x)
+                {
+                    whatRow++;
+                }
+                whatRow = Mathf.FloorToInt(i/attackInfo.attackRangeSize[currentAttack].y);
+                
                 //To Do: Make it look at the given rangeSize.x  to determine on which row it is
-                selectedTargets[targetsCounter] = i; //Store this as a tileID for Selected targets
+                selectedTargetVector[targetsCounter].x = i ;
+                selectedTargetVector[targetsCounter].y = whatRow;
+
+                selectedTargets[targetsCounter] = Mathf.FloorToInt(selectedTargetVector[targetsCounter].x + (selectedTargetVector[targetsCounter].y*tileVectorSize.x)); //Store this as a tileID for Selected targets
                 targetsCounter++;
             }
         }
 
         for(int i = 0; i < targetAmount; i++)
         {
-            selectedTargetsTransform[i].position = tileScript.tileTransform[selectedTargets[i]].position + new Vector3(0,0.01f,0);
+            selectedTargetsTransform[i].position = tileScript.tileTransform[selectedTargets[i]].position + new Vector3(0,0.005f,0);
         }
     }
 
