@@ -473,29 +473,21 @@ public class GameManager : MonoBehaviour
             whatColumn = 0;
 
             
-
+            //For each time the tile goes over the rangeSize.x
             //What row should the current tile being inspected be a part of
             for(int n = 1; n <= attackInfo.attackRangeSize[currentAttack].y; n++)
             {
-                //Debug.Log("Go fuck yourself in the anus" + i);
+                //Debug.Log("Go fuck yourself" + i);
                 if (i > attackInfo.attackRangeSize[currentAttack].x*n )
                 {
                     whatRow++;
                 }
             }
-            
-            
-            
-
                 
             //Let's revise what we're doing here: we're going through each ad every single tile affected by the range
             
             if(attackInfo.attackRangeActive[currentAttack][i] == 1) //Is the current tile being inspected a part of the range?
             {
-
-                              
-
-                
 
                 whatColumn = i - whatRow * 8;
                 
