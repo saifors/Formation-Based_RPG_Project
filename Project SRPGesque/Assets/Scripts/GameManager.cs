@@ -264,6 +264,7 @@ public class GameManager : MonoBehaviour
             GameObject[] objTarget;
             
             currentAttack = charControl[activeCharacter].attacksLearned[battleUI.attackOptionSelected];
+            //Debug.Log("Attack " + currentAttack);
             
             targetAmount = 0;
             for(int i = 0; i < attackInfo.attackRangeSize[currentAttack].x * attackInfo.attackRangeSize[currentAttack].y; i++)
@@ -283,6 +284,8 @@ public class GameManager : MonoBehaviour
                 objTarget[i].name = "TargetCursor_" + i;
                 selectedTargetsTransform[i] = objTarget[i].GetComponent<Transform>();
             }
+
+            
             
             TargetPlacement();
 
@@ -448,33 +451,62 @@ public class GameManager : MonoBehaviour
     {
         //Calculate which should be selected Targets using 
         int targetsCounter = 0;
+        int targetQuantity = 0;
         selectedTargets = new int[targetAmount];
         selectedTargetVector = new Vector2[targetAmount];
-
-        for(int i = 0; i < attackInfo.attackRangeSize[currentAttack].x * attackInfo.attackRangeSize[currentAttack].y; i++) //For all of the attacks range size 
+        for (int i = 0; i < attackInfo.attackRangeActive[currentAttack].Length; i++)
         {
-            
-            if(attackInfo.attackRangeActive[currentAttack][i] == 1) //Check  which ones are active
+            if (attackInfo.attackRangeActive[currentAttack][i] == 1)
             {
-                int whatRow = 0;
-                //We Want to know which row (Y) this fucker is on.
-                
-                for(int n = 0; n < 3; n++)
+                targetQuantity++;
+            }
+        }
+        //Debug.Log("targetquantity" + targetQuantity);
+
+        //Declaring values for row and column
+        int whatColumn; //X                
+        int whatRow; //Y 
+
+        for (int i = 0; i < attackInfo.attackRangeActive[currentAttack].Length; i++) //For all of the attacks range size 
+        {
+            whatRow = 0;
+            whatColumn = 0;
+
+            
+
+            //What row should the current tile being inspected be a part of
+            for(int n = 1; n <= attackInfo.attackRangeSize[currentAttack].y; n++)
+            {
+                //Debug.Log("Go fuck yourself in the anus" + i);
+                if (i > attackInfo.attackRangeSize[currentAttack].x*n )
                 {
-                    if(i - (attackInfo.attackRangeSize[currentAttack].x * n) > attackInfo.attackRangeSize[currentAttack].x)
-                    {
-                        whatRow = n+1;
-                    
-                    }
+                    whatRow++;
                 }
+            }
+            
+            
+            
+
                 
+            //Let's revise what we're doing here: we're going through each ad every single tile affected by the range
+            
+            if(attackInfo.attackRangeActive[currentAttack][i] == 1) //Is the current tile being inspected a part of the range?
+            {
+
+                              
+
                 
+
+                whatColumn = i - whatRow * 8;
                 
                 //To Do: Make it look at the given rangeSize.x  to determine on which row it is
-                selectedTargetVector[targetsCounter].x = i - whatRow * attackInfo.attackRangeSize[currentAttack].x;
+                selectedTargetVector[targetsCounter].x = whatColumn;
                 selectedTargetVector[targetsCounter].y = whatRow;
 
-                selectedTargets[targetsCounter] = Mathf.FloorToInt(selectedTargetVector[targetsCounter].x + (selectedTargetVector[targetsCounter].y*(tileVectorSize.x + 2))); //Store this as a tileID for Selected targets
+                Debug.Log(targetsCounter + "Column " + whatColumn);
+                Debug.Log(targetsCounter + "Row " + whatRow);
+
+                selectedTargets[targetsCounter] = Mathf.FloorToInt(selectedTargetVector[targetsCounter].x + (selectedTargetVector[targetsCounter].y * tileVectorSize.y)); //Store this as a tileID for Selected targets
                 
                 targetsCounter++;
             }
