@@ -68,7 +68,7 @@ public class GameManager : MonoBehaviour
 
     //Target
         public int targetAmount; //How many Tiles are in the range of the attack
-        
+    public Vector2 targetOrigin;
         public int[] selectedTargets; // All tileIDs affected by current attack;
         public Vector2[] selectedTargetVector; //X and Y of all tiles in range
         public Transform[] selectedTargetsTransform;
@@ -445,23 +445,119 @@ public class GameManager : MonoBehaviour
     public void AttackTargetMovement()
     {
         //attackInfo.attackRangeSize[];
+        
+        if (axis.x > 0) //Right
+        {
+            if (axis.y > 0) //Upright
+            {
+                //tile - ytiles
+                targetOrigin.x--;
+
+                if (targetOrigin.x < selectionLimit[0].x)
+                {
+                    targetOrigin.x++;
+                    soundPlayer.PlaySound(2, 1, true);
+                }
+
+            }
+            else
+            if (axis.y < 0) //DownRight
+            {
+                //tile + 1
+                //I don't even know anymore
+                targetOrigin.y++;
+
+                if (targetOrigin.y >= selectionLimit[1].y)
+                {
+                    targetOrigin.y--;
+                    soundPlayer.PlaySound(2, 1, true);
+                }
+            }
+            else //Right
+            {
+                //tile - ytiles + 1
+                targetOrigin.x--;
+                targetOrigin.y++;
+                if (targetOrigin.x < selectionLimit[0].x && targetOrigin.y >= selectionLimit[1].y) soundPlayer.PlaySound(2, 1, true);
+                if (targetOrigin.x < selectionLimit[0].x) targetOrigin.x++;
+                if (targetOrigin.y >= selectionLimit[1].y) targetOrigin.y--;
+            }
+        }
+        else if (axis.x < 0) //Left
+        {
+            if (axis.y > 0) //UpLeft
+            {
+                //tile - 1
+                targetOrigin.y--;
+
+                if (targetOrigin.y < selectionLimit[0].y)
+                {
+                    targetOrigin.y++;
+                    soundPlayer.PlaySound(2, 1, true);
+                }
+
+            }
+            else if (axis.y < 0) //DownLeft
+            {
+                // tile + ytiles 
+                targetOrigin.x++;
+                if (targetOrigin.x >= selectionLimit[1].x)
+                {
+                    targetOrigin.x--;
+                    soundPlayer.PlaySound(2, 1, true);
+                }
+
+            }
+            else //Left
+            {
+                //tile + ytiles - 1
+                targetOrigin.x++;
+                targetOrigin.y--;
+                if (targetOrigin.x >= selectionLimit[1].x && targetOrigin.y < selectionLimit[0].y) soundPlayer.PlaySound(2, 1, true);
+                if (targetOrigin.x >= selectionLimit[1].x) targetOrigin.x--;
+                if (targetOrigin.y < selectionLimit[0].y) targetOrigin.y++;
+
+            }
+        }
+        else if (axis.y > 0) //Up
+        {
+            //tile - ytiles - 1
+            targetOrigin.x--;
+            targetOrigin.y--;
+            if (targetOrigin.x < selectionLimit[0].x && targetOrigin.y < selectionLimit[0].y) soundPlayer.PlaySound(2, 1, true);
+            if (targetOrigin.x < selectionLimit[0].x) targetOrigin.x++;
+            if (targetOrigin.y < selectionLimit[0].y) targetOrigin.y++;
+
+        }
+        else if (axis.y < 0) //Down
+        {
+            //tile + ytiles + 1
+            targetOrigin.x++;
+            targetOrigin.y++;
+            if (targetOrigin.y >= selectionLimit[1].y && targetOrigin.x >= selectionLimit[1].x) soundPlayer.PlaySound(2, 1, true);
+
+            if (targetOrigin.y >= selectionLimit[1].y) targetOrigin.y--;
+            if (targetOrigin.x >= selectionLimit[1].x) targetOrigin.x--;
+
+
+        }
+
+        if (axis.x != 0 || axis.y != 0)
+        {
+            TargetPlacement();
+
+            tileSelectCooldownCounter = 0;
+            //gameManager.MoveFormation(0, selectedTile);
+        }
+
     }
 
     public void TargetPlacement()
     {
         //Calculate which should be selected Targets using 
         int targetsCounter = 0;
-        int targetQuantity = 0;
         selectedTargets = new int[targetAmount];
-        selectedTargetVector = new Vector2[targetAmount];
-        for (int i = 0; i < attackInfo.attackRangeActive[currentAttack].Length; i++)
-        {
-            if (attackInfo.attackRangeActive[currentAttack][i] == 1)
-            {
-                targetQuantity++;
-            }
-        }
-        //Debug.Log("targetquantity" + targetQuantity);
+        selectedTargetVector = new Vector2[targetAmount];        
 
         //Declaring values for row and column
         int whatColumn; //X                
@@ -471,16 +567,13 @@ public class GameManager : MonoBehaviour
 
         for (int i = 0; i < attackInfo.attackRangeActive[currentAttack].Length; i++) //For all of the attacks range size 
         {
-            
-
-            
-            //For each time the tile goes over the rangeSize.x
-            //What row should the current tile being inspected be a part of
+            //go through all the possible rows until you find the one the current array iteration is on
             for(int n = 0; n <= attackInfo.attackRangeSize[currentAttack].y; n++)
             {
                 if (i == attackInfo.attackRangeSize[currentAttack].x*n )
                 {
                     whatRow = n;
+                    break;
                 }
             }
             
@@ -490,8 +583,8 @@ public class GameManager : MonoBehaviour
                 whatColumn = i - whatRow * Mathf.FloorToInt(attackInfo.attackRangeSize[currentAttack].x);
                 
                 //To Do: Make it look at the given rangeSize.x  to determine on which row it is
-                selectedTargetVector[targetsCounter].x = whatColumn;
-                selectedTargetVector[targetsCounter].y = whatRow;
+                selectedTargetVector[targetsCounter].x = whatColumn + targetOrigin.x;
+                selectedTargetVector[targetsCounter].y = whatRow + targetOrigin.y;
 
                 Debug.Log(targetsCounter + "Column " + whatColumn);
                 Debug.Log(targetsCounter + "Row " + whatRow);
