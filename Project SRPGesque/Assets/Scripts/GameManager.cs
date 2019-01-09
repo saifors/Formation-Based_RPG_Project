@@ -466,30 +466,28 @@ public class GameManager : MonoBehaviour
         //Declaring values for row and column
         int whatColumn; //X                
         int whatRow; //Y 
+        whatRow = 0;
+        whatColumn = 0;
 
         for (int i = 0; i < attackInfo.attackRangeActive[currentAttack].Length; i++) //For all of the attacks range size 
         {
-            whatRow = 0;
-            whatColumn = 0;
+            
 
             
             //For each time the tile goes over the rangeSize.x
             //What row should the current tile being inspected be a part of
-            for(int n = 1; n <= attackInfo.attackRangeSize[currentAttack].y; n++)
+            for(int n = 0; n <= attackInfo.attackRangeSize[currentAttack].y; n++)
             {
-                //Debug.Log("Go fuck yourself" + i);
-                if (i > attackInfo.attackRangeSize[currentAttack].x*n )
+                if (i == attackInfo.attackRangeSize[currentAttack].x*n )
                 {
-                    whatRow++;
+                    whatRow = n;
                 }
             }
-                
-            //Let's revise what we're doing here: we're going through each ad every single tile affected by the range
             
             if(attackInfo.attackRangeActive[currentAttack][i] == 1) //Is the current tile being inspected a part of the range?
             {
 
-                whatColumn = i - whatRow * 8;
+                whatColumn = i - whatRow * Mathf.FloorToInt(attackInfo.attackRangeSize[currentAttack].x);
                 
                 //To Do: Make it look at the given rangeSize.x  to determine on which row it is
                 selectedTargetVector[targetsCounter].x = whatColumn;
