@@ -54,7 +54,8 @@ public class GameManager : MonoBehaviour
         
     //Battle - Attack
         public GameObject targetCursor; //Prefab
-        public int currentAttack;    
+        public int currentAttack;
+        public Vector2 targetMargin;
     //Tiles
         [HideInInspector] public TileScript tileScript;
         public int tileAmount;
@@ -267,7 +268,9 @@ public class GameManager : MonoBehaviour
             //Debug.Log("Attack " + currentAttack);
             
             targetAmount = 0;
-            for(int i = 0; i < attackInfo.attackRangeSize[currentAttack].x * attackInfo.attackRangeSize[currentAttack].y; i++)
+            targetMargin = attackInfo.attackRangeSize[currentAttack];
+
+            for(int i = 0; i < targetMargin.x * targetMargin.y; i++)
             {
                 if(attackInfo.attackRangeActive[currentAttack][i] == 1) 
                 {
@@ -284,9 +287,9 @@ public class GameManager : MonoBehaviour
                 objTarget[i].name = "TargetCursor_" + i;
                 selectedTargetsTransform[i] = objTarget[i].GetComponent<Transform>();
             }
-
-            
-            
+            targetOrigin.x = 2;
+            targetOrigin.y = 2;
+       
             TargetPlacement();
 
 
@@ -444,7 +447,7 @@ public class GameManager : MonoBehaviour
     }
     public void AttackTargetMovement()
     {
-        //attackInfo.attackRangeSize[];
+        //attackInfo.attackRangeSize[currentattack].;
         
         if (axis.x > 0) //Right
         {
@@ -453,7 +456,7 @@ public class GameManager : MonoBehaviour
                 //tile - ytiles
                 targetOrigin.x--;
 
-                if (targetOrigin.x < selectionLimit[0].x)
+                if (targetOrigin.x < selectionLimit[2].x)
                 {
                     targetOrigin.x++;
                     soundPlayer.PlaySound(2, 1, true);
@@ -467,7 +470,7 @@ public class GameManager : MonoBehaviour
                 //I don't even know anymore
                 targetOrigin.y++;
 
-                if (targetOrigin.y >= selectionLimit[1].y)
+                if (targetOrigin.y + targetMargin.x > selectionLimit[3].y)
                 {
                     targetOrigin.y--;
                     soundPlayer.PlaySound(2, 1, true);
@@ -478,9 +481,9 @@ public class GameManager : MonoBehaviour
                 //tile - ytiles + 1
                 targetOrigin.x--;
                 targetOrigin.y++;
-                if (targetOrigin.x < selectionLimit[0].x && targetOrigin.y >= selectionLimit[1].y) soundPlayer.PlaySound(2, 1, true);
-                if (targetOrigin.x < selectionLimit[0].x) targetOrigin.x++;
-                if (targetOrigin.y >= selectionLimit[1].y) targetOrigin.y--;
+                if (targetOrigin.x < selectionLimit[2].x && targetOrigin.y + targetMargin.x > selectionLimit[3].y) soundPlayer.PlaySound(2, 1, true);
+                if (targetOrigin.x < selectionLimit[2].x) targetOrigin.x++;
+                if (targetOrigin.y + targetMargin.x > selectionLimit[3].y) targetOrigin.y--;
             }
         }
         else if (axis.x < 0) //Left
@@ -490,7 +493,7 @@ public class GameManager : MonoBehaviour
                 //tile - 1
                 targetOrigin.y--;
 
-                if (targetOrigin.y < selectionLimit[0].y)
+                if (targetOrigin.y < selectionLimit[2].y)
                 {
                     targetOrigin.y++;
                     soundPlayer.PlaySound(2, 1, true);
@@ -501,7 +504,7 @@ public class GameManager : MonoBehaviour
             {
                 // tile + ytiles 
                 targetOrigin.x++;
-                if (targetOrigin.x >= selectionLimit[1].x)
+                if (targetOrigin.x + targetMargin.x - 1 > selectionLimit[3].x)
                 {
                     targetOrigin.x--;
                     soundPlayer.PlaySound(2, 1, true);
@@ -513,9 +516,9 @@ public class GameManager : MonoBehaviour
                 //tile + ytiles - 1
                 targetOrigin.x++;
                 targetOrigin.y--;
-                if (targetOrigin.x >= selectionLimit[1].x && targetOrigin.y < selectionLimit[0].y) soundPlayer.PlaySound(2, 1, true);
-                if (targetOrigin.x >= selectionLimit[1].x) targetOrigin.x--;
-                if (targetOrigin.y < selectionLimit[0].y) targetOrigin.y++;
+                if (targetOrigin.x + targetMargin.y > selectionLimit[3].x && targetOrigin.y < selectionLimit[2].y) soundPlayer.PlaySound(2, 1, true);
+                if (targetOrigin.x + targetMargin.y > selectionLimit[3].x) targetOrigin.x--;
+                if (targetOrigin.y < selectionLimit[2].y) targetOrigin.y++;
 
             }
         }
@@ -524,9 +527,9 @@ public class GameManager : MonoBehaviour
             //tile - ytiles - 1
             targetOrigin.x--;
             targetOrigin.y--;
-            if (targetOrigin.x < selectionLimit[0].x && targetOrigin.y < selectionLimit[0].y) soundPlayer.PlaySound(2, 1, true);
-            if (targetOrigin.x < selectionLimit[0].x) targetOrigin.x++;
-            if (targetOrigin.y < selectionLimit[0].y) targetOrigin.y++;
+            if (targetOrigin.x < selectionLimit[2].x && targetOrigin.y < selectionLimit[2].y) soundPlayer.PlaySound(2, 1, true);
+            if (targetOrigin.x < selectionLimit[2].x) targetOrigin.x++;
+            if (targetOrigin.y < selectionLimit[2].y) targetOrigin.y++;
 
         }
         else if (axis.y < 0) //Down
@@ -534,10 +537,10 @@ public class GameManager : MonoBehaviour
             //tile + ytiles + 1
             targetOrigin.x++;
             targetOrigin.y++;
-            if (targetOrigin.y >= selectionLimit[1].y && targetOrigin.x >= selectionLimit[1].x) soundPlayer.PlaySound(2, 1, true);
+            if (targetOrigin.y + targetMargin.y >= selectionLimit[3].y && targetOrigin.x + targetMargin.x - 1 > selectionLimit[3].x) soundPlayer.PlaySound(2, 1, true);
 
-            if (targetOrigin.y >= selectionLimit[1].y) targetOrigin.y--;
-            if (targetOrigin.x >= selectionLimit[1].x) targetOrigin.x--;
+            if (targetOrigin.y + targetMargin.y >= selectionLimit[3].y) targetOrigin.y--;
+            if (targetOrigin.x + targetMargin.y > selectionLimit[3].x) targetOrigin.x--;
 
 
         }
@@ -568,9 +571,9 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < attackInfo.attackRangeActive[currentAttack].Length; i++) //For all of the attacks range size 
         {
             //go through all the possible rows until you find the one the current array iteration is on
-            for(int n = 0; n <= attackInfo.attackRangeSize[currentAttack].y; n++)
+            for(int n = 0; n <= targetMargin.y; n++)
             {
-                if (i == attackInfo.attackRangeSize[currentAttack].x*n )
+                if (i == targetMargin.x*n )
                 {
                     whatRow = n;
                     break;
@@ -580,14 +583,12 @@ public class GameManager : MonoBehaviour
             if(attackInfo.attackRangeActive[currentAttack][i] == 1) //Is the current tile being inspected a part of the range?
             {
 
-                whatColumn = i - whatRow * Mathf.FloorToInt(attackInfo.attackRangeSize[currentAttack].x);
+                whatColumn = i - whatRow * Mathf.FloorToInt(targetMargin.x);
                 
                 //To Do: Make it look at the given rangeSize.x  to determine on which row it is
-                selectedTargetVector[targetsCounter].x = whatColumn + targetOrigin.x;
-                selectedTargetVector[targetsCounter].y = whatRow + targetOrigin.y;
-
-                Debug.Log(targetsCounter + "Column " + whatColumn);
-                Debug.Log(targetsCounter + "Row " + whatRow);
+                selectedTargetVector[targetsCounter].x = whatColumn + targetOrigin.y;
+                selectedTargetVector[targetsCounter].y = whatRow + targetOrigin.x;
+                
 
                 selectedTargets[targetsCounter] = Mathf.FloorToInt(selectedTargetVector[targetsCounter].x + (selectedTargetVector[targetsCounter].y * tileVectorSize.y)); //Store this as a tileID for Selected targets
                 
