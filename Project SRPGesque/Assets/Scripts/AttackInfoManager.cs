@@ -47,15 +47,15 @@ public class AttackInfoManager : MonoBehaviour
         //Attack 5
         SetAttack(4, "III", 20, 10);
         SetAttackDescription(4, true, "idk3");
-        SetRange(5, new Vector2(3,2), new int[] {1,1,1,0,1,0});
+        SetRange(4, new Vector2(3,2), new int[] {1,1,1,0,1,0});
         //Attack 6
         SetAttack(5, "IV", 20, 10);
         SetAttackDescription(5, true, "idk4");
-        SetRange(6, new Vector2(3,2), new int[] {1,1,1,0,1,0});
+        SetRange(5, new Vector2(3,2), new int[] {1,1,1,0,1,0});
         //Attack 7
         SetAttack(6, "V", 20, 10);
         SetAttackDescription(6, true, "idk5");
-        SetRange(7, new Vector2(3,2), new int[] {1,1,1,0,1,0});
+        SetRange(6, new Vector2(3,2), new int[] {1,1,1,0,1,0});
     }
 	
 	// Update is called once per frame

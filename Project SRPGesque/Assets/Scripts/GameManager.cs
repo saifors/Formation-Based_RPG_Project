@@ -287,8 +287,8 @@ public class GameManager : MonoBehaviour
                 objTarget[i].name = "TargetCursor_" + i;
                 selectedTargetsTransform[i] = objTarget[i].GetComponent<Transform>();
             }
-            targetOrigin.x = 2;
-            targetOrigin.y = 2;
+            targetOrigin.x = 0; //row
+            targetOrigin.y = 0; //column
        
             TargetPlacement();
 
@@ -504,7 +504,7 @@ public class GameManager : MonoBehaviour
             {
                 // tile + ytiles 
                 targetOrigin.x++;
-                if (targetOrigin.x + targetMargin.x - 1 > selectionLimit[3].x)
+                if (targetOrigin.x + targetMargin.y > selectionLimit[3].x)
                 {
                     targetOrigin.x--;
                     soundPlayer.PlaySound(2, 1, true);
@@ -537,9 +537,9 @@ public class GameManager : MonoBehaviour
             //tile + ytiles + 1
             targetOrigin.x++;
             targetOrigin.y++;
-            if (targetOrigin.y + targetMargin.y >= selectionLimit[3].y && targetOrigin.x + targetMargin.x - 1 > selectionLimit[3].x) soundPlayer.PlaySound(2, 1, true);
+            if (targetOrigin.y + targetMargin.x > selectionLimit[3].y && targetOrigin.x + targetMargin.y > selectionLimit[3].x) soundPlayer.PlaySound(2, 1, true);
 
-            if (targetOrigin.y + targetMargin.y >= selectionLimit[3].y) targetOrigin.y--;
+            if (targetOrigin.y + targetMargin.x > selectionLimit[3].y) targetOrigin.y--;
             if (targetOrigin.x + targetMargin.y > selectionLimit[3].x) targetOrigin.x--;
 
 
