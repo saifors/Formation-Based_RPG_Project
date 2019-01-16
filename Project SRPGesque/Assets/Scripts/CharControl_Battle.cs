@@ -18,6 +18,8 @@ public class CharControl_Battle : MonoBehaviour
 	public int res;
 	public int spd;
 
+	public bool isDefending = false;
+
     public int[] attacksLearned;
     public int attacksAmount; //How many attacks does this character have.
     public int maxAttacks = 6;
@@ -57,6 +59,8 @@ public class CharControl_Battle : MonoBehaviour
             allianceString = "Enemy";
         }
 
+		charId = charID;
+
         level = PlayerPrefs.GetInt(allianceString + charID + "Level");
 
         hp = PlayerPrefs.GetInt(allianceString + charID + "Hp");
@@ -81,7 +85,8 @@ public class CharControl_Battle : MonoBehaviour
     }
     public void UpdateTileID(string allianceString)
     {
-        tile.x = PlayerPrefs.GetFloat(allianceString + charId + "_TileX");
+		
+		tile.x = PlayerPrefs.GetFloat(allianceString + charId + "_TileX");
         tile.y = PlayerPrefs.GetFloat(allianceString + charId + "_TileY");
         tileID = Mathf.FloorToInt(tile.y + tile.x * rowSize);
     }
@@ -103,7 +108,7 @@ public class CharControl_Battle : MonoBehaviour
         //if(alliance == 0) gameManager.battleUI.UpdatePlayerBars(charId);
     }
 
-    public void Damage(int attackPower)
+    public void Damage(int attackPower, int attackerStrength)
     {
         currentHp -= attackPower/2;
         if(alliance == 1) gameManager.battleUI.UpdateEnemyBars(charId);

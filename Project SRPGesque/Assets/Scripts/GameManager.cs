@@ -112,10 +112,12 @@ public class GameManager : MonoBehaviour
             charStats.SetTileOccupied("Player", 0, new Vector2(3, 4), tileScript.yTiles);
 
             charStats.CreateCharacterStats("Enemy", 0, 4, 70, 12, 5, 3, 2, 4); //PLACHEOLDER;
-            charStats.SetTileOccupied("Enemy", 0, new Vector2(2, 2), tileScript.yTiles);
-        
-        //Create a cursor for Formation Movement
-            GameObject objCursor;
+            charStats.SetTileOccupied("Enemy", 0, new Vector2(1, 2), tileScript.yTiles);
+			charStats.CreateCharacterStats("Enemy", 1, 4, 70, 12, 5, 3, 2, 4); //PLACHEOLDER;
+			charStats.SetTileOccupied("Enemy", 1, new Vector2(1, 4), tileScript.yTiles);
+
+		//Create a cursor for Formation Movement
+		GameObject objCursor;
             objCursor = Instantiate(cursor);
             selectedTileIndicator = objCursor.GetComponent<Transform>();
             selectedTileIndicator.gameObject.SetActive(false);
@@ -211,132 +213,194 @@ public class GameManager : MonoBehaviour
     }
     
 //Input
-        public void ConfirmSelectedCommand()
+    public void ConfirmSelectedCommand()
+    {
+        soundPlayer.PlaySound(0,1, true);
+        if(battleUI.command == BattleUI.CommandSelection.Attack)
         {
-            soundPlayer.PlaySound(0,1, true);
-            if(battleUI.command == BattleUI.CommandSelection.Attack)
-            {
-                battleUI.InitiateAttackSelection();
+            battleUI.InitiateAttackSelection();
 
-            }
-            else if(battleUI.command == BattleUI.CommandSelection.Defend)
-            {
-                //Go to Select defend
-            }
-            else if(battleUI.command == BattleUI.CommandSelection.Move)
-            {
-                //Go to move menu
-                selecting = SelectingMenu.selectingMove;
+        }
+        else if(battleUI.command == BattleUI.CommandSelection.Defend)
+        {
+			//Go to Select defend
+			Defend();
+        }
+        else if(battleUI.command == BattleUI.CommandSelection.Move)
+        {
+            //Go to move menu
+            selecting = SelectingMenu.selectingMove;
                 
-                tileSelection = charControl[0].tile; //0 is a placeholder for now Will be replaced with an Int indicating the active character when that's a thing            
-                selectedTile = Mathf.FloorToInt(tileSelection.y + (tileSelection.x * tileVectorSize.y));
-                selectedTileIndicator.gameObject.SetActive(true);
-                selectedTileIndicator.position = tileScript.tileTransform[selectedTile].position;
-                battleUI.actionMenu.SetActive(false);
-                //gameManager.MoveFormation(0,5);
-            }
-            else if(battleUI.command == BattleUI.CommandSelection.Item)
+            tileSelection = charControl[0].tile; //0 is a placeholder for now Will be replaced with an Int indicating the active character when that's a thing            
+            selectedTile = Mathf.FloorToInt(tileSelection.y + (tileSelection.x * tileVectorSize.y));
+            selectedTileIndicator.gameObject.SetActive(true);
+            selectedTileIndicator.position = tileScript.tileTransform[selectedTile].position;
+            battleUI.actionMenu.SetActive(false);
+            //gameManager.MoveFormation(0,5);
+        }
+        else if(battleUI.command == BattleUI.CommandSelection.Item)
+        {
+            //Go to Item Menu
+        }
+        else if(battleUI.command == BattleUI.CommandSelection.Run)
+        {
+            //Execute Running away
+            RunFromBattle();
+        }
+        else 
+        {
+            Debug.Log("Tried to confirm an Action command selection but nothing was selected");
+        }
+    }
+    public void ReturnToCommandSelection()
+	{
+        soundPlayer.PlaySound(1,1, true);
+        selecting = SelectingMenu.selectingAction;
+        selectedTileIndicator.gameObject.SetActive(false);
+        battleUI.attackMenu.SetActive(false);
+        battleUI.partyInfo.SetActive(true);
+        battleUI.actionMenu.SetActive(true);
+	}
+    public void ConfirmAttackSelection()
+    {
+        //This is all going to change once it's an array of course
+        soundPlayer.PlaySound(0,1, true);
+        GameObject[] objTarget;
+            
+        currentAttack = charControl[activeCharacter].attacksLearned[battleUI.attackOptionSelected];
+        //Debug.Log("Attack " + currentAttack);
+            
+        targetAmount = 0;
+        targetMargin = attackInfo.attackRangeSize[currentAttack];
+
+        for(int i = 0; i < targetMargin.x * targetMargin.y; i++)
+        {
+            if(attackInfo.attackRangeActive[currentAttack][i] == 1) 
             {
-                //Go to Item Menu
-            }
-            else if(battleUI.command == BattleUI.CommandSelection.Run)
-            {
-                //Execute Running away
-                RunFromBattle();
-            }
-            else 
-            {
-                Debug.Log("Tried to confirm an Action command selection but nothing was selected");
+                targetAmount++;
             }
         }
-        public void ReturnToCommandSelection()
-	    {
-            soundPlayer.PlaySound(1,1, true);
-            selecting = SelectingMenu.selectingAction;
-            selectedTileIndicator.gameObject.SetActive(false);
-            battleUI.attackMenu.SetActive(false);
-            battleUI.partyInfo.SetActive(true);
-            battleUI.actionMenu.SetActive(true);
-	    }
-        public void ConfirmAttackSelection()
+
+        objTarget = new GameObject[targetAmount];
+        selectedTargetsTransform = new Transform[targetAmount];
+
+        for (int i = 0; i < targetAmount; i++)
         {
-            //This is all going to change once it's an array of course
-            soundPlayer.PlaySound(0,1, true);
-            GameObject[] objTarget;
-            
-            currentAttack = charControl[activeCharacter].attacksLearned[battleUI.attackOptionSelected];
-            //Debug.Log("Attack " + currentAttack);
-            
-            targetAmount = 0;
-            targetMargin = attackInfo.attackRangeSize[currentAttack];
-
-            for(int i = 0; i < targetMargin.x * targetMargin.y; i++)
-            {
-                if(attackInfo.attackRangeActive[currentAttack][i] == 1) 
-                {
-                    targetAmount++;
-                }
-            }
-
-            objTarget = new GameObject[targetAmount];
-            selectedTargetsTransform = new Transform[targetAmount];
-
-            for (int i = 0; i < targetAmount; i++)
-            {
-                objTarget[i] = Instantiate(targetCursor);
-                objTarget[i].name = "TargetCursor_" + i;
-                selectedTargetsTransform[i] = objTarget[i].GetComponent<Transform>();
-            }
-            targetOrigin.x = 0; //row
-            targetOrigin.y = 0; //column
+            objTarget[i] = Instantiate(targetCursor);
+            objTarget[i].name = "TargetCursor_" + i;
+            selectedTargetsTransform[i] = objTarget[i].GetComponent<Transform>();
+        }
+        targetOrigin.x = 0; //row
+        targetOrigin.y = 0; //column
        
-            TargetPlacement();
+        TargetPlacement();
 
 
-            //selectedTargetVector[0] = Vector2.zero;
-            //selectedTarget[i] = selectedTargetVector[i].x + selectedTargetVector[i].y;
-            //selectedTargetsTransform[i].gameObject.SetActive(true);
-            //selectedTargetsTransform[i].position = gameManager.tileScript.tileTransform[selectedTarget[i]].position;
-            battleUI.attackMenu.SetActive(false);
-            selecting = SelectingMenu.selectingTarget;
-        }
-        public void ReturnToAttackSelect()
+        //selectedTargetVector[0] = Vector2.zero;
+        //selectedTarget[i] = selectedTargetVector[i].x + selectedTargetVector[i].y;
+        //selectedTargetsTransform[i].gameObject.SetActive(true);
+        //selectedTargetsTransform[i].position = gameManager.tileScript.tileTransform[selectedTarget[i]].position;
+        battleUI.attackMenu.SetActive(false);
+        selecting = SelectingMenu.selectingTarget;
+    }
+    public void ReturnToAttackSelect()
+    {
+        soundPlayer.PlaySound(1,1, true);
+
+        for(int i = 0; i < targetAmount; i++) //Eliminate the target cursors.
         {
-            soundPlayer.PlaySound(1,1, true);
+            Destroy(selectedTargetsTransform[i].gameObject);
+        }
+        selectedTargetsTransform = new Transform[0];
 
-            for(int i = 0; i < targetAmount; i++) //Eliminate the target cursors.
+        battleUI.InitiateAttackSelection(); 
+    }
+
+    public void SetAxis(Vector2 inputAxis)
+    {
+        axis = inputAxis;
+    }
+
+//Attack		
+	public void StartAttack()
+    {
+		//Debug.Log("Start Attack");
+		for (int i = 0; i < selectedTargets.Length; i++)
+		{
+			if(tileScript.tiles[selectedTargets[i]].isOccupied)
+			{
+				LaunchAttack();
+				break;
+			}
+			else if(i >= selectedTargets.Length - 1) soundPlayer.PlaySound(2, 1, true);
+	}
+				
+		/*if(tileScript.tiles[selectedTarget].isOccupied)
+        {
+            soundPlayer.PlaySound(0,1, true);
+            for (int i = 0; i < enemyAmount; i++) //4 is a placeholder for enemy amount
             {
-                Destroy(selectedTargetsTransform[i].gameObject);
-            }
-            selectedTargetsTransform = new Transform[0];
-
-            battleUI.InitiateAttackSelection(); 
-        }
-
-        public void SetAxis(Vector2 inputAxis)
-        {
-            axis = inputAxis;
-        }
-
-    public void ConfirmAttackTarget()
-        {
-            /*if(tileScript.tiles[selectedTarget].isOccupied)
-            {
-                soundPlayer.PlaySound(0,1, true);
-                for (int i = 0; i < enemyAmount; i++) //4 is a placeholder for enemy amount
+                if(enemyControl[i].tileID == selectedTarget[x])
                 {
-                    if(enemyControl[i].tileID == selectedTarget[x])
-                    {
-                        enemyControl[i].Damage(attackInfo.attackStrengths[charControl[activeCharacter].attacksLearned[battleUI.attackOptionSelected]]);
+                    enemyControl[i].Damage(attackInfo.attackStrengths[charControl[activeCharacter].attacksLearned[battleUI.attackOptionSelected]]);
                         
-                    }
-
                 }
-                //gameManager.charControl[gameManager.activeCharacter].UseMp(gameManager.attackInfo.attackMpCosts[gameManager.charControl[gameManager.activeCharacter].attacksLearned[attackOptionSelected]]);
+
             }
-            else soundPlayer.PlaySound(2,1, true);
-            */
+            //gameManager.charControl[gameManager.activeCharacter].UseMp(gameManager.attackInfo.attackMpCosts[gameManager.charControl[gameManager.activeCharacter].attacksLearned[attackOptionSelected]]);
         }
+        else soundPlayer.PlaySound(2,1, true);
+        */
+    }
+	public void LaunchAttack()
+	{
+	//Debug.Log("Attack Launched");
+	//Character attack animation
+		//charControl[activeCharacter].anim.Play(attackAnimation);
+	//Play Animation on all targets
+		//Instantiate(AttackEffect).Play
+	//When animation has finished:
+		//if(AttackEffect finished)
+		HitAttack();
+			
+	}
+	public void HitAttack()
+	{
+		for (int i = 0; i < selectedTargets.Length; i++) 
+		{
+			for (int e = 0; e < enemyAmount; e++)
+			{
+				if (enemyControl[e].tileID == selectedTargets[i])
+				{
+					enemyControl[e].Damage(attackInfo.attackStrengths[charControl[activeCharacter].attacksLearned[battleUI.attackOptionSelected]] , charControl[activeCharacter].atk);
+				//Debug.Log(enemyControl[e].charId + "Has been hit");
+				}
+			}
+		}
+		//End Attack and End your turn.
+		EndTurn();
+	}
+
+//Defend
+	public void Defend()
+	{
+		charControl[activeCharacter].isDefending = true;
+		//Change To Defend idle?
+
+		EndTurn();
+	}
+//Turn System
+	public void StartTurn()
+	{
+		//activeCharacter = next character in turn order
+		charControl[activeCharacter].isDefending = false;
+
+
+	}
+	public void EndTurn()
+	{
+		//Next character in turn order?
+	}
 //-------------------------Tile Selection----------------------
     public void FormationMovement()
     {
@@ -649,7 +713,7 @@ public class GameManager : MonoBehaviour
         }
 
         //Enemy Initialization
-        enemyAmount = 1; //PLACHEOLDER
+        enemyAmount = 2; //PLACHEOLDER
         enemies = new GameObject[enemyAmount];
         enemyControl = new EnemyControl_Battle[enemyAmount];
         for(int i = 0; i < enemyAmount; i++)

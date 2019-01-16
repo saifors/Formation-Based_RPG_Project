@@ -60,7 +60,7 @@ public class InputManager : MonoBehaviour
                 }
                 else if(gameManager.selecting == GameManager.SelectingMenu.selectingTarget)
                 {
-                    gameManager.ConfirmAttackTarget();
+                    gameManager.StartAttack();
                 }
                 else if(gameManager.selecting == GameManager.SelectingMenu.victoryScreen)
                 {
