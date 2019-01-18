@@ -208,7 +208,7 @@ public class BattleUI : MonoBehaviour
     public void InitializeInfoBoxes()
     {
         enemyInfoPopUp = new EnemyInfoPopUp[gameManager.enemyAmount];
-        for (int i = 0; i < gameManager.enemyAmount; i++)
+        for (int i = gameManager.partyMembers; i < gameManager.enemyAmount + gameManager.partyMembers; i++)
         {
             GameObject obj = Instantiate(enemyInfoPrefab);
 
@@ -218,7 +218,7 @@ public class BattleUI : MonoBehaviour
             obj.name = "EnemyInfo_" + i;
 
             enemyInfoPopUp[i] = obj.GetComponent<EnemyInfoPopUp>();
-            enemyInfoPopUp[i].levelText.text = gameManager.enemyControl[i].level.ToString();
+            enemyInfoPopUp[i].levelText.text = gameManager.charControl[i].level.ToString();
 
             //Debug.Log("Testing this shit");
 
@@ -373,8 +373,8 @@ public class BattleUI : MonoBehaviour
     public void UpdateEnemyBars(int enemyID)
     {
         //Percentage of life = (life*100)/MaxHP
-        float lifePercent = (gameManager.enemyControl[enemyID].currentHp*100)/ gameManager.enemyControl[enemyID].hp;
-        float mpPercent = (gameManager.enemyControl[enemyID].currentMp*100)/ gameManager.enemyControl[enemyID].mp;
+        float lifePercent = (gameManager.charControl[enemyID].currentHp*100)/ gameManager.charControl[enemyID].hp;
+        float mpPercent = (gameManager.charControl[enemyID].currentMp*100)/ gameManager.charControl[enemyID].mp;
 
         float hpWidth = (lifePercent * maxEnemyBarWidth)/100;
         float hpPosX = ((maxEnemyBarPosX * lifePercent) / 100) - maxEnemyBarPosX;

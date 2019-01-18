@@ -25,7 +25,6 @@ public class TitleScreen_Script : MonoBehaviour
     public Text resolutionText;
     public Text qualityText;
     public OptionsManager options;
-    public CharacterStats charStats;
     public SoundPlayer soundPlayer;
 
     // Use this for initialization
@@ -35,7 +34,6 @@ public class TitleScreen_Script : MonoBehaviour
         selectionImage = selectionImageGroup.GetComponentsInChildren<Image>();
         transition = GameObject.FindGameObjectWithTag("Manager").GetComponent<TransitionManager>();
         options = transition.GetComponent<OptionsManager>();
-        charStats = transition.GetComponent<CharacterStats>();
         soundPlayer = transition.GetComponent<SoundPlayer>();
         UpdateVideoSettingsText();
 
@@ -132,8 +130,8 @@ public class TitleScreen_Script : MonoBehaviour
         if (optionNum == 0) //New Game
         {
             // Set up first character for New game.
-            charStats.CreateCharacterStats("Player", 0, 1, 70, 35, 15, 10, 5, 20);
-            charStats.SetTileOccupied("Player", 0, new Vector2(1, 1), 8);
+            CharacterStats.CreateCharacterStats(0, 1, 70, 35, 15, 10, 5, 20);
+            CharacterStats.SetTileOccupied(0, new Vector2(1, 1), 8);
 
             transition.FadeToSceneChange(false, NewGameSceneID);
         }

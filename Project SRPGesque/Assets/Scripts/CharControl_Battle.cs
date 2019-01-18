@@ -5,8 +5,7 @@ using UnityEngine;
 public class CharControl_Battle : MonoBehaviour 
 {
 	public int charId;
-    public int alliance;
-    public string allianceString;
+    public CharacterStats.Alliance alliance;
 
     public int level;
     public int currentHp;
@@ -50,44 +49,42 @@ public class CharControl_Battle : MonoBehaviour
 	{
         if(isPlayer)
         {
-            alliance = 0;
-            allianceString = "Player";
+            alliance = CharacterStats.Alliance.Player;
         }
         else
         {
-            alliance = 1;
-            allianceString = "Enemy";
+            alliance = CharacterStats.Alliance.Enemy;
         }
 
 		charId = charID;
 
-        level = PlayerPrefs.GetInt(allianceString + charID + "Level");
+        level = PlayerPrefs.GetInt(charID + "Level");
 
-        hp = PlayerPrefs.GetInt(allianceString + charID + "Hp");
-		mp = PlayerPrefs.GetInt(allianceString + charID + "Mp");
-		atk = PlayerPrefs.GetInt(allianceString + charID + "Attack");
-		def = PlayerPrefs.GetInt(allianceString + charID + "Defense");
-		res = PlayerPrefs.GetInt(allianceString + charID + "Resistance");
-		spd = PlayerPrefs.GetInt(allianceString + charID + "Speed");
+        hp = PlayerPrefs.GetInt(charID + "Hp");
+		mp = PlayerPrefs.GetInt(charID + "Mp");
+		atk = PlayerPrefs.GetInt(charID + "Attack");
+		def = PlayerPrefs.GetInt(charID + "Defense");
+		res = PlayerPrefs.GetInt(charID + "Resistance");
+		spd = PlayerPrefs.GetInt(charID + "Speed");
 
-        currentHp = PlayerPrefs.GetInt(allianceString + charID + "Current Hp");
-        currentMp = PlayerPrefs.GetInt(allianceString + charID + "Current Mp");
+        currentHp = PlayerPrefs.GetInt(charID + "Current Hp");
+        currentMp = PlayerPrefs.GetInt(charID + "Current Mp");
         if (currentHp > hp) currentHp = hp;
         if (currentMp > mp) currentMp = mp;
 
         attackInfo = GameObject.FindGameObjectWithTag("Manager").GetComponent<AttackInfoManager>();
         CalculateAttackNumber(charID);
 
-        tile.x = PlayerPrefs.GetFloat(allianceString + charID + "_TileX");
-		tile.y = PlayerPrefs.GetFloat(allianceString + charID + "_TileY");
+        tile.x = PlayerPrefs.GetFloat(charID + "_TileX");
+		tile.y = PlayerPrefs.GetFloat(charID + "_TileY");
         tileID = Mathf.FloorToInt(tile.y + tile.x* rowSize);
         //transform.position = 
     }
-    public void UpdateTileID(string allianceString)
+    public void UpdateTileID()
     {
 		
-		tile.x = PlayerPrefs.GetFloat(allianceString + charId + "_TileX");
-        tile.y = PlayerPrefs.GetFloat(allianceString + charId + "_TileY");
+		tile.x = PlayerPrefs.GetFloat(charId + "_TileX");
+        tile.y = PlayerPrefs.GetFloat(charId + "_TileY");
         tileID = Mathf.FloorToInt(tile.y + tile.x * rowSize);
     }
     public void CalculateAttackNumber(int charID)
@@ -95,7 +92,7 @@ public class CharControl_Battle : MonoBehaviour
         maxAttacks = 6;
         //attacksAmount = PlayerPrefs.GetInt(charID + "AtkNum", 1);
 		attacksAmount = 3; //PLACEHOLDER
-        if (attacksAmount > maxAttacks) attacksAmount = maxAttacks; PlayerPrefs.SetInt(allianceString + charID + "AtkNum", maxAttacks);
+        if (attacksAmount > maxAttacks) attacksAmount = maxAttacks; PlayerPrefs.SetInt(charID + "AtkNum", maxAttacks);
         attacksLearned = new int[attacksAmount];
         attacksLearned[0] = 0;//Placheolders
         attacksLearned[1] = 1;
@@ -111,7 +108,7 @@ public class CharControl_Battle : MonoBehaviour
     public void Damage(int attackPower, int attackerStrength)
     {
         currentHp -= attackPower/2;
-        if(alliance == 1) gameManager.battleUI.UpdateEnemyBars(charId);
+        if(alliance == CharacterStats.Alliance.Enemy) gameManager.battleUI.UpdateEnemyBars(charId);
 
         if (currentHp <= 0) Die();
         
@@ -123,12 +120,12 @@ public class CharControl_Battle : MonoBehaviour
         isDead = true;
         gameManager.tileScript.tiles[tileID].isOccupied = false;
         gameObject.SetActive(false);
-        if(alliance == 1)//if enemy
+        if(alliance == CharacterStats.Alliance.Enemy)//if enemy
         {
             gameManager.battleUI.enemyInfoPopUp[charId].gameObject.SetActive(false);
             for (int i = 0; i < gameManager.enemyAmount; i++)
             {
-                if(gameManager.enemyControl[i].isDead == true)
+                if(gameManager.charControl[i].isDead == true)
                 {
                     gameManager.enemyDefeated++;
                 }
@@ -138,5 +135,6 @@ public class CharControl_Battle : MonoBehaviour
                 gameManager.Victory();
             }
         }
+
     }
 }
