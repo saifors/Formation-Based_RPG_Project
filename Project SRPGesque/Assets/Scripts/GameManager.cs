@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
 	//Database
 	[HideInInspector] public AttackInfoManager attackInfo;
 
-	[HideInInspector] public CharControl_Battle[] charControl;
+	public CharControl_Battle[] charControl;
 	//Playable Characters: Amount, Object and Controller Arrays, Active/Currently Selected, 
 	public int partyMembers;
 	public GameObject[] characters;
@@ -42,7 +42,6 @@ public class GameManager : MonoBehaviour
 	//Enemy Characters: Current Amount and start of battle Amount, Object and Controller Arrays, Check Amount alive.
 	public int initialEnemyAmount;
 	public int enemyAmount;
-	public GameObject[] enemies;
 	public int enemyDefeated;
 
 	//Battle
@@ -92,6 +91,8 @@ public class GameManager : MonoBehaviour
 	{
 		gameState = GameState.Overworld;
 		randomEcountersOn = true;//Depending on the area. Maybe a scene database indicating whether true or false?.
+
+		partyMembers = PlayerPrefs.GetInt("PartyMembers", 1);
 
 		//Initialization of Objects
 		cam_T = GameObject.FindGameObjectWithTag("CamTarget").GetComponent<Transform>();
@@ -714,15 +715,18 @@ public class GameManager : MonoBehaviour
 
 		enemyAmount = 2; //PLACHEOLDER
 
-		charControl = new CharControl_Battle[partyMembers + enemyAmount];
-
-        //Player Initialization
-        partyMembers = PlayerPrefs.GetInt("PartyMembers", 1);
+		partyMembers = PlayerPrefs.GetInt("PartyMembers", 1);
+		
+        
         characters = new GameObject[partyMembers + enemyAmount];
+		charControl = new CharControl_Battle[partyMembers + enemyAmount];
+		
         
         for (int i = 0; i < partyMembers + enemyAmount; i++)
         {
-            characters[i] = Instantiate(battleCharacterPrefab);
+			
+
+			characters[i] = Instantiate(battleCharacterPrefab);
             
             charControl[i] = characters[i].GetComponent<CharControl_Battle>();
             charControl[i].rowSize = tileScript.yTiles;
@@ -730,27 +734,13 @@ public class GameManager : MonoBehaviour
 			else characters[i].name = "Battle_Enemy_" + i;
 
 
-			charControl[i].Init(i, true);
-            charControl[i].UpdateTileID();
+			if(i < partyMembers)charControl[i].Init(i, true);
+			else charControl[i].Init(i, false);
+			charControl[i].UpdateTileID();
             PlaceCharacterOnTheirTile(i);
             tileScript.tiles[charControl[i].tileID].isOccupied = true;
         }
-
-        //Enemy Initialization
-        /*
-        enemies = new GameObject[enemyAmount];
-        for(int i = partyMembers; i < enemyAmount + partyMembers; i++)
-        {
-            enemies[i] = Instantiate(battleCharacterPrefab);
-            enemies[i].name = "Battle_Enemy_" + i;
-            charControl[partyMembers + i] = enemies[i].GetComponent<CharControl_Battle>();
-            charControl[partyMembers + i].rowSize = tileScript.yTiles;
-            // THIS NEEDS SOME WORK
-            charControl[partyMembers + i].Init(i, false);
-            charControl[partyMembers + i].UpdateTileID();
-            PlaceCharacterOnTheirTile(partyMembers + i);
-            tileScript.tiles[charControl[partyMembers + i].tileID].isOccupied = true;
-        }*/
+		
 
         battleUI.InitializeInfoBoxes();
         battleUI.attackOptionAmount = charControl[activeCharacter].attacksAmount;

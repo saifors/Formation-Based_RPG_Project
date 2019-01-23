@@ -207,24 +207,7 @@ public class BattleUI : MonoBehaviour
 
     public void InitializeInfoBoxes()
     {
-        enemyInfoPopUp = new EnemyInfoPopUp[gameManager.enemyAmount];
-        for (int i = gameManager.partyMembers; i < gameManager.enemyAmount + gameManager.partyMembers; i++)
-        {
-            GameObject obj = Instantiate(enemyInfoPrefab);
-
-            obj.transform.SetParent(enemyBarParent);
-            obj.transform.localScale = new Vector3(1, 1, 1);
-            obj.transform.localPosition = new Vector3(-118, 318, 0); //placehodler coordinates
-            obj.name = "EnemyInfo_" + i;
-
-            enemyInfoPopUp[i] = obj.GetComponent<EnemyInfoPopUp>();
-            enemyInfoPopUp[i].levelText.text = gameManager.charControl[i].level.ToString();
-
-            //Debug.Log("Testing this shit");
-
-        }
-        
-        playerInfoBox = new PlayerInfoBox[gameManager.enemyAmount];
+        playerInfoBox = new PlayerInfoBox[gameManager.partyMembers];
         for (int i = 0; i < gameManager.partyMembers; i++)
         {
             GameObject obj = Instantiate(playerInfoPrefab);
@@ -236,6 +219,25 @@ public class BattleUI : MonoBehaviour
             playerInfoBox[i] = obj.GetComponent<PlayerInfoBox>();
             playerInfoBox[i].levelNum.text = "Lv." + gameManager.charControl[i].level.ToString();
         }
+
+		enemyInfoPopUp = new EnemyInfoPopUp[gameManager.enemyAmount];
+        for (int i = gameManager.partyMembers; i < gameManager.enemyAmount + gameManager.partyMembers; i++)
+        {
+            GameObject obj = Instantiate(enemyInfoPrefab);
+
+            obj.transform.SetParent(enemyBarParent);
+            obj.transform.localScale = new Vector3(1, 1, 1);
+            obj.transform.localPosition = new Vector3(-118, 318, 0); //placehodler coordinates
+            obj.name = "EnemyInfo_" + i;
+			Debug.Log("Enemy Info " + i);
+            enemyInfoPopUp[i - gameManager.partyMembers] = obj.GetComponent<EnemyInfoPopUp>();
+            enemyInfoPopUp[i - gameManager.partyMembers].levelText.text = gameManager.charControl[i].level.ToString();
+
+            //Debug.Log("Testing this shit");
+
+        }
+        
+        
     }
 
     public void UpdateAttackInfo(int attack)
@@ -370,42 +372,36 @@ public class BattleUI : MonoBehaviour
         attackMenu.SetActive(true);
     }
 
-    public void UpdateEnemyBars(int enemyID)
+    public void UpdateLifeBars(int charID)
     {
         //Percentage of life = (life*100)/MaxHP
-        float lifePercent = (gameManager.charControl[enemyID].currentHp*100)/ gameManager.charControl[enemyID].hp;
-        float mpPercent = (gameManager.charControl[enemyID].currentMp*100)/ gameManager.charControl[enemyID].mp;
+        float lifePercent = (gameManager.charControl[charID].currentHp*100)/ gameManager.charControl[charID].hp;
+        float mpPercent = (gameManager.charControl[charID].currentMp*100)/ gameManager.charControl[charID].mp;
+		Debug.Log(lifePercent);
+		float emptyRight;
+		if (gameManager.charControl[charID].alliance == CharacterStats.Alliance.Enemy) emptyRight = enemyInfoPopUp[charID - gameManager.partyMembers + 1].barTransform[0].offsetMin.x;
+		else emptyRight = playerInfoBox[charID].barTransform[0].offsetMin.x;
+		float hpHeight = 15.42f;
+		float mpHeight = 11.5f;
 
-        float hpWidth = (lifePercent * maxEnemyBarWidth)/100;
-        float hpPosX = ((maxEnemyBarPosX * lifePercent) / 100) - maxEnemyBarPosX;
+		float hpRight = emptyRight / (100 / lifePercent);
 
-        float mpWidth = (mpPercent * maxEnemyBarWidth)/100;
-        float mpPosX = ((maxEnemyBarPosX * mpPercent) / 100) - maxEnemyBarPosX;
+		float mpRight = emptyRight / (100 / lifePercent);
 
-        //HP Bar 
-        enemyInfoPopUp[enemyID].barTransform[0].sizeDelta = new Vector2(hpWidth, 15.42f);
-        enemyInfoPopUp[enemyID].barTransform[0].localPosition = new Vector2(hpPosX, 0);
-        //MP Bar
-        enemyInfoPopUp[enemyID].barTransform[1].sizeDelta = new Vector2(mpWidth, 11.5f);
+		//HP Bar 
+		if(charID < gameManager.partyMembers)
+		{
+			playerInfoBox[charID].barTransform[0].offsetMax = new Vector2(hpRight, hpHeight);
+			playerInfoBox[charID].barTransform[1].offsetMax = new Vector2(mpRight, mpHeight);
+		}
+		else
+		{
+			enemyInfoPopUp[charID - gameManager.partyMembers + 1].barTransform[0].offsetMax = new Vector2(hpRight, hpHeight);
+			//MP Bar
+			enemyInfoPopUp[charID - gameManager.partyMembers + 1].barTransform[1].offsetMax = new Vector2(mpRight, mpHeight);
+		}
+		
         
-    }
-    public void UpdatePlayerBars(int playerID) //This belongs here
-    {
-        float lifePercent = (gameManager.charControl[playerID].currentHp * 100) / gameManager.charControl[playerID].hp;
-        float mpPercent = (gameManager.charControl[playerID].currentMp * 100) / gameManager.charControl[playerID].mp;
-
-        float hpWidth = (lifePercent * maxPlayerBarWidth) / 100;
-        float hpPosX = ((maxPlayerBarPosX * lifePercent) / 100) - maxPlayerBarPosX;
-
-        float mpWidth = (mpPercent * maxPlayerBarWidth) / 100;
-        float mpPosX = ((maxPlayerBarPosX * mpPercent) / 100) - maxPlayerBarPosX;
-
-        //HP Bar 
-        playerInfoBox[playerID].barTransform[0].sizeDelta = new Vector2(hpWidth, 42.86f);
-        playerInfoBox[playerID].barTransform[0].localPosition = new Vector2(hpPosX, 0);
-        //MP Bar
-        playerInfoBox[playerID].barTransform[1].sizeDelta = new Vector2(mpWidth, 42.86f);
-        playerInfoBox[playerID].barTransform[1].localPosition = new Vector2(mpPosX, 0);
     }
 
     public void ChangeNotifText(string notifText) //This belongs here
