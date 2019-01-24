@@ -373,9 +373,9 @@ public class GameManager : MonoBehaviour
 		{
 			for (int e = 0; e < enemyAmount; e++)
 			{
-				if (charControl[e].tileID == selectedTargets[i])
+				if (charControl[e + partyMembers].tileID == selectedTargets[i])
 				{
-					charControl[e].Damage(attackInfo.attackStrengths[charControl[activeCharacter].attacksLearned[battleUI.attackOptionSelected]], charControl[activeCharacter].atk);
+					charControl[e + partyMembers].Damage(attackInfo.attackStrengths[charControl[activeCharacter].attacksLearned[battleUI.attackOptionSelected]], charControl[activeCharacter].atk);
 					//Debug.Log(enemyControl[e].charId + "Has been hit");
 				}
 			}
@@ -689,7 +689,7 @@ public class GameManager : MonoBehaviour
 
     public void MoveFormation(int charID, Vector2 tiles)
     {
-        CharacterStats.SetTileOccupied(partyMembers + charID, tiles, tileScript.yTiles);
+        CharacterStats.SetTileOccupied(charID, tiles, tileScript.yTiles);
         charControl[charID].UpdateTileID();
         PlaceCharacterOnTheirTile(charID);
     }

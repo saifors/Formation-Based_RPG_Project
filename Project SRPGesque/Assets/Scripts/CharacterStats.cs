@@ -34,7 +34,6 @@ public class CharacterStats : MonoBehaviour
 
     public static void SetTileOccupied(int charID, Vector2 tiles, int rowSize)
 	{
-		Debug.Log(charID + " set to tiles " + tiles.x + " " + tiles.y);
 		PlayerPrefs.SetFloat (charID + "_TileX", tiles.x);
         PlayerPrefs.SetFloat (charID + "_TileY", tiles.y);
         PlayerPrefs.SetInt (charID + "_TileID", Mathf.FloorToInt(tiles.y + tiles.x * rowSize));

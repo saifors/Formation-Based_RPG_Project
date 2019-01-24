@@ -47,7 +47,6 @@ public class CharControl_Battle : MonoBehaviour
 
 	public void Init(int charID, bool isPlayer)
 	{
-		Debug.Log("Character of id: " + charID + " is initializing");
 		if (isPlayer)
         {
             alliance = CharacterStats.Alliance.Player;
@@ -109,7 +108,7 @@ public class CharControl_Battle : MonoBehaviour
     public void Damage(int attackPower, int attackerStrength)
     {
         currentHp -= attackPower/2;
-        if(alliance == CharacterStats.Alliance.Enemy) gameManager.battleUI.UpdateLifeBars(charId);
+		gameManager.battleUI.UpdateLifeBars(charId);
 
         if (currentHp <= 0) Die();
         
@@ -123,7 +122,7 @@ public class CharControl_Battle : MonoBehaviour
         gameObject.SetActive(false);
         if(alliance == CharacterStats.Alliance.Enemy)//if enemy
         {
-            gameManager.battleUI.enemyInfoPopUp[charId].gameObject.SetActive(false);
+            gameManager.battleUI.enemyInfoPopUp[charId - gameManager.partyMembers].gameObject.SetActive(false);
             for (int i = 0; i < gameManager.enemyAmount; i++)
             {
                 if(gameManager.charControl[i].isDead == true)

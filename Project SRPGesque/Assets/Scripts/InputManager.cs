@@ -50,7 +50,7 @@ public class InputManager : MonoBehaviour
                     if (!gameManager.tileScript.tiles[gameManager.selectedTile].isOccupied)
                     {
                         gameManager.tileScript.tiles[gameManager.charControl[0].tileID].isOccupied = false;//this one first before its tile gets changed
-                        gameManager.MoveFormation(0, gameManager.tileSelection);
+                        gameManager.MoveFormation(gameManager.activeCharacter, gameManager.tileSelection);
                         gameManager.tileScript.tiles[gameManager.selectedTile].isOccupied = true;
                     }
                 }

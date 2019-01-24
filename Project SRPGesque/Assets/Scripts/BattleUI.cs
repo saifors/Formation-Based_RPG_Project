@@ -58,7 +58,6 @@ public class BattleUI : MonoBehaviour
     public Image battleNotificationBg;
     public SoundPlayer soundPlayer;
     [Header("HP, MP and SP Bars")]
-    public Transform enemyBarParent;
     public float maxEnemyBarWidth = 170;
     public float maxEnemyBarPosX = 85;
     public GameObject enemyInfoPrefab;
@@ -225,11 +224,10 @@ public class BattleUI : MonoBehaviour
         {
             GameObject obj = Instantiate(enemyInfoPrefab);
 
-            obj.transform.SetParent(enemyBarParent);
-            obj.transform.localScale = new Vector3(1, 1, 1);
-            obj.transform.localPosition = new Vector3(-118, 318, 0); //placehodler coordinates
+            
+            
+            obj.transform.position = new Vector3(238, 168, 0); //placehodler coordinates
             obj.name = "EnemyInfo_" + i;
-			Debug.Log("Enemy Info " + i);
             enemyInfoPopUp[i - gameManager.partyMembers] = obj.GetComponent<EnemyInfoPopUp>();
             enemyInfoPopUp[i - gameManager.partyMembers].levelText.text = gameManager.charControl[i].level.ToString();
 
@@ -377,30 +375,55 @@ public class BattleUI : MonoBehaviour
         //Percentage of life = (life*100)/MaxHP
         float lifePercent = (gameManager.charControl[charID].currentHp*100)/ gameManager.charControl[charID].hp;
         float mpPercent = (gameManager.charControl[charID].currentMp*100)/ gameManager.charControl[charID].mp;
-		Debug.Log(lifePercent);
-		float emptyRight;
-		if (gameManager.charControl[charID].alliance == CharacterStats.Alliance.Enemy) emptyRight = enemyInfoPopUp[charID - gameManager.partyMembers + 1].barTransform[0].offsetMin.x;
-		else emptyRight = playerInfoBox[charID].barTransform[0].offsetMin.x;
-		float hpHeight = 15.42f;
-		float mpHeight = 11.5f;
 
-		float hpRight = emptyRight / (100 / lifePercent);
+		float maxWidth;
 
-		float mpRight = emptyRight / (100 / lifePercent);
+		Vector2 hpSize;
+		Vector2 mpSize;
+
+		if(gameManager.charControl[charID].alliance == CharacterStats.Alliance.Player)
+		{
+			hpSize.y = playerInfoBox[charID].barTransform[0].sizeDelta.x;
+			mpSize.y = playerInfoBox[charID].barTransform[1].sizeDelta.x;
+
+			maxWidth = 235;
+		}
+		else
+		{
+			hpSize.y = enemyInfoPopUp[charID - gameManager.partyMembers].barTransform[0].sizeDelta.y;
+			mpSize.y = enemyInfoPopUp[charID - gameManager.partyMembers].barTransform[1].sizeDelta.y;
+
+			maxWidth = 170;
+		}
+		hpSize.y = 15.42f;
+		mpSize.y = 11.5f;
+
+		hpSize.x = maxWidth/lifePercent * 100;
+
+		mpSize.x = maxWidth / mpPercent * 100;
 
 		//HP Bar 
 		if(charID < gameManager.partyMembers)
 		{
-			playerInfoBox[charID].barTransform[0].offsetMax = new Vector2(hpRight, hpHeight);
-			playerInfoBox[charID].barTransform[1].offsetMax = new Vector2(mpRight, mpHeight);
+			playerInfoBox[charID].barTransform[0].sizeDelta = hpSize;
+			playerInfoBox[charID].barTransform[1].sizeDelta = mpSize;
 		}
 		else
 		{
-			enemyInfoPopUp[charID - gameManager.partyMembers + 1].barTransform[0].offsetMax = new Vector2(hpRight, hpHeight);
+
+			enemyInfoPopUp[charID - gameManager.partyMembers].barTransform[0].sizeDelta = hpSize;
 			//MP Bar
-			enemyInfoPopUp[charID - gameManager.partyMembers + 1].barTransform[1].offsetMax = new Vector2(mpRight, mpHeight);
+			enemyInfoPopUp[charID - gameManager.partyMembers].barTransform[1].sizeDelta = mpSize;
 		}
-		
+
+		//EJEMPLO
+		/*
+		RectTransform rect;
+		Vector2 size = rect.sizeDelta;
+		maxSize = size.x;//width
+		minSize = 0;
+
+		rect.sizeDelta = size;*/
         
     }
 
