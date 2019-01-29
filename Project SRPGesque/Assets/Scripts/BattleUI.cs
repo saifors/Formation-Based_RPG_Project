@@ -58,8 +58,7 @@ public class BattleUI : MonoBehaviour
     public Image battleNotificationBg;
     public SoundPlayer soundPlayer;
     [Header("HP, MP and SP Bars")]
-    public float maxEnemyBarWidth = 170;
-    public float maxEnemyBarPosX = 85;
+    
     public GameObject enemyInfoPrefab;
     public EnemyInfoPopUp[] enemyInfoPopUp;
     public Transform partyMemberInfoBoxes;
@@ -81,9 +80,7 @@ public class BattleUI : MonoBehaviour
         notifBgColor = battleNotificationBg.color;
         
         soundPlayer = gameManager.soundPlayer;
-        
-        maxEnemyBarWidth = 170;
-        maxEnemyBarPosX = 85;        
+            
 
 
         attackName = attackNames.GetComponentsInChildren<Text>();
@@ -212,7 +209,7 @@ public class BattleUI : MonoBehaviour
             GameObject obj = Instantiate(playerInfoPrefab);
             obj.transform.SetParent(partyMemberInfoBoxes);
             obj.transform.localScale = new Vector3(1, 1, 1);
-            obj.transform.localPosition = new Vector3(-559, -21.8f, 0); //placehodler coordinates
+            obj.transform.localPosition = new Vector3(418*i, 0, 0); //placehodler coordinates
             obj.name = "PlayerInfo_" + i;
 
             playerInfoBox[i] = obj.GetComponent<PlayerInfoBox>();
@@ -223,11 +220,18 @@ public class BattleUI : MonoBehaviour
         for (int i = gameManager.partyMembers; i < gameManager.enemyAmount + gameManager.partyMembers; i++)
         {
             GameObject obj = Instantiate(enemyInfoPrefab);
+			//Probably in need of optimiation.
+			Canvas objCanvas = obj.GetComponent<Canvas>();
+			objCanvas.worldCamera = gameManager.cam;
+			Transform objTrans;
+			objTrans = obj.GetComponent<Transform>();
 
-            
-            
-            obj.transform.position = new Vector3(238, 168, 0); //placehodler coordinates
-            obj.name = "EnemyInfo_" + i;
+            objTrans.position = gameManager.charControl[i].transform.position;
+			objTrans.position = new Vector3(objTrans.position.x, objTrans.position.y + 1.5f, objTrans.position.z);
+            objTrans.localScale = new Vector3(0.01f,0.01f,0);
+            objTrans.eulerAngles = new Vector3(0,45,0);
+
+			obj.name = "EnemyInfo_" + i;
             enemyInfoPopUp[i - gameManager.partyMembers] = obj.GetComponent<EnemyInfoPopUp>();
             enemyInfoPopUp[i - gameManager.partyMembers].levelText.text = gameManager.charControl[i].level.ToString();
 
@@ -383,8 +387,8 @@ public class BattleUI : MonoBehaviour
 
 		if(gameManager.charControl[charID].alliance == CharacterStats.Alliance.Player)
 		{
-			hpSize.y = playerInfoBox[charID].barTransform[0].sizeDelta.x;
-			mpSize.y = playerInfoBox[charID].barTransform[1].sizeDelta.x;
+			hpSize.y = playerInfoBox[charID].barTransform[0].sizeDelta.y;
+			mpSize.y = playerInfoBox[charID].barTransform[1].sizeDelta.y;
 
 			maxWidth = 235;
 		}
@@ -393,14 +397,12 @@ public class BattleUI : MonoBehaviour
 			hpSize.y = enemyInfoPopUp[charID - gameManager.partyMembers].barTransform[0].sizeDelta.y;
 			mpSize.y = enemyInfoPopUp[charID - gameManager.partyMembers].barTransform[1].sizeDelta.y;
 
-			maxWidth = 170;
+			maxWidth = 100;
 		}
-		hpSize.y = 15.42f;
-		mpSize.y = 11.5f;
 
-		hpSize.x = maxWidth/lifePercent * 100;
+		hpSize.x = maxWidth * lifePercent / 100;
 
-		mpSize.x = maxWidth / mpPercent * 100;
+		mpSize.x = maxWidth * mpPercent / 100;
 
 		//HP Bar 
 		if(charID < gameManager.partyMembers)

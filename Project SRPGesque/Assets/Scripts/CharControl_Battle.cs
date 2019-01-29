@@ -135,6 +135,10 @@ public class CharControl_Battle : MonoBehaviour
                 gameManager.Victory();
             }
         }
+		else
+		{
+			gameManager.GameOverCheck();
+		}
 
     }
 }

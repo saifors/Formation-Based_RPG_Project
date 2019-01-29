@@ -37,7 +37,7 @@ public class InputManager : MonoBehaviour
         if(Input.GetKey(KeyCode.LeftShift)) playerController.isRunning = true;
         else playerController.isRunning = false;
 
-        
+		if (gameManager.gameState == GameManager.GameState.Battle && Input.GetKey(KeyCode.R)) gameManager.charControl[0].Damage(2, 3);
 
          
         if (Input.GetKeyDown(KeyCode.Z))
@@ -88,7 +88,7 @@ public class InputManager : MonoBehaviour
         
         
 
-        //Konami Code for debug
+        //debug
         if(Input.GetKeyDown(KeyCode.F10)) gameManager.ToggleDebug();
         if(gameManager.debug)
         {

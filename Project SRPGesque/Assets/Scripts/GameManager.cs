@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
 	private Transform cam_T;
 	private OWPlayerController playerController;
 	public enum CameraSetting { OverworldCam, BattleCam, CutsceneCam }; public CameraSetting camSet;
+	public Camera cam;
 	public enum GameState { Overworld, Battle, GameMenu };
 	public GameState gameState;
 
@@ -91,8 +92,10 @@ public class GameManager : MonoBehaviour
 	{
 		gameState = GameState.Overworld;
 		randomEcountersOn = true;//Depending on the area. Maybe a scene database indicating whether true or false?.
-
+		
 		partyMembers = PlayerPrefs.GetInt("PartyMembers", 1);
+
+		cam = Camera.main;
 
 		//Initialization of Objects
 		cam_T = GameObject.FindGameObjectWithTag("CamTarget").GetComponent<Transform>();
@@ -779,9 +782,23 @@ public class GameManager : MonoBehaviour
             battleUI.victoryPanel.SetActive(true);
             selecting = SelectingMenu.victoryScreen;
         }
-    
+	//-----------------------------Loss------------------------------
+	public void GameOverCheck()
+	{
+		for(int i = 0; i < partyMembers; i++)
+		{
+			if (!charControl[i].isDead) break;
+
+			if (i >= partyMembers - 1) GameOver();
+		}
+	}
+	public void GameOver()
+	{
+		//Git gud
+	}
+
 //-------------------------------Pause---------------------------------    
-    public void PauseToggle()
+	public void PauseToggle()
     {
         isPaused = !isPaused;
         if(isPaused)

@@ -1584,9 +1584,6 @@ MonoBehaviour:
   battleNotificationText: {fileID: 1654926146}
   battleNotificationBg: {fileID: 1194538684}
   soundPlayer: {fileID: 0}
-  enemyBarParent: {fileID: 0}
-  maxEnemyBarWidth: 250
-  maxEnemyBarPosX: 125
   enemyInfoPrefab: {fileID: 1623790647342768403, guid: 1005106bcc762c64cbfe5415a4f340b8,
     type: 3}
   enemyInfoPopUp: []
@@ -2441,11 +2438,11 @@ RectTransform:
   m_Father: {fileID: 1476578920}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 70.8, y: -425.4}
-  m_SizeDelta: {x: 1505.4, y: 230}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 247.50024, y: -0.39990234}
+  m_SizeDelta: {x: 1536, y: 260}
+  m_Pivot: {x: 0, y: 0}
 --- !u!1 &1194538682
 GameObject:
   m_ObjectHideFlags: 0
@@ -3679,6 +3676,7 @@ MonoBehaviour:
   debugMenu: {fileID: 2045106482}
   axis: {x: 0, y: 0}
   camSet: 0
+  cam: {fileID: 0}
   gameState: 0
   randomEcountersOn: 1
   encounterMinimumPercent: 80
