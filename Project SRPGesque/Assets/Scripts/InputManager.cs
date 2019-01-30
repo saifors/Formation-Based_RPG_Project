@@ -37,7 +37,9 @@ public class InputManager : MonoBehaviour
         if(Input.GetKey(KeyCode.LeftShift)) playerController.isRunning = true;
         else playerController.isRunning = false;
 
-		if (gameManager.gameState == GameManager.GameState.Battle && Input.GetKey(KeyCode.R)) gameManager.charControl[0].Damage(2, 3);
+
+
+		if (gameManager.gameState == GameManager.GameState.Battle && Input.GetKeyDown(KeyCode.R)) gameManager.charControl[0].Damage(10, 30);
 
          
         if (Input.GetKeyDown(KeyCode.Z))

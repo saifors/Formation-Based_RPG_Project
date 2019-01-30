@@ -102,12 +102,26 @@ public class CharControl_Battle : MonoBehaviour
     public void UseMp(int mpAmount)
     {
         currentMp -= mpAmount;
+		gameManager.battleUI.UpdateLifeBars(gameManager.activeCharacter);
         //if(alliance == 0) gameManager.battleUI.UpdatePlayerBars(charId);
     }
 
     public void Damage(int attackPower, int attackerStrength)
     {
-        currentHp -= attackPower/2;
+		int totalDamage;
+		
+
+		if (isDefending)
+		{
+			totalDamage = Mathf.FloorToInt( (attackPower + attackerStrength)/2 - (def * 1.5f) );
+		}
+		else
+		{
+			totalDamage = Mathf.FloorToInt( (attackPower + attackerStrength)/2 - def );
+		}
+		currentHp -= totalDamage;
+
+		if (currentHp < 0) currentHp = 0;
 		gameManager.battleUI.UpdateLifeBars(charId);
 
         if (currentHp <= 0) Die();

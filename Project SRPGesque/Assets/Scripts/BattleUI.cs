@@ -239,7 +239,10 @@ public class BattleUI : MonoBehaviour
 
         }
         
-        
+        for(int i = 0; i < gameManager.partyMembers + gameManager.enemyAmount; i++)
+		{
+			UpdateLifeBars(i);
+		}
     }
 
     public void UpdateAttackInfo(int attack)
@@ -391,6 +394,9 @@ public class BattleUI : MonoBehaviour
 			mpSize.y = playerInfoBox[charID].barTransform[1].sizeDelta.y;
 
 			maxWidth = 235;
+
+			playerInfoBox[charID].barText[0].text = gameManager.charControl[charID].currentHp + "/" + gameManager.charControl[charID].hp;
+			playerInfoBox[charID].barText[1].text = gameManager.charControl[charID].currentMp + "/" + gameManager.charControl[charID].mp;
 		}
 		else
 		{

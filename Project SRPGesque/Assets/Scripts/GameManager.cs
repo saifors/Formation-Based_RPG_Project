@@ -114,7 +114,7 @@ public class GameManager : MonoBehaviour
 		//General Info
 
 		//Placeholder Character Creation
-		CharacterStats.CreateCharacterStats(0, 1, 10, 12, 5, 3, 2, 4); //PLACHEOLDER;
+		CharacterStats.CreateCharacterStats(0, 1, 100, 120, 5, 3, 2, 4); //PLACHEOLDER;
 		CharacterStats.SetTileOccupied(0, new Vector2(3, 4), tileScript.yTiles);
 
 		CharacterStats.CreateCharacterStats(partyMembers + 0, 4, 70, 12, 5, 3, 2, 4); //PLACHEOLDER;
@@ -330,6 +330,14 @@ public class GameManager : MonoBehaviour
 	//Attack		
 	public void StartAttack()
 	{
+		if(charControl[activeCharacter].currentMp -  attackInfo.attackMpCosts[charControl[activeCharacter].attacksLearned[battleUI.attackOptionSelected]] < 0)
+		{
+			battleUI.ChangeNotifText("Not enough MP.");
+			soundPlayer.PlaySound(2, 1, true);
+
+			return;
+		}
+
 		//Debug.Log("Start Attack");
 		for (int i = 0; i < selectedTargets.Length; i++)
 		{
@@ -361,6 +369,8 @@ public class GameManager : MonoBehaviour
 	public void LaunchAttack()
 	{
 		//Debug.Log("Attack Launched");
+		charControl[activeCharacter].UseMp(attackInfo.attackMpCosts[charControl[activeCharacter].attacksLearned[battleUI.attackOptionSelected]]);
+
 		//Character attack animation
 		//charControl[activeCharacter].anim.Play(attackAnimation);
 		//Play Animation on all targets
