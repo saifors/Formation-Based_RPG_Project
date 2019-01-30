@@ -203,7 +203,8 @@ public class BattleUI : MonoBehaviour
 
     public void InitializeInfoBoxes()
     {
-        playerInfoBox = new PlayerInfoBox[gameManager.partyMembers];
+		partyInfo.SetActive(true);
+		playerInfoBox = new PlayerInfoBox[gameManager.partyMembers];
         for (int i = 0; i < gameManager.partyMembers; i++)
         {
             GameObject obj = Instantiate(playerInfoPrefab);

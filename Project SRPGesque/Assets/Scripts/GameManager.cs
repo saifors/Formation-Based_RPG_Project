@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
 	public GameObject debugMenu;
 	//Basics
 	private float timeCounter;
-	public Vector2 axis;
+	private Vector2 axis;
 	private Transform cam_T;
 	private OWPlayerController playerController;
 	public enum CameraSetting { OverworldCam, BattleCam, CutsceneCam }; public CameraSetting camSet;
@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
 	public bool randomEcountersOn;
 	public float encounterMinimumPercent = 100;
 
+	[Header("User Interface")]
 	//Battle Interface (Canvas)    
 	public GameObject battleMenu;
 	public BattleUI battleUI;
@@ -28,11 +29,12 @@ public class GameManager : MonoBehaviour
 	public SelectingMenu selecting;
 
 	//Prefabs For Player and Enemy characters    
-	public GameObject battleCharacterPrefab;
+	
 
-	//Database
+	
 	[HideInInspector] public AttackInfoManager attackInfo;
-
+	[Header("Characters & Enemies")]
+	public GameObject battleCharacterPrefab;
 	public CharControl_Battle[] charControl;
 	//Playable Characters: Amount, Object and Controller Arrays, Active/Currently Selected, 
 	public int partyMembers;
@@ -45,6 +47,7 @@ public class GameManager : MonoBehaviour
 	public int enemyAmount;
 	public int enemyDefeated;
 
+	[Header("Battle")]
 	//Battle
 	//Battle - Move
 	public GameObject cursor; //Prefab
@@ -54,6 +57,7 @@ public class GameManager : MonoBehaviour
 	public GameObject targetCursor; //Prefab
 	public int currentAttack;
 	public Vector2 targetMargin;
+	[Header("Tiles")]
 	//Tiles
 	[HideInInspector] public TileScript tileScript;
 	public int tileAmount;
@@ -64,7 +68,7 @@ public class GameManager : MonoBehaviour
 
 	private Transform selectedTileIndicator;
 
-
+	[Header("Attack Target")]
 	//Target
 	public int targetAmount; //How many Tiles are in the range of the attack
 	public Vector2 targetOrigin;
@@ -72,11 +76,13 @@ public class GameManager : MonoBehaviour
 	public Vector2[] selectedTargetVector; //X and Y of all tiles in range
 	public Transform[] selectedTargetsTransform;
 
+	[Header("Turn System")]
 	//Turn System
 	public int[] turnOrder; //Takes in Combined character Ids of both player and enemy, length will depend on playerAmount, enemy amount and the speed of each and every one.
 	public int turnCounter; //Counter of turns inside a phase of turns. a turn phase keeps repeating whenever it ends. 
 	private int turnAmount;
 
+	[Header("Miscelaneous")]
 	// Pause Stuff
 	public bool isPaused;
 	public GameObject pausePanel;
@@ -406,25 +412,30 @@ public class GameManager : MonoBehaviour
 		EndTurn();
 	}
 	//Turn System
-	public void CalculateTurnOrder()
+	public void CalculateTurnOrderInPhase()
 	{
-		for(int i = 0; i < partyMembers; i++)
+		int extraTurns;
+
+		extraTurns = 0;
+
+		for (int i = 0; i < partyMembers; i++)
 		{
 			//charControl[i]
 		}
 
-		turnAmount = partyMembers + enemyAmount;
+		turnAmount = partyMembers + enemyAmount + extraTurns;
 		turnOrder = new int[turnAmount];
 	}
 
 	public void NextTurn()
 	{
 		turnCounter++;
+		if (turnCounter > turnAmount) turnCounter = 0;
 	}
 
 	public void StartTurn()
 	{
-		//activeCharacter = next character in turn order
+		activeCharacter = turnOrder[turnCounter];
 		charControl[activeCharacter].isDefending = false;
 
 
@@ -722,6 +733,7 @@ public class GameManager : MonoBehaviour
         playerController.isMoving = false;
         gameState = GameState.Battle;
         camSet = CameraSetting.BattleCam;
+		selecting = SelectingMenu.selectingAction;
         cam_T.position = battlefield.position;
         
         enemyDefeated = 0;
@@ -759,13 +771,35 @@ public class GameManager : MonoBehaviour
         battleUI.attackOptionAmount = charControl[activeCharacter].attacksAmount;
         battleMenu.SetActive(true);
         battleUI.ChangeNotifText("Encountered an enemy!");
+
+		turnCounter = 0;
+		CalculateTurnOrderInPhase();
+		StartTurn();
+
     }
 //--------------------------End battle-------------------------------
     public void EndBattle()
     {
         gameState = GameState.Overworld;
         camSet = CameraSetting.OverworldCam;
-        cam_T.position = playerController.trans.position;
+
+		if (selectedTargetsTransform.Length != 0)
+		{
+			for (int i = 0; i < targetAmount; i++) //Eliminate the target cursors.
+			{
+				Destroy(selectedTargetsTransform[i].gameObject);
+			}
+			selectedTargetsTransform = new Transform[0];
+		}
+
+		for(int i = 0; i < partyMembers + enemyAmount; i++)
+		{
+			Destroy(charControl[i].gameObject);
+			if (i < partyMembers) Destroy(battleUI.playerInfoBox[i].gameObject);
+			else Destroy(battleUI.enemyInfoPopUp[i - partyMembers].gameObject);
+		}
+
+		cam_T.position = playerController.trans.position;
         battleMenu.SetActive(false);
     }
     //------------------------------Run-----------------------------
