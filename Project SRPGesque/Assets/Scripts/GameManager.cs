@@ -81,6 +81,8 @@ public class GameManager : MonoBehaviour
 	public int[] turnOrder; //Takes in Combined character Ids of both player and enemy, length will depend on playerAmount, enemy amount and the speed of each and every one.
 	public int turnCounter; //Counter of turns inside a phase of turns. a turn phase keeps repeating whenever it ends. 
 	private int turnAmount;
+	private int[] characterSpeeds; //Store speed of each charID
+	private int[] charactersWithExtraTurn;
 
 	[Header("Miscelaneous")]
 	// Pause Stuff
@@ -411,26 +413,60 @@ public class GameManager : MonoBehaviour
 
 		EndTurn();
 	}
-	//Turn System
+//----------------------------------Turn System--------------------------------------------
 	public void CalculateTurnOrderInPhase()
-	{
-		int extraTurns;
+	{		
+		turnAmount = partyMembers + enemyAmount;
+		turnOrder = new int[turnAmount];
 
-		extraTurns = 0;
-
-		for (int i = 0; i < partyMembers; i++)
+		characterSpeeds = new int[partyMembers + enemyAmount];
+		for (int i = 0; i < characterSpeeds.Length; i++)
 		{
-			//charControl[i]
+			characterSpeeds[i] = charControl[i].spd;
 		}
 
-		turnAmount = partyMembers + enemyAmount + extraTurns;
-		turnOrder = new int[turnAmount];
+		
+		for(int i = 0; i < turnOrder.Length; i++)
+		{
+			if(characterSpeeds[i] > characterSpeeds[i - 1] || i == 0)
+			{
+				//i is faster  than the previous one
+			}
+		}
+
+
+		/*int extraTurn = 0;
+		
+
+		for(int e = 0; e < characterSpeeds.Length; e++)
+		{
+			for(int n = 0; n < characterSpeeds.Length; n++)
+			{
+				if(n != e)
+				{
+					if (characterSpeeds[e] >= characterSpeeds[n] * 1.25f ) //By how much you need to outspeed might be changed, its temporary
+					{
+						// Give an extra turn to charID "e" that takes place before charID "n"
+						if()
+						{
+							extraTurn++;
+						}
+						charactersWithExtraTurn = new int[extraTurn];
+					}
+				}
+				
+			}
+		}
+		*/
+		
 	}
 
 	public void NextTurn()
 	{
 		turnCounter++;
 		if (turnCounter > turnAmount) turnCounter = 0;
+
+		StartTurn();
 	}
 
 	public void StartTurn()
@@ -819,6 +855,7 @@ public class GameManager : MonoBehaviour
         public void FailedToRun()
         {
             battleUI.ChangeNotifText("Failed to run!");
+			EndTurn();
         }
     //----------------------------Victory----------------------------
         public void Victory()
