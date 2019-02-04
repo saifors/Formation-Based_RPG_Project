@@ -425,13 +425,19 @@ public class GameManager : MonoBehaviour
 			characterSpeeds[i] = charControl[i].spd;
 		}
 
-		
-		for(int i = 0; i < turnOrder.Length; i++)
+		for(int placeInTurn = 0; placeInTurn < turnOrder.Length; placeInTurn++)
 		{
-			if(characterSpeeds[i] > characterSpeeds[i - 1] || i == 0)
+			for(int character = 0; character < charControl.Length; character++)
 			{
-				//i is faster  than the previous one
+				for(int comparison = 0; comparison < charControl.Length; comparison++)
+				{
+					if(characterSpeeds[character] > characterSpeeds[comparison])
+					{
+
+					}
+				}
 			}
+		
 		}
 
 
@@ -464,7 +470,7 @@ public class GameManager : MonoBehaviour
 	public void NextTurn()
 	{
 		turnCounter++;
-		if (turnCounter > turnAmount) turnCounter = 0;
+		if (turnCounter >= turnAmount) turnCounter = 0;
 
 		StartTurn();
 	}
