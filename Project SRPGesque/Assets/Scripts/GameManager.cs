@@ -27,11 +27,8 @@ public class GameManager : MonoBehaviour
 	public BattleUI battleUI;
 	public enum SelectingMenu { selectingAction, selectingAttack, selectingTarget, selectingMove, victoryScreen };
 	public SelectingMenu selecting;
-
-	//Prefabs For Player and Enemy characters    
-	
-
-	
+	public DialogueBox dialogueUI;
+		
 	[HideInInspector] public AttackInfoManager attackInfo;
 	[Header("Characters & Enemies")]
 	public GameObject battleCharacterPrefab;
@@ -110,6 +107,8 @@ public class GameManager : MonoBehaviour
 
 		playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<OWPlayerController>();
 		battleUI = GameObject.FindGameObjectWithTag("UI").GetComponent<BattleUI>();
+		//dialogueUI = GameObject.FindGameObjectWithTag("DialogueUI").GetComponent<DialogueBox>();
+		//dialogueUI.gameObject.SetActive(false);
 
 		soundPlayer = gameObject.GetComponent<SoundPlayer>();
 		tileScript = GameObject.FindGameObjectWithTag("TileManager").GetComponent<TileScript>();
@@ -122,12 +121,12 @@ public class GameManager : MonoBehaviour
 		//General Info
 
 		//Placeholder Character Creation
-		CharacterStats.CreateCharacterStats(0, 1, 100, 120, 5, 3, 2, 4); //PLACHEOLDER;
+		CharacterStats.CreateCharacterStats(0, 1, 100, 120, 5, 3, 2, 2); //PLACHEOLDER;
 		CharacterStats.SetTileOccupied(0, new Vector2(3, 4), tileScript.yTiles);
 
-		CharacterStats.CreateCharacterStats(partyMembers + 0, 4, 70, 12, 5, 3, 2, 4); //PLACHEOLDER;
+		CharacterStats.CreateCharacterStats(partyMembers + 0, 4, 70, 12, 5, 3, 2, 6); //PLACHEOLDER;
 		CharacterStats.SetTileOccupied(partyMembers + 0, new Vector2(1, 2), tileScript.yTiles);
-		CharacterStats.CreateCharacterStats(partyMembers + 1, 4, 70, 12, 5, 3, 2, 4); //PLACHEOLDER;
+		CharacterStats.CreateCharacterStats(partyMembers + 1, 4, 70, 12, 5, 3, 2, 5); //PLACHEOLDER;
 		CharacterStats.SetTileOccupied(partyMembers + 1, new Vector2(1, 4), tileScript.yTiles);
 
 		//Create a cursor for Formation Movement
@@ -425,45 +424,38 @@ public class GameManager : MonoBehaviour
 			characterSpeeds[i] = charControl[i].spd;
 		}
 
-		for(int placeInTurn = 0; placeInTurn < turnOrder.Length; placeInTurn++)
-		{
-			for(int character = 0; character < charControl.Length; character++)
-			{
-				for(int comparison = 0; comparison < charControl.Length; comparison++)
-				{
-					if(characterSpeeds[character] > characterSpeeds[comparison])
-					{
 
+		for (int turnI = 0; turnI < turnOrder.Length; turnI++)
+		{
+			int fastestInCache = 0;
+			for (int character = 0; character < characterSpeeds.Length; character++)//Is this the chracter that has this turn in turn order?
+			{
+				bool b = false;
+				//Check whether this character isn´t already assigned to an earlier turn.
+				for(int i = 0; i < turnI; i++)
+				{
+					if (turnOrder[i] == character)
+					{
+						//In this case ignore the if statement right after this for and look at the next character.
+						b = true;
+						break;
 					}
 				}
-			}
-		
-		}
 
-
-		/*int extraTurn = 0;
-		
-
-		for(int e = 0; e < characterSpeeds.Length; e++)
-		{
-			for(int n = 0; n < characterSpeeds.Length; n++)
-			{
-				if(n != e)
+				//is this character the fastest from the characters that haven´t been assigned to a previous turn?
+				if(!b && characterSpeeds[character] > characterSpeeds[fastestInCache])
 				{
-					if (characterSpeeds[e] >= characterSpeeds[n] * 1.25f ) //By how much you need to outspeed might be changed, its temporary
-					{
-						// Give an extra turn to charID "e" that takes place before charID "n"
-						if()
-						{
-							extraTurn++;
-						}
-						charactersWithExtraTurn = new int[extraTurn];
-					}
+					fastestInCache = character;					
 				}
-				
+				if (character == characterSpeeds.Length - 1)
+				{
+					turnOrder[turnI] = fastestInCache;
+				}
+
 			}
 		}
-		*/
+
+
 		
 	}
 
