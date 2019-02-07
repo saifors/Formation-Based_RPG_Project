@@ -378,6 +378,19 @@ public class BattleUI : MonoBehaviour
         attackMenu.SetActive(true);
     }
 
+	public void PlayerTurnUIChange()
+	{
+		actionMenu.SetActive(true);
+		partyInfo.SetActive(true);
+		attackMenu.SetActive(false);
+	}
+	public void EnemyTurnUIChange()
+	{
+		actionMenu.SetActive(false);
+		partyInfo.SetActive(true);
+		attackMenu.SetActive(false);
+	}
+
     public void UpdateLifeBars(int charID)
     {
         //Percentage of life = (life*100)/MaxHP

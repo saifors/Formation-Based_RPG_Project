@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
 	//Battle Interface (Canvas)    
 	public GameObject battleMenu;
 	public BattleUI battleUI;
-	public enum SelectingMenu { selectingAction, selectingAttack, selectingTarget, selectingMove, victoryScreen };
+	public enum SelectingMenu { selectingAction, selectingAttack, selectingTarget, selectingMove, victoryScreen, enemyTurn};
 	public SelectingMenu selecting;
 	public DialogueBox dialogueUI;
 		
@@ -121,7 +121,7 @@ public class GameManager : MonoBehaviour
 		//General Info
 
 		//Placeholder Character Creation
-		CharacterStats.CreateCharacterStats(0, 1, 100, 120, 5, 3, 2, 2); //PLACHEOLDER;
+		CharacterStats.CreateCharacterStats(0, 1, 100, 120, 5, 3, 2, 8); //PLACHEOLDER;
 		CharacterStats.SetTileOccupied(0, new Vector2(3, 4), tileScript.yTiles);
 
 		CharacterStats.CreateCharacterStats(partyMembers + 0, 4, 70, 12, 5, 3, 2, 6); //PLACHEOLDER;
@@ -424,10 +424,11 @@ public class GameManager : MonoBehaviour
 			characterSpeeds[i] = charControl[i].spd;
 		}
 
+		//TO FIX: For some reason when the fastest character of all is the same as the local int fastestIncChache all turns become theirs.
 
 		for (int turnI = 0; turnI < turnOrder.Length; turnI++) //Initial turn order calculation
 		{
-			int fastestInCache = 0;
+			int fastestInCache;
 			for (int character = 0; character < characterSpeeds.Length; character++)//Is this the chracter that has this turn in turn order?
 			{
 				bool b = false;
@@ -475,7 +476,16 @@ public class GameManager : MonoBehaviour
 	{
 		activeCharacter = turnOrder[turnCounter];
 		charControl[activeCharacter].isDefending = false;
-
+		if(charControl[activeCharacter].alliance == CharacterStats.Alliance.Enemy)
+		{
+			battleUI.EnemyTurnUIChange();
+			selecting = SelectingMenu.enemyTurn;
+		}
+		else
+		{
+			battleUI.PlayerTurnUIChange();
+			selecting = SelectingMenu.selectingAction;
+		}
 
 	}
 	public void EndTurn()

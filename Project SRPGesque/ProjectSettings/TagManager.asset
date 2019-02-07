@@ -12,6 +12,7 @@ TagManager:
   - B_Char_00
   - TitleScreenOptions
   - BattleMenu
+  - DialogueUI
   layers:
   - Default
   - TransparentFX

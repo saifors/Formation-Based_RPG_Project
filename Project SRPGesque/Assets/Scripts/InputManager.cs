@@ -73,7 +73,7 @@ public class InputManager : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.X))
         {
-            if (gameManager.selecting != GameManager.SelectingMenu.selectingTarget) gameManager.ReturnToCommandSelection();
+            if (gameManager.selecting != GameManager.SelectingMenu.selectingTarget && gameManager.selecting != GameManager.SelectingMenu.enemyTurn) gameManager.ReturnToCommandSelection();
             else if (gameManager.selecting == GameManager.SelectingMenu.selectingTarget) { gameManager.ReturnToAttackSelect(); }
         }
         
