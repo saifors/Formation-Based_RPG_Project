@@ -126,7 +126,7 @@ public class GameManager : MonoBehaviour
 
 		CharacterStats.CreateCharacterStats(partyMembers + 0, 4, 70, 12, 5, 3, 2, 6); //PLACHEOLDER;
 		CharacterStats.SetTileOccupied(partyMembers + 0, new Vector2(1, 2), tileScript.yTiles);
-		CharacterStats.CreateCharacterStats(partyMembers + 1, 4, 70, 12, 5, 3, 2, 5); //PLACHEOLDER;
+		CharacterStats.CreateCharacterStats(partyMembers + 1, 4, 70, 12, 5, 3, 2, 6); //PLACHEOLDER;
 		CharacterStats.SetTileOccupied(partyMembers + 1, new Vector2(1, 4), tileScript.yTiles);
 
 		//Create a cursor for Formation Movement
@@ -425,7 +425,7 @@ public class GameManager : MonoBehaviour
 		}
 
 
-		for (int turnI = 0; turnI < turnOrder.Length; turnI++)
+		for (int turnI = 0; turnI < turnOrder.Length; turnI++) //Initial turn order calculation
 		{
 			int fastestInCache = 0;
 			for (int character = 0; character < characterSpeeds.Length; character++)//Is this the chracter that has this turn in turn order?
@@ -443,9 +443,13 @@ public class GameManager : MonoBehaviour
 				}
 
 				//is this character the fastest from the characters that haven´t been assigned to a previous turn?
-				if(!b && characterSpeeds[character] > characterSpeeds[fastestInCache])
+				if(!b)
 				{
-					fastestInCache = character;					
+					if(characterSpeeds[character] > characterSpeeds[fastestInCache]) fastestInCache = character;		
+					else if(characterSpeeds[character] == characterSpeeds[fastestInCache])
+					{
+						if (Random.Range(0, 2) == 0) fastestInCache = character;
+					}
 				}
 				if (character == characterSpeeds.Length - 1)
 				{
@@ -476,7 +480,7 @@ public class GameManager : MonoBehaviour
 	}
 	public void EndTurn()
 	{
-		//Next character in turn order?
+		
 		NextTurn();
 	}
 //-------------------------Tile Selection----------------------
