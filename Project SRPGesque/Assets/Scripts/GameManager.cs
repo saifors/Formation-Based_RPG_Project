@@ -428,7 +428,7 @@ public class GameManager : MonoBehaviour
 
 		for (int turnI = 0; turnI < turnOrder.Length; turnI++) //Initial turn order calculation
 		{
-			int fastestInCache;
+			int fastestInCache = 0;
 			for (int character = 0; character < characterSpeeds.Length; character++)//Is this the chracter that has this turn in turn order?
 			{
 				bool b = false;
