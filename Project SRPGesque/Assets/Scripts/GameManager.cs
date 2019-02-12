@@ -121,10 +121,10 @@ public class GameManager : MonoBehaviour
 		//General Info
 
 		//Placeholder Character Creation
-		CharacterStats.CreateCharacterStats(0, 1, 100, 120, 5, 3, 2, 8); //PLACHEOLDER;
+		CharacterStats.CreateCharacterStats(0, 1, 100, 120, 5, 3, 2,10); //PLACHEOLDER;
 		CharacterStats.SetTileOccupied(0, new Vector2(3, 4), tileScript.yTiles);
 
-		CharacterStats.CreateCharacterStats(partyMembers + 0, 4, 70, 12, 5, 3, 2, 6); //PLACHEOLDER;
+		CharacterStats.CreateCharacterStats(partyMembers + 0, 4, 70, 12, 5, 3, 2, 2); //PLACHEOLDER;
 		CharacterStats.SetTileOccupied(partyMembers + 0, new Vector2(1, 2), tileScript.yTiles);
 		CharacterStats.CreateCharacterStats(partyMembers + 1, 4, 70, 12, 5, 3, 2, 6); //PLACHEOLDER;
 		CharacterStats.SetTileOccupied(partyMembers + 1, new Vector2(1, 4), tileScript.yTiles);
@@ -426,50 +426,37 @@ public class GameManager : MonoBehaviour
 
 		//TO FIX: For some reason when the fastest character of all is the same as the local int fastestIncChache all turns become theirs.
 
+		bool[] assigned = new bool[characterSpeeds.Length];
+		for (int i = 0; i < assigned.Length; i++) assigned[i] = false;
+
 		for (int turnI = 0; turnI < turnOrder.Length; turnI++) //Initial turn order calculation
 		{
-			int fastestInCache = 0;
-			for (int character = 0; character < characterSpeeds.Length; character++)//Is this the chracter that has this turn in turn order?
+			int fastestInCache = -1;
+			for (int i = 0; i < assigned.Length; i++)
 			{
-				bool b = false;
-
-
-				//Check whether this character isn´t already assigned to an earlier turn.
-				for(int i = 0; i < turnI; i++)
+				if (!assigned[i]) // Prevents previously assigned characters to be put as the default fastestInCache
 				{
-					if (turnOrder[i] == character)
-					{
-						//In this case ignore the if statement right after this for and look at the next character.
-						b = true;
-						break;
-					}
+					fastestInCache = i;
+					break;
 				}
-
-				//Somewhere around here check whther current character is = fastestInCache?
-
-				//is this character the fastest from the characters that haven´t been assigned to a previous turn?
-				if(!b) //if this characters hasn't been assigned to an earlier turn
-				{
-					if(character != fastestInCache)
-					{
-						if (characterSpeeds[character] > characterSpeeds[fastestInCache]) fastestInCache = character;		
-						else if(characterSpeeds[character] == characterSpeeds[fastestInCache])
-						{
-							if (Random.Range(0, 2) == 0) fastestInCache = character;
-						}
-					}
-					
-				}
-				if (character == characterSpeeds.Length - 1)
-				{
-					turnOrder[turnI] = fastestInCache;
-				}
-
 			}
-		}
 
-
-		
+			for (int character = 1; character < characterSpeeds.Length; character++)//Is this the chracter that has this turn in turn order?
+			{
+				//Somewhere around here check whther current character is = fastestInCache?
+				
+				//is this character the fastest from the characters that haven´t been assigned to a previous turn?
+				if(!assigned[character]) //if this characters hasn't been assigned to an earlier turn
+				{
+					if (characterSpeeds[character] > characterSpeeds[fastestInCache])
+					{
+						fastestInCache = character;	
+					}
+				}		
+			}
+			turnOrder[turnI] = fastestInCache;
+			assigned[fastestInCache] = true;
+		}		
 	}
 
 	public void NextTurn()
@@ -498,7 +485,10 @@ public class GameManager : MonoBehaviour
 	}
 	public void EndTurn()
 	{
-		
+		for(int  i = 0; i < selectedTargetsTransform.Length; i++)
+		{
+			Destroy(selectedTargetsTransform[i].gameObject);
+		}
 		NextTurn();
 	}
 //-------------------------Tile Selection----------------------
