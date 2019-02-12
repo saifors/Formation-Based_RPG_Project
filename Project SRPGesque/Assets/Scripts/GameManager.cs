@@ -432,6 +432,8 @@ public class GameManager : MonoBehaviour
 			for (int character = 0; character < characterSpeeds.Length; character++)//Is this the chracter that has this turn in turn order?
 			{
 				bool b = false;
+
+
 				//Check whether this character isn´t already assigned to an earlier turn.
 				for(int i = 0; i < turnI; i++)
 				{
@@ -443,14 +445,20 @@ public class GameManager : MonoBehaviour
 					}
 				}
 
+				//Somewhere around here check whther current character is = fastestInCache?
+
 				//is this character the fastest from the characters that haven´t been assigned to a previous turn?
-				if(!b)
+				if(!b) //if this characters hasn't been assigned to an earlier turn
 				{
-					if(characterSpeeds[character] > characterSpeeds[fastestInCache]) fastestInCache = character;		
-					else if(characterSpeeds[character] == characterSpeeds[fastestInCache])
+					if(character != fastestInCache)
 					{
-						if (Random.Range(0, 2) == 0) fastestInCache = character;
+						if (characterSpeeds[character] > characterSpeeds[fastestInCache]) fastestInCache = character;		
+						else if(characterSpeeds[character] == characterSpeeds[fastestInCache])
+						{
+							if (Random.Range(0, 2) == 0) fastestInCache = character;
+						}
 					}
+					
 				}
 				if (character == characterSpeeds.Length - 1)
 				{
@@ -540,7 +548,7 @@ public class GameManager : MonoBehaviour
                 //tile - 1
                 tileSelection.y--;
 
-                if (tileSelection.y < selectionLimit[0].y) 
+                 if (tileSelection.y < selectionLimit[0].y) 
                 {
                     tileSelection.y++;
                     soundPlayer.PlaySound(2,1, true);
