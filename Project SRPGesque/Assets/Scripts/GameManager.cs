@@ -205,7 +205,7 @@ public class GameManager : MonoBehaviour
 					FormationMovement();
 				}
 			}
-			if (selecting == SelectingMenu.selectingTarget)
+			else if (selecting == SelectingMenu.selectingTarget)
 			{
 				if (tileSelectCooldownCounter < 1) tileSelectCooldownCounter += Time.deltaTime;
 
@@ -214,6 +214,11 @@ public class GameManager : MonoBehaviour
 					AttackTargetMovement();
 
 				}
+			}
+			else if (selecting == SelectingMenu.enemyTurn)
+			{
+				//Enemy AI
+				EnemyAILogic();
 			}
 
 			if (debug)
@@ -491,8 +496,9 @@ public class GameManager : MonoBehaviour
 		}
 		NextTurn();
 	}
-//-------------------------Tile Selection----------------------
-    public void FormationMovement()
+	//-------------------------Tile Selection----------------------
+	#region Tile and Target Movement
+	public void FormationMovement()
     {
         if (axis.x > 0) //Right
         {
@@ -708,8 +714,8 @@ public class GameManager : MonoBehaviour
         }
 
     }
-
-    public void TargetPlacement()
+	#endregion 
+	public void TargetPlacement()
     {
         //Calculate which should be selected Targets using 
         int targetsCounter = 0;
@@ -769,6 +775,19 @@ public class GameManager : MonoBehaviour
 		
 	}
 
+//-------------------------Artificial Intelligence--------------------
+
+	public void EnemyAILogic()
+	{
+		for(int i = 0; i < charControl[activeCharacter].attacksLearned.Length; i++)
+		{
+			//Enough MP to Use?
+
+			//How many can it hit?
+
+			//How much combined damage will it do
+		}
+	}
 //-------------------------Start Battle-------------------------
     public void ToggleEncounterRate()
 	{
