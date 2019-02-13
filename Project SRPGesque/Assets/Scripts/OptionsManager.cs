@@ -18,13 +18,9 @@ public class OptionsManager : MonoBehaviour
         resolutions[1] = "1600x900";
         resolutions[2] = "1920x1080";
 
-        qualities = new string[4];
-        qualities[0] = "FAST";
-        qualities[1] = "GOOD";
-        qualities[2] = "GREAT";
-        qualities[3] = "ULTRA";
+		qualities = QualitySettings.names;
 
-        resolutionOption = PlayerPrefs.GetInt("currentResolution",0);
+		resolutionOption = PlayerPrefs.GetInt("currentResolution",0);
         qualityOption = PlayerPrefs.GetInt("currentQuality",0);
         UpdateResolution();
     }
@@ -59,8 +55,9 @@ public class OptionsManager : MonoBehaviour
             if (qualityOption <= -1) qualityOption = qualities.Length - 1;
         }
         PlayerPrefs.SetInt("currentQuality", resolutionOption);
+		UpdateQuality();
 
-    }
+	}
     public void UpdateResolution()
     {
         if(resolutionOption == 0) Screen.SetResolution(1280, 720, true);
@@ -68,4 +65,8 @@ public class OptionsManager : MonoBehaviour
         else if(resolutionOption == 2) Screen.SetResolution(1920, 1080, true);
         
     }
+	public void UpdateQuality()
+	{
+		QualitySettings.SetQualityLevel(qualityOption, true);
+	}
 }

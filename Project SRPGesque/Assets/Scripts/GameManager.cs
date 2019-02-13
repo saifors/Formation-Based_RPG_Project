@@ -782,7 +782,7 @@ public class GameManager : MonoBehaviour
 		for(int i = 0; i < charControl[activeCharacter].attacksLearned.Length; i++)
 		{
 			//Enough MP to Use?
-
+			
 			//How many can it hit?
 
 			//How much combined damage will it do
