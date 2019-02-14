@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
 	public Camera cam;
 	public enum GameState { Overworld, Battle, GameMenu };
 	public GameState gameState;
+	private TransitionManager transition;
 
 	//Encounters
 	public bool randomEcountersOn;
@@ -101,6 +102,7 @@ public class GameManager : MonoBehaviour
 		partyMembers = PlayerPrefs.GetInt("PartyMembers", 1);
 
 		cam = Camera.main;
+		transition = GetComponent<TransitionManager>();
 
 		//Initialization of Objects
 		cam_T = GameObject.FindGameObjectWithTag("CamTarget").GetComponent<Transform>();
@@ -782,10 +784,16 @@ public class GameManager : MonoBehaviour
 		for(int i = 0; i < charControl[activeCharacter].attacksLearned.Length; i++)
 		{
 			//Enough MP to Use?
-			
-			//How many can it hit?
+			if(attackInfo.attackMpCosts[charControl[activeCharacter].attacksLearned[i]] >= charControl[activeCharacter].currentMp)
+			{
+				//How many can it hit?
 
-			//How much combined damage will it do
+
+				//How much combined damage will it do
+
+
+			}
+			
 		}
 	}
 //-------------------------Start Battle-------------------------
@@ -905,6 +913,7 @@ public class GameManager : MonoBehaviour
 	public void GameOver()
 	{
 		//Git gud
+		transition.FadeToSceneChange(false, 2);
 	}
 
 //-------------------------------Pause---------------------------------    

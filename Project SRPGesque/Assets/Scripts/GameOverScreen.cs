@@ -8,18 +8,42 @@ using TMPro;
 public class GameOverScreen : MonoBehaviour
 {
 	public TextMeshProUGUI gameOverText;
+	public TextMeshProUGUI pressText;
+	public RectTransform pressTrans;
 	public float separationValue;
+	public bool finishedScroll;
+	public TransitionManager transition;
 
 	//815
 	// Start is called before the first frame update
 	void Start()
     {
-		DOTween.To(() => separationValue, x => separationValue = x, 815, 8).From();
+		pressTrans = pressText.GetComponent<RectTransform>();
+		finishedScroll = false;
+		DOTween.To(() => separationValue, x => separationValue = x, 815, 5).From().OnComplete(FinishedGOverScroll);
     }
 
     // Update is called once per frame
     void Update()
     {
-		gameOverText.wordSpacing = separationValue;
+		if(!finishedScroll) gameOverText.wordSpacing = separationValue;
+		else
+		{
+			if(Input.GetKeyDown(KeyCode.Z))
+			{
+				transition.FadeToSceneChange(false, 1);
+			}
+		}
     }
+	public void FinishedGOverScroll()
+	{
+		gameOverText.wordSpacing = 0;
+		finishedScroll = true;
+		pressText.DOFade(1, 2).OnComplete(TurnOnFlicker);
+		pressTrans.DOAnchorPosY(-33, 2, true).From();
+	}
+	public void TurnOnFlicker()
+	{
+		pressText.DOFade(0.3f, 1).SetEase(Ease.InOutSine).SetLoops(-1, LoopType.Yoyo);
+	}
 }
