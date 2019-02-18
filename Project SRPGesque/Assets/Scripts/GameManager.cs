@@ -188,8 +188,7 @@ public class GameManager : MonoBehaviour
 					}
 				}
 			}
-
-			//Las mierdas de debug.
+			
 			if (debug)
 			{
 
@@ -290,16 +289,7 @@ public class GameManager : MonoBehaviour
 		currentAttack = charControl[activeCharacter].attacksLearned[battleUI.attackOptionSelected];
 		//Debug.Log("Attack " + currentAttack);
 
-		targetAmount = 0;
-		targetMargin = attackInfo.attackRangeSize[currentAttack];
-
-		for (int i = 0; i < targetMargin.x * targetMargin.y; i++)
-		{
-			if (attackInfo.attackRangeActive[currentAttack][i] == 1)
-			{
-				targetAmount++;
-			}
-		}
+		CalculateTargetAmount();
 
 		objTarget = new GameObject[targetAmount];
 		selectedTargetsTransform = new Transform[targetAmount];
@@ -322,6 +312,19 @@ public class GameManager : MonoBehaviour
 		//selectedTargetsTransform[i].position = gameManager.tileScript.tileTransform[selectedTarget[i]].position;
 		battleUI.attackMenu.SetActive(false);
 		selecting = SelectingMenu.selectingTarget;
+	}
+	public void CalculateTargetAmount()
+	{
+		targetAmount = 0;
+		targetMargin = attackInfo.attackRangeSize[currentAttack];
+
+		for (int i = 0; i < targetMargin.x * targetMargin.y; i++)
+		{
+			if (attackInfo.attackRangeActive[currentAttack][i] == 1)
+			{
+				targetAmount++;
+			}
+		}
 	}
 	public void ReturnToAttackSelect()
 	{
@@ -781,20 +784,42 @@ public class GameManager : MonoBehaviour
 
 	public void EnemyAILogic()
 	{
-		for(int i = 0; i < charControl[activeCharacter].attacksLearned.Length; i++)
-		{
-			//Enough MP to Use?
+		int[] storedAtk = new int[charControl[activeCharacter].attacksLearned.Length]; //max amount of attacks, some maybe empty.
+		int attacksStoredCounter = 0;
+
+		//Enough MP to Use?
+		for (int i = 0; i < charControl[activeCharacter].attacksLearned.Length; i++)
+		{			
 			if(attackInfo.attackMpCosts[charControl[activeCharacter].attacksLearned[i]] >= charControl[activeCharacter].currentMp)
 			{
-				//How many can it hit?
-
-
-				//How much combined damage will it do
-
-
-			}
-			
+				storedAtk[attacksStoredCounter] = attackInfo.attackMpCosts[charControl[activeCharacter].attacksLearned[i]];
+				attacksStoredCounter++;
+			}			
 		}
+
+		//Of the ones with enough MP How many can it hit?
+		for(int i = 0; i < attacksStoredCounter; i++)
+		{
+			//go tile by tile 
+			currentAttack = storedAtk[i];
+
+			CalculateTargetAmount();
+
+			for (int tileX = 0; tileX < tileScript.xTiles; tileX++)
+			{
+				for (int tileY = 0; tileY < tileScript.yTiles; tileY++)
+				{
+
+				}
+			}
+
+			/*for (int e = 0; e < attackInfo.attackRangeActive[storedAtk[i]].Length; e++)
+			{
+				//attackInfo.attackRangeActive[storedAtk[i]][e];
+			}*/
+		}
+		//How much combined damage will it do
+
 	}
 //-------------------------Start Battle-------------------------
     public void ToggleEncounterRate()
