@@ -126,9 +126,9 @@ public class GameManager : MonoBehaviour
 		CharacterStats.CreateCharacterStats(0, 1, 100, 120, 5, 3, 2,10); //PLACHEOLDER;
 		CharacterStats.SetTileOccupied(0, new Vector2(3, 4), tileScript.yTiles);
 
-		CharacterStats.CreateCharacterStats(partyMembers + 0, 4, 70, 12, 5, 3, 2, 2); //PLACHEOLDER;
+		CharacterStats.CreateCharacterStats(partyMembers + 0, 4, 70, 50, 5, 3, 2, 2); //PLACHEOLDER;
 		CharacterStats.SetTileOccupied(partyMembers + 0, new Vector2(1, 2), tileScript.yTiles);
-		CharacterStats.CreateCharacterStats(partyMembers + 1, 4, 70, 12, 5, 3, 2, 6); //PLACHEOLDER;
+		CharacterStats.CreateCharacterStats(partyMembers + 1, 4, 70, 10, 5, 3, 2, 6); //PLACHEOLDER;
 		CharacterStats.SetTileOccupied(partyMembers + 1, new Vector2(1, 4), tileScript.yTiles);
 
 		//Create a cursor for Formation Movement
@@ -304,6 +304,7 @@ public class GameManager : MonoBehaviour
 		targetOrigin.y = 0; //column
 
 		TargetPlacement();
+		TargetPlacementVisuals();
 
 
 		//selectedTargetVector[0] = Vector2.zero;
@@ -497,8 +498,11 @@ public class GameManager : MonoBehaviour
 	{
 		for(int  i = 0; i < selectedTargetsTransform.Length; i++)
 		{
-			Destroy(selectedTargetsTransform[i].gameObject);
+
+			// something wrong here
+			if(selectedTargetsTransform[i].gameObject.scene.IsValid()) Destroy(selectedTargetsTransform[i].gameObject);
 		}
+
 		NextTurn();
 	}
 	//-------------------------Tile Selection----------------------
@@ -713,6 +717,7 @@ public class GameManager : MonoBehaviour
         if (axis.x != 0 || axis.y != 0)
         {
             TargetPlacement();
+			TargetPlacementVisuals();
 
             tileSelectCooldownCounter = 0;
             //gameManager.MoveFormation(0, selectedTile);
@@ -762,11 +767,15 @@ public class GameManager : MonoBehaviour
             
         }
 
-        for(int i = 0; i < targetAmount; i++)
-        {
-            selectedTargetsTransform[i].position = tileScript.tileTransform[selectedTargets[i]].position + new Vector3(0,0.005f,0);
-        }
+        
     }
+	public void TargetPlacementVisuals()
+	{
+		for (int i = 0; i < targetAmount; i++)
+		{
+			selectedTargetsTransform[i].position = tileScript.tileTransform[selectedTargets[i]].position + new Vector3(0, 0.005f, 0);
+		}
+	}
 
     public void MoveFormation(int charID, Vector2 tiles)
     {
@@ -787,37 +796,84 @@ public class GameManager : MonoBehaviour
 		int[] storedAtk = new int[charControl[activeCharacter].attacksLearned.Length]; //max amount of attacks, some maybe empty.
 		int attacksStoredCounter = 0;
 
+		int atkInPoolWithMostTargets = -1;
+		int highestTargetAmount = 0;
+		Vector2 optimalTileOrigin = new Vector2(0, 0);
+
+		int[] victimAmount;
+
 		//Enough MP to Use?
 		for (int i = 0; i < charControl[activeCharacter].attacksLearned.Length; i++)
 		{			
-			if(attackInfo.attackMpCosts[charControl[activeCharacter].attacksLearned[i]] >= charControl[activeCharacter].currentMp)
+			if(attackInfo.attackMpCosts[charControl[activeCharacter].attacksLearned[i]] <= charControl[activeCharacter].currentMp)
 			{
-				storedAtk[attacksStoredCounter] = attackInfo.attackMpCosts[charControl[activeCharacter].attacksLearned[i]];
+				storedAtk[attacksStoredCounter] = attackInfo.attackID[charControl[activeCharacter].attacksLearned[i]];
 				attacksStoredCounter++;
 			}			
 		}
+
+		if (attacksStoredCounter == 0)
+		{
+			//NO MP
+			EndTurn();
+		}
+
+		victimAmount = new int[attacksStoredCounter];
 
 		//Of the ones with enough MP How many can it hit?
 		for(int i = 0; i < attacksStoredCounter; i++)
 		{
 			//go tile by tile 
+			
 			currentAttack = storedAtk[i];
-
 			CalculateTargetAmount();
 
-			for (int tileX = 0; tileX < tileScript.xTiles; tileX++)
+			for (int tileX = 0; tileX < tileScript.xTiles - (targetMargin.x-1); tileX++)
 			{
-				for (int tileY = 0; tileY < tileScript.yTiles; tileY++)
+				for (int tileY = 0; tileY < tileScript.yTiles - (targetMargin.y-1); tileY++)
 				{
+					targetOrigin.x = tileX;
+					targetOrigin.y = tileY;
 
+					TargetPlacement();
+					
+
+					//see not just whether it has the most targets, but whether the places on which the targets lay are occupied
+					for(int e = 0; e < selectedTargets.Length; e++)
+					{
+						if(tileScript.tiles[ selectedTargets[e] ].isOccupied) victimAmount[i]++;		
+					}
+
+					if(victimAmount[i] != 0)
+					{ 
+						if (victimAmount[i] > highestTargetAmount)
+						{
+							atkInPoolWithMostTargets = i;
+							highestTargetAmount = victimAmount[i];
+							optimalTileOrigin = new Vector2(tileX, tileY);
+						}
+						else if (victimAmount[i] == highestTargetAmount)
+						{
+							//PLACEHOLDER
+							atkInPoolWithMostTargets = i;
+							highestTargetAmount = victimAmount[i];
+							optimalTileOrigin = new Vector2(tileX, tileY);
+						}
+					}
 				}
 			}
-
-			/*for (int e = 0; e < attackInfo.attackRangeActive[storedAtk[i]].Length; e++)
-			{
-				//attackInfo.attackRangeActive[storedAtk[i]][e];
-			}*/
 		}
+		//Get the selected Targets based on what has just been decided as the best course;
+		targetOrigin = optimalTileOrigin;
+		currentAttack = storedAtk[atkInPoolWithMostTargets];
+		CalculateTargetAmount();
+		TargetPlacement();
+		LaunchAttack();
+
+
+		Debug.Log("Using attack " + currentAttack + "On the tiles(x,y) " + targetOrigin);
+
+
 		//How much combined damage will it do
 
 	}
