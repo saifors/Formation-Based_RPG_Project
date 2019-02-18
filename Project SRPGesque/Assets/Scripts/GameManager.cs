@@ -1,4 +1,5 @@
-﻿ using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -176,7 +177,7 @@ public class GameManager : MonoBehaviour
 						{
 							encounterMinimumPercent -= 2.5f;
 
-							if (Random.Range(0, 100) >= encounterMinimumPercent)
+							if (UnityEngine.Random.Range(0, 100) >= encounterMinimumPercent)
 							{
 								InitializeEncounter();
 								encounterMinimumPercent = 100;
@@ -219,7 +220,6 @@ public class GameManager : MonoBehaviour
 			else if (selecting == SelectingMenu.enemyTurn)
 			{
 				//Enemy AI
-				EnemyAILogic();
 			}
 
 			if (debug)
@@ -402,11 +402,11 @@ public class GameManager : MonoBehaviour
 	{
 		for (int i = 0; i < selectedTargets.Length; i++)
 		{
-			for (int e = 0; e < enemyAmount; e++)
+			for (int e = 0; e < partyMembers + enemyAmount; e++)
 			{
-				if (charControl[e + partyMembers].tileID == selectedTargets[i])
+				if (charControl[e].tileID == selectedTargets[i])
 				{
-					charControl[e + partyMembers].Damage(attackInfo.attackStrengths[charControl[activeCharacter].attacksLearned[battleUI.attackOptionSelected]], charControl[activeCharacter].atk);
+					charControl[e].Damage(attackInfo.attackStrengths[currentAttack], charControl[activeCharacter].atk);
 					//Debug.Log(enemyControl[e].charId + "Has been hit");
 				}
 			}
@@ -486,6 +486,7 @@ public class GameManager : MonoBehaviour
 		{
 			battleUI.EnemyTurnUIChange();
 			selecting = SelectingMenu.enemyTurn;
+			EnemyAILogic();
 		}
 		else
 		{
@@ -498,10 +499,9 @@ public class GameManager : MonoBehaviour
 	{
 		for(int  i = 0; i < selectedTargetsTransform.Length; i++)
 		{
-
-			// something wrong here
-			if(selectedTargetsTransform[i].gameObject.scene.IsValid()) Destroy(selectedTargetsTransform[i].gameObject);
+			Destroy(selectedTargetsTransform[i].gameObject);
 		}
+		selectedTargetsTransform = new Transform[0];
 
 		NextTurn();
 	}
@@ -820,6 +820,8 @@ public class GameManager : MonoBehaviour
 
 		victimAmount = new int[attacksStoredCounter];
 
+		
+
 		//Of the ones with enough MP How many can it hit?
 		for(int i = 0; i < attacksStoredCounter; i++)
 		{
@@ -828,20 +830,23 @@ public class GameManager : MonoBehaviour
 			currentAttack = storedAtk[i];
 			CalculateTargetAmount();
 
-			for (int tileX = 0; tileX < tileScript.xTiles - (targetMargin.x-1); tileX++)
+			for (int tileX = 3; tileX < tileScript.xTiles - (targetMargin.x); tileX++)
 			{
-				for (int tileY = 0; tileY < tileScript.yTiles - (targetMargin.y-1); tileY++)
+				for (int tileY = 0; tileY < tileScript.yTiles - (targetMargin.y); tileY++)
 				{
 					targetOrigin.x = tileX;
 					targetOrigin.y = tileY;
 
 					TargetPlacement();
-					
 
+					
 					//see not just whether it has the most targets, but whether the places on which the targets lay are occupied
 					for(int e = 0; e < selectedTargets.Length; e++)
 					{
-						if(tileScript.tiles[ selectedTargets[e] ].isOccupied) victimAmount[i]++;		
+						if (tileScript.tiles[selectedTargets[e]].isOccupied)
+						{
+							victimAmount[i]++;
+						}
 					}
 
 					if(victimAmount[i] != 0)
@@ -868,7 +873,7 @@ public class GameManager : MonoBehaviour
 		currentAttack = storedAtk[atkInPoolWithMostTargets];
 		CalculateTargetAmount();
 		TargetPlacement();
-		LaunchAttack();
+		StartAttack();
 
 
 		Debug.Log("Using attack " + currentAttack + "On the tiles(x,y) " + targetOrigin);
@@ -959,7 +964,7 @@ public class GameManager : MonoBehaviour
     //------------------------------Run-----------------------------
         public void RunFromBattle()
         {
-            if (Random.Range(0, 3) >= 2)
+            if (UnityEngine.Random.Range(0, 3) >= 2)
             {
                 EndBattle();
             }
