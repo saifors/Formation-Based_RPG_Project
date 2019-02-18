@@ -109,7 +109,7 @@ public class CharControl_Battle : MonoBehaviour
     public void Damage(int attackPower, int attackerStrength)
     {
 		int totalDamage;
-		
+		Debug.Log("ow");
 
 		if (isDefending)
 		{

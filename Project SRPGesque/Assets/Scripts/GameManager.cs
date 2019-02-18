@@ -129,7 +129,7 @@ public class GameManager : MonoBehaviour
 
 		CharacterStats.CreateCharacterStats(partyMembers + 0, 4, 70, 50, 5, 3, 2, 2); //PLACHEOLDER;
 		CharacterStats.SetTileOccupied(partyMembers + 0, new Vector2(1, 2), tileScript.yTiles);
-		CharacterStats.CreateCharacterStats(partyMembers + 1, 4, 70, 10, 5, 3, 2, 6); //PLACHEOLDER;
+		CharacterStats.CreateCharacterStats(partyMembers + 1, 4, 70, 60, 10, 3, 2, 6); //PLACHEOLDER;
 		CharacterStats.SetTileOccupied(partyMembers + 1, new Vector2(1, 4), tileScript.yTiles);
 
 		//Create a cursor for Formation Movement
@@ -400,15 +400,19 @@ public class GameManager : MonoBehaviour
 	}
 	public void HitAttack()
 	{
-		for (int i = 0; i < selectedTargets.Length; i++)
+		
+		for (int chara = 0; chara < partyMembers + enemyAmount; chara++)
 		{
-			for (int e = 0; e < partyMembers + enemyAmount; e++)
+			for (int target = 0; target < selectedTargets.Length; target++)
 			{
-				if (charControl[e].tileID == selectedTargets[i])
+
+				if (charControl[chara].tileID == selectedTargets[target])
 				{
-					charControl[e].Damage(attackInfo.attackStrengths[currentAttack], charControl[activeCharacter].atk);
-					//Debug.Log(enemyControl[e].charId + "Has been hit");
+					Debug.Log(charControl[chara].charId + "Has been hit");
+					charControl[chara].Damage(attackInfo.attackStrengths[currentAttack], charControl[activeCharacter].atk);
+
 				}
+				else if (activeCharacter == 1) Debug.Log(selectedTargets[target] + "Shoot me in the face" + charControl[chara].tileID);
 			}
 		}
 		//End Attack and End your turn.
@@ -763,11 +767,8 @@ public class GameManager : MonoBehaviour
                 selectedTargets[targetsCounter] = Mathf.FloorToInt(selectedTargetVector[targetsCounter].x + (selectedTargetVector[targetsCounter].y * tileVectorSize.y)); //Store this as a tileID for Selected targets
                 
                 targetsCounter++;
-            }
-            
-        }
-
-        
+            }   
+        } 
     }
 	public void TargetPlacementVisuals()
 	{
@@ -873,10 +874,9 @@ public class GameManager : MonoBehaviour
 		currentAttack = storedAtk[atkInPoolWithMostTargets];
 		CalculateTargetAmount();
 		TargetPlacement();
-		StartAttack();
 
+		LaunchAttack();
 
-		Debug.Log("Using attack " + currentAttack + "On the tiles(x,y) " + targetOrigin);
 
 
 		//How much combined damage will it do
