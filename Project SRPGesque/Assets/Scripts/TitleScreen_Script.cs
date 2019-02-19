@@ -2,18 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class TitleScreen_Script : MonoBehaviour
 {
-    public GameObject selectionImageGroup;
-    public GameObject loadGamePanel;
+	public GameObject selectionImageGroup;
+	private CanvasGroup selectionGroupCanvasGroup;
+	public GameObject loadGamePanel;
     public GameObject optionsPanel;
-    public Image[] selectionImage;
+	public RectTransform title;
+	private CanvasGroup titleCanvas;
+    public RectTransform[] selectionOption;
+	private CanvasGroup[] selectionCanvasGroup;
+	public RectTransform arrows;
     public int titleSelection;
     public int fileSelection;
 
+	private bool animFinished;
+
     public int optionSelection;
-    public Color unselectedColor;
+    public float unselectedAlpha;
     public float inputAxis;
     public float scrollCooldown = 0.25f;
     public float scrollCooldownCounter;
@@ -30,24 +38,34 @@ public class TitleScreen_Script : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
-        selectionImageGroup = GameObject.FindGameObjectWithTag("TitleScreenOptions");
-        selectionImage = selectionImageGroup.GetComponentsInChildren<Image>();
-        transition = GameObject.FindGameObjectWithTag("Manager").GetComponent<TransitionManager>();
+		titleCanvas = title.GetComponent<CanvasGroup>();
+		selectionGroupCanvasGroup = selectionImageGroup.GetComponent<CanvasGroup>();
+		selectionCanvasGroup = new CanvasGroup[selectionOption.Length];
+		for (int i = 0; i < selectionOption.Length; i++) selectionCanvasGroup[i] = selectionOption[i].GetComponent<CanvasGroup>();
+		transition = GameObject.FindGameObjectWithTag("Manager").GetComponent<TransitionManager>();
         options = transition.GetComponent<OptionsManager>();
         soundPlayer = transition.GetComponent<SoundPlayer>();
         UpdateVideoSettingsText();
 
-        unselectedColor = new Color(0.66f, 0.66f, 0.66f, 0.75f);
+        unselectedAlpha = 0.6f;
+		animFinished = false;
 
-        state = TitleState.Title;
-        CancelSelection();
-        SelectOption(0);
+		state = TitleState.Title;
+		CancelSelection();
+		SelectOption(0);
+
+		title.DOAnchorPosX(-154.8f, 2).From().SetDelay(0.5f);
+		titleCanvas.DOFade(0, 1.5f).From().SetDelay(0.7f);
+		selectionGroupCanvasGroup.DOFade(0, 1).From().SetDelay(2.5f).OnComplete(FinishAnim);
+
+        
 	}
 	
 	// Update is called once per frame
 	void Update ()
     {
         inputAxis = Input.GetAxisRaw("Vertical");
+		if (!animFinished) return;
 
         if(state == TitleState.Title) //Update for Normal title selection
         {
@@ -55,7 +73,7 @@ public class TitleScreen_Script : MonoBehaviour
             {
                 if (inputAxis <= -1)
                 {
-                    if (titleSelection >= selectionImage.Length - 1) SelectOption(0);
+                    if (titleSelection >= selectionOption.Length - 1) SelectOption(0);
                     else SelectOption(titleSelection + 1);
                     scrollCooldownCounter = 0;
                 }
@@ -106,14 +124,20 @@ public class TitleScreen_Script : MonoBehaviour
         }
 
     }
+
+	public void FinishAnim()
+	{
+		
+		animFinished = true;
+	}
         
     
     public void UnselectAll()
     {
-        for (int i = 0; i < selectionImage.Length; i++)
+        for (int i = 0; i < selectionOption.Length; i++)
         {
-            selectionImage[i].color = unselectedColor;
-            selectionImage[i].transform.localScale = Vector3.one;
+            selectionCanvasGroup[i].alpha = unselectedAlpha;
+            selectionOption[i].DOScale(Vector3.one * 0.75f, 0.15f);
         }
     }
 
@@ -121,8 +145,9 @@ public class TitleScreen_Script : MonoBehaviour
     {
         titleSelection = optionNum;
         UnselectAll();
-        selectionImage[optionNum].color = Color.white;
-        selectionImage[optionNum].transform.localScale = Vector3.one * 1.1f;
+		selectionCanvasGroup[optionNum].alpha = 1;
+        selectionOption[optionNum].DOScale(Vector3.one, 0.15f);
+		arrows.DOAnchorPosY(selectionOption[optionNum].localPosition.y, 0.15f, true);
     }
     public void ConfirmSelection(int optionNum)
     {
