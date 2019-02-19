@@ -268,7 +268,7 @@ public class GameManager : MonoBehaviour
 		}
 		else
 		{
-			Debug.Log("Tried to confirm an Action command selection but nothing was selected");
+			//Debug.Log("Tried to confirm an Action command selection but nothing was selected");
 		}
 	}
 	public void ReturnToCommandSelection()
@@ -408,11 +408,11 @@ public class GameManager : MonoBehaviour
 
 				if (charControl[chara].tileID == selectedTargets[target])
 				{
-					Debug.Log(charControl[chara].charId + "Has been hit");
+					//Debug.Log(charControl[chara].charId + "Has been hit");
 					charControl[chara].Damage(attackInfo.attackStrengths[currentAttack], charControl[activeCharacter].atk);
 
 				}
-				else if (activeCharacter == 1) Debug.Log(selectedTargets[target] + "Shoot me in the face" + charControl[chara].tileID);
+				//Debug.Log(selectedTargets[target] + "is target but character is on" + charControl[chara].tileID);
 			}
 		}
 		//End Attack and End your turn.
@@ -485,12 +485,11 @@ public class GameManager : MonoBehaviour
 	public void StartTurn()
 	{
 		activeCharacter = turnOrder[turnCounter];
-		charControl[activeCharacter].isDefending = false;
+		charControl[activeCharacter].MyTurn();
 		if(charControl[activeCharacter].alliance == CharacterStats.Alliance.Enemy)
 		{
 			battleUI.EnemyTurnUIChange();
 			selecting = SelectingMenu.enemyTurn;
-			EnemyAILogic();
 		}
 		else
 		{
@@ -770,7 +769,7 @@ public class GameManager : MonoBehaviour
 				
             }   
         }
-		Debug.Log("Char" + activeCharacter + " has " + targetsCounter + "targets");
+		//Debug.Log("Char" + activeCharacter + " has " + targetsCounter + "targets");
     }
 	public void TargetPlacementVisuals()
 	{
@@ -792,101 +791,6 @@ public class GameManager : MonoBehaviour
 		
 	}
 
-//-------------------------Artificial Intelligence--------------------
-
-	public void EnemyAILogic()
-	{
-		int[] storedAtk = new int[charControl[activeCharacter].attacksLearned.Length]; //max amount of attacks, some maybe empty.
-		int attacksStoredCounter = 0;
-
-		int atkInPoolWithMostTargets = -1;
-		int highestTargetAmount = 0;
-		Vector2 optimalTileOrigin = new Vector2(0, 0);
-
-		int[] victimAmount;
-
-		//Enough MP to Use?
-		for (int i = 0; i < charControl[activeCharacter].attacksLearned.Length; i++)
-		{			
-			if(attackInfo.attackMpCosts[charControl[activeCharacter].attacksLearned[i]] <= charControl[activeCharacter].currentMp)
-			{
-				storedAtk[attacksStoredCounter] = attackInfo.attackID[charControl[activeCharacter].attacksLearned[i]];
-				attacksStoredCounter++;
-			}			
-		}
-
-		if (attacksStoredCounter == 0)
-		{
-			//NO MP
-			EndTurn();
-		}
-
-		victimAmount = new int[attacksStoredCounter];
-
-		
-
-		//Of the ones with enough MP How many can it hit?
-		for(int i = 0; i < attacksStoredCounter; i++)
-		{
-			//go tile by tile 
-			
-			currentAttack = storedAtk[i];
-			CalculateTargetAmount();
-
-			for (int tileX = 3; tileX < tileScript.xTiles - (targetMargin.x); tileX++)
-			{
-				for (int tileY = 0; tileY < tileScript.yTiles - (targetMargin.y); tileY++)
-				{
-					targetOrigin.x = tileX;
-					targetOrigin.y = tileY;
-
-					TargetPlacement();
-
-					
-					//see not just whether it has the most targets, but whether the places on which the targets lay are occupied
-					for(int e = 0; e < selectedTargets.Length; e++)
-					{
-						if (tileScript.tiles[selectedTargets[e]].isOccupied)
-						{
-							victimAmount[i]++;
-						}
-					}
-
-					if(victimAmount[i] != 0)
-					{ 
-						if (victimAmount[i] > highestTargetAmount)
-						{
-							atkInPoolWithMostTargets = i;
-							highestTargetAmount = victimAmount[i];
-							optimalTileOrigin = new Vector2(tileX, tileY);
-						}
-						else if (victimAmount[i] == highestTargetAmount)
-						{
-							//PLACEHOLDER
-							atkInPoolWithMostTargets = i;
-							highestTargetAmount = victimAmount[i];
-							optimalTileOrigin = new Vector2(tileX, tileY);
-						}
-					}
-				}
-			}
-		}
-		//Get the selected Targets based on what has just been decided as the best course;
-		
-		targetOrigin = optimalTileOrigin;
-		currentAttack = storedAtk[atkInPoolWithMostTargets];
-		Debug.Log("attack with most targets " + atkInPoolWithMostTargets + " current attack " + currentAttack);
-		CalculateTargetAmount();
-
-		TargetPlacement();
-
-		LaunchAttack();
-
-
-
-		//How much combined damage will it do
-
-	}
 //-------------------------Start Battle-------------------------
     public void ToggleEncounterRate()
 	{

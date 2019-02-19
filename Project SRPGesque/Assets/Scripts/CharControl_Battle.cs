@@ -32,6 +32,8 @@ public class CharControl_Battle : MonoBehaviour
 	public int tileID;
     public int rowSize;
 
+	public EnemyAI ai;
+
 	// Use this for initialization
 	void Start () 
 	{
@@ -45,6 +47,15 @@ public class CharControl_Battle : MonoBehaviour
 		
 	}
 
+	public void MyTurn()
+	{
+		isDefending = false;
+		if(alliance == CharacterStats.Alliance.Enemy)
+		{
+			ai.EnemyAILogic();
+		}
+	}
+
 	public void Init(int charID, bool isPlayer)
 	{
 		if (isPlayer)
@@ -54,6 +65,7 @@ public class CharControl_Battle : MonoBehaviour
         else
         {
             alliance = CharacterStats.Alliance.Enemy;
+			ai = gameObject.AddComponent<EnemyAI>();
         }
 
 		charId = charID;
