@@ -767,8 +767,10 @@ public class GameManager : MonoBehaviour
                 selectedTargets[targetsCounter] = Mathf.FloorToInt(selectedTargetVector[targetsCounter].x + (selectedTargetVector[targetsCounter].y * tileVectorSize.y)); //Store this as a tileID for Selected targets
                 
                 targetsCounter++;
+				
             }   
-        } 
+        }
+		Debug.Log("Char" + activeCharacter + " has " + targetsCounter + "targets");
     }
 	public void TargetPlacementVisuals()
 	{
@@ -870,9 +872,12 @@ public class GameManager : MonoBehaviour
 			}
 		}
 		//Get the selected Targets based on what has just been decided as the best course;
+		
 		targetOrigin = optimalTileOrigin;
 		currentAttack = storedAtk[atkInPoolWithMostTargets];
+		Debug.Log("attack with most targets " + atkInPoolWithMostTargets + " current attack " + currentAttack);
 		CalculateTargetAmount();
+
 		TargetPlacement();
 
 		LaunchAttack();
