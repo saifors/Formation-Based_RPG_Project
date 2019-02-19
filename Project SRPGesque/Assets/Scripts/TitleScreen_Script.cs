@@ -34,7 +34,7 @@ public class TitleScreen_Script : MonoBehaviour
     public Text qualityText;
     public OptionsManager options;
     public SoundPlayer soundPlayer;
-
+	Tween arrowTween;
     // Use this for initialization
     void Start ()
     {
@@ -53,11 +53,13 @@ public class TitleScreen_Script : MonoBehaviour
 		state = TitleState.Title;
 		CancelSelection();
 		SelectOption(0);
+		arrowTween = arrows.DORotate(new Vector3(180, 0, 0), 1).SetDelay(1).SetLoops(-1, LoopType.Incremental);
+		arrowTween.Pause();
 
 		title.DOAnchorPosX(-154.8f, 2).From().SetDelay(0.5f);
 		titleCanvas.DOFade(0, 1.5f).From().SetDelay(0.7f);
 		selectionGroupCanvasGroup.DOFade(0, 1).From().SetDelay(2.5f).OnComplete(FinishAnim);
-
+		
         
 	}
 	
@@ -66,7 +68,7 @@ public class TitleScreen_Script : MonoBehaviour
     {
         inputAxis = Input.GetAxisRaw("Vertical");
 		if (!animFinished) return;
-
+		
         if(state == TitleState.Title) //Update for Normal title selection
         {
             if (scrollCooldownCounter >= scrollCooldown)
@@ -127,7 +129,7 @@ public class TitleScreen_Script : MonoBehaviour
 
 	public void FinishAnim()
 	{
-		
+		arrowTween.Play();
 		animFinished = true;
 	}
         
