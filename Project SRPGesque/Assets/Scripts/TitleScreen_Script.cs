@@ -35,6 +35,10 @@ public class TitleScreen_Script : MonoBehaviour
     public OptionsManager options;
     public SoundPlayer soundPlayer;
 	Tween arrowTween;
+
+	float timeCounter;
+	bool musicStarted;
+
     // Use this for initialization
     void Start ()
     {
@@ -59,14 +63,21 @@ public class TitleScreen_Script : MonoBehaviour
 		title.DOAnchorPosX(-154.8f, 2).From().SetDelay(0.5f);
 		titleCanvas.DOFade(0, 1.5f).From().SetDelay(0.7f);
 		selectionGroupCanvasGroup.DOFade(0, 1).From().SetDelay(2.5f).OnComplete(FinishAnim);
+
 		
-        
 	}
 	
 	// Update is called once per frame
 	void Update ()
     {
-        inputAxis = Input.GetAxisRaw("Vertical");
+		if (timeCounter <= 2 && !musicStarted)timeCounter += Time.deltaTime;
+		else if (!musicStarted)
+		{
+			musicStarted = true;
+			soundPlayer.PlayMusic(0);
+		}
+
+		inputAxis = Input.GetAxisRaw("Vertical");
 		if (!animFinished) return;
 		
         if(state == TitleState.Title) //Update for Normal title selection
@@ -88,14 +99,14 @@ public class TitleScreen_Script : MonoBehaviour
             }
             else scrollCooldownCounter += Time.deltaTime;
             if (Input.GetKey(KeyCode.Z)) ConfirmSelection(titleSelection);
-            if(Input.GetKeyDown(KeyCode.Z))soundPlayer.PlaySound(0, 1, true);
+            if(Input.GetKeyDown(KeyCode.Z))soundPlayer.PlaySound(0, true);
         }
         else if(state == TitleState.Load)
         {
             if (Input.GetKey(KeyCode.X)) 
             {
                 CancelSelection();
-                soundPlayer.PlaySound(1, 1, true);
+                soundPlayer.PlaySound(1, true);
             }
 
             if (inputAxis <= -1)
@@ -112,7 +123,7 @@ public class TitleScreen_Script : MonoBehaviour
             if (Input.GetKey(KeyCode.X)) 
             {
                 CancelSelection();
-                soundPlayer.PlaySound(1, 1, true);
+                soundPlayer.PlaySound(1, true);
             }
 
             if (inputAxis <= -1)

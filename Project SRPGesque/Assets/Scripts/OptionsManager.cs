@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class OptionsManager : MonoBehaviour
 {
@@ -10,8 +11,12 @@ public class OptionsManager : MonoBehaviour
     public int qualityOption;    
     public string[] qualities;
 
-    // Use this for initialization
-    void Start ()
+	public Slider[] volumeSliders;
+
+	private SoundPlayer soundPlayer;
+
+	// Use this for initialization
+	void Start ()
     {
         resolutions = new string[3];
         resolutions[0] = "1280x720";
@@ -19,11 +24,27 @@ public class OptionsManager : MonoBehaviour
         resolutions[2] = "1920x1080";
 
 		qualities = QualitySettings.names;
+		soundPlayer = GetComponent<SoundPlayer>();
 
 		resolutionOption = PlayerPrefs.GetInt("currentResolution",0);
         qualityOption = PlayerPrefs.GetInt("currentQuality",0);
-        UpdateResolution();
+
+		volumeSliders[0].value = PlayerPrefs.GetFloat("Sound_Volume");
+		volumeSliders[1].value = PlayerPrefs.GetFloat("Music_Volume");
+
+		UpdateResolution();
     }
+
+	public void SoundVolume(float newSound)
+	{
+		PlayerPrefs.SetFloat("Sound_Volume", newSound);
+		soundPlayer.UpdateSoundVol();
+	}
+	public void MusicVolume(float newMusic)
+	{
+		PlayerPrefs.SetFloat("Music_Volume", newMusic);
+		soundPlayer.UpdateMusicVol();
+	}
 	
 
     public void ChangeResolution(bool whichArrow)

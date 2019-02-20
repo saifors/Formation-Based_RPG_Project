@@ -234,7 +234,7 @@ public class GameManager : MonoBehaviour
 	//Input
 	public void ConfirmSelectedCommand()
 	{
-		soundPlayer.PlaySound(0, 1, true);
+		soundPlayer.PlaySound(0, true);
 		if (battleUI.command == BattleUI.CommandSelection.Attack)
 		{
 			battleUI.InitiateAttackSelection();
@@ -273,7 +273,7 @@ public class GameManager : MonoBehaviour
 	}
 	public void ReturnToCommandSelection()
 	{
-		soundPlayer.PlaySound(1, 1, true);
+		soundPlayer.PlaySound(1, true);
 		selecting = SelectingMenu.selectingAction;
 		selectedTileIndicator.gameObject.SetActive(false);
 		battleUI.attackMenu.SetActive(false);
@@ -283,7 +283,7 @@ public class GameManager : MonoBehaviour
 	public void ConfirmAttackSelection()
 	{
 		//This is all going to change once it's an array of course
-		soundPlayer.PlaySound(0, 1, true);
+		soundPlayer.PlaySound(0, true);
 		GameObject[] objTarget;
 
 		currentAttack = charControl[activeCharacter].attacksLearned[battleUI.attackOptionSelected];
@@ -317,7 +317,7 @@ public class GameManager : MonoBehaviour
 	
 	public void ReturnToAttackSelect()
 	{
-		soundPlayer.PlaySound(1, 1, true);
+		soundPlayer.PlaySound(1, true);
 
 		for (int i = 0; i < targetAmount; i++) //Eliminate the target cursors.
 		{
@@ -339,7 +339,7 @@ public class GameManager : MonoBehaviour
 		if(charControl[activeCharacter].currentMp -  attackInfo.attackMpCosts[charControl[activeCharacter].attacksLearned[battleUI.attackOptionSelected]] < 0)
 		{
 			battleUI.ChangeNotifText("Not enough MP.");
-			soundPlayer.PlaySound(2, 1, true);
+			soundPlayer.PlaySound(2, true);
 
 			return;
 		}
@@ -352,7 +352,7 @@ public class GameManager : MonoBehaviour
 				LaunchAttack();
 				break;
 			}
-			else if (i >= selectedTargets.Length - 1) soundPlayer.PlaySound(2, 1, true);
+			else if (i >= selectedTargets.Length - 1) soundPlayer.PlaySound(2, true);
 		}
 
 		/*if(tileScript.tiles[selectedTarget].isOccupied)
@@ -386,7 +386,7 @@ public class GameManager : MonoBehaviour
 		HitAttack();
 
 	}
-	public void HitAttack()
+	public void HitAttack() //For some reason won't work on enemy turn
 	{
 		
 		for (int chara = 0; chara < partyMembers + enemyAmount; chara++)
@@ -510,7 +510,7 @@ public class GameManager : MonoBehaviour
                 if (tileSelection.x < selectionLimit[0].x) 
                 {
                     tileSelection.x++;
-                    soundPlayer.PlaySound(2,1, true);
+                    soundPlayer.PlaySound(2, true);
                 }
 
             }
@@ -524,7 +524,7 @@ public class GameManager : MonoBehaviour
                 if (tileSelection.y >= selectionLimit[1].y) 
                 {
                     tileSelection.y--;
-                    soundPlayer.PlaySound(2,1, true);
+                    soundPlayer.PlaySound(2, true);
                 }
             }
             else //Right
@@ -532,7 +532,7 @@ public class GameManager : MonoBehaviour
                 //tile - ytiles + 1
                 tileSelection.x--;
                 tileSelection.y++;
-                if (tileSelection.x < selectionLimit[0].x && tileSelection.y >= selectionLimit[1].y) soundPlayer.PlaySound(2,1, true);
+                if (tileSelection.x < selectionLimit[0].x && tileSelection.y >= selectionLimit[1].y) soundPlayer.PlaySound(2, true);
                 if (tileSelection.x < selectionLimit[0].x) tileSelection.x++;
                 if (tileSelection.y >= selectionLimit[1].y) tileSelection.y--;
             }
@@ -547,7 +547,7 @@ public class GameManager : MonoBehaviour
                  if (tileSelection.y < selectionLimit[0].y) 
                 {
                     tileSelection.y++;
-                    soundPlayer.PlaySound(2,1, true);
+                    soundPlayer.PlaySound(2, true);
                 }
 
             }
@@ -558,7 +558,7 @@ public class GameManager : MonoBehaviour
                 if (tileSelection.x >= selectionLimit[1].x) 
                 {
                     tileSelection.x--;
-                    soundPlayer.PlaySound(2,1, true);
+                    soundPlayer.PlaySound(2, true);
                 }
 
             }
@@ -567,7 +567,7 @@ public class GameManager : MonoBehaviour
                 //tile + ytiles - 1
                 tileSelection.x++;
                 tileSelection.y--;
-                if (tileSelection.x >= selectionLimit[1].x && tileSelection.y < selectionLimit[0].y) soundPlayer.PlaySound(2,1, true);
+                if (tileSelection.x >= selectionLimit[1].x && tileSelection.y < selectionLimit[0].y) soundPlayer.PlaySound(2, true);
                 if(tileSelection.x >= selectionLimit[1].x) tileSelection.x--;
                 if (tileSelection.y < selectionLimit[0].y) tileSelection.y++;
 
@@ -578,7 +578,7 @@ public class GameManager : MonoBehaviour
             //tile - ytiles - 1
             tileSelection.x--;
             tileSelection.y--;
-            if (tileSelection.x < selectionLimit[0].x && tileSelection.y < selectionLimit[0].y) soundPlayer.PlaySound(2,1, true);
+            if (tileSelection.x < selectionLimit[0].x && tileSelection.y < selectionLimit[0].y) soundPlayer.PlaySound(2, true);
             if(tileSelection.x < selectionLimit[0].x) tileSelection.x++;
             if(tileSelection.y < selectionLimit[0].y) tileSelection.y++;
 
@@ -588,7 +588,7 @@ public class GameManager : MonoBehaviour
             //tile + ytiles + 1
             tileSelection.x++;
             tileSelection.y++;
-            if (tileSelection.y >= selectionLimit[1].y && tileSelection.x >= selectionLimit[1].x) soundPlayer.PlaySound(2, 1, true);
+            if (tileSelection.y >= selectionLimit[1].y && tileSelection.x >= selectionLimit[1].x) soundPlayer.PlaySound(2, true);
 
             if (tileSelection.y >= selectionLimit[1].y) tileSelection.y--;    
             if(tileSelection.x >= selectionLimit[1].x) tileSelection.x--;
@@ -619,7 +619,7 @@ public class GameManager : MonoBehaviour
                 if (targetOrigin.x < selectionLimit[2].x)
                 {
                     targetOrigin.x++;
-                    soundPlayer.PlaySound(2, 1, true);
+                    soundPlayer.PlaySound(2,  true);
                 }
 
             }
@@ -633,7 +633,7 @@ public class GameManager : MonoBehaviour
                 if (targetOrigin.y + targetMargin.x > selectionLimit[3].y)
                 {
                     targetOrigin.y--;
-                    soundPlayer.PlaySound(2, 1, true);
+                    soundPlayer.PlaySound(2,  true);
                 }
             }
             else //Right
@@ -641,7 +641,7 @@ public class GameManager : MonoBehaviour
                 //tile - ytiles + 1
                 targetOrigin.x--;
                 targetOrigin.y++;
-                if (targetOrigin.x < selectionLimit[2].x && targetOrigin.y + targetMargin.x > selectionLimit[3].y) soundPlayer.PlaySound(2, 1, true);
+                if (targetOrigin.x < selectionLimit[2].x && targetOrigin.y + targetMargin.x > selectionLimit[3].y) soundPlayer.PlaySound(2,  true);
                 if (targetOrigin.x < selectionLimit[2].x) targetOrigin.x++;
                 if (targetOrigin.y + targetMargin.x > selectionLimit[3].y) targetOrigin.y--;
             }
@@ -656,7 +656,7 @@ public class GameManager : MonoBehaviour
                 if (targetOrigin.y < selectionLimit[2].y)
                 {
                     targetOrigin.y++;
-                    soundPlayer.PlaySound(2, 1, true);
+                    soundPlayer.PlaySound(2, true);
                 }
 
             }
@@ -667,7 +667,7 @@ public class GameManager : MonoBehaviour
                 if (targetOrigin.x + targetMargin.y > selectionLimit[3].x)
                 {
                     targetOrigin.x--;
-                    soundPlayer.PlaySound(2, 1, true);
+                    soundPlayer.PlaySound(2, true);
                 }
 
             }
@@ -676,7 +676,7 @@ public class GameManager : MonoBehaviour
                 //tile + ytiles - 1
                 targetOrigin.x++;
                 targetOrigin.y--;
-                if (targetOrigin.x + targetMargin.y > selectionLimit[3].x && targetOrigin.y < selectionLimit[2].y) soundPlayer.PlaySound(2, 1, true);
+                if (targetOrigin.x + targetMargin.y > selectionLimit[3].x && targetOrigin.y < selectionLimit[2].y) soundPlayer.PlaySound(2, true);
                 if (targetOrigin.x + targetMargin.y > selectionLimit[3].x) targetOrigin.x--;
                 if (targetOrigin.y < selectionLimit[2].y) targetOrigin.y++;
 
@@ -687,7 +687,7 @@ public class GameManager : MonoBehaviour
             //tile - ytiles - 1
             targetOrigin.x--;
             targetOrigin.y--;
-            if (targetOrigin.x < selectionLimit[2].x && targetOrigin.y < selectionLimit[2].y) soundPlayer.PlaySound(2, 1, true);
+            if (targetOrigin.x < selectionLimit[2].x && targetOrigin.y < selectionLimit[2].y) soundPlayer.PlaySound(2, true);
             if (targetOrigin.x < selectionLimit[2].x) targetOrigin.x++;
             if (targetOrigin.y < selectionLimit[2].y) targetOrigin.y++;
 
@@ -697,7 +697,7 @@ public class GameManager : MonoBehaviour
             //tile + ytiles + 1
             targetOrigin.x++;
             targetOrigin.y++;
-            if (targetOrigin.y + targetMargin.x > selectionLimit[3].y && targetOrigin.x + targetMargin.y > selectionLimit[3].x) soundPlayer.PlaySound(2, 1, true);
+            if (targetOrigin.y + targetMargin.x > selectionLimit[3].y && targetOrigin.x + targetMargin.y > selectionLimit[3].x) soundPlayer.PlaySound(2, true);
 
             if (targetOrigin.y + targetMargin.x > selectionLimit[3].y) targetOrigin.y--;
             if (targetOrigin.x + targetMargin.y > selectionLimit[3].x) targetOrigin.x--;

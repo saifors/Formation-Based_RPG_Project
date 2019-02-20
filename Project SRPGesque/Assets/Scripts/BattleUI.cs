@@ -346,7 +346,7 @@ public class BattleUI : MonoBehaviour
 
     public void ReturnToAttackSelect()
     {
-        soundPlayer.PlaySound(1,1, true);
+        soundPlayer.PlaySound(1, true);
         InitiateAttackSelection(); 
     }
 
