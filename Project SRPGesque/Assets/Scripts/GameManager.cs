@@ -314,19 +314,7 @@ public class GameManager : MonoBehaviour
 		battleUI.attackMenu.SetActive(false);
 		selecting = SelectingMenu.selectingTarget;
 	}
-	public void CalculateTargetAmount()
-	{
-		targetAmount = 0;
-		targetMargin = attackInfo.attackRangeSize[currentAttack];
-
-		for (int i = 0; i < targetMargin.x * targetMargin.y; i++)
-		{
-			if (attackInfo.attackRangeActive[currentAttack][i] == 1)
-			{
-				targetAmount++;
-			}
-		}
-	}
+	
 	public void ReturnToAttackSelect()
 	{
 		soundPlayer.PlaySound(1, 1, true);
@@ -508,7 +496,7 @@ public class GameManager : MonoBehaviour
 
 		NextTurn();
 	}
-	//-------------------------Tile Selection----------------------
+	//-------------------------Tile Selection & targets----------------------
 	#region Tile and Target Movement
 	public void FormationMovement()
     {
@@ -778,8 +766,21 @@ public class GameManager : MonoBehaviour
 			selectedTargetsTransform[i].position = tileScript.tileTransform[selectedTargets[i]].position + new Vector3(0, 0.005f, 0);
 		}
 	}
+	public void CalculateTargetAmount()
+	{
+		targetAmount = 0;
+		targetMargin = attackInfo.attackRangeSize[currentAttack];
 
-    public void MoveFormation(int charID, Vector2 tiles)
+		for (int i = 0; i < targetMargin.x * targetMargin.y; i++)
+		{
+			if (attackInfo.attackRangeActive[currentAttack][i] == 1)
+			{
+				targetAmount++;
+			}
+		}
+	}
+
+	public void MoveFormation(int charID, Vector2 tiles)
     {
         CharacterStats.SetTileOccupied(charID, tiles, tileScript.yTiles);
         charControl[charID].UpdateTileID();
