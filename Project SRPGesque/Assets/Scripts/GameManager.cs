@@ -388,21 +388,28 @@ public class GameManager : MonoBehaviour
 	}
 	public void HitAttack() //For some reason won't work on enemy turn
 	{
+		Debug.Log(activeCharacter + "starts hitting its attack");
 		
-		for (int chara = 0; chara < partyMembers + enemyAmount; chara++)
+		for (int target = 0; target < selectedTargets.Length; target++)
 		{
-			for (int target = 0; target < selectedTargets.Length; target++)
+			Debug.Log(activeCharacter + "goes through target" + target + "which has tile ID of " + selectedTargets[target] + "or" + tileScript.tiles[selectedTargets[target]].tileID);
+			if (tileScript.tiles[selectedTargets[target]].isOccupied)
 			{
-
-				if (charControl[chara].tileID == selectedTargets[target])
+				//Here its already failing
+				Debug.Log(activeCharacter + "goes through all the character on target tile" + tileScript.tiles[selectedTargets[target]].tileID);
+				for (int chara = 0; chara < partyMembers + enemyAmount; chara++)
 				{
-					//Debug.Log(charControl[chara].charId + "Has been hit");
-					charControl[chara].Damage(attackInfo.attackStrengths[currentAttack], charControl[activeCharacter].atk);
-
+					if(charControl[chara].tileID == tileScript.tiles[selectedTargets[target]].tileID)
+					{
+						Debug.Log(charControl[chara].charId + "Has been hit");
+						charControl[chara].Damage(attackInfo.attackStrengths[currentAttack], charControl[activeCharacter].atk);
+					}
+					else Debug.Log(tileScript.tiles[selectedTargets[target]].tileID + "is target but character" + chara + "is on" + charControl[chara].tileID);
 				}
-				//Debug.Log(selectedTargets[target] + "is target but character is on" + charControl[chara].tileID);
 			}
+			
 		}
+		
 		//End Attack and End your turn.
 		EndTurn();
 	}
@@ -720,6 +727,7 @@ public class GameManager : MonoBehaviour
     {
         //Calculate which should be selected Targets using 
         int targetsCounter = 0;
+		//Debug.Log(targetAmount);
         selectedTargets = new int[targetAmount];
         selectedTargetVector = new Vector2[targetAmount];        
 

@@ -46,7 +46,7 @@ public class EnemyAI : MonoBehaviour
 		highestTargetAmount = 0;
 		
 
-		attacksTargetMargin = attackInfo.attackRangeSize[currentAttack];
+		
 
 		int[] victimAmount;
 
@@ -77,6 +77,7 @@ public class EnemyAI : MonoBehaviour
 			//Left off investigation here
 			//
 			victimAmount[attack] = 0;
+			attacksTargetMargin = attackInfo.attackRangeSize[attack];
 			//Possible confusions: X and Y getting mixed up.
 			for (int tileX = 3; tileX < tileScript.xTiles - (attacksTargetMargin.x); tileX++)
 			{
@@ -162,7 +163,8 @@ public class EnemyAI : MonoBehaviour
 
 		currentAttack = storedAtk[atkInPoolWithMostTargets];
 		gameManager.targetOrigin = optimalTileOrigins[atkInPoolWithMostTargets];
-
+		attacksTargetMargin = attackInfo.attackRangeSize[atkInPoolWithMostTargets];
+		gameManager.targetMargin = attacksTargetMargin;
 		gameManager.CalculateTargetAmount();
 		gameManager.TargetPlacement();
 
