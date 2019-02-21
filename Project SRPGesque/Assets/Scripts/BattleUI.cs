@@ -137,26 +137,33 @@ public class BattleUI : MonoBehaviour
 
                 if(axis.y > 0) //This one needs limits depending on attacksAmoun
                 {
-                    atkSelVector.y--; 
+                    atkSelVector.y--; //Up
                     if(atkSelVector.y < 0) atkSelVector.y++;               
                 }
                 else if(axis.y < 0)
                 {
-                    atkSelVector.y++; 
+                    atkSelVector.y++; //Down
                     if(atkSelVector.y >= currentAtkVerticalLimit) atkSelVector.y--;
                 }
                 if(axis.x > 0) //This one needs limits depending on attacksAmoun
                 {
-                    atkSelVector.x++;
+                    atkSelVector.x++; // Right
                     if(atkSelVector.x >= currentAtkHorizontalLimit) atkSelVector.x--;
                 }
                 else if(axis.x < 0 )
                 {
-                    atkSelVector.x--;
+                    atkSelVector.x--; //Left
                     if(atkSelVector.x < 0) atkSelVector.x++;
                 }
                 if(axis != Vector2.zero)
                 {
+                    if (attackOptionAmount % 2 != 0)
+                    {
+                        if (atkSelVector.x >= atkHorizontalLimit-1 && atkSelVector.y >= atkVerticalLimit-1)//make it so diagonal won't work to bug shit.
+                        {
+                            atkSelVector.x--;
+                        }
+                    }
                     attackOptionSelected = Mathf.FloorToInt(atkSelVector.x + (atkSelVector.y * 2));
                     attackSelection.position = attackNamePos[attackOptionSelected].position;
                     scrollCooldownCounter = 0;
