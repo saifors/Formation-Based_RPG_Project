@@ -14,13 +14,19 @@ public class GameOverScreen : MonoBehaviour
 	public bool finishedScroll;
 	public TransitionManager transition;
 
-	//815
-	// Start is called before the first frame update
-	void Start()
+    public Image bgElementChar;
+    public Image bg;
+
+    //815
+    // Start is called before the first frame update
+    void Start()
     {
 		pressTrans = pressText.GetComponent<RectTransform>();
 		finishedScroll = false;
 		DOTween.To(() => separationValue, x => separationValue = x, 815, 5).From().OnComplete(FinishedGOverScroll);
+
+        bgElementChar.DOFade(0, 3).From().SetDelay(3).SetEase(Ease.InOutSine);
+        bg.DOColor(new Color(0.5f, 0.5f, 0.5f, 1), 4).SetEase(Ease.InOutSine).From().SetLoops(-1, LoopType.Yoyo);
     }
 
     // Update is called once per frame
