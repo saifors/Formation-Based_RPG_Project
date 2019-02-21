@@ -87,6 +87,7 @@ public class GameManager : MonoBehaviour
 	// Pause Stuff
 	public bool isPaused;
 	public GameObject pausePanel;
+    public PauseMenuScript pauseMenu;
 	//Location of the where battles take place
 	private Transform battlefield;
 
@@ -149,6 +150,8 @@ public class GameManager : MonoBehaviour
 
 		//MoveFormation(0, charControl[0].tile); //PLACEHOLDER
 		battleUI.Init();
+
+        pauseMenu = pausePanel.GetComponent<PauseMenuScript>();
 	}
 
 	// Update
@@ -932,14 +935,19 @@ public class GameManager : MonoBehaviour
 //-------------------------------Pause---------------------------------    
 	public void PauseToggle()
     {
-        isPaused = !isPaused;
-        if(isPaused)
+        if (!pauseMenu.isAnimating)
         {
-            pausePanel.SetActive(true);
-        }
-        else
-        {
-            pausePanel.SetActive(false);
+            isPaused = !isPaused;
+            if (isPaused)
+            {
+                pausePanel.SetActive(true);
+                pauseMenu.PauseLoadAnimation();
+
+            }
+            else
+            {
+                pausePanel.SetActive(false);
+            }
         }
     }
 //------------------------------Debug----------------------------------

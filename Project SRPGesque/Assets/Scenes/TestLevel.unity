@@ -660,7 +660,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 339.7, y: 66}
+  m_SizeDelta: {x: 360.9, y: 66}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &161511860
 MonoBehaviour:
@@ -719,7 +719,7 @@ MonoBehaviour:
   m_fontStyle: 0
   m_textAlignment: 514
   m_isAlignmentEnumConverted: 1
-  m_characterSpacing: 0
+  m_characterSpacing: 4.08
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -2421,6 +2421,7 @@ GameObject:
   - component: {fileID: 489068116}
   - component: {fileID: 489068115}
   - component: {fileID: 489068114}
+  - component: {fileID: 489068117}
   m_Layer: 5
   m_Name: PausePanel
   m_TagString: Untagged
@@ -2489,6 +2490,25 @@ RectTransform:
   m_AnchoredPosition: {x: -0.000061035, y: 0.00065613}
   m_SizeDelta: {x: 1920, y: 1080.6}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &489068117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 489068113}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea745578a919ea84e91f70fb5fa37a23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bg: {fileID: 489068114}
+  header: {fileID: 1897963400}
+  bottomBar: {fileID: 1278120518}
+  selectionBox: {fileID: 433742219}
+  partyInfoBoxes: {fileID: 807745549}
+  locationNameTrans: {fileID: 1029588472}
+  isAnimating: 0
 --- !u!1 &500298185
 GameObject:
   m_ObjectHideFlags: 0
@@ -4924,7 +4944,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 440}
-  m_SizeDelta: {x: 586.8, y: 75.4}
+  m_SizeDelta: {x: 663.7, y: 123.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1029588473
 MonoBehaviour:
@@ -4983,7 +5003,7 @@ MonoBehaviour:
   m_fontStyle: 1
   m_textAlignment: 514
   m_isAlignmentEnumConverted: 1
-  m_characterSpacing: 0
+  m_characterSpacing: 7.61
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -4992,7 +5012,7 @@ MonoBehaviour:
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: -1
+  m_firstOverflowCharacterIndex: 13
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
@@ -5020,7 +5040,7 @@ MonoBehaviour:
     spaceCount: 3
     wordCount: 4
     linkCount: 0
-    lineCount: 1
+    lineCount: 2
     pageCount: 1
     materialCount: 1
   m_havePropertiesChanged: 0
@@ -7852,7 +7872,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 50, y: 25}
-  m_SizeDelta: {x: 340, y: 120}
+  m_SizeDelta: {x: 360.9, y: 120}
   m_Pivot: {x: 0, y: 0}
 --- !u!1 &1547499198
 GameObject:
@@ -9615,6 +9635,7 @@ MonoBehaviour:
   turnCounter: 0
   isPaused: 0
   pausePanel: {fileID: 489068113}
+  pauseMenu: {fileID: 0}
   soundPlayer: {fileID: 1888884850}
 --- !u!4 &1888884845
 Transform:
@@ -9912,7 +9933,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 339.7, y: 66}
+  m_SizeDelta: {x: 360.9, y: 66}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &1893083035
 MonoBehaviour:
@@ -9971,7 +9992,7 @@ MonoBehaviour:
   m_fontStyle: 0
   m_textAlignment: 514
   m_isAlignmentEnumConverted: 1
-  m_characterSpacing: 0
+  m_characterSpacing: 4.95
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
