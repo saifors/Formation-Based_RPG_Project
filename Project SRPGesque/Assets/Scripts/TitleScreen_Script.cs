@@ -10,6 +10,7 @@ public class TitleScreen_Script : MonoBehaviour
 	private CanvasGroup selectionGroupCanvasGroup;
 	public GameObject loadGamePanel;
     public GameObject optionsPanel;
+	public RectTransform optionsTrans;
 	public RectTransform title;
 	private CanvasGroup titleCanvas;
     public RectTransform[] selectionOption;
@@ -53,6 +54,7 @@ public class TitleScreen_Script : MonoBehaviour
 
         unselectedAlpha = 0.6f;
 		animFinished = false;
+		optionsTrans = optionsPanel.GetComponent<RectTransform>();
 
 		state = TitleState.Title;
 		CancelSelection();
@@ -185,6 +187,7 @@ public class TitleScreen_Script : MonoBehaviour
             
             selectionImageGroup.SetActive(false);
             optionsPanel.SetActive(true);
+			optionsTrans.DOAnchorPosX(0, 1, true).WaitForCompletion();
             loadGamePanel.SetActive(false);
             UpdateVideoSettingsText();
             state = TitleState.Options;
@@ -197,6 +200,7 @@ public class TitleScreen_Script : MonoBehaviour
         state = TitleState.Title;
         selectionImageGroup.SetActive(true);
         optionsPanel.SetActive(false);
+		optionsTrans.DOAnchorPosX(1500, 1, true).WaitForCompletion();
         loadGamePanel.SetActive(false);
     }
     
