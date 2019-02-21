@@ -124,12 +124,12 @@ public class GameManager : MonoBehaviour
 		//General Info
 
 		//Placeholder Character Creation
-		CharacterStats.CreateCharacterStats(0, 1, 100, 120, 5, 3, 2,10); //PLACHEOLDER;
+		CharacterStats.CreateCharacterStats(0, 1, 100, 120, 10, 3, 2,10); //PLACHEOLDER;
 		CharacterStats.SetTileOccupied(0, new Vector2(3, 4), tileScript.yTiles);
 
-		CharacterStats.CreateCharacterStats(partyMembers + 0, 4, 70, 50, 5, 3, 2, 2); //PLACHEOLDER;
+		CharacterStats.CreateCharacterStats(partyMembers + 0, 4, 50, 10, 5, 3, 2, 2); //PLACHEOLDER;
 		CharacterStats.SetTileOccupied(partyMembers + 0, new Vector2(1, 2), tileScript.yTiles);
-		CharacterStats.CreateCharacterStats(partyMembers + 1, 4, 70, 60, 10, 3, 2, 6); //PLACHEOLDER;
+		CharacterStats.CreateCharacterStats(partyMembers + 1, 4, 50, 90, 10, 3, 2, 6); //PLACHEOLDER;
 		CharacterStats.SetTileOccupied(partyMembers + 1, new Vector2(1, 4), tileScript.yTiles);
 
 		//Create a cursor for Formation Movement
@@ -375,7 +375,8 @@ public class GameManager : MonoBehaviour
 	public void LaunchAttack()
 	{
 		//Debug.Log("Attack Launched");
-		charControl[activeCharacter].UseMp(attackInfo.attackMpCosts[charControl[activeCharacter].attacksLearned[battleUI.attackOptionSelected]]);
+		if (charControl[activeCharacter].alliance == CharacterStats.Alliance.Player) charControl[activeCharacter].UseMp(attackInfo.attackMpCosts[charControl[activeCharacter].attacksLearned[battleUI.attackOptionSelected]]);
+		else if (charControl[activeCharacter].alliance == CharacterStats.Alliance.Enemy) charControl[activeCharacter].UseMp(attackInfo.attackMpCosts[charControl[activeCharacter].ai.currentAttack]);
 
 		//Character attack animation
 		//charControl[activeCharacter].anim.Play(attackAnimation);
@@ -388,23 +389,23 @@ public class GameManager : MonoBehaviour
 	}
 	public void HitAttack() //For some reason won't work on enemy turn
 	{
-		Debug.Log(activeCharacter + "starts hitting its attack");
+		//Debug.Log(activeCharacter + "starts hitting its attack");
 		
 		for (int target = 0; target < selectedTargets.Length; target++)
 		{
-			Debug.Log(activeCharacter + "goes through target" + target + "which has tile ID of " + selectedTargets[target] + "or" + tileScript.tiles[selectedTargets[target]].tileID);
+			//Debug.Log(activeCharacter + "goes through target" + target + "which has tile ID of " + selectedTargets[target] + "or" + tileScript.tiles[selectedTargets[target]].tileID);
 			if (tileScript.tiles[selectedTargets[target]].isOccupied)
 			{
-				//Here its already failing
-				Debug.Log(activeCharacter + "goes through all the character on target tile" + tileScript.tiles[selectedTargets[target]].tileID);
+				
+				//Debug.Log(activeCharacter + "goes through all the character on target tile" + tileScript.tiles[selectedTargets[target]].tileID);
 				for (int chara = 0; chara < partyMembers + enemyAmount; chara++)
 				{
 					if(charControl[chara].tileID == tileScript.tiles[selectedTargets[target]].tileID)
 					{
-						Debug.Log(charControl[chara].charId + "Has been hit");
+						//Debug.Log(charControl[chara].charId + "Has been hit");
 						charControl[chara].Damage(attackInfo.attackStrengths[currentAttack], charControl[activeCharacter].atk);
 					}
-					else Debug.Log(tileScript.tiles[selectedTargets[target]].tileID + "is target but character" + chara + "is on" + charControl[chara].tileID);
+					//else Debug.Log(tileScript.tiles[selectedTargets[target]].tileID + "is target but character" + chara + "is on" + charControl[chara].tileID);
 				}
 			}
 			
@@ -500,6 +501,14 @@ public class GameManager : MonoBehaviour
 			Destroy(selectedTargetsTransform[i].gameObject);
 		}
 		selectedTargetsTransform = new Transform[0];
+
+		GameOverCheck();
+
+		if(enemyDefeated >= enemyAmount)
+		{
+			Victory();
+			return;
+		}
 
 		NextTurn();
 	}

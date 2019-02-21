@@ -29,7 +29,7 @@ public class AttackInfoManager : MonoBehaviour
         attackRangeActive = new int[attacks][];
 
         //Attack 1
-        SetAttack(0, "Fire Bolt",20, 10);
+        SetAttack(0, "Fire Bolt",20, 11);
         SetAttackDescription(0, true, "Summons an arrow of fire from above to pierce through the foe's body.");
         SetRange(0, new Vector2(3,2), new int[] {1,0,1,0,1,0});
         //Attack 2

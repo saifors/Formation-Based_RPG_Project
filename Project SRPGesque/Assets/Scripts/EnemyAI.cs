@@ -12,7 +12,7 @@ public class EnemyAI : MonoBehaviour
 	public int atkInPoolWithMostTargets;
 	public int highestTargetAmount;
 
-	
+	int attacksStoredCounter;
 
 	public int currentAttack;
 	public Vector2 attacksTargetMargin;
@@ -40,7 +40,7 @@ public class EnemyAI : MonoBehaviour
 	public void EnemyAILogic()
 	{
 		int[] storedAtk = new int[charControl.attacksLearned.Length]; //max amount of attacks, some maybe empty.
-		int attacksStoredCounter = 0;
+		attacksStoredCounter = 0;
 
 		atkInPoolWithMostTargets = -1;
 		highestTargetAmount = 0;
@@ -61,11 +61,17 @@ public class EnemyAI : MonoBehaviour
 			}
 		}
 
+		Debug.Log(charControl.charId + " stored " + attacksStoredCounter + " attacks");
+		
+
 		if (attacksStoredCounter == 0)
 		{
 			//NO MP
 			Debug.Log(charControl.charId + "has not enough Mp to use any of its moves");
+			gameManager.EndTurn();
+			return;
 		}
+		Debug.Log(charControl.charId + " stored " + storedAtk[0]);
 
 		//Initialize an array of length of how many attacks have been stored for the amount of characters that will be hit by each stored attack. 
 		victimAmount = new int[attacksStoredCounter];

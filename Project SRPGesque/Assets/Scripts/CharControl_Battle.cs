@@ -113,7 +113,9 @@ public class CharControl_Battle : MonoBehaviour
 
     public void UseMp(int mpAmount)
     {
-        currentMp -= mpAmount;
+		Debug.Log(charId + "used" + mpAmount + "mp");
+		if (currentMp - mpAmount < 0)Debug.Log(charId + "used more MP than it has");
+		currentMp -= mpAmount;
 		gameManager.battleUI.UpdateLifeBars(gameManager.activeCharacter);
         //if(alliance == 0) gameManager.battleUI.UpdatePlayerBars(charId);
     }
@@ -121,7 +123,7 @@ public class CharControl_Battle : MonoBehaviour
     public void Damage(int attackPower, int attackerStrength)
     {
 		int totalDamage;
-		Debug.Log(charId + "ow");
+		
 
 		if (isDefending)
 		{
@@ -135,6 +137,8 @@ public class CharControl_Battle : MonoBehaviour
 
 		if (currentHp < 0) currentHp = 0;
 		gameManager.battleUI.UpdateLifeBars(charId);
+
+		Debug.Log(charId + " has been hit for " + totalDamage + " leaving it at " + currentHp + " HP");
 
         if (currentHp <= 0) Die();
         
@@ -156,15 +160,7 @@ public class CharControl_Battle : MonoBehaviour
                     gameManager.enemyDefeated++;
                 }
             }
-            if(gameManager.enemyDefeated >= gameManager.enemyAmount)
-            {
-                gameManager.Victory();
-            }
         }
-		else
-		{
-			gameManager.GameOverCheck();
-		}
 
     }
 }
