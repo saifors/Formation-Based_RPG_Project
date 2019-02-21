@@ -19,6 +19,8 @@ public class OWPlayerController : MonoBehaviour
     public bool isMoving;
     public bool isRunning;
 
+    private Animator anim;
+
     private GameManager gameManager;
 
     bool isRotating;// make it so it can't move when rotating and only starts moving when completed rotation.
@@ -49,6 +51,7 @@ public class OWPlayerController : MonoBehaviour
     {
         trans = transform;
         gameManager = GameObject.FindGameObjectWithTag("Manager").GetComponent<GameManager>();
+        anim = GetComponent<Animator>();
     }
 	
 	// Update is called once per frame
@@ -79,7 +82,19 @@ public class OWPlayerController : MonoBehaviour
             DetermineDirection();
             previousAxis = axis; //Store axis of last frame
         }
-        
+        if ( isMoving == false)
+        {
+            anim.Play("Idle");
+        }
+        else if (isMoving == true && isRunning == false)
+        {
+            anim.Play("Walk");
+        }
+        else if (isMoving == true && isRunning == true)
+        {
+            anim.Play("Run");
+        }
+
     }
 
     public void DetermineDirection()  
