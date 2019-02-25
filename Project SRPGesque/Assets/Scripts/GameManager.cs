@@ -176,7 +176,7 @@ public class GameManager : MonoBehaviour
 					if (playerController.isMoving)
 					{
 						timeCounter += Time.deltaTime;
-						if (timeCounter >= 1)
+						if (timeCounter >= 5)
 						{
 							encounterMinimumPercent -= 2.5f;
 
