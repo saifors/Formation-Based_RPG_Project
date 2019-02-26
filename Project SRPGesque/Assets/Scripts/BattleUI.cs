@@ -236,7 +236,7 @@ public class BattleUI : MonoBehaviour
 
             objTrans.position = gameManager.charControl[i].transform.position;
 			objTrans.position = new Vector3(objTrans.position.x, objTrans.position.y + 1.5f, objTrans.position.z);
-            objTrans.localScale = new Vector3(0.01f,0.01f,0);
+            objTrans.localScale = new Vector3(0.0055f, 0.006f, 0.006f);
             objTrans.eulerAngles = new Vector3(0,45,0);
 
 			obj.name = "EnemyInfo_" + i;
@@ -424,7 +424,7 @@ public class BattleUI : MonoBehaviour
 			hpSize.y = enemyInfoPopUp[charID - gameManager.partyMembers].barTransform[0].sizeDelta.y;
 			mpSize.y = enemyInfoPopUp[charID - gameManager.partyMembers].barTransform[1].sizeDelta.y;
 
-			maxWidth = 100;
+			maxWidth = 200;
 		}
 
 		hpSize.x = maxWidth * lifePercent / 100;
