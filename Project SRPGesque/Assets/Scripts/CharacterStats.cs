@@ -6,6 +6,7 @@ public class CharacterStats : MonoBehaviour
 {
 	public enum Alliance { Neutral, Player, Enemy}
 
+
 	public static void CreateCharacterStats(int charID, int level, int hp, int mp, int atk, int def, int res, int spd)
 	{
 
