@@ -94,10 +94,17 @@ public class GameManager : MonoBehaviour
 	//Audio
 	public SoundPlayer soundPlayer;
 
+	//Game Data 
+	public GameData gameData;
+
 	//Start
 	// Use this for initialization
 	void Start()
 	{
+		PlayerPrefs.SetString("CurrentFile", "spel_aanpassingen.dios");
+
+		gameData = GameDataManager.Load(PlayerPrefs.GetString("CurrentFile"));
+
 		gameState = GameState.Overworld;
 		randomEcountersOn = true;//Depending on the area. Maybe a scene database indicating whether true or false?.
 		
@@ -127,6 +134,8 @@ public class GameManager : MonoBehaviour
 		//Placeholder Character Creation
 		CharacterStats.CreateCharacterStats(0, 1, 100, 120, 10, 3, 2,10); //PLACHEOLDER;
 		CharacterStats.SetTileOccupied(0, new Vector2(3, 4), tileScript.yTiles);
+
+
 
 		CharacterStats.CreateCharacterStats(partyMembers + 0, 4, 50, 10, 5, 3, 2, 2); //PLACHEOLDER;
 		CharacterStats.SetTileOccupied(partyMembers + 0, new Vector2(1, 2), tileScript.yTiles);

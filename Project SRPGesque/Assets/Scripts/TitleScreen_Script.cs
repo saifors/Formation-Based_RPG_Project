@@ -203,6 +203,24 @@ public class TitleScreen_Script : MonoBehaviour
 		optionsTrans.DOAnchorPosX(1500, 1, true).WaitForCompletion();
         loadGamePanel.SetActive(false);
     }
+
+	public void LoadGameSlot(int slot)
+	{
+		switch(slot)
+		{
+			case 0:
+				PlayerPrefs.SetString("CurrentFile", "spelEen.od"); // OD : Opslag Data
+				break;
+			case 1:
+				PlayerPrefs.SetString("CurrentFile", "spelTwee.od");
+				break;
+			case 2:
+				PlayerPrefs.SetString("CurrentFile", "spelDrie.od");
+				break;
+			default:
+				break;
+		}
+	}
     
     public void UpdateVideoSettingsText()
     {
