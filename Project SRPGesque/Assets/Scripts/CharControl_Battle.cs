@@ -8,6 +8,7 @@ public class CharControl_Battle : MonoBehaviour
     public CharacterStats.Alliance alliance;
 
     public int level;
+	public int exp;
     public int currentHp;
     public int currentMp;
     public int hp;
@@ -70,19 +71,40 @@ public class CharControl_Battle : MonoBehaviour
 
 		charId = charID;
 
-        level = PlayerPrefs.GetInt(charID + "Level");
+		if(isPlayer)
+		{
+			level = gameManager.gameData.Party[charID].level;
 
-        hp = PlayerPrefs.GetInt(charID + "Hp");
-		mp = PlayerPrefs.GetInt(charID + "Mp");
-		atk = PlayerPrefs.GetInt(charID + "Attack");
-		def = PlayerPrefs.GetInt(charID + "Defense");
-		res = PlayerPrefs.GetInt(charID + "Resistance");
-		spd = PlayerPrefs.GetInt(charID + "Speed");
+			hp = gameManager.gameData.Party[charID].hp;
+			mp = gameManager.gameData.Party[charID].mp;
+			atk = gameManager.gameData.Party[charID].attack;
+			def = gameManager.gameData.Party[charID].defense;
+			res = gameManager.gameData.Party[charID].resistance;
+			spd = gameManager.gameData.Party[charID].speed;
 
-        currentHp = PlayerPrefs.GetInt(charID + "Current Hp");
-        currentMp = PlayerPrefs.GetInt(charID + "Current Mp");
-        if (currentHp > hp) currentHp = hp;
-        if (currentMp > mp) currentMp = mp;
+			currentHp = gameManager.gameData.Party[charID].currentHp;
+			currentMp = gameManager.gameData.Party[charID].currentMp;
+			if (currentHp > hp) currentHp = hp;
+			if (currentMp > mp) currentMp = mp;
+
+			//tile formation from game data here pls
+		}
+		else
+		{		
+			level = PlayerPrefs.GetInt(charID + "Level");
+
+			hp = PlayerPrefs.GetInt(charID + "Hp");
+			mp = PlayerPrefs.GetInt(charID + "Mp");
+			atk = PlayerPrefs.GetInt(charID + "Attack");
+			def = PlayerPrefs.GetInt(charID + "Defense");
+			res = PlayerPrefs.GetInt(charID + "Resistance");
+			spd = PlayerPrefs.GetInt(charID + "Speed");
+
+			currentHp = PlayerPrefs.GetInt(charID + "Current Hp");
+			currentMp = PlayerPrefs.GetInt(charID + "Current Mp");
+			if (currentHp > hp) currentHp = hp;
+			if (currentMp > mp) currentMp = mp;
+		}
 
         attackInfo = GameObject.FindGameObjectWithTag("Manager").GetComponent<AttackInfoManager>();
         CalculateAttackNumber(charID);
@@ -94,9 +116,16 @@ public class CharControl_Battle : MonoBehaviour
     }
     public void UpdateTileID()
     {
-		
-		tile.x = PlayerPrefs.GetFloat(charId + "_TileX");
-        tile.y = PlayerPrefs.GetFloat(charId + "_TileY");
+		if(alliance == CharacterStats.Alliance.Player)
+		{
+			tile = gameManager.gameData.Formation[charId].tiles;
+		}
+		else
+		{
+			tile.x = PlayerPrefs.GetFloat(charId + "_TileX");
+			tile.y = PlayerPrefs.GetFloat(charId + "_TileY");
+		}
+
         tileID = Mathf.FloorToInt(tile.y + tile.x * rowSize);
     }
     public void CalculateAttackNumber(int charID)

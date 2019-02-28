@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 using System;
 using System.IO;
 
-[XmlRoot("PartyMembers")]
+[System.Serializable]
 public class GameData
 {
 
@@ -13,6 +13,10 @@ public class GameData
 	[XmlArray("Party")]
 	[XmlArrayItem("Character")]
 	public List<CharacterData> Party;
+	//Party Formation
+	[XmlArray("PartyFormation")]
+	[XmlArrayItem("Member")]
+	public List<FormationData> Formation;
 	//Monsters
 	[XmlArray("Enemies")]
 	[XmlArrayItem("Enemy")]
