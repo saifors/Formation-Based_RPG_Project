@@ -102,9 +102,10 @@ public class GameManager : MonoBehaviour
 	// Use this for initialization
 	void Start()
 	{
-		fileName = PlayerPrefs.GetString("CurrentFile");
+		fileName = PlayerPrefs.GetString("CurrentFile", "spelEen.od");
 
 		gameData = GameDataManager.Load(fileName);
+
 
 		gameState = GameState.Overworld;
 		randomEcountersOn = true;//Depending on the area. Maybe a scene database indicating whether true or false?.

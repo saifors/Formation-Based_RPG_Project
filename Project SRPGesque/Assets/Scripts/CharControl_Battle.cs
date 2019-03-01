@@ -38,7 +38,7 @@ public class CharControl_Battle : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
-        gameManager = GameObject.FindGameObjectWithTag("Manager").GetComponent<GameManager>();
+        
         
         
 	}
@@ -59,6 +59,8 @@ public class CharControl_Battle : MonoBehaviour
 
 	public void Init(int charID, bool isPlayer)
 	{
+		gameManager = GameObject.FindGameObjectWithTag("Manager").GetComponent<GameManager>();
+
 		if (isPlayer)
         {
             alliance = CharacterStats.Alliance.Player;
@@ -73,6 +75,7 @@ public class CharControl_Battle : MonoBehaviour
 
 		if(isPlayer)
 		{
+			//Debug.Log(gameManager.gameData.Party[charID].level);
 			level = gameManager.gameData.Party[charID].level;
 
 			hp = gameManager.gameData.Party[charID].hp;
@@ -90,18 +93,18 @@ public class CharControl_Battle : MonoBehaviour
 			//tile formation from game data here pls
 		}
 		else
-		{		
-			level = PlayerPrefs.GetInt(charID + "Level");
+		{
+			level = gameManager.gameData.EnemyCollection[charID].level;
 
-			hp = PlayerPrefs.GetInt(charID + "Hp");
-			mp = PlayerPrefs.GetInt(charID + "Mp");
-			atk = PlayerPrefs.GetInt(charID + "Attack");
-			def = PlayerPrefs.GetInt(charID + "Defense");
-			res = PlayerPrefs.GetInt(charID + "Resistance");
-			spd = PlayerPrefs.GetInt(charID + "Speed");
+			hp = gameManager.gameData.EnemyCollection[charID].hp;
+			mp = gameManager.gameData.EnemyCollection[charID].mp;
+			atk = gameManager.gameData.EnemyCollection[charID].attack;
+			def = gameManager.gameData.EnemyCollection[charID].defense;
+			res = gameManager.gameData.EnemyCollection[charID].resistance;
+			spd = gameManager.gameData.EnemyCollection[charID].speed;
 
-			currentHp = PlayerPrefs.GetInt(charID + "Current Hp");
-			currentMp = PlayerPrefs.GetInt(charID + "Current Mp");
+			currentHp = gameManager.gameData.Party[charID].currentHp;
+			currentMp = gameManager.gameData.Party[charID].currentMp;
 			if (currentHp > hp) currentHp = hp;
 			if (currentMp > mp) currentMp = mp;
 		}

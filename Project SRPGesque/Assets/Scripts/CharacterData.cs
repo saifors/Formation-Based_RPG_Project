@@ -244,3 +244,11 @@ public class FormationData
 		tileID = Mathf.FloorToInt(tiles.y + tiles.x * 8);
 	}
 }
+
+public class EnemyEncountersData
+{
+	//Complication: is this shit even doable, should I make a seperate Formation Data?
+	//Load up a list*1 of lists*2 where one will be all the types of groups you'll encounter and 2 the enemies in those groups 
+	[XmlAttribute("Encounter")]
+	public FormationData encounter;
+}

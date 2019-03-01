@@ -24,14 +24,23 @@ public class GameData
 	//Enemy encounters (Formations what enemies, what level etc.)
 
 	//Attacks
+	[XmlArray("Attacks")]
+	[XmlArrayItem("Attack")]
+	public List<AttackData> AttackList;
 
 	public GameData()
 	{
 		Party = new List<CharacterData>();
 		for (int i = 0; i < 4; i++) Party.Add(new CharacterData(i));
 
+		Formation = new List<FormationData>();
+		for (int i = 0; i < 4; i++) Formation.Add(new FormationData(i));
+
 		EnemyCollection = new List<EnemyData>();
 		for (int i = 0; i < 10; i++) EnemyCollection.Add(new EnemyData(i));
+
+		AttackList = new List<AttackData>();
+		for (int i = 0; i < 15; i++) AttackList.Add(new AttackData(i));
 	}
 }
 
@@ -72,7 +81,7 @@ public static class GameDataManager
 		}
 		catch (Exception e)
 		{
-			Debug.LogError("[GameDataManager] Load error: " + e);
+			//Debug.LogError("[GameDataManager] Load error: " + e);
 			data = NewGame();
 		}
 
