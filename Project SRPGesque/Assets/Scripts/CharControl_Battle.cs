@@ -7,6 +7,8 @@ public class CharControl_Battle : MonoBehaviour
 	public int charId;
     public CharacterStats.Alliance alliance;
 
+	public string name;
+
     public int level;
 	public int exp;
     public int currentHp;
@@ -34,19 +36,6 @@ public class CharControl_Battle : MonoBehaviour
     public int rowSize;
 
 	public EnemyAI ai;
-
-	// Use this for initialization
-	void Start () 
-	{
-        
-        
-        
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
 	public void MyTurn()
 	{
@@ -76,6 +65,7 @@ public class CharControl_Battle : MonoBehaviour
 		if(isPlayer)
 		{
 			//Debug.Log(gameManager.gameData.Party[charID].level);
+			name = gameManager.gameData.Party[charID].name;
 			level = gameManager.gameData.Party[charID].level;
 
 			hp = gameManager.gameData.Party[charID].hp;
@@ -94,19 +84,22 @@ public class CharControl_Battle : MonoBehaviour
 		}
 		else
 		{
-			level = gameManager.gameData.EnemyCollection[charID].level;
+			int enemyID;
+			enemyID = charID - gameManager.partyMembers; //PLACEHOLDER UNTIL I HAVE SHIT THAT ACTUALLY WORKS
 
-			hp = gameManager.gameData.EnemyCollection[charID].hp;
-			mp = gameManager.gameData.EnemyCollection[charID].mp;
-			atk = gameManager.gameData.EnemyCollection[charID].attack;
-			def = gameManager.gameData.EnemyCollection[charID].defense;
-			res = gameManager.gameData.EnemyCollection[charID].resistance;
-			spd = gameManager.gameData.EnemyCollection[charID].speed;
+			name = gameManager.gameData.EnemyCollection[enemyID].name;
 
-			currentHp = gameManager.gameData.Party[charID].currentHp;
-			currentMp = gameManager.gameData.Party[charID].currentMp;
-			if (currentHp > hp) currentHp = hp;
-			if (currentMp > mp) currentMp = mp;
+			level = gameManager.gameData.EnemyCollection[enemyID].level;
+
+			hp = gameManager.gameData.EnemyCollection[enemyID].hp;
+			mp = gameManager.gameData.EnemyCollection[enemyID].mp;
+			atk = gameManager.gameData.EnemyCollection[enemyID].attack;
+			def = gameManager.gameData.EnemyCollection[enemyID].defense;
+			res = gameManager.gameData.EnemyCollection[enemyID].resistance;
+			spd = gameManager.gameData.EnemyCollection[enemyID].speed;
+
+			currentHp = hp;
+			currentMp = mp;
 		}
 
         attackInfo = GameObject.FindGameObjectWithTag("Manager").GetComponent<AttackInfoManager>();

@@ -97,14 +97,17 @@ public class GameManager : MonoBehaviour
 	//Game Data 
 	public GameData gameData;
 	public string fileName;
+	public string cacheName;
 
 	//Start
 	// Use this for initialization
 	void Start()
 	{
 		fileName = PlayerPrefs.GetString("CurrentFile", "spelEen.od");
+		cacheName = "spelQuick.od";
 
 		gameData = GameDataManager.Load(fileName);
+		GameDataManager.Save(gameData, cacheName);
 
 
 		gameState = GameState.Overworld;
@@ -138,13 +141,11 @@ public class GameManager : MonoBehaviour
 		/*
 		CharacterStats.CreateCharacterStats(0, 1, 100, 120, 10, 3, 2,10); //PLACHEOLDER;
 		CharacterStats.SetTileOccupied(0, new Vector2(3, 4), tileScript.yTiles);
-		*/
-
-
 		CharacterStats.CreateCharacterStats(partyMembers + 0, 4, 50, 10, 5, 3, 2, 2); //PLACHEOLDER;
 		CharacterStats.SetTileOccupied(partyMembers + 0, new Vector2(1, 2), tileScript.yTiles);
 		CharacterStats.CreateCharacterStats(partyMembers + 1, 4, 50, 90, 10, 3, 2, 6); //PLACHEOLDER;
 		CharacterStats.SetTileOccupied(partyMembers + 1, new Vector2(1, 4), tileScript.yTiles);
+		*/
 
 		//Create a cursor for Formation Movement
 		GameObject objCursor;
