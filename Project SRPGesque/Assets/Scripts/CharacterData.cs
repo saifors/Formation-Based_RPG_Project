@@ -224,7 +224,7 @@ public class AttackData
 				break;
 			case 1:
 				name = "Ice Pike";
-				description = "Frozen pikes rize from the ground catching the enemy off guard.";
+				description = "Magic: Summons an arrow of fire from above to pierce through the foe's body.";
 				isMagic = true;
 				strength = 23;
 				mpCost = 12;
