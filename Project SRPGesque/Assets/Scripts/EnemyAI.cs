@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyAI : MonoBehaviour
 {
 	public GameManager gameManager;
-	public AttackInfoManager attackInfo;
+	//public AttackInfoManager attackInfo;
 	public TileScript tileScript;
 	public CharControl_Battle charControl;
 
@@ -23,11 +23,11 @@ public class EnemyAI : MonoBehaviour
 	void Start()
     {
 		gameManager = GameObject.FindGameObjectWithTag("Manager").GetComponent<GameManager>();
-		attackInfo = gameManager.GetComponent<AttackInfoManager>();
+		//attackInfo = gameManager.GetComponent<AttackInfoManager>();
 		tileScript = gameManager.GetComponentInChildren<TileScript>();
 		charControl = GetComponent<CharControl_Battle>();
 
-		attacksTargetMargin = attackInfo.attackRangeSize[currentAttack];
+		attacksTargetMargin = gameManager.gameData.AttackList[currentAttack].rangeSize;
     }
 
     // Update is called once per frame
@@ -53,10 +53,10 @@ public class EnemyAI : MonoBehaviour
 		//Enough MP to Use?
 		for (int i = 0; i < charControl.attacksLearned.Length; i++)
 		{
-			if (attackInfo.attackMpCosts[charControl.attacksLearned[i]] <= charControl.currentMp) //If character has enough MP left to use this attack
+			if (gameManager.gameData.AttackList[charControl.attacksLearned[i]].mpCost <= charControl.currentMp) //If character has enough MP left to use this attack
 			{
 				//Store this attack
-				storedAtk[attacksStoredCounter] = attackInfo.attackID[charControl.attacksLearned[i]];
+				storedAtk[attacksStoredCounter] = gameManager.gameData.AttackList[charControl.attacksLearned[i]].id;
 				attacksStoredCounter++;
 			}
 		}
@@ -83,7 +83,7 @@ public class EnemyAI : MonoBehaviour
 			//Left off investigation here
 			//
 			victimAmount[attack] = 0;
-			attacksTargetMargin = attackInfo.attackRangeSize[attack];
+			attacksTargetMargin = gameManager.gameData.AttackList[attack].rangeSize;
 			//Possible confusions: X and Y getting mixed up.
 			for (int tileX = 3; tileX < tileScript.xTiles - (attacksTargetMargin.x); tileX++)
 			{
@@ -138,21 +138,21 @@ public class EnemyAI : MonoBehaviour
 				else if(victimAmount[attack] == highestTargetAmount) // In case it has as many victims as the highest
 				{
 					//Does it do more damage than the attack with most victims?
-					if (attackInfo.attackStrengths[storedAtk[attack]] > attackInfo.attackStrengths[storedAtk[atkInPoolWithMostTargets]])
+					if (gameManager.gameData.AttackList[storedAtk[attack]].strength > gameManager.gameData.AttackList[storedAtk[atkInPoolWithMostTargets]].strength)
 					{
 						highestTargetAmount = victimAmount[attack];
 						atkInPoolWithMostTargets = attack;
 					}
-					else if(attackInfo.attackStrengths[storedAtk[attack]] == attackInfo.attackStrengths[storedAtk[atkInPoolWithMostTargets]])
+					else if(gameManager.gameData.AttackList[storedAtk[attack]].strength == gameManager.gameData.AttackList[storedAtk[atkInPoolWithMostTargets]].strength)
 					{
 						//By some coincidence both attacks have equal; amount of victims and strength
 						//which one wastes less mp?
-						if(attackInfo.attackMpCosts[storedAtk[attack]] < attackInfo.attackMpCosts[storedAtk[atkInPoolWithMostTargets]])
+						if(gameManager.gameData.AttackList[storedAtk[attack]].mpCost < gameManager.gameData.AttackList[storedAtk[atkInPoolWithMostTargets]].mpCost)
 						{
 							highestTargetAmount = victimAmount[attack];
 							atkInPoolWithMostTargets = attack;
 						}
-						else if(attackInfo.attackMpCosts[storedAtk[attack]] == attackInfo.attackMpCosts[storedAtk[atkInPoolWithMostTargets]])
+						else if(gameManager.gameData.AttackList[storedAtk[attack]].mpCost == gameManager.gameData.AttackList[storedAtk[atkInPoolWithMostTargets]].mpCost)
 						{
 							// By some godforsaken reason these attacks are way too fucking similar. Just leave it to chance.
 							if(Random.value == 0)
@@ -169,7 +169,7 @@ public class EnemyAI : MonoBehaviour
 
 		currentAttack = storedAtk[atkInPoolWithMostTargets];
 		gameManager.targetOrigin = optimalTileOrigins[atkInPoolWithMostTargets];
-		attacksTargetMargin = attackInfo.attackRangeSize[atkInPoolWithMostTargets];
+		attacksTargetMargin = gameManager.gameData.AttackList[atkInPoolWithMostTargets].rangeSize;
 		gameManager.targetMargin = attacksTargetMargin;
 		gameManager.CalculateTargetAmount();
 		gameManager.TargetPlacement();

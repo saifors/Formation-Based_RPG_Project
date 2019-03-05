@@ -257,10 +257,10 @@ public class BattleUI : MonoBehaviour
     {
         //Todo: Change Displayed Description to selected attacks description
         //Check these a bit more in depth.
-        SelectedAttackDescription.text = gameManager.attackInfo.attackDescriptions[ gameManager.charControl[gameManager.activeCharacter].attacksLearned[attack] ];
+        SelectedAttackDescription.text = gameManager.gameData.AttackList[gameManager.charControl[gameManager.activeCharacter].attacksLearned[attack]].description;
 
         //Change displayed Power and MP to that of the attack 
-        SelectedAttackStats.text = "Power: " + gameManager.attackInfo.attackStrengths[gameManager.charControl[gameManager.activeCharacter].attacksLearned[attack]] + System.Environment.NewLine + "MP: " + gameManager.attackInfo.attackMpCosts[gameManager.charControl[gameManager.activeCharacter].attacksLearned[attack]];
+        SelectedAttackStats.text = "Power: " + gameManager.gameData.AttackList[gameManager.charControl[gameManager.activeCharacter].attacksLearned[attack]].strength + System.Environment.NewLine + "MP: " + gameManager.gameData.AttackList[gameManager.charControl[gameManager.activeCharacter].attacksLearned[attack]].mpCost;
 
         //Hard: Change Displayed range/AoE of attack 
     }
@@ -374,7 +374,7 @@ public class BattleUI : MonoBehaviour
         {
             attackName[i].gameObject.SetActive(true);
             //Fix this?
-            attackName[i].text = gameManager.attackInfo.attackNames[gameManager.charControl[gameManager.activeCharacter].attacksLearned[i]];
+            attackName[i].text = gameManager.gameData.AttackList[gameManager.charControl[gameManager.activeCharacter].attacksLearned[i]].name;
         }
 
         //gameManager.selectedTarget[] = 0;

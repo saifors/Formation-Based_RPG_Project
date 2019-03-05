@@ -23,7 +23,7 @@ public class CharControl_Battle : MonoBehaviour
     public int[] attacksLearned;
     public int attacksAmount; //How many attacks does this character have.
     public int maxAttacks = 6;
-    public AttackInfoManager attackInfo;
+    //public AttackInfoManager attackInfo;
 
     public GameManager gameManager;
 
@@ -109,8 +109,8 @@ public class CharControl_Battle : MonoBehaviour
 			if (currentMp > mp) currentMp = mp;
 		}
 
-        attackInfo = GameObject.FindGameObjectWithTag("Manager").GetComponent<AttackInfoManager>();
-        CalculateAttackNumber(charID);
+        //attackInfo = GameObject.FindGameObjectWithTag("Manager").GetComponent<AttackInfoManager>();
+        CalculateAttackNumber();
 
         tile.x = PlayerPrefs.GetFloat(charID + "_TileX");
 		tile.y = PlayerPrefs.GetFloat(charID + "_TileY");
@@ -131,16 +131,31 @@ public class CharControl_Battle : MonoBehaviour
 
         tileID = Mathf.FloorToInt(tile.y + tile.x * rowSize);
     }
-    public void CalculateAttackNumber(int charID)
+    public void CalculateAttackNumber()
     {
         maxAttacks = 6;
-        //attacksAmount = PlayerPrefs.GetInt(charID + "AtkNum", 1);
-		attacksAmount = 3; //PLACEHOLDER
-        if (attacksAmount > maxAttacks) attacksAmount = maxAttacks; PlayerPrefs.SetInt(charID + "AtkNum", maxAttacks);
-        attacksLearned = new int[attacksAmount];
-        attacksLearned[0] = 0;//Placheolders
-        attacksLearned[1] = 1;
-        attacksLearned[2] = 2;
+		//attacksAmount = PlayerPrefs.GetInt(charID + "AtkNum", 1);
+		if (alliance == CharacterStats.Alliance.Player)
+		{
+			attacksAmount = gameManager.gameData.Party[charId].attackAmount;
+			if (attacksAmount > maxAttacks) attacksAmount = maxAttacks; PlayerPrefs.SetInt(charId + "AtkNum", maxAttacks);
+			attacksLearned = new int[attacksAmount];
+			for (int i = 0; i < attacksAmount; i++)
+			{
+				attacksLearned[i] = gameManager.gameData.Party[charId].attacksLearned[i];
+			}
+		}
+		else
+		{
+			//Need to fina a way to get their charID in scene
+			/*attacksAmount = gameManager.gameData.EnemyCollection[ insert long ass code here to indicate their actual charID in current scene and relate it to their id in the monster array].attackAmount;
+			if (attacksAmount > maxAttacks) attacksAmount = maxAttacks; PlayerPrefs.SetInt(charId + "AtkNum", maxAttacks);
+			attacksLearned = new int[attacksAmount];
+			for (int i = 0; i < attacksAmount; i++)
+			{
+				attacksLearned[i] = gameManager.gameData.EnemyCollection[charId].attacksLearned[i];
+			}*/
+		}
     }
 
     public void UseMp(int mpAmount)

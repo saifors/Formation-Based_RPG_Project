@@ -31,6 +31,9 @@ public class CharacterData
 	public int currentHp;
 	[XmlElement("CurrentMP")]
 	public int currentMp;
+	[XmlElement("Attacks")]
+	public List<int> attacksLearned;
+	public int attackAmount;
 
 	public CharacterData(int createID)
 	{
@@ -52,6 +55,11 @@ public class CharacterData
 
 				currentHp = hp;
 				currentMp = mp;
+
+				attacksLearned.Add(0);
+				attacksLearned.Add(1);
+				attacksLearned.Add(2);
+
 				break;
 			case 1:
 				name = "Leech";
@@ -67,6 +75,11 @@ public class CharacterData
 
 				currentHp = hp;
 				currentMp = mp;
+
+				attacksLearned.Add(0);
+				attacksLearned.Add(1);
+				attacksLearned.Add(2);
+
 				break;
 			case 2:
 				name = "Fenia";
@@ -82,6 +95,11 @@ public class CharacterData
 
 				currentHp = hp;
 				currentMp = mp;
+
+				attacksLearned.Add(0);
+				attacksLearned.Add(1);
+				attacksLearned.Add(2);
+
 				break;
 			case 3:
 				name = "Entkid";
@@ -97,11 +115,16 @@ public class CharacterData
 
 				currentHp = hp;
 				currentMp = mp;
+
+				attacksLearned.Add(0);
+				attacksLearned.Add(1);
+				attacksLearned.Add(2);
+
 				break;
 			default:
 				break;
 		}
-
+		attackAmount = attacksLearned.Count;
 	}
 
 }

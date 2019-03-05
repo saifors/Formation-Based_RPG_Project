@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
 	public SelectingMenu selecting;
 	public DialogueBox dialogueUI;
 		
-	[HideInInspector] public AttackInfoManager attackInfo;
+	//[HideInInspector] public AttackInfoManager attackInfo;
 	[Header("Characters & Enemies")]
 	public GameObject battleCharacterPrefab;
 	public CharControl_Battle[] charControl;
@@ -130,7 +130,7 @@ public class GameManager : MonoBehaviour
 
 		//Databases.
 		
-		attackInfo = GetComponent<AttackInfoManager>();
+		//attackInfo = GetComponent<AttackInfoManager>();
 		//General Info
 
 		//Placeholder Character Creation
@@ -352,7 +352,7 @@ public class GameManager : MonoBehaviour
 	//Attack		
 	public void StartAttack()
 	{
-		if(charControl[activeCharacter].currentMp -  attackInfo.attackMpCosts[charControl[activeCharacter].attacksLearned[battleUI.attackOptionSelected]] < 0)
+		if(charControl[activeCharacter].currentMp - gameData.AttackList[charControl[activeCharacter].attacksLearned[battleUI.attackOptionSelected]].mpCost < 0)
 		{
 			battleUI.ChangeNotifText("Not enough MP.");
 			soundPlayer.PlaySound(2, true);
@@ -391,8 +391,8 @@ public class GameManager : MonoBehaviour
 	public void LaunchAttack()
 	{
 		//Debug.Log("Attack Launched");
-		if (charControl[activeCharacter].alliance == CharacterStats.Alliance.Player) charControl[activeCharacter].UseMp(attackInfo.attackMpCosts[charControl[activeCharacter].attacksLearned[battleUI.attackOptionSelected]]);
-		else if (charControl[activeCharacter].alliance == CharacterStats.Alliance.Enemy) charControl[activeCharacter].UseMp(attackInfo.attackMpCosts[charControl[activeCharacter].ai.currentAttack]);
+		if (charControl[activeCharacter].alliance == CharacterStats.Alliance.Player) charControl[activeCharacter].UseMp(gameData.AttackList[charControl[activeCharacter].attacksLearned[battleUI.attackOptionSelected]].mpCost);
+		else if (charControl[activeCharacter].alliance == CharacterStats.Alliance.Enemy) charControl[activeCharacter].UseMp(gameData.AttackList[charControl[activeCharacter].ai.currentAttack].mpCost);
 
 		//Character attack animation
 		//charControl[activeCharacter].anim.Play(attackAnimation);
@@ -419,7 +419,7 @@ public class GameManager : MonoBehaviour
 					if(charControl[chara].tileID == tileScript.tiles[selectedTargets[target]].tileID)
 					{
 						//Debug.Log(charControl[chara].charId + "Has been hit");
-						charControl[chara].Damage(attackInfo.attackStrengths[currentAttack], charControl[activeCharacter].atk);
+						charControl[chara].Damage(gameData.AttackList[currentAttack].strength, charControl[activeCharacter].atk);
 					}
 					//else Debug.Log(tileScript.tiles[selectedTargets[target]].tileID + "is target but character" + chara + "is on" + charControl[chara].tileID);
 				}
@@ -762,7 +762,7 @@ public class GameManager : MonoBehaviour
         whatRow = 0;
         whatColumn = 0;
 
-        for (int i = 0; i < attackInfo.attackRangeActive[currentAttack].Length; i++) //For all of the attacks range size 
+        for (int i = 0; i < gameData.AttackList[currentAttack].rangeActive.Length; i++) //For all of the attacks range size 
         {
             //go through all the possible rows until you find the one the current array iteration is on
             for(int n = 0; n <= targetMargin.y; n++)
@@ -774,7 +774,7 @@ public class GameManager : MonoBehaviour
                 }
             }
             
-            if(attackInfo.attackRangeActive[currentAttack][i] == 1) //Is the current tile being inspected a part of the range?
+            if(gameData.AttackList[currentAttack].rangeActive[i] == 1) //Is the current tile being inspected a part of the range?
             {
 
                 whatColumn = i - whatRow * Mathf.FloorToInt(targetMargin.x);
@@ -802,11 +802,11 @@ public class GameManager : MonoBehaviour
 	public void CalculateTargetAmount()
 	{
 		targetAmount = 0;
-		targetMargin = attackInfo.attackRangeSize[currentAttack];
+		targetMargin = gameData.AttackList[currentAttack].rangeSize;
 
 		for (int i = 0; i < targetMargin.x * targetMargin.y; i++)
 		{
-			if (attackInfo.attackRangeActive[currentAttack][i] == 1)
+			if (gameData.AttackList[currentAttack].rangeActive[i]  == 1)
 			{
 				targetAmount++;
 			}
