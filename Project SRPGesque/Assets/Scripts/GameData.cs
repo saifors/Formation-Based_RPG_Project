@@ -18,11 +18,13 @@ public class GameData
 	[XmlArrayItem("Member")]
 	public List<FormationData> Formation;
 	//Monsters
-	[XmlArray("Enemies")]
-	[XmlArrayItem("Enemy")]
+	[XmlArray("Monsters")]
+	[XmlArrayItem("Monster")]
 	public List<EnemyData> EnemyCollection;
 	//Enemy encounters (Formations what enemies, what level etc.)
-
+	[XmlArray("FullFormations")]
+	[XmlArrayItem("FullFormation")]
+	public List<FullFormationData> FullFormationsCollection;
 	//Attacks
 	[XmlArray("Attacks")]
 	[XmlArrayItem("Attack")]
@@ -38,6 +40,9 @@ public class GameData
 
 		EnemyCollection = new List<EnemyData>();
 		for (int i = 0; i < 10; i++) EnemyCollection.Add(new EnemyData(i));
+
+		EnemyEncounterCollection = new List<FullFormationData>();
+		for (int i = 0; i < 10; i++) EnemyEncounterCollection.Add(new FullFormationData(i));
 
 		AttackList = new List<AttackData>();
 		for (int i = 0; i < 15; i++) AttackList.Add(new AttackData(i));

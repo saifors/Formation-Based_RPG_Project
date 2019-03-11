@@ -31,9 +31,12 @@ public class CharacterData
 	public int currentHp;
 	[XmlElement("CurrentMP")]
 	public int currentMp;
+	[XmlElement("Model")]
+	public int modelId;
 	[XmlElement("Attacks")]
 	public List<int> attacksLearned;
 	public int attackAmount;
+	
 
 	public CharacterData(int createID)
 	{
@@ -56,6 +59,8 @@ public class CharacterData
 				currentHp = hp;
 				currentMp = mp;
 
+				modelId = 0;
+
 				attacksLearned.Add(0);
 				attacksLearned.Add(1);
 				attacksLearned.Add(2);
@@ -75,6 +80,8 @@ public class CharacterData
 
 				currentHp = hp;
 				currentMp = mp;
+
+				modelId = 1;
 
 				attacksLearned.Add(0);
 				attacksLearned.Add(1);
@@ -96,6 +103,8 @@ public class CharacterData
 				currentHp = hp;
 				currentMp = mp;
 
+				modelId = 2;
+
 				attacksLearned.Add(0);
 				attacksLearned.Add(1);
 				attacksLearned.Add(2);
@@ -115,6 +124,8 @@ public class CharacterData
 
 				currentHp = hp;
 				currentMp = mp;
+
+				modelId = 3;
 
 				attacksLearned.Add(0);
 				attacksLearned.Add(1);
@@ -150,10 +161,17 @@ public class EnemyData
 	public int resistance;
 	[XmlElement("Speed")]
 	public int speed;
+
 	[XmlElement("ExpGain")]
 	public int expGain;
 	[XmlElement("GoldGain")]
 	public int goldGain;
+
+	[XmlElement("Model")]
+	public int modelId;
+	[XmlElement("Attacks")]
+	public List<int> attacksLearned;
+	public int attackAmount;
 
 	public EnemyData(int createID)
 	{
@@ -172,6 +190,8 @@ public class EnemyData
 				speed = 10;
 				expGain = 20;
 				goldGain = 50;
+
+				modelId = 4;
 				break;
 			default:
 				name = "MissingNo.";
@@ -184,6 +204,8 @@ public class EnemyData
 				speed = 5;
 				expGain = 250;
 				goldGain = 550;
+
+				modelId = 0;
 				break;
 		}
 	}
@@ -246,7 +268,7 @@ public class AttackData
 
 public class FormationData
 {
-	[XmlAttribute("PlayerID")]
+	[XmlAttribute("FormationCharID")]
 	public int id;
 	[XmlElement("TileVector")]
 	public Vector2 tiles;
@@ -257,8 +279,21 @@ public class FormationData
 		id = createID;
 		switch (id)
 		{
-			case 0:
+			case 0://A'en
 				tiles = new Vector2(3, 2);
+				break;
+			case 1://Leech
+				tiles = new Vector2(3, 4);
+				break;
+			case 2://Fenia
+				tiles = new Vector2(4, 2);
+				break;
+			case 3://Entkid
+				tiles = new Vector2(3, 3);
+				break;
+			//From here on enemies
+			case 4:
+				tiles = new Vector2(6,6);
 				break;
 			default:
 				tiles = Vector2.zero;
@@ -268,10 +303,32 @@ public class FormationData
 	}
 }
 
-public class EnemyEncountersData
+public class FullFormationData
 {
 	//Complication: is this shit even doable, should I make a seperate Formation Data?
 	//Load up a list*1 of lists*2 where one will be all the types of groups you'll encounter and 2 the enemies in those groups 
 	[XmlAttribute("Encounter")]
-	public FormationData encounter;
+	public int id;
+	[XmlElement("EnemyFormation")]
+	public List<FormationData> formation;
+	public FullFormationData(int createID)
+	{
+		id = createID;
+		int iterations;
+		switch(id)
+		{
+			case 0:
+				//Player Full formation
+				iterations = 4;		
+				break;
+			case 1:
+				//Enemy Formations form here on out
+				iterations = 2;
+				break;
+			default:
+				iterations = 1;
+				break;
+		}
+		for (int i = 0; i < iterations; i++)formation.Add(new FormationData(formation.Count)); //This can be done because its being created inside a for in gameData
+	}
 }
