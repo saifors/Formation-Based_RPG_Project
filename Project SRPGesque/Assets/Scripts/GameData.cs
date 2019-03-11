@@ -41,8 +41,8 @@ public class GameData
 		EnemyCollection = new List<EnemyData>();
 		for (int i = 0; i < 10; i++) EnemyCollection.Add(new EnemyData(i));
 
-		EnemyEncounterCollection = new List<FullFormationData>();
-		for (int i = 0; i < 10; i++) EnemyEncounterCollection.Add(new FullFormationData(i));
+		FullFormationsCollection = new List<FullFormationData>();
+		for (int i = 0; i < 10; i++) FullFormationsCollection.Add(new FullFormationData(i));
 
 		AttackList = new List<AttackData>();
 		for (int i = 0; i < 15; i++) AttackList.Add(new AttackData(i));
