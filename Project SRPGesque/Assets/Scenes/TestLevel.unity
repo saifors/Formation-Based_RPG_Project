@@ -3490,7 +3490,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scrollCooldown: 0
   command: 0
-  gameManager: {fileID: 0}
+  gameManager: {fileID: 1888884844}
   notifPanel: {fileID: 500298185}
   notifShown: 0
   battleMenu: {fileID: 1476578919}
@@ -9540,7 +9540,6 @@ MonoBehaviour:
   battleUI: {fileID: 0}
   selecting: 0
   dialogueUI: {fileID: 0}
-  attackInfo: {fileID: 0}
   battleCharacterPrefab: {fileID: 1542637486942168, guid: d5258dd58b4531e478789f5a3bdfdf86,
     type: 3}
   charControl: []
@@ -9549,6 +9548,7 @@ MonoBehaviour:
   activeCharacter: 0
   initialEnemyAmount: 0
   enemyAmount: 0
+  enemyGroupID: 0
   enemyDefeated: 0
   cursor: {fileID: 1483354850765374, guid: 43cacd41c2b3d72448ccf2443039dca2, type: 3}
   targetCursor: {fileID: 1483354850765374, guid: 6045aaa1e5898a3488922882648e4754,
@@ -9576,6 +9576,10 @@ MonoBehaviour:
   pausePanel: {fileID: 489068113}
   pauseMenu: {fileID: 0}
   soundPlayer: {fileID: 1888884850}
+  gameData:
+    Party: []
+  fileName: 
+  cacheName: 
 --- !u!4 &1888884845
 Transform:
   m_ObjectHideFlags: 0
@@ -9646,13 +9650,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d10b75a48c5b9c4eb4dc890a9b24c56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attacks: 1
-  attackID: 
-  attackNames: []
-  attackDescriptions: []
-  attackStrengths: 
-  attackMpCosts: 
-  attackRangeSize: []
 --- !u!114 &1888884850
 MonoBehaviour:
   m_ObjectHideFlags: 0

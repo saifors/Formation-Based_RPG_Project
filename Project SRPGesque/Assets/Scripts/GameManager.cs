@@ -44,6 +44,7 @@ public class GameManager : MonoBehaviour
 	//Enemy Characters: Current Amount and start of battle Amount, Object and Controller Arrays, Check Amount alive.
 	public int initialEnemyAmount;
 	public int enemyAmount;
+	public int enemyGroupID;
 	public int enemyDefeated;
 
 	[Header("Battle")]
@@ -105,10 +106,10 @@ public class GameManager : MonoBehaviour
 	{
 		fileName = PlayerPrefs.GetString("CurrentFile", "spelEen.od");
 		cacheName = "spelQuick.od";
-
+		
 		gameData = GameDataManager.Load(fileName);
 		GameDataManager.Save(gameData, cacheName);
-
+		
 
 		gameState = GameState.Overworld;
 		randomEcountersOn = true;//Depending on the area. Maybe a scene database indicating whether true or false?.
@@ -841,19 +842,20 @@ public class GameManager : MonoBehaviour
         
         enemyDefeated = 0;
 
-		enemyAmount = 2; //PLACHEOLDER
+		enemyGroupID = 1; //This will later be random
+
+		enemyAmount = gameData.FullFormationsCollection[enemyGroupID].formation.Count; //PLACHEOLDER
 
 		partyMembers = PlayerPrefs.GetInt("PartyMembers", 1);
 		
         
         characters = new GameObject[partyMembers + enemyAmount];
 		charControl = new CharControl_Battle[partyMembers + enemyAmount];
+
 		
         
         for (int i = 0; i < partyMembers + enemyAmount; i++)
         {
-			
-
 			characters[i] = Instantiate(battleCharacterPrefab);
             
             charControl[i] = characters[i].GetComponent<CharControl_Battle>();
@@ -861,6 +863,11 @@ public class GameManager : MonoBehaviour
 			if(i < partyMembers)characters[i].name = "Battle_Char_" + i;
 			else characters[i].name = "Battle_Enemy_" + i;
 
+			//Up to here is good.
+
+
+
+			//gameData.FullFormationsCollection[].formation[]
 
 			if(i < partyMembers)charControl[i].Init(i, true);
 			else charControl[i].Init(i, false);

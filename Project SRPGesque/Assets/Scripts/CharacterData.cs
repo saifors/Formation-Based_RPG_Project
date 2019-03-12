@@ -41,6 +41,7 @@ public class CharacterData
 	public CharacterData(int createID)
 	{
 		id = createID;
+		attacksLearned = new List<int>();
 
 		switch (id)
 		{
@@ -61,9 +62,9 @@ public class CharacterData
 
 				modelId = 0;
 
-				attacksLearned.Add(0);
-				attacksLearned.Add(1);
 				attacksLearned.Add(2);
+				attacksLearned.Add(1);
+				attacksLearned.Add(0);
 
 				break;
 			case 1:
@@ -176,7 +177,7 @@ public class EnemyData
 	public EnemyData(int createID)
 	{
 		id = createID;
-
+		attacksLearned = new List<int>();
 		switch (id)
 		{
 			case 0:
@@ -205,7 +206,7 @@ public class EnemyData
 				expGain = 250;
 				goldGain = 550;
 
-				modelId = 0;
+				modelId = 5;
 				break;
 		}
 	}
@@ -270,6 +271,10 @@ public class FormationData
 {
 	[XmlAttribute("FormationCharID")]
 	public int id;
+	[XmlElement("Monster/CharID")]
+	public int classID;
+	[XmlElement("IsMonster")]
+	public bool isMonster;
 	[XmlElement("TileVector")]
 	public Vector2 tiles;
 	[XmlElement("TileID")]
@@ -280,25 +285,33 @@ public class FormationData
 		switch (id)
 		{
 			case 0://A'en
+				isMonster = false;
 				tiles = new Vector2(3, 2);
 				break;
 			case 1://Leech
+				isMonster = false;
 				tiles = new Vector2(3, 4);
 				break;
 			case 2://Fenia
+				isMonster = false;
 				tiles = new Vector2(4, 2);
 				break;
 			case 3://Entkid
+				isMonster = false;
 				tiles = new Vector2(3, 3);
 				break;
 			//From here on enemies
 			case 4:
+				isMonster = true;
 				tiles = new Vector2(6,6);
 				break;
 			default:
+				isMonster = true;
 				tiles = Vector2.zero;
 				break;
 		}
+		if (!isMonster) classID = id;
+		else classID = id - 4; //Get From Monster classes in Enemy.
 		tileID = Mathf.FloorToInt(tiles.y + tiles.x * 8);
 	}
 }
@@ -314,7 +327,9 @@ public class FullFormationData
 	public FullFormationData(int createID)
 	{
 		id = createID;
-		int iterations;
+		int iterations; //Iterations = how many Formation Datas does this take into the group of formations
+		formation = new List<FormationData>();
+
 		switch(id)
 		{
 			case 0:
@@ -329,6 +344,7 @@ public class FullFormationData
 				iterations = 1;
 				break;
 		}
+
 		for (int i = 0; i < iterations; i++)formation.Add(new FormationData(formation.Count)); //This can be done because its being created inside a for in gameData
 	}
 }

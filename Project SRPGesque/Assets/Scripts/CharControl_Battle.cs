@@ -8,6 +8,8 @@ public class CharControl_Battle : MonoBehaviour
     public CharacterStats.Alliance alliance;
 
 	public string name;
+	public int classID;
+	public int modelID;
 
     public int level;
 	public int exp;
@@ -28,6 +30,7 @@ public class CharControl_Battle : MonoBehaviour
     //public AttackInfoManager attackInfo;
 
     public GameManager gameManager;
+	public GameData gameData;
 
     public bool isDead;
 
@@ -49,6 +52,7 @@ public class CharControl_Battle : MonoBehaviour
 	public void Init(int charID, bool isPlayer)
 	{
 		gameManager = GameObject.FindGameObjectWithTag("Manager").GetComponent<GameManager>();
+		gameData = gameManager.gameData;
 
 		if (isPlayer)
         {
@@ -64,49 +68,60 @@ public class CharControl_Battle : MonoBehaviour
 
 		if(isPlayer)
 		{
-			//Debug.Log(gameManager.gameData.Party[charID].level);
-			name = gameManager.gameData.Party[charID].name;
-			level = gameManager.gameData.Party[charID].level;
+			classID = gameData.FullFormationsCollection[0].formation[charID].classID;
+			//tile formation from game data here pls
+			tile = gameData.FullFormationsCollection[0].formation[charID].tiles;
 
-			hp = gameManager.gameData.Party[charID].hp;
-			mp = gameManager.gameData.Party[charID].mp;
-			atk = gameManager.gameData.Party[charID].attack;
-			def = gameManager.gameData.Party[charID].defense;
-			res = gameManager.gameData.Party[charID].resistance;
-			spd = gameManager.gameData.Party[charID].speed;
+			//Debug.Log(gameData.Party[charID].level);
+			name = gameData.Party[charID].name;
+			level = gameData.Party[charID].level;
 
-			currentHp = gameManager.gameData.Party[charID].currentHp;
-			currentMp = gameManager.gameData.Party[charID].currentMp;
+			hp = gameData.Party[charID].hp;
+			mp = gameData.Party[charID].mp;
+			atk = gameData.Party[charID].attack;
+			def = gameData.Party[charID].defense;
+			res = gameData.Party[charID].resistance;
+			spd = gameData.Party[charID].speed;
+
+			currentHp = gameData.Party[charID].currentHp;
+			currentMp = gameData.Party[charID].currentMp;
 			if (currentHp > hp) currentHp = hp;
 			if (currentMp > mp) currentMp = mp;
 
-			//tile formation from game data here pls
+			modelID = gameData.Party[charID].modelId;
 		}
 		else
 		{
 			int enemyID;
 			enemyID = charID - gameManager.partyMembers; //PLACEHOLDER UNTIL I HAVE SHIT THAT ACTUALLY WORKS
 
-			name = gameManager.gameData.EnemyCollection[enemyID].name;
+			classID = gameData.FullFormationsCollection[gameManager.enemyGroupID].formation[enemyID].classID;
+			tile = gameData.FullFormationsCollection[gameManager.enemyGroupID].formation[enemyID].tiles;
 
-			level = gameManager.gameData.EnemyCollection[enemyID].level;
+			name = gameData.EnemyCollection[enemyID].name;
 
-			hp = gameManager.gameData.EnemyCollection[enemyID].hp;
-			mp = gameManager.gameData.EnemyCollection[enemyID].mp;
-			atk = gameManager.gameData.EnemyCollection[enemyID].attack;
-			def = gameManager.gameData.EnemyCollection[enemyID].defense;
-			res = gameManager.gameData.EnemyCollection[enemyID].resistance;
-			spd = gameManager.gameData.EnemyCollection[enemyID].speed;
+			level = gameData.EnemyCollection[enemyID].level;
+
+			hp = gameData.EnemyCollection[enemyID].hp;
+			mp = gameData.EnemyCollection[enemyID].mp;
+			atk = gameData.EnemyCollection[enemyID].attack;
+			def = gameData.EnemyCollection[enemyID].defense;
+			res = gameData.EnemyCollection[enemyID].resistance;
+			spd = gameData.EnemyCollection[enemyID].speed;
 
 			currentHp = hp;
 			currentMp = mp;
+
+			modelID = gameData.EnemyCollection[gameData.FullFormationsCollection[gameManager.enemyGroupID].formation[enemyID].classID].modelId;
+
 		}
+		
 
         //attackInfo = GameObject.FindGameObjectWithTag("Manager").GetComponent<AttackInfoManager>();
         CalculateAttackNumber();
 
-        tile.x = PlayerPrefs.GetFloat(charID + "_TileX");
-		tile.y = PlayerPrefs.GetFloat(charID + "_TileY");
+        /*tile.x = PlayerPrefs.GetFloat(charID + "_TileX");
+		tile.y = PlayerPrefs.GetFloat(charID + "_TileY");*/
         tileID = Mathf.FloorToInt(tile.y + tile.x* rowSize);
         //transform.position = 
     }
@@ -114,12 +129,13 @@ public class CharControl_Battle : MonoBehaviour
     {
 		if(alliance == CharacterStats.Alliance.Player)
 		{
-			tile = gameManager.gameData.Formation[charId].tiles;
+			tile = gameData.FullFormationsCollection[0].formation[charId].tiles;
 		}
 		else
 		{
-			tile.x = PlayerPrefs.GetFloat(charId + "_TileX");
-			tile.y = PlayerPrefs.GetFloat(charId + "_TileY");
+			int enemyID;
+			enemyID = charId - gameManager.partyMembers;
+			tile = gameData.FullFormationsCollection[gameManager.enemyGroupID].formation[enemyID].tiles;
 		}
 
         tileID = Mathf.FloorToInt(tile.y + tile.x * rowSize);
@@ -130,24 +146,35 @@ public class CharControl_Battle : MonoBehaviour
 		//attacksAmount = PlayerPrefs.GetInt(charID + "AtkNum", 1);
 		if (alliance == CharacterStats.Alliance.Player)
 		{
-			attacksAmount = gameManager.gameData.Party[charId].attackAmount;
-			if (attacksAmount > maxAttacks) attacksAmount = maxAttacks; PlayerPrefs.SetInt(charId + "AtkNum", maxAttacks);
+			attacksAmount = gameData.Party[charId].attackAmount;
+			if (attacksAmount > maxAttacks)
+			{
+				attacksAmount = maxAttacks;
+				gameData.Party[charId].attackAmount = maxAttacks;
+				PlayerPrefs.SetInt(charId + "AtkNum", maxAttacks);
+			}
 			attacksLearned = new int[attacksAmount];
 			for (int i = 0; i < attacksAmount; i++)
 			{
-				attacksLearned[i] = gameManager.gameData.Party[charId].attacksLearned[i];
+				attacksLearned[i] = gameData.Party[charId].attacksLearned[i];
 			}
 		}
 		else
 		{
+			int enemyID;
+			enemyID = charId - gameManager.partyMembers;
 			//Need to fina a way to get their charID in scene
-			/*attacksAmount = gameManager.gameData.EnemyCollection[ insert long ass code here to indicate their actual charID in current scene and relate it to their id in the monster array].attackAmount;
-			if (attacksAmount > maxAttacks) attacksAmount = maxAttacks; PlayerPrefs.SetInt(charId + "AtkNum", maxAttacks);
+			attacksAmount = gameData.EnemyCollection[gameData.FullFormationsCollection[gameManager.enemyGroupID].formation[enemyID].classID].attackAmount; // insert long ass code here to indicate their actual charID in current scene and relate it to their id in the monster array].attackAmount;
+			if (attacksAmount > maxAttacks)
+			{
+				attacksAmount = maxAttacks;
+				gameData.EnemyCollection[gameData.FullFormationsCollection[gameManager.enemyGroupID].formation[enemyID].classID].attackAmount = maxAttacks;
+			}
 			attacksLearned = new int[attacksAmount];
 			for (int i = 0; i < attacksAmount; i++)
 			{
-				attacksLearned[i] = gameManager.gameData.EnemyCollection[charId].attacksLearned[i];
-			}*/
+				attacksLearned[i] = gameData.EnemyCollection[gameData.FullFormationsCollection[gameManager.enemyGroupID].formation[enemyID].classID].attacksLearned[i];
+			}
 		}
     }
 
