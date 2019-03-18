@@ -193,6 +193,10 @@ public class EnemyData
 				goldGain = 50;
 
 				modelId = 4;
+
+				attacksLearned.Add(0);
+				attacksLearned.Add(1);
+				attacksLearned.Add(2);
 				break;
 			default:
 				name = "MissingNo.";
@@ -207,6 +211,10 @@ public class EnemyData
 				goldGain = 550;
 
 				modelId = 5;
+
+				attacksLearned.Add(0);
+				attacksLearned.Add(1);
+				attacksLearned.Add(2);
 				break;
 		}
 	}
@@ -284,6 +292,7 @@ public class FormationData
 		id = createID;
 		switch (id)
 		{
+			//Players X >= 3
 			case 0://A'en
 				isMonster = false;
 				tiles = new Vector2(3, 2);
@@ -300,10 +309,18 @@ public class FormationData
 				isMonster = false;
 				tiles = new Vector2(3, 3);
 				break;
-			//From here on enemies
+			//From here on enemies //X < 3
 			case 4:
 				isMonster = true;
-				tiles = new Vector2(6,6);
+				tiles = new Vector2(2,4);
+				break;
+			case 5:
+				isMonster = true;
+				tiles = new Vector2(0, 3);
+				break;
+			case 6:
+				isMonster = true;
+				tiles = new Vector2(1, 5);
 				break;
 			default:
 				isMonster = true;
@@ -322,12 +339,16 @@ public class FullFormationData
 	//Load up a list*1 of lists*2 where one will be all the types of groups you'll encounter and 2 the enemies in those groups 
 	[XmlAttribute("Encounter")]
 	public int id;
+	[XmlElement("Amount")]
+	public int iterations; //Iterations = how many Formation Datas does this take into the group of formations
 	[XmlElement("EnemyFormation")]
 	public List<FormationData> formation;
-	public FullFormationData(int createID)
+	
+
+	public FullFormationData(int createID, int formCounter)
 	{
 		id = createID;
-		int iterations; //Iterations = how many Formation Datas does this take into the group of formations
+		
 		formation = new List<FormationData>();
 
 		switch(id)
@@ -344,7 +365,13 @@ public class FullFormationData
 				iterations = 1;
 				break;
 		}
-
-		for (int i = 0; i < iterations; i++)formation.Add(new FormationData(formation.Count)); //This can be done because its being created inside a for in gameData
+		
+		for (int i = 0; i < iterations; i++)
+		{
+			//Make the createID of FormationData the one that is next
+			formation.Add(new FormationData(formCounter + i));
+		}
+		//Debug.Log(formation.Count);
+		//This can be done because its being created inside a for in gameData
 	}
 }

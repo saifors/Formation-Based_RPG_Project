@@ -95,8 +95,11 @@ public class CharControl_Battle : MonoBehaviour
 			int enemyID;
 			enemyID = charID - gameManager.partyMembers; //PLACEHOLDER UNTIL I HAVE SHIT THAT ACTUALLY WORKS
 
+
+			//Debug.Log(gameManager.enemyGroupID);
 			classID = gameData.FullFormationsCollection[gameManager.enemyGroupID].formation[enemyID].classID;
 			tile = gameData.FullFormationsCollection[gameManager.enemyGroupID].formation[enemyID].tiles;
+			
 
 			name = gameData.EnemyCollection[enemyID].name;
 
@@ -115,14 +118,16 @@ public class CharControl_Battle : MonoBehaviour
 			modelID = gameData.EnemyCollection[gameData.FullFormationsCollection[gameManager.enemyGroupID].formation[enemyID].classID].modelId;
 
 		}
+
 		
 
-        //attackInfo = GameObject.FindGameObjectWithTag("Manager").GetComponent<AttackInfoManager>();
-        CalculateAttackNumber();
+		//attackInfo = GameObject.FindGameObjectWithTag("Manager").GetComponent<AttackInfoManager>();
+		CalculateAttackNumber();
 
         /*tile.x = PlayerPrefs.GetFloat(charID + "_TileX");
 		tile.y = PlayerPrefs.GetFloat(charID + "_TileY");*/
         tileID = Mathf.FloorToInt(tile.y + tile.x* rowSize);
+		Debug.Log(charId + " on " + tile.x + "X" + tile.y + "Y" + " on tile " + tileID + "Class ID" + classID);
         //transform.position = 
     }
     public void UpdateTileID()
@@ -168,6 +173,9 @@ public class CharControl_Battle : MonoBehaviour
 			if (attacksAmount > maxAttacks)
 			{
 				attacksAmount = maxAttacks;
+
+				//Here
+
 				gameData.EnemyCollection[gameData.FullFormationsCollection[gameManager.enemyGroupID].formation[enemyID].classID].attackAmount = maxAttacks;
 			}
 			attacksLearned = new int[attacksAmount];

@@ -6,7 +6,7 @@ public class CharacterStats : MonoBehaviour
 {
 	public enum Alliance { Neutral, Player, Enemy}
 
-	
+	/*
 	public static void CreateCharacterStats(int charID, int level, int hp, int mp, int atk, int def, int res, int spd)
 	{
 
@@ -31,7 +31,7 @@ public class CharacterStats : MonoBehaviour
 		PlayerPrefs.SetFloat(charID + "_TileX", tiles.x);
         PlayerPrefs.SetFloat(charID + "_TileY", tiles.y);
         //PlayerPrefs.SetInt(charID + "_TileID", Mathf.FloorToInt(tiles.y + tiles.x * rowSize));
-    }
+    }*/
 
 	//This one will be the only remaining with some changes.
     public static void SetTileOccupied(int charID, Vector2 tiles, int rowSize)

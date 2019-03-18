@@ -169,9 +169,8 @@ public class TitleScreen_Script : MonoBehaviour
         
         if (optionNum == 0) //New Game
         {
-            // Set up first character for New game.
-            CharacterStats.CreateCharacterStats(0, 1, 70, 35, 15, 10, 5, 20);
-            CharacterStats.SetTileOccupied(0, new Vector2(1, 1), 8);
+            
+            
 
             transition.FadeToSceneChange(false, NewGameSceneID);
         }

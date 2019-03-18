@@ -42,7 +42,13 @@ public class GameData
 		for (int i = 0; i < 10; i++) EnemyCollection.Add(new EnemyData(i));
 
 		FullFormationsCollection = new List<FullFormationData>();
-		for (int i = 0; i < 10; i++) FullFormationsCollection.Add(new FullFormationData(i));
+		for (int i = 0; i < 10; i++)			
+		{
+			int formCount;
+			if (i > 0) formCount = FullFormationsCollection[i - 1].formation.Count;
+			else formCount = 0;
+			FullFormationsCollection.Add(new FullFormationData(i, formCount));
+		}
 
 		AttackList = new List<AttackData>();
 		for (int i = 0; i < 15; i++) AttackList.Add(new AttackData(i));

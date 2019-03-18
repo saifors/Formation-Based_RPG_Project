@@ -817,13 +817,15 @@ public class GameManager : MonoBehaviour
 
 	public void MoveFormation(int charID, Vector2 tiles)
     {
-        CharacterStats.SetTileOccupied(charID, tiles, tileScript.yTiles);
+		gameData.FullFormationsCollection[0].formation[charID].tiles = tiles;
+		//CharacterStats.SetTileOccupied(charID, tiles, tileScript.yTiles);
         charControl[charID].UpdateTileID();
         PlaceCharacterOnTheirTile(charID);
     }
     public void PlaceCharacterOnTheirTile(int charID)
     {
-        characters[charID].transform.position = tileScript.tileTransform[PlayerPrefs.GetInt(charID + "_TileID")].position;
+		characters[charID].transform.position = tileScript.tileTransform[charControl[charID].tileID].position;
+			//tileScript.tileTransform[gameData PlayerPrefs.GetInt(charID + "_TileID")].position;
 		
 	}
 
@@ -865,11 +867,11 @@ public class GameManager : MonoBehaviour
 
 			//Up to here is good.
 
+			
 
+				//gameData.FullFormationsCollection[].formation[]
 
-			//gameData.FullFormationsCollection[].formation[]
-
-			if(i < partyMembers)charControl[i].Init(i, true);
+				if (i < partyMembers)charControl[i].Init(i, true);
 			else charControl[i].Init(i, false);
 			charControl[i].UpdateTileID();
             PlaceCharacterOnTheirTile(i);

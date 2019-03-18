@@ -44,8 +44,8 @@ public class EnemyAI : MonoBehaviour
 
 		atkInPoolWithMostTargets = -1;
 		highestTargetAmount = 0;
-		
 
+		//Debug.Log(charControl.attacksLearned.Length);
 		
 
 		int[] victimAmount;
@@ -53,6 +53,7 @@ public class EnemyAI : MonoBehaviour
 		//Enough MP to Use?
 		for (int i = 0; i < charControl.attacksLearned.Length; i++)
 		{
+			//Debug.Log("mpCost" + gameManager.gameData.AttackList[charControl.attacksLearned[i]].mpCost);
 			if (gameManager.gameData.AttackList[charControl.attacksLearned[i]].mpCost <= charControl.currentMp) //If character has enough MP left to use this attack
 			{
 				//Store this attack
