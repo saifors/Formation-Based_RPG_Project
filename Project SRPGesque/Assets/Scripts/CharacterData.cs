@@ -50,8 +50,8 @@ public class CharacterData
 				level = 1;
 				exp = 0;
 
-				hp = 10;
-				mp = 10;
+				hp = 100;
+				mp = 100;
 				attack = 10;
 				defense = 10;
 				resistance = 10;
@@ -183,8 +183,8 @@ public class EnemyData
 			case 0:
 				name = "Slime";
 				level = 1;
-				hp = 10;
-				mp = 13;
+				hp = 100;
+				mp = 80;
 				attack = 10;
 				defense = 10;
 				resistance = 10;
@@ -201,8 +201,8 @@ public class EnemyData
 			default:
 				name = "MissingNo.";
 				level = 1;
-				hp = 5;
-				mp = 5;
+				hp = 100;
+				mp = 50;
 				attack = 5;
 				defense = 5;
 				resistance = 5;
@@ -217,6 +217,7 @@ public class EnemyData
 				attacksLearned.Add(2);
 				break;
 		}
+		attackAmount = attacksLearned.Count;
 	}
 }
 
@@ -312,23 +313,36 @@ public class FormationData
 			//From here on enemies //X < 3
 			case 4:
 				isMonster = true;
+				classID = 0;
 				tiles = new Vector2(2,4);
 				break;
 			case 5:
 				isMonster = true;
+				classID = 1;
 				tiles = new Vector2(0, 3);
 				break;
-			case 6:
+			case 6://New Group
 				isMonster = true;
+				classID = 1;
 				tiles = new Vector2(1, 5);
+				break;
+			case 7:
+				isMonster = true;
+				classID = 0;
+				tiles = new Vector2(1, 7);
+				break;
+			case 8:
+				isMonster = true;
+				classID = 1;
+				tiles = new Vector2(2, 6);
 				break;
 			default:
 				isMonster = true;
+				classID = 0;
 				tiles = Vector2.zero;
 				break;
 		}
 		if (!isMonster) classID = id;
-		else classID = id - 4; //Get From Monster classes in Enemy.
 		tileID = Mathf.FloorToInt(tiles.y + tiles.x * 8);
 	}
 }
@@ -361,6 +375,9 @@ public class FullFormationData
 				//Enemy Formations form here on out
 				iterations = 2;
 				break;
+			case 2:
+				iterations = 3;
+				break;
 			default:
 				iterations = 1;
 				break;
@@ -369,6 +386,8 @@ public class FullFormationData
 		for (int i = 0; i < iterations; i++)
 		{
 			//Make the createID of FormationData the one that is next
+
+			// HERE IS THE FUCKING CUNT-ASS GARBAGE  PROBLEM
 			formation.Add(new FormationData(formCounter + i));
 		}
 		//Debug.Log(formation.Count);

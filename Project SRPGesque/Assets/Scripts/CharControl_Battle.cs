@@ -94,10 +94,11 @@ public class CharControl_Battle : MonoBehaviour
 		{
 			int enemyID;
 			enemyID = charID - gameManager.partyMembers; //PLACEHOLDER UNTIL I HAVE SHIT THAT ACTUALLY WORKS
+			//Debug.Log(charId + "Is enemy" + enemyID);
 
-
-			//Debug.Log(gameManager.enemyGroupID);
+			Debug.Log(enemyID);
 			classID = gameData.FullFormationsCollection[gameManager.enemyGroupID].formation[enemyID].classID;
+			//Debug.Log(charID + "class is " + classID);
 			tile = gameData.FullFormationsCollection[gameManager.enemyGroupID].formation[enemyID].tiles;
 			
 
@@ -170,11 +171,12 @@ public class CharControl_Battle : MonoBehaviour
 			enemyID = charId - gameManager.partyMembers;
 			//Need to fina a way to get their charID in scene
 			attacksAmount = gameData.EnemyCollection[gameData.FullFormationsCollection[gameManager.enemyGroupID].formation[enemyID].classID].attackAmount; // insert long ass code here to indicate their actual charID in current scene and relate it to their id in the monster array].attackAmount;
+			
 			if (attacksAmount > maxAttacks)
 			{
 				attacksAmount = maxAttacks;
 
-				//Here
+				
 
 				gameData.EnemyCollection[gameData.FullFormationsCollection[gameManager.enemyGroupID].formation[enemyID].classID].attackAmount = maxAttacks;
 			}
@@ -192,8 +194,8 @@ public class CharControl_Battle : MonoBehaviour
 		if (currentMp - mpAmount < 0)Debug.Log(charId + "used more MP than it has");
 		currentMp -= mpAmount;
 		gameManager.battleUI.UpdateLifeBars(gameManager.activeCharacter);
-        //if(alliance == 0) gameManager.battleUI.UpdatePlayerBars(charId);
-    }
+        if(alliance == CharacterStats.Alliance.Player) gameData.Party[charId].currentMp = currentMp;
+	}
 
     public void Damage(int attackPower, int attackerStrength)
     {
@@ -202,18 +204,20 @@ public class CharControl_Battle : MonoBehaviour
 
 		if (isDefending)
 		{
-			totalDamage = Mathf.FloorToInt( (attackPower + attackerStrength)/2 - (def * 1.5f) );
+			totalDamage = Mathf.FloorToInt( (attackPower + attackerStrength)/2 - (def * 0.25f) );
 		}
 		else
 		{
-			totalDamage = Mathf.FloorToInt( (attackPower + attackerStrength)/2 - def );
+			totalDamage = Mathf.FloorToInt( (attackPower + attackerStrength)/2 - def*0.5f );
 		}
+		if (totalDamage < 0) totalDamage = 0;
 		currentHp -= totalDamage;
 
 		if (currentHp < 0) currentHp = 0;
 		gameManager.battleUI.UpdateLifeBars(charId);
+		if (alliance == CharacterStats.Alliance.Player) gameData.Party[charId].currentHp = currentHp;
 
-		Debug.Log(charId + " has been hit for " + totalDamage + " leaving it at " + currentHp + " HP");
+		Debug.Log(charId + " has been hit for " + totalDamage + " by combining " + attackPower + "and" + attackerStrength + " leaving it at " + currentHp + " HP");
 
         if (currentHp <= 0) Die();
         

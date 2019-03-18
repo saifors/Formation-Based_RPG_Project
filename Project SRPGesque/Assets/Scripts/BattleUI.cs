@@ -424,7 +424,7 @@ public class BattleUI : MonoBehaviour
 			hpSize.y = enemyInfoPopUp[charID - gameManager.partyMembers].barTransform[0].sizeDelta.y;
 			mpSize.y = enemyInfoPopUp[charID - gameManager.partyMembers].barTransform[1].sizeDelta.y;
 
-			maxWidth = 200;
+			maxWidth = 175;
 		}
 
 		hpSize.x = maxWidth * lifePercent / 100;

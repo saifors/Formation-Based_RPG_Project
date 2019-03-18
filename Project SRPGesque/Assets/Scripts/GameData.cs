@@ -32,6 +32,9 @@ public class GameData
 
 	public GameData()
 	{
+		int formCount;
+		formCount = 0;
+
 		Party = new List<CharacterData>();
 		for (int i = 0; i < 4; i++) Party.Add(new CharacterData(i));
 
@@ -42,11 +45,13 @@ public class GameData
 		for (int i = 0; i < 10; i++) EnemyCollection.Add(new EnemyData(i));
 
 		FullFormationsCollection = new List<FullFormationData>();
-		for (int i = 0; i < 10; i++)			
+		for (int i = 0; i < 4; i++)			
 		{
-			int formCount;
-			if (i > 0) formCount = FullFormationsCollection[i - 1].formation.Count;
-			else formCount = 0;
+			
+			if (i <= 0) formCount = 0;
+			else formCount += FullFormationsCollection[i - 1].formation.Count;
+			
+			Debug.Log("FormCount: " + formCount);
 			FullFormationsCollection.Add(new FullFormationData(i, formCount));
 		}
 

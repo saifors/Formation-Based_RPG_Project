@@ -844,7 +844,8 @@ public class GameManager : MonoBehaviour
         
         enemyDefeated = 0;
 
-		enemyGroupID = 1; //This will later be random
+		if (enemyGroupID == 1) enemyGroupID = 2; //This will later be random
+		else enemyGroupID = 1;
 
 		enemyAmount = gameData.FullFormationsCollection[enemyGroupID].formation.Count; //PLACHEOLDER
 
