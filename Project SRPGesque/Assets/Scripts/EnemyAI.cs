@@ -62,7 +62,7 @@ public class EnemyAI : MonoBehaviour
 			}
 		}
 
-		Debug.Log(charControl.charId + " stored " + attacksStoredCounter + " attacks");
+		//Debug.Log(charControl.charId + " stored " + attacksStoredCounter + " attacks");
 		
 
 		if (attacksStoredCounter == 0)
@@ -72,7 +72,7 @@ public class EnemyAI : MonoBehaviour
 			gameManager.EndTurn();
 			return;
 		}
-		Debug.Log(charControl.charId + " stored " + storedAtk[0]);
+		//Debug.Log(charControl.charId + " stored " + storedAtk[0]);
 
 		//Initialize an array of length of how many attacks have been stored for the amount of characters that will be hit by each stored attack. 
 		victimAmount = new int[attacksStoredCounter];
@@ -166,7 +166,7 @@ public class EnemyAI : MonoBehaviour
 				}
 			}
 		}
-		Debug.Log(atkInPoolWithMostTargets + "or moreso known as " + storedAtk[atkInPoolWithMostTargets] + "shall be used by " + charControl.charId);
+		//Debug.Log(atkInPoolWithMostTargets + "or moreso known as " + storedAtk[atkInPoolWithMostTargets] + "shall be used by " + charControl.charId);
 
 		currentAttack = storedAtk[atkInPoolWithMostTargets];
 		gameManager.targetOrigin = optimalTileOrigins[atkInPoolWithMostTargets];

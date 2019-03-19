@@ -25,6 +25,10 @@ public class GameData
 	[XmlArray("FullFormations")]
 	[XmlArrayItem("FullFormation")]
 	public List<FullFormationData> FullFormationsCollection;
+	//Encounter groups that can appear on a map
+	[XmlArray("MapEncounters")]
+	[XmlArrayItem("MapEncounter")]
+	public List<EncounterMap> MapEncounterCollection;
 	//Attacks
 	[XmlArray("Attacks")]
 	[XmlArrayItem("Attack")]
@@ -37,10 +41,10 @@ public class GameData
 
 		Party = new List<CharacterData>();
 		for (int i = 0; i < 4; i++) Party.Add(new CharacterData(i));
-
+		/*
 		Formation = new List<FormationData>();
 		for (int i = 0; i < 4; i++) Formation.Add(new FormationData(i));
-
+		*/
 		EnemyCollection = new List<EnemyData>();
 		for (int i = 0; i < 10; i++) EnemyCollection.Add(new EnemyData(i));
 
@@ -51,12 +55,15 @@ public class GameData
 			if (i <= 0) formCount = 0;
 			else formCount += FullFormationsCollection[i - 1].formation.Count;
 			
-			Debug.Log("FormCount: " + formCount);
+			//Debug.Log("FormCount: " + formCount);
 			FullFormationsCollection.Add(new FullFormationData(i, formCount));
 		}
 
 		AttackList = new List<AttackData>();
 		for (int i = 0; i < 15; i++) AttackList.Add(new AttackData(i));
+
+		MapEncounterCollection = new List<EncounterMap>();
+		for (int i = 0; i < 2; i++) MapEncounterCollection.Add(new EncounterMap());
 	}
 }
 

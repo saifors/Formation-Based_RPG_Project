@@ -9510,6 +9510,7 @@ GameObject:
   - component: {fileID: 1888884848}
   - component: {fileID: 1888884849}
   - component: {fileID: 1888884850}
+  - component: {fileID: 1888884851}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Manager
@@ -9550,6 +9551,9 @@ MonoBehaviour:
   enemyAmount: 0
   enemyGroupID: 0
   enemyDefeated: 0
+  currentEncounterMap: 0
+  possibleEncounters: 
+  assigner: {fileID: 0}
   cursor: {fileID: 1483354850765374, guid: 43cacd41c2b3d72448ccf2443039dca2, type: 3}
   targetCursor: {fileID: 1483354850765374, guid: 6045aaa1e5898a3488922882648e4754,
     type: 3}
@@ -9674,6 +9678,29 @@ MonoBehaviour:
   musicVol: 0
   soundCounter: 0
   musicCounter: 0
+--- !u!114 &1888884851
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1888884843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2ede790114dd1645a98d74ad101e7bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  modelsPrefabs:
+  - {fileID: 4438125938483942539, guid: 1f8d0dfa2f58db34787692236799f1ed, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 4797710552982084772, guid: 403f37973a2169b4ebd1b3c79d412111, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &1892449245
 GameObject:
   m_ObjectHideFlags: 0

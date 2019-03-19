@@ -46,9 +46,12 @@ public class GameManager : MonoBehaviour
 	public int enemyAmount;
 	public int enemyGroupID;
 	public int enemyDefeated;
+	public int currentEncounterMap;
+	public int[] possibleEncounters;
 
 	[Header("Battle")]
 	//Battle
+	public ModelAssigner assigner;
 	//Battle - Move
 	public GameObject cursor; //Prefab
 	private float tileSelectCooldownCounter;
@@ -131,22 +134,10 @@ public class GameManager : MonoBehaviour
 		tileScript = GameObject.FindGameObjectWithTag("TileManager").GetComponent<TileScript>();
 		tileScript.Init();
 		battlefield = GameObject.FindGameObjectWithTag("Battlefield").GetComponent<Transform>();
-
+		assigner = GetComponent<ModelAssigner>();
 		//Databases.
-		
-		//attackInfo = GetComponent<AttackInfoManager>();
-		//General Info
-
-		//Placeholder Character Creation
-		
-		/*
-		CharacterStats.CreateCharacterStats(0, 1, 100, 120, 10, 3, 2,10); //PLACHEOLDER;
-		CharacterStats.SetTileOccupied(0, new Vector2(3, 4), tileScript.yTiles);
-		CharacterStats.CreateCharacterStats(partyMembers + 0, 4, 50, 10, 5, 3, 2, 2); //PLACHEOLDER;
-		CharacterStats.SetTileOccupied(partyMembers + 0, new Vector2(1, 2), tileScript.yTiles);
-		CharacterStats.CreateCharacterStats(partyMembers + 1, 4, 50, 90, 10, 3, 2, 6); //PLACHEOLDER;
-		CharacterStats.SetTileOccupied(partyMembers + 1, new Vector2(1, 4), tileScript.yTiles);
-		*/
+		currentEncounterMap = 0;
+		possibleEncounters = gameData.MapEncounterCollection[currentEncounterMap].groupIDs;
 
 		//Create a cursor for Formation Movement
 		GameObject objCursor;
@@ -520,6 +511,8 @@ public class GameManager : MonoBehaviour
 		}
 		selectedTargetsTransform = new Transform[0];
 
+		if (enemyDefeated >= enemyAmount);
+
 		GameOverCheck();
 
 		if(enemyDefeated >= enemyAmount)
@@ -836,7 +829,8 @@ public class GameManager : MonoBehaviour
 	}
     public void InitializeEncounter()
     {
-        playerController.isMoving = false;
+		if (gameState == GameState.Battle) return;
+		playerController.isMoving = false;
         gameState = GameState.Battle;
         camSet = CameraSetting.BattleCam;
 		selecting = SelectingMenu.selectingAction;
@@ -844,8 +838,13 @@ public class GameManager : MonoBehaviour
         
         enemyDefeated = 0;
 
-		if (enemyGroupID == 1) enemyGroupID = 2; //This will later be random
-		else enemyGroupID = 1;
+		int randEncounter;
+		randEncounter = UnityEngine.Random.Range(0, possibleEncounters.Length);
+
+		enemyGroupID = possibleEncounters[randEncounter];
+
+		/*if (enemyGroupID == 1) enemyGroupID = 2; //This will later be random
+		else enemyGroupID = 1;*/
 
 		enemyAmount = gameData.FullFormationsCollection[enemyGroupID].formation.Count; //PLACHEOLDER
 
@@ -937,7 +936,8 @@ public class GameManager : MonoBehaviour
     //----------------------------Victory----------------------------
         public void Victory()
         {
-            battleUI.victoryPanel.SetActive(true);
+		//Debug.Log("Victory");
+			battleUI.victoryPanel.SetActive(true);
             selecting = SelectingMenu.victoryScreen;
         }
 	//-----------------------------Loss------------------------------

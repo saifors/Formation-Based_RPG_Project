@@ -96,7 +96,7 @@ public class CharControl_Battle : MonoBehaviour
 			enemyID = charID - gameManager.partyMembers; //PLACEHOLDER UNTIL I HAVE SHIT THAT ACTUALLY WORKS
 			//Debug.Log(charId + "Is enemy" + enemyID);
 
-			Debug.Log(enemyID);
+			//Debug.Log(enemyID);
 			classID = gameData.FullFormationsCollection[gameManager.enemyGroupID].formation[enemyID].classID;
 			//Debug.Log(charID + "class is " + classID);
 			tile = gameData.FullFormationsCollection[gameManager.enemyGroupID].formation[enemyID].tiles;
@@ -128,7 +128,7 @@ public class CharControl_Battle : MonoBehaviour
         /*tile.x = PlayerPrefs.GetFloat(charID + "_TileX");
 		tile.y = PlayerPrefs.GetFloat(charID + "_TileY");*/
         tileID = Mathf.FloorToInt(tile.y + tile.x* rowSize);
-		Debug.Log(charId + " on " + tile.x + "X" + tile.y + "Y" + " on tile " + tileID + "Class ID" + classID);
+		//Debug.Log(charId + " on " + tile.x + "X" + tile.y + "Y" + " on tile " + tileID + "Class ID" + classID);
         //transform.position = 
     }
     public void UpdateTileID()
@@ -190,7 +190,7 @@ public class CharControl_Battle : MonoBehaviour
 
     public void UseMp(int mpAmount)
     {
-		Debug.Log(charId + "used" + mpAmount + "mp");
+		//Debug.Log(charId + "used" + mpAmount + "mp");
 		if (currentMp - mpAmount < 0)Debug.Log(charId + "used more MP than it has");
 		currentMp -= mpAmount;
 		gameManager.battleUI.UpdateLifeBars(gameManager.activeCharacter);
@@ -217,7 +217,7 @@ public class CharControl_Battle : MonoBehaviour
 		gameManager.battleUI.UpdateLifeBars(charId);
 		if (alliance == CharacterStats.Alliance.Player) gameData.Party[charId].currentHp = currentHp;
 
-		Debug.Log(charId + " has been hit for " + totalDamage + " by combining " + attackPower + "and" + attackerStrength + " leaving it at " + currentHp + " HP");
+		//Debug.Log(charId + " has been hit for " + totalDamage + " by combining " + attackPower + "and" + attackerStrength + " leaving it at " + currentHp + " HP");
 
         if (currentHp <= 0) Die();
         
@@ -227,19 +227,23 @@ public class CharControl_Battle : MonoBehaviour
     {
         currentHp = 0;
         isDead = true;
+		
         gameManager.tileScript.tiles[tileID].isOccupied = false;
         gameObject.SetActive(false);
         if(alliance == CharacterStats.Alliance.Enemy)//if enemy
         {
-            gameManager.battleUI.enemyInfoPopUp[charId - gameManager.partyMembers].gameObject.SetActive(false);
-            for (int i = 0; i < gameManager.enemyAmount; i++)
+            //Debug.Log(charId + "died");
+			gameManager.battleUI.enemyInfoPopUp[charId - gameManager.partyMembers].gameObject.SetActive(false);
+            gameManager.enemyDefeated++;
+			/*for (int i = 0; i < gameManager.enemyAmount; i++)
             {
                 if(gameManager.charControl[i].isDead == true)
                 {
-                    gameManager.enemyDefeated++;
+                    
                 }
-            }
+            }*/
+			
         }
-
+		
     }
 }

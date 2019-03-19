@@ -141,7 +141,6 @@ public class CharacterData
 
 }
 
-
 public class EnemyData
 {
 	[XmlAttribute("EnemyID")]
@@ -276,6 +275,43 @@ public class AttackData
 	}
 }
 
+public class ItemData
+{
+	public enum ItemEffect { Heal20, Heal50, Heal100, Heal200, Heal500, Recover50, Recover100, Recover300, CurePoison };//Heal is HP, Recover is MP Cure is Status effect
+	[XmlAttribute("ItemID")]
+	public int id;
+	[XmlElement("Name")]
+	public string name;
+	[XmlElement("Description")]
+	public string description;
+	[XmlElement("Effect")]
+	public ItemEffect effect;
+
+	public ItemData(int createID)
+	{
+		id = createID;
+		switch(id)
+		{
+			case 0:
+				name = "Cheap Potion";
+				effect = ItemEffect.Heal20;
+				break;
+			case 1:
+				name = "Potion";
+				effect = ItemEffect.Heal50;
+				break;
+			case 2:
+				name = "High Potion";
+				effect = ItemEffect.Heal100;
+				break;
+			case 3:
+				break;
+			default:
+				break;
+		}
+	}
+}
+
 public class FormationData
 {
 	[XmlAttribute("FormationCharID")]
@@ -336,6 +372,11 @@ public class FormationData
 				classID = 1;
 				tiles = new Vector2(2, 6);
 				break;
+			case 9: //New Group
+				isMonster = true;
+				classID = 0;
+				tiles = new Vector2(2, 4);
+				break;
 			default:
 				isMonster = true;
 				classID = 0;
@@ -394,3 +435,25 @@ public class FullFormationData
 		//This can be done because its being created inside a for in gameData
 	}
 }
+
+public class EncounterMap
+{
+	[XmlAttribute("MapEncountersID")]
+	public int id;
+	[XmlElement("FormationGroups")]
+	public int[] groupIDs;
+	public EncounterMap()
+	{
+
+		switch (id)
+		{
+			case 0:
+				groupIDs = new int[] { 1, 2, 3 };
+				break;
+			default:
+				groupIDs = new int[] { 1};
+				break;
+		}
+	}
+}
+
