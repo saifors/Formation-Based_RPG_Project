@@ -197,6 +197,24 @@ public class EnemyData
 				attacksLearned.Add(1);
 				attacksLearned.Add(2);
 				break;
+			case 1:
+				name = "Squll";
+				level = 1;
+				hp = 100;
+				mp = 50;
+				attack = 5;
+				defense = 5;
+				resistance = 5;
+				speed = 5;
+				expGain = 250;
+				goldGain = 550;
+
+				modelId = 5;
+
+				attacksLearned.Add(0);
+				attacksLearned.Add(1);
+				attacksLearned.Add(2);
+				break;
 			default:
 				name = "MissingNo.";
 				level = 1;
@@ -209,7 +227,7 @@ public class EnemyData
 				expGain = 250;
 				goldGain = 550;
 
-				modelId = 5;
+				modelId = 10;
 
 				attacksLearned.Add(0);
 				attacksLearned.Add(1);

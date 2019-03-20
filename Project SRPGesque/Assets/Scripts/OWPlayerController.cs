@@ -19,7 +19,7 @@ public class OWPlayerController : MonoBehaviour
     public bool isMoving;
     public bool isRunning;
 
-    //private Animator anim;
+    private Animator anim;
 
     private GameManager gameManager;
 
@@ -51,7 +51,7 @@ public class OWPlayerController : MonoBehaviour
     {
         trans = transform;
         gameManager = GameObject.FindGameObjectWithTag("Manager").GetComponent<GameManager>();
-        //anim = GetComponent<Animator>();
+        anim = GetComponentInChildren<Animator>();
     }
 	
 	// Update is called once per frame
@@ -83,19 +83,19 @@ public class OWPlayerController : MonoBehaviour
             previousAxis = axis; //Store axis of last frame
         }
 		//Animation
-		/*
-        if ( isMoving == false)
-        {
-            anim.Play("Idle");
-        }
-        else if (isMoving == true && isRunning == false)
-        {
-            anim.Play("Walk");
-        }
-        else if (isMoving == true && isRunning == true)
-        {
-            anim.Play("Run");
-        }*/
+
+		if (isMoving == false)
+		{
+			anim.Play("Idle");
+		}
+		else if (isMoving == true && isRunning == false)
+		{
+			anim.Play("Walk");
+		}
+		else if (isMoving == true && isRunning == true)
+		{
+			anim.Play("Run");
+		}
 
     }
 

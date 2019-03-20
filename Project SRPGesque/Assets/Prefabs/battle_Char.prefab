@@ -1,96 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1299516517912010
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4219847043443832}
-  - component: {fileID: 33140186032172932}
-  - component: {fileID: 23683622204882276}
-  - component: {fileID: 65864187939034880}
-  m_Layer: 0
-  m_Name: Model
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4219847043443832
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1299516517912010}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0}
-  m_LocalScale: {x: 0.5, y: 1, z: 0.5}
-  m_Children: []
-  m_Father: {fileID: 4346317456880494}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &33140186032172932
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1299516517912010}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &23683622204882276
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1299516517912010}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 4294967295
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 0
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
---- !u!65 &65864187939034880
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1299516517912010}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1542637486942168
 GameObject:
   m_ObjectHideFlags: 0
@@ -118,8 +27,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 4219847043443832}
+  m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -137,7 +45,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   charId: 0
   alliance: 0
+  trans: {fileID: 0}
+  name: 
+  classID: 0
+  modelID: 0
   level: 0
+  exp: 0
   currentHp: 0
   currentMp: 0
   hp: 0
@@ -150,8 +63,69 @@ MonoBehaviour:
   attacksLearned: 
   attacksAmount: 0
   maxAttacks: 6
-  attackInfo: {fileID: 0}
   gameManager: {fileID: 0}
+  gameData:
+    Party:
+    - id: 0
+      name: A'en
+      level: 1
+      exp: 0
+      hp: 100
+      mp: 100
+      attack: 10
+      defense: 10
+      resistance: 10
+      speed: 10
+      currentHp: 100
+      currentMp: 100
+      modelId: 0
+      attacksLearned: 020000000100000000000000
+      attackAmount: 3
+    - id: 1
+      name: Leech
+      level: 2
+      exp: 0
+      hp: 10
+      mp: 11
+      attack: 10
+      defense: 10
+      resistance: 10
+      speed: 10
+      currentHp: 10
+      currentMp: 11
+      modelId: 1
+      attacksLearned: 000000000100000002000000
+      attackAmount: 3
+    - id: 2
+      name: Fenia
+      level: 5
+      exp: 0
+      hp: 10
+      mp: 10
+      attack: 11
+      defense: 10
+      resistance: 10
+      speed: 10
+      currentHp: 10
+      currentMp: 10
+      modelId: 2
+      attacksLearned: 000000000100000002000000
+      attackAmount: 3
+    - id: 3
+      name: Entkid
+      level: 1
+      exp: 0
+      hp: 10
+      mp: 10
+      attack: 10
+      defense: 11
+      resistance: 10
+      speed: 10
+      currentHp: 10
+      currentMp: 10
+      modelId: 3
+      attacksLearned: 000000000100000002000000
+      attackAmount: 3
   isDead: 0
   tile: {x: 0, y: 0}
   tileID: 0

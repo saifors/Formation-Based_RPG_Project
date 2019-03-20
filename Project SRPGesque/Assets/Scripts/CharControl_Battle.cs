@@ -2,20 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharControl_Battle : MonoBehaviour 
+public class CharControl_Battle : MonoBehaviour
 {
 	public int charId;
-    public CharacterStats.Alliance alliance;
+	public CharacterStats.Alliance alliance;
+	public Transform trans;
 
 	public string name;
 	public int classID;
 	public int modelID;
 
-    public int level;
+	public int level;
 	public int exp;
-    public int currentHp;
-    public int currentMp;
-    public int hp;
+	public int currentHp;
+	public int currentMp;
+	public int hp;
 	public int mp;
 	public int atk;
 	public int def;
@@ -24,21 +25,27 @@ public class CharControl_Battle : MonoBehaviour
 
 	public bool isDefending = false;
 
-    public int[] attacksLearned;
-    public int attacksAmount; //How many attacks does this character have.
-    public int maxAttacks = 6;
-    //public AttackInfoManager attackInfo;
+	public int[] attacksLearned;
+	public int attacksAmount; //How many attacks does this character have.
+	public int maxAttacks = 6;
+	//public AttackInfoManager attackInfo;
 
-    public GameManager gameManager;
+	public GameManager gameManager;
 	public GameData gameData;
 
-    public bool isDead;
+	public bool isDead;
 
-    public Vector2 tile;
+	public Vector2 tile;
 	public int tileID;
-    public int rowSize;
+	public int rowSize;
 
 	public EnemyAI ai;
+
+	private Vector3 playerRot = new Vector3(0,90,0);
+	private Vector3 enemyRot = new Vector3(0,-90,0);
+
+	private Animator anim;
+	private bool lacksAnimator = true;
 
 	public void MyTurn()
 	{
@@ -53,6 +60,18 @@ public class CharControl_Battle : MonoBehaviour
 	{
 		gameManager = GameObject.FindGameObjectWithTag("Manager").GetComponent<GameManager>();
 		gameData = gameManager.gameData;
+
+		trans = transform;
+		try
+		{
+			anim = GetComponentInChildren<Animator>();
+			anim.Play("Idle");
+		}
+		catch
+		{
+			lacksAnimator = false;
+		}
+		
 
 		if (isPlayer)
         {
@@ -89,6 +108,7 @@ public class CharControl_Battle : MonoBehaviour
 			if (currentMp > mp) currentMp = mp;
 
 			modelID = gameData.Party[charID].modelId;
+			
 		}
 		else
 		{
@@ -120,7 +140,9 @@ public class CharControl_Battle : MonoBehaviour
 
 		}
 
-		
+		gameManager.assigner.Assign(this, modelID);
+		if (isPlayer) trans.eulerAngles = playerRot;
+		else trans.eulerAngles = enemyRot;
 
 		//attackInfo = GameObject.FindGameObjectWithTag("Manager").GetComponent<AttackInfoManager>();
 		CalculateAttackNumber();

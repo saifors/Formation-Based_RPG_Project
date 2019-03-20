@@ -817,7 +817,7 @@ public class GameManager : MonoBehaviour
     }
     public void PlaceCharacterOnTheirTile(int charID)
     {
-		characters[charID].transform.position = tileScript.tileTransform[charControl[charID].tileID].position;
+		charControl[charID].trans.position = tileScript.tileTransform[charControl[charID].tileID].position;
 			//tileScript.tileTransform[gameData PlayerPrefs.GetInt(charID + "_TileID")].position;
 		
 	}
@@ -865,6 +865,8 @@ public class GameManager : MonoBehaviour
 			if(i < partyMembers)characters[i].name = "Battle_Char_" + i;
 			else characters[i].name = "Battle_Enemy_" + i;
 
+			
+
 			//Up to here is good.
 
 			
@@ -876,6 +878,7 @@ public class GameManager : MonoBehaviour
 			charControl[i].UpdateTileID();
             PlaceCharacterOnTheirTile(i);
             tileScript.tiles[charControl[i].tileID].isOccupied = true;
+			
         }
 		
 

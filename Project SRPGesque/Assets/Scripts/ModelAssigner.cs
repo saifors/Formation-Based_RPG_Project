@@ -12,9 +12,11 @@ public class ModelAssigner : MonoBehaviour
         
     }
 
-    public void Assign(GameObject obj, int modelID)
+    public void Assign(CharControl_Battle character, int modelID)
 	{
 		GameObject model = Instantiate(modelsPrefabs[modelID]);
-
+		Transform modelTrans = model.transform; 
+		modelTrans.SetParent(character.trans);
+		//modelTrans.eulerAngles = Vector3.zero;
 	}
 }
