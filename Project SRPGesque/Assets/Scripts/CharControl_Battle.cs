@@ -44,7 +44,7 @@ public class CharControl_Battle : MonoBehaviour
 	private Vector3 playerRot = new Vector3(0,90,0);
 	private Vector3 enemyRot = new Vector3(0,-90,0);
 
-	private Animator anim;
+	public Animator anim;
 	private bool lacksAnimator = true;
 
 	public void MyTurn()
@@ -238,6 +238,7 @@ public class CharControl_Battle : MonoBehaviour
 		if (currentHp < 0) currentHp = 0;
 		gameManager.battleUI.UpdateLifeBars(charId);
 		if (alliance == CharacterStats.Alliance.Player) gameData.Party[charId].currentHp = currentHp;
+		HurtAnim();
 
 		//Debug.Log(charId + " has been hit for " + totalDamage + " by combining " + attackPower + "and" + attackerStrength + " leaving it at " + currentHp + " HP");
 
@@ -268,4 +269,15 @@ public class CharControl_Battle : MonoBehaviour
         }
 		
     }
+
+	public Animator CastAnim()
+	{
+		anim.Play("Cast");
+		return anim;
+	}
+	public void HurtAnim()
+	{
+		anim.Play("Hurt");
+		
+	}
 }

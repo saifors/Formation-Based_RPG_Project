@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class BattleUI : MonoBehaviour 
 {
@@ -434,15 +435,15 @@ public class BattleUI : MonoBehaviour
 		//HP Bar 
 		if(charID < gameManager.partyMembers)
 		{
-			playerInfoBox[charID].barTransform[0].sizeDelta = hpSize;
-			playerInfoBox[charID].barTransform[1].sizeDelta = mpSize;
+			playerInfoBox[charID].barTransform[0].DOSizeDelta(hpSize , 1, true);
+			playerInfoBox[charID].barTransform[1].DOSizeDelta(mpSize, 1, true);
 		}
 		else
 		{
 
-			enemyInfoPopUp[charID - gameManager.partyMembers].barTransform[0].sizeDelta = hpSize;
+			enemyInfoPopUp[charID - gameManager.partyMembers].barTransform[0].DOSizeDelta(hpSize, 1, true);
 			//MP Bar
-			enemyInfoPopUp[charID - gameManager.partyMembers].barTransform[1].sizeDelta = mpSize;
+			enemyInfoPopUp[charID - gameManager.partyMembers].barTransform[1].DOSizeDelta(mpSize, 1, true);
 		}
 
 		//EJEMPLO

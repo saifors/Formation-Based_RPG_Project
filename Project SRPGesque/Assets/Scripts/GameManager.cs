@@ -52,6 +52,7 @@ public class GameManager : MonoBehaviour
 	[Header("Battle")]
 	//Battle
 	public ModelAssigner assigner;
+	public BattleAnimation battleAnim;
 	//Battle - Move
 	public GameObject cursor; //Prefab
 	private float tileSelectCooldownCounter;
@@ -135,6 +136,7 @@ public class GameManager : MonoBehaviour
 		tileScript.Init();
 		battlefield = GameObject.FindGameObjectWithTag("Battlefield").GetComponent<Transform>();
 		assigner = GetComponent<ModelAssigner>();
+		battleAnim = GetComponent<BattleAnimation>();
 		//Databases.
 		currentEncounterMap = 0;
 		possibleEncounters = gameData.MapEncounterCollection[currentEncounterMap].groupIDs;
@@ -387,18 +389,21 @@ public class GameManager : MonoBehaviour
 		if (charControl[activeCharacter].alliance == CharacterStats.Alliance.Player) charControl[activeCharacter].UseMp(gameData.AttackList[charControl[activeCharacter].attacksLearned[battleUI.attackOptionSelected]].mpCost);
 		else if (charControl[activeCharacter].alliance == CharacterStats.Alliance.Enemy) charControl[activeCharacter].UseMp(gameData.AttackList[charControl[activeCharacter].ai.currentAttack].mpCost);
 
+		battleAnim.LaunchAttackAnim();
 		//Character attack animation
 		//charControl[activeCharacter].anim.Play(attackAnimation);
 		//Play Animation on all targets
 		//Instantiate(AttackEffect).Play
 		//When animation has finished:
 		//if(AttackEffect finished)
-		HitAttack();
 
 	}
 	public void HitAttack() //For some reason won't work on enemy turn
 	{
 		//Debug.Log(activeCharacter + "starts hitting its attack");
+		List<Animator> animes = new List<Animator>();
+		int longest;
+		float longestTime;
 		
 		for (int target = 0; target < selectedTargets.Length; target++)
 		{
@@ -413,15 +418,35 @@ public class GameManager : MonoBehaviour
 					{
 						//Debug.Log(charControl[chara].charId + "Has been hit");
 						charControl[chara].Damage(gameData.AttackList[currentAttack].strength, charControl[activeCharacter].atk);
+						animes[chara] = charControl[chara].anim;
 					}
 					//else Debug.Log(tileScript.tiles[selectedTargets[target]].tileID + "is target but character" + chara + "is on" + charControl[chara].tileID);
 				}
 			}
 			
 		}
+
+		//Get The longest hit animation
+		longest = -1;
+		longestTime = 0;
+
+		for(int i = 0; i < animes.Count; i++)
+		{
+			float currentLength = animes[i].GetCurrentAnimatorStateInfo(0).length;
+			if (currentLength > longestTime)
+			{
+				longest = i;
+				longestTime = currentLength;
+			}
+			else if (currentLength == longestTime)
+			{
+				longest = i;
+				longestTime = currentLength;
+			}
+		}
+
+		battleAnim.HitAnim(animes[longest]);
 		
-		//End Attack and End your turn.
-		EndTurn();
 	}
 
 	//Defend

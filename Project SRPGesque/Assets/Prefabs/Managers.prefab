@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 1149260100857757717}
   - component: {fileID: 1149260100857757719}
   - component: {fileID: 1149260100857757718}
+  - component: {fileID: 4895986158329190311}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Manager
@@ -73,6 +74,7 @@ MonoBehaviour:
   currentEncounterMap: 0
   possibleEncounters: 
   assigner: {fileID: 0}
+  battleAnim: {fileID: 0}
   cursor: {fileID: 1483354850765374, guid: 43cacd41c2b3d72448ccf2443039dca2, type: 3}
   targetCursor: {fileID: 1483354850765374, guid: 6045aaa1e5898a3488922882648e4754,
     type: 3}
@@ -193,6 +195,18 @@ MonoBehaviour:
   - {fileID: 2718651199090173535, guid: 934145134cc8f6a4cb37a01ea29ce005, type: 3}
   - {fileID: 2718651199090173535, guid: 934145134cc8f6a4cb37a01ea29ce005, type: 3}
   - {fileID: 2718651199090173535, guid: 934145134cc8f6a4cb37a01ea29ce005, type: 3}
+--- !u!114 &4895986158329190311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1149260100857757710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42d9339935fd2f341bd753e8263c553c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1149260101636217453
 GameObject:
   m_ObjectHideFlags: 0
