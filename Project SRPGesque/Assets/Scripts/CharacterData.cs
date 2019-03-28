@@ -43,6 +43,20 @@ public class CharacterData
 		id = createID;
 		attacksLearned = new List<int>();
 
+		/*string fullText = DataManager.LoadTextFromFile("TextData/Form"); //No need to put Resources as it´s already loading from inside Resources 
+															 //Debug.Log(fullText);
+															 //Now we need to seperate the text into lines so:
+		string[] linesText = DataManager.ReadLinesFromString(fullText);
+		//Debug.Log(linesText[0]);
+		for (int i = 1; i < linesText.Length; i++) //i is 1 because line 0 is not info for the program
+		{
+			//langData.form //Dictionary, it´s already loaded inside Language Data
+			string[] rows = linesText[i].Split('\t'); //Splits it by tabs inside of the string.
+			.Add(rows[0], rows[1]);
+					
+			
+		}
+		*/
 		switch (id)
 		{
 			case 0:
@@ -138,7 +152,7 @@ public class CharacterData
 		}
 		attackAmount = attacksLearned.Count;
 	}
-
+	
 }
 
 public class EnemyData
@@ -474,4 +488,6 @@ public class EncounterMap
 		}
 	}
 }
+
+
 

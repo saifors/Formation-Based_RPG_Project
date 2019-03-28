@@ -80,7 +80,8 @@ public static class GameDataManager
 
 		try //try doing the following
 		{
-			DataManager.SaveToXML<GameData>(data, fileName, path);
+			//DataManager.SaveToXML<GameData>(data, fileName, path);
+			DataManager.SaveToText<GameData>(data, fileName, path);
 			Debug.Log("[GameDataManager] Save successful");
 		}
 		catch (Exception e) //in case of failure get what the issue is
@@ -99,12 +100,13 @@ public static class GameDataManager
 
 		try //Optional depending on how load works
 		{
-			data = (GameData)DataManager.LoadFromXML<GameData>(fileName, path);
+			//data = (GameData)DataManager.LoadFromXML<GameData>(fileName, path);
+			data = (GameData)DataManager.LoadFromText<GameData>(fileName, path);
 			Debug.Log("Load Successful");
 		}
 		catch (Exception e)
 		{
-			//Debug.LogError("[GameDataManager] Load error: " + e);
+			Debug.LogError("[GameDataManager] Load error: " + e);
 			data = NewGame();
 		}
 
