@@ -1,0 +1,4 @@
+ID	Name	Description	IsMagic?	Strength	MPCost	Range size	Range Active
+0	Name_FireBolt	Desc_FireBolt	true	20	15	3,2	1,0,1,0,1,0
+1	Name_IcePike	Desc_IcePike	true	24	11	1,2	1,1
+2	Name_BladeStrike	Desc_BladeStrike	false	40	2	1,1	1

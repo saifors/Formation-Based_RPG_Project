@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 using System;
 using System.IO;
 
-[System.Serializable]
+//[System.Serializable]
 public class GameData
 {
 
