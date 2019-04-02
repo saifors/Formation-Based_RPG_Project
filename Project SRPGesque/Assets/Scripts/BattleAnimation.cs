@@ -23,7 +23,7 @@ public class BattleAnimation : MonoBehaviour
 
     public void LaunchAttackAnim()
 	{
-		gameManager.battleUI.ChangeNotifText(gameManager.gameData.AttackList[gameManager.currentAttack].name);
+		gameManager.battleUI.ChangeNotifText(gameManager.gameData.AttackList[gameManager.currentAttack].nameKey);
 		step = 0;
 		Animator anim = gameManager.charControl[gameManager.activeCharacter].CastAnim();
 		StartCoroutine(WaitForAnimation(anim));

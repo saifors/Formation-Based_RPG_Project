@@ -51,10 +51,7 @@ public class GameData
 
 		LoadFormations();
 
-		
-
-		MapEncounterCollection = new List<EncounterMap>();
-		for (int i = 0; i < 2; i++) MapEncounterCollection.Add(new EncounterMap());
+		LoadEncounters();
 	}
 
 	public void LoadCharacters()
@@ -90,21 +87,35 @@ public class GameData
 		int formCount;
 		formCount = 0;
 		FullFormationsCollection = new List<FullFormationData>();
-		string fullText = DataManager.LoadTextFromFile("Data/FullFormations");
+		string fullFullText = DataManager.LoadTextFromFile("Data/FullFormations");
 
-		string[] linesText = DataManager.ReadLinesFromString(fullText);
+		string[] fulllinesText = DataManager.ReadLinesFromString(fullFullText);
+
+		string indFullText = DataManager.LoadTextFromFile("Data/Formations");
+
+		string[] indLinesText = DataManager.ReadLinesFromString(indFullText);
 
 		//Another fulltext to input instead of formCount????
 
-		for (int i = 0; i < 4; i++)
+		for (int i = 0; i < fulllinesText.Length; i++)
 		{
 
 			if (i <= 0) formCount = 0;
 			else formCount += FullFormationsCollection[i - 1].formation.Count;
 
 			//Debug.Log("FormCount: " + formCount);
-			FullFormationsCollection.Add(new FullFormationData(linesText[i], formCount));
+			FullFormationsCollection.Add(new FullFormationData(fulllinesText[i], indLinesText[formCount]));
 		}
+	}
+
+	public void LoadEncounters()
+	{
+		MapEncounterCollection = new List<EncounterMap>();
+		string fullText = DataManager.LoadTextFromFile("Data/EncounterMaps");
+
+		string[] linesText = DataManager.ReadLinesFromString(fullText);
+
+		for (int i = 0; i < linesText.Length; i++) MapEncounterCollection.Add(new EncounterMap(linesText[i]));
 	}
 }
 

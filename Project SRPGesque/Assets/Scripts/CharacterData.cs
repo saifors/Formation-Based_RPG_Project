@@ -252,7 +252,7 @@ public class FullFormationData
 	public List<FormationData> formation;
 	
 
-	public FullFormationData(string uniFormString, int formCounter)
+	public FullFormationData(string uniFormString, string indFormString)
 	{
 		string[] cols = uniFormString.Split('\t');
 		id = int.Parse(cols[0]);
@@ -266,7 +266,7 @@ public class FullFormationData
 			//Make the createID of FormationData the one that is next
 
 			
-			formation.Add(new FormationData((formCounter + i)));
+			formation.Add(new FormationData((indFormString + i)));//Should work
 		}
 		//Debug.Log(formation.Count);
 		//This can be done because its being created inside a for in gameData
@@ -279,18 +279,21 @@ public class EncounterMap
 	public int id;
 	[XmlElement("FormationGroups")]
 	public int[] groupIDs;
-	public EncounterMap()
+	public EncounterMap(string encounterString)
 	{
+		string[] cols = encounterString.Split('\t');
 
-		switch (id)
+		id = int.Parse(cols[0]);
+
+		List<int> tempGroup = new List<int>();
+
+		string[] groupMembers = cols[1].Split(',');
+		for (int i = 0; i < groupMembers.Length; i++)
 		{
-			case 0:
-				groupIDs = new int[] { 1, 2, 3 };
-				break;
-			default:
-				groupIDs = new int[] { 1};
-				break;
+			tempGroup.Add(int.Parse(groupMembers[i]));
 		}
+
+		groupIDs = tempGroup.ToArray();
 	}
 }
 
