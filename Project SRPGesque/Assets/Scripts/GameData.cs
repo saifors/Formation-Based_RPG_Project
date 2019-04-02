@@ -36,36 +36,78 @@ public class GameData
 
 	public GameData()
 	{
-		int formCount;
-		formCount = 0;
 
-		Party = new List<CharacterData>();
-		for (int i = 0; i < 4; i++) Party.Add(new CharacterData(i));
+		LoadCharacters();
+
+		LoadMonsters();
+
+		LoadAttacks();
+
 		/*
 		Formation = new List<FormationData>();
 		for (int i = 0; i < 4; i++) Formation.Add(new FormationData(i));
 		*/
-		EnemyCollection = new List<EnemyData>();
-		for (int i = 0; i < 10; i++) EnemyCollection.Add(new EnemyData(i));
 
-		FullFormationsCollection = new List<FullFormationData>();
-		for (int i = 0; i < 4; i++)			
-		{
-			
-			if (i <= 0) formCount = 0;
-			else formCount += FullFormationsCollection[i - 1].formation.Count;
-			
-			//Debug.Log("FormCount: " + formCount);
-			FullFormationsCollection.Add(new FullFormationData(i, formCount));
-		}
 
-		AttackList = new List<AttackData>();
-		for (int i = 0; i < 15; i++) AttackList.Add(new AttackData(i));
+		LoadFormations();
+
+		
 
 		MapEncounterCollection = new List<EncounterMap>();
 		for (int i = 0; i < 2; i++) MapEncounterCollection.Add(new EncounterMap());
 	}
+
+	public void LoadCharacters()
+	{
+		Party = new List<CharacterData>();
+		string fullText = DataManager.LoadTextFromFile("Data/Characters"); //No need to put Resources as it´s already loading from inside Resources 
+																		   //Debug.Log(fullText);
+																		   //Now we need to seperate the text into lines so:
+		string[] linesText = DataManager.ReadLinesFromString(fullText);
+		for (int i = 1; i < linesText.Length; i++) Party.Add(new CharacterData(linesText[i]));
+	}
+
+	public void LoadMonsters()
+	{
+		EnemyCollection = new List<EnemyData>();
+		string fullText = DataManager.LoadTextFromFile("Data/Monsters");
+
+		string[] linesText = DataManager.ReadLinesFromString(fullText);
+		for (int i = 1; i < linesText.Length; i++) EnemyCollection.Add(new EnemyData(linesText[i]));
+	}
+
+	public void LoadAttacks()
+	{
+		AttackList = new List<AttackData>();
+		string fullText = DataManager.LoadTextFromFile("Data/Attacks");
+
+		string[] linesText = DataManager.ReadLinesFromString(fullText);
+		for (int i = 0; i < linesText.Length; i++) AttackList.Add(new AttackData(linesText[i]));
+	}
+
+	public void LoadFormations()
+	{
+		int formCount;
+		formCount = 0;
+		FullFormationsCollection = new List<FullFormationData>();
+		string fullText = DataManager.LoadTextFromFile("Data/FullFormations");
+
+		string[] linesText = DataManager.ReadLinesFromString(fullText);
+
+		//Another fulltext to input instead of formCount????
+
+		for (int i = 0; i < 4; i++)
+		{
+
+			if (i <= 0) formCount = 0;
+			else formCount += FullFormationsCollection[i - 1].formation.Count;
+
+			//Debug.Log("FormCount: " + formCount);
+			FullFormationsCollection.Add(new FullFormationData(linesText[i], formCount));
+		}
+	}
 }
+
 
 public static class GameDataManager
 {

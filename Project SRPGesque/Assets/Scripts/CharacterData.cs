@@ -36,119 +36,31 @@ public class CharacterData
 	[XmlElement("Attacks")]
 	public List<int> attacksLearned;
 	public int attackAmount;
-	
 
-	public CharacterData(int createID)
+
+	public CharacterData(string characterString)
 	{
-		id = createID;
+		string[] cols = characterString.Split('\t');
+
+		id = int.Parse(cols[0]);
+		name = cols[1];
+		level = int.Parse(cols[2]);
+		exp = int.Parse(cols[3]);
+		hp = int.Parse(cols[4]);
+		mp = int.Parse(cols[5]);
+		attack = int.Parse(cols[6]);
+		defense = int.Parse(cols[7]);
+		resistance = int.Parse(cols[8]);
+		speed = int.Parse(cols[9]);
+		currentHp = int.Parse(cols[10]);
+		currentMp = int.Parse(cols[11]);
+		modelId = int.Parse(cols[12]);
+
 		attacksLearned = new List<int>();
-
-		/*string fullText = DataManager.LoadTextFromFile("TextData/Form"); //No need to put Resources as it´s already loading from inside Resources 
-															 //Debug.Log(fullText);
-															 //Now we need to seperate the text into lines so:
-		string[] linesText = DataManager.ReadLinesFromString(fullText);
-		//Debug.Log(linesText[0]);
-		for (int i = 1; i < linesText.Length; i++) //i is 1 because line 0 is not info for the program
+		string[] attacks = cols[13].Split(',');
+		for (int i = 0; i < attacks.Length; i++)
 		{
-			//langData.form //Dictionary, it´s already loaded inside Language Data
-			string[] rows = linesText[i].Split('\t'); //Splits it by tabs inside of the string.
-			.Add(rows[0], rows[1]);
-					
-			
-		}
-		*/
-		switch (id)
-		{
-			case 0:
-				name = "A'en";
-				level = 1;
-				exp = 0;
-
-				hp = 100;
-				mp = 100;
-				attack = 10;
-				defense = 10;
-				resistance = 10;
-				speed = 10;
-
-				currentHp = hp;
-				currentMp = mp;
-
-				modelId = 0;
-
-				attacksLearned.Add(2);
-				attacksLearned.Add(1);
-				attacksLearned.Add(0);
-
-				break;
-			case 1:
-				name = "Leech";
-				level = 2;
-				exp = 0;
-
-				hp = 10;
-				mp = 11;
-				attack = 10;
-				defense = 10;
-				resistance = 10;
-				speed = 10;
-
-				currentHp = hp;
-				currentMp = mp;
-
-				modelId = 1;
-
-				attacksLearned.Add(0);
-				attacksLearned.Add(1);
-				attacksLearned.Add(2);
-
-				break;
-			case 2:
-				name = "Fenia";
-				level = 5;
-				exp = 0;
-
-				hp = 10;
-				mp = 10;
-				attack = 11;
-				defense = 10;
-				resistance = 10;
-				speed = 10;
-
-				currentHp = hp;
-				currentMp = mp;
-
-				modelId = 2;
-
-				attacksLearned.Add(0);
-				attacksLearned.Add(1);
-				attacksLearned.Add(2);
-
-				break;
-			case 3:
-				name = "Entkid";
-				level = 1;
-				exp = 0;
-
-				hp = 10;
-				mp = 10;
-				attack = 10;
-				defense = 11;
-				resistance = 10;
-				speed = 10;
-
-				currentHp = hp;
-				currentMp = mp;
-
-				modelId = 3;
-
-				attacksLearned.Add(0);
-				attacksLearned.Add(1);
-				attacksLearned.Add(2);
-
-				break;
-			default:
-				break;
+			attacksLearned.Add(int.Parse(attacks[i]));
 		}
 		attackAmount = attacksLearned.Count;
 	}
@@ -187,67 +99,32 @@ public class EnemyData
 	public List<int> attacksLearned;
 	public int attackAmount;
 
-	public EnemyData(int createID)
+	public EnemyData(string monsterString)
 	{
-		id = createID;
+		string[] cols = monsterString.Split('\t');
+		id = int.Parse(cols[0]);
+		name = cols[1];
+		level = int.Parse(cols[2]);
+		hp = int.Parse(cols[3]);
+		mp = int.Parse(cols[4]);
+		attack = int.Parse(cols[5]);
+		defense = int.Parse(cols[6]);
+		resistance = int.Parse(cols[7]);
+		speed = int.Parse(cols[8]);
+
+		expGain = int.Parse(cols[9]);
+		goldGain = int.Parse(cols[10]);
+
+		modelId = int.Parse(cols[11]);
+
 		attacksLearned = new List<int>();
-		switch (id)
+
+		string[] attacks = cols[12].Split(',');
+		for (int i = 0; i < attacks.Length; i++)
 		{
-			case 0:
-				name = "Slime";
-				level = 1;
-				hp = 100;
-				mp = 80;
-				attack = 10;
-				defense = 10;
-				resistance = 10;
-				speed = 10;
-				expGain = 20;
-				goldGain = 50;
-
-				modelId = 4;
-
-				attacksLearned.Add(0);
-				attacksLearned.Add(1);
-				attacksLearned.Add(2);
-				break;
-			case 1:
-				name = "Squll";
-				level = 1;
-				hp = 100;
-				mp = 50;
-				attack = 5;
-				defense = 5;
-				resistance = 5;
-				speed = 5;
-				expGain = 250;
-				goldGain = 550;
-
-				modelId = 5;
-
-				attacksLearned.Add(0);
-				attacksLearned.Add(1);
-				attacksLearned.Add(2);
-				break;
-			default:
-				name = "MissingNo.";
-				level = 1;
-				hp = 100;
-				mp = 50;
-				attack = 5;
-				defense = 5;
-				resistance = 5;
-				speed = 5;
-				expGain = 250;
-				goldGain = 550;
-
-				modelId = 10;
-
-				attacksLearned.Add(0);
-				attacksLearned.Add(1);
-				attacksLearned.Add(2);
-				break;
+			attacksLearned.Add(int.Parse(attacks[i]));
 		}
+
 		attackAmount = attacksLearned.Count;
 	}
 }
@@ -257,9 +134,9 @@ public class AttackData
 	[XmlAttribute("AttackID")]
 	public int id;
 	[XmlElement("Name")]
-	public string name;
+	public string nameKey;
 	[XmlElement("Description")]
-	public string description;
+	public string descKey;
 	[XmlElement("IsMagic")]
 	public bool isMagic;
 	[XmlElement("Strength")]
@@ -271,42 +148,34 @@ public class AttackData
 	[XmlElement("RangeActive")]
 	public int[] rangeActive;
 
-	public AttackData(int createID)
+	public AttackData(string attackString)
 	{
-		id = createID;
-		switch (id)
+		string[] cols = attackString.Split('\t');
+
+		id = int.Parse(cols[0]);
+		nameKey = cols[1];
+		descKey = cols[2];
+		isMagic = bool.Parse(cols[3]);
+		strength = int.Parse(cols[4]);
+		mpCost = int.Parse(cols[5]);
+
+		string[] rSizes = cols[6].Split(',');
+		rangeSize = new Vector2(int.Parse(rSizes[0]), int.Parse(rSizes[1]));
+
+		
+		string[] rActives = cols[7].Split(',');
+		List<int> tempRange = new List<int>();
+
+		for (int i = 0; i < rActives.Length; i++)
 		{
-			case 0:
-				name = "Fire Bolt";
-				description = "Magic: Summons an arrow of fire from above to pierce through the foe's body.";
-				isMagic = true;
-				strength = 20;
-				mpCost = 11;
-				rangeSize = new Vector2(3, 2);
-				rangeActive = new int[] { 1, 0, 1, 0, 1, 0 };
-				break;
-			case 1:
-				name = "Ice Pike";
-				description = "Magic: Summons an arrow of fire from above to pierce through the foe's body.";
-				isMagic = true;
-				strength = 23;
-				mpCost = 12;
-				rangeSize = new Vector2(1, 2);
-				rangeActive = new int[] { 1,1};
-				break;
-			default:
-				name = "Dab";
-				description = "Physical: Kills off the user's brain cells to make the enemy facepalm so hard it hurts them";
-				isMagic = false;
-				strength = 7;
-				mpCost = 5;
-				rangeSize = new Vector2(1, 1);
-				rangeActive = new int[] { 1 };
-				break;
+			tempRange.Add(int.Parse(rActives[i]));
 		}
+
+		rangeActive = tempRange.ToArray();
+		
 	}
 }
-
+/*
 public class ItemData
 {
 	public enum ItemEffect { Heal20, Heal50, Heal100, Heal200, Heal500, Recover50, Recover100, Recover300, CurePoison };//Heal is HP, Recover is MP Cure is Status effect
@@ -343,7 +212,7 @@ public class ItemData
 		}
 	}
 }
-
+*/
 public class FormationData
 {
 	[XmlAttribute("FormationCharID")]
@@ -356,66 +225,17 @@ public class FormationData
 	public Vector2 tiles;
 	[XmlElement("TileID")]
 	public int tileID;
-	public FormationData(int createID)
-	{
-		id = createID;
-		switch (id)
-		{
-			//Players X >= 3
-			case 0://A'en
-				isMonster = false;
-				tiles = new Vector2(3, 2);
-				break;
-			case 1://Leech
-				isMonster = false;
-				tiles = new Vector2(3, 4);
-				break;
-			case 2://Fenia
-				isMonster = false;
-				tiles = new Vector2(4, 2);
-				break;
-			case 3://Entkid
-				isMonster = false;
-				tiles = new Vector2(3, 3);
-				break;
-			//From here on enemies //X < 3
-			case 4:
-				isMonster = true;
-				classID = 0;
-				tiles = new Vector2(2,4);
-				break;
-			case 5:
-				isMonster = true;
-				classID = 1;
-				tiles = new Vector2(0, 3);
-				break;
-			case 6://New Group
-				isMonster = true;
-				classID = 1;
-				tiles = new Vector2(1, 5);
-				break;
-			case 7:
-				isMonster = true;
-				classID = 0;
-				tiles = new Vector2(1, 7);
-				break;
-			case 8:
-				isMonster = true;
-				classID = 1;
-				tiles = new Vector2(2, 6);
-				break;
-			case 9: //New Group
-				isMonster = true;
-				classID = 0;
-				tiles = new Vector2(2, 4);
-				break;
-			default:
-				isMonster = true;
-				classID = 0;
-				tiles = Vector2.zero;
-				break;
-		}
-		if (!isMonster) classID = id;
+	public FormationData(string formString)
+	{		
+		string[] cols = formString.Split('\t');
+
+		id = int.Parse(cols[0]);
+		classID = int.Parse(cols[1]);
+		isMonster = bool.Parse(cols[2]);
+
+		string[] tileVec = cols[3].Split(',');
+		tiles = new Vector2(int.Parse(tileVec[0]), int.Parse(tileVec[1]));
+
 		tileID = Mathf.FloorToInt(tiles.y + tiles.x * 8);
 	}
 }
@@ -432,36 +252,21 @@ public class FullFormationData
 	public List<FormationData> formation;
 	
 
-	public FullFormationData(int createID, int formCounter)
+	public FullFormationData(string uniFormString, int formCounter)
 	{
-		id = createID;
+		string[] cols = uniFormString.Split('\t');
+		id = int.Parse(cols[0]);
+		iterations = int.Parse(cols[1]);
 		
 		formation = new List<FormationData>();
 
-		switch(id)
-		{
-			case 0:
-				//Player Full formation
-				iterations = 4;		
-				break;
-			case 1:
-				//Enemy Formations form here on out
-				iterations = 2;
-				break;
-			case 2:
-				iterations = 3;
-				break;
-			default:
-				iterations = 1;
-				break;
-		}
 		
 		for (int i = 0; i < iterations; i++)
 		{
 			//Make the createID of FormationData the one that is next
 
-			// HERE IS THE FUCKING CUNT-ASS GARBAGE  PROBLEM
-			formation.Add(new FormationData(formCounter + i));
+			
+			formation.Add(new FormationData((formCounter + i)));
 		}
 		//Debug.Log(formation.Count);
 		//This can be done because its being created inside a for in gameData
