@@ -79,7 +79,7 @@ public class GameData
 		string fullText = DataManager.LoadTextFromFile("Data/Attacks");
 
 		string[] linesText = DataManager.ReadLinesFromString(fullText);
-		for (int i = 0; i < linesText.Length; i++) AttackList.Add(new AttackData(linesText[i]));
+		for (int i = 1; i < linesText.Length; i++) AttackList.Add(new AttackData(linesText[i]));
 	}
 
 	public void LoadFormations()
@@ -97,7 +97,7 @@ public class GameData
 
 		//Another fulltext to input instead of formCount????
 
-		for (int i = 0; i < fulllinesText.Length; i++)
+		for (int i = 1; i < fulllinesText.Length; i++)
 		{
 
 			if (i <= 0) formCount = 0;
@@ -115,7 +115,7 @@ public class GameData
 
 		string[] linesText = DataManager.ReadLinesFromString(fullText);
 
-		for (int i = 0; i < linesText.Length; i++) MapEncounterCollection.Add(new EncounterMap(linesText[i]));
+		for (int i = 1; i < linesText.Length; i++) MapEncounterCollection.Add(new EncounterMap(linesText[i]));
 	}
 }
 

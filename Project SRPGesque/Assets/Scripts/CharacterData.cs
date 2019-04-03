@@ -41,7 +41,6 @@ public class CharacterData
 	public CharacterData(string characterString)
 	{
 		string[] cols = characterString.Split('\t');
-
 		id = int.Parse(cols[0]);
 		name = cols[1];
 		level = int.Parse(cols[2]);
@@ -151,10 +150,17 @@ public class AttackData
 	public AttackData(string attackString)
 	{
 		string[] cols = attackString.Split('\t');
+		for (int i = 0; i < cols.Length; i++)
+		{
+			Debug.Log(cols[i]);
+		}
 
 		id = int.Parse(cols[0]);
 		nameKey = cols[1];
 		descKey = cols[2];
+		int magic = int.Parse(cols[3]);
+		/*if (magic == 1) isMagic = true;
+		else isMagic = false;*/
 		isMagic = bool.Parse(cols[3]);
 		strength = int.Parse(cols[4]);
 		mpCost = int.Parse(cols[5]);
