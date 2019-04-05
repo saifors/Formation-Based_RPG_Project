@@ -87,24 +87,28 @@ public class GameData
 		int formCount;
 		formCount = 0;
 		FullFormationsCollection = new List<FullFormationData>();
-		string fullFullText = DataManager.LoadTextFromFile("Data/FullFormations");
+		string fullText = DataManager.LoadTextFromFile("Data/FullFormations");
 
-		string[] fulllinesText = DataManager.ReadLinesFromString(fullFullText);
+		string[] linesText = DataManager.ReadLinesFromString(fullText);
 
-		string indFullText = DataManager.LoadTextFromFile("Data/Formations");
+		
 
-		string[] indLinesText = DataManager.ReadLinesFromString(indFullText);
-
+		
 		//Another fulltext to input instead of formCount????
 
-		for (int i = 1; i < fulllinesText.Length; i++)
+		for (int i = 1; i < linesText.Length; i++)
 		{
-
-			if (i <= 0) formCount = 0;
-			else formCount += FullFormationsCollection[i - 1].formation.Count;
-
+			
+			if (i <= 1) formCount = 0;
+			else
+			{
+				
+				//Debug.Log(FullFormationsCollection[i - 2].formations.Length); // - 2 one fore previosu another to make up for it starting at 1.
+				formCount += FullFormationsCollection[i - 2].formations.Length; // FUCK THIS SHIIIIT
+			}
+			
 			//Debug.Log("FormCount: " + formCount);
-			FullFormationsCollection.Add(new FullFormationData(fulllinesText[i], indLinesText[formCount]));
+			FullFormationsCollection.Add(new FullFormationData(linesText[i], formCount));
 		}
 	}
 

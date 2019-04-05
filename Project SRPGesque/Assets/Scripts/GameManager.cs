@@ -835,7 +835,7 @@ public class GameManager : MonoBehaviour
 
 	public void MoveFormation(int charID, Vector2 tiles)
     {
-		gameData.FullFormationsCollection[0].formation[charID].tiles = tiles;
+		gameData.FullFormationsCollection[0].formations[charID].tiles = tiles;
 		//CharacterStats.SetTileOccupied(charID, tiles, tileScript.yTiles);
         charControl[charID].UpdateTileID();
         PlaceCharacterOnTheirTile(charID);
@@ -871,7 +871,7 @@ public class GameManager : MonoBehaviour
 		/*if (enemyGroupID == 1) enemyGroupID = 2; //This will later be random
 		else enemyGroupID = 1;*/
 
-		enemyAmount = gameData.FullFormationsCollection[enemyGroupID].formation.Count; //PLACHEOLDER
+		enemyAmount = gameData.FullFormationsCollection[enemyGroupID].formations.Length; //PLACHEOLDER
 
 		partyMembers = PlayerPrefs.GetInt("PartyMembers", 1);
 		

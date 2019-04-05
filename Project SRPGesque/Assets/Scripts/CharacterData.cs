@@ -150,15 +150,15 @@ public class AttackData
 	public AttackData(string attackString)
 	{
 		string[] cols = attackString.Split('\t');
-		for (int i = 0; i < cols.Length; i++)
-		{
-			Debug.Log(cols[i]);
-		}
+		
+		
+		
 
 		id = int.Parse(cols[0]);
 		nameKey = cols[1];
 		descKey = cols[2];
-		int magic = int.Parse(cols[3]);
+		
+		
 		/*if (magic == 1) isMagic = true;
 		else isMagic = false;*/
 		isMagic = bool.Parse(cols[3]);
@@ -178,7 +178,7 @@ public class AttackData
 		}
 
 		rangeActive = tempRange.ToArray();
-		
+		//Debug.Log("end" + attackString);
 	}
 }
 /*
@@ -232,13 +232,21 @@ public class FormationData
 	[XmlElement("TileID")]
 	public int tileID;
 	public FormationData(string formString)
-	{		
+	{
+		//Debug.Log(formString);
 		string[] cols = formString.Split('\t');
-
+		/*for (int i = 0; i < cols.Length; i++)
+		{
+			Debug.Log(cols[i]);
+		}*/
+		
 		id = int.Parse(cols[0]);
+		
 		classID = int.Parse(cols[1]);
+		
 		isMonster = bool.Parse(cols[2]);
-
+		
+		
 		string[] tileVec = cols[3].Split(',');
 		tiles = new Vector2(int.Parse(tileVec[0]), int.Parse(tileVec[1]));
 
@@ -255,26 +263,33 @@ public class FullFormationData
 	[XmlElement("Amount")]
 	public int iterations; //Iterations = how many Formation Datas does this take into the group of formations
 	[XmlElement("EnemyFormation")]
-	public List<FormationData> formation;
+	public FormationData[] formations;
 	
 
-	public FullFormationData(string uniFormString, string indFormString)
+	public FullFormationData(string uniFormString, int formCount)
 	{
-		string[] cols = uniFormString.Split('\t');
+		//Debug.Log(uniFormString);
+		string[] cols = uniFormString.Split('\t');// This string is for FullFormations
+		
 		id = int.Parse(cols[0]);
 		iterations = int.Parse(cols[1]);
-		
-		formation = new List<FormationData>();
 
-		
-		for (int i = 0; i < iterations; i++)
+		List<FormationData> formation = new List<FormationData>();
+
+		string fullText = DataManager.LoadTextFromFile("Data/Formations");
+
+		string[] linesText = DataManager.ReadLinesFromString(fullText);
+
+		for (int i = 1; i < iterations + 1; i++)
 		{
 			//Make the createID of FormationData the one that is next
-
 			
-			formation.Add(new FormationData((indFormString + i)));//Should work
+
+			formation.Add(new FormationData(( linesText[formCount + i] )));//Should work
+			
 		}
-		//Debug.Log(formation.Count);
+		formations = formation.ToArray();
+		//Debug.Log(formations.Length);
 		//This can be done because its being created inside a for in gameData
 	}
 }
