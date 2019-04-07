@@ -1,4 +1,4 @@
 Key	English	Spanish	Dutch	German	Observations
-Desc_FireBolt	Magic: Summons an arrow of fire from above to rain down on the foe's body.	Magia: Invoca una flecha de fuego y lo lanza al enemigo.	Magie: Aanroept een pijl van vlam om de rivaal te verbranden.		
-Desc_IcePike	Magic: Pierce throught the opponents feet with sharp icicles.	Magia: Enclava los piernas del rival.	Magie: Met ijspegels uit de grond, doorboort de voeten van de tegenstander.		
-Desc_BladeStrike	Physical: Swing down the blade of your sword upon an enemy.	Fisico: Da un espadazo desde arriba al enemigo.	Fysiek: Breng het blad van je zwaard op je vijand.		
+Desc_FireBolt	Magic: Summons an arrow of fire from above to rain down on the foe's body.	Magia: Invoca una flecha de fuego y lo lanza al enemigo.	Magie: Aanroept een pijl van vlam om de rivaal te verbranden.	Zauber:	
+Desc_IcePike	Magic: Pierce throught the opponents feet with sharp icicles.	Magia: Enclava los piernas del rival.	Magie: Met ijspegels uit de grond, doorboort de voeten van de tegenstander.	Zauber	
+Desc_BladeStrike	Physical: Swing down the blade of your sword upon an enemy.	Fisico: Da un espadazo desde arriba al enemigo.	Fysiek: Breng het blad van je zwaard op je vijand.	Körperlich:	

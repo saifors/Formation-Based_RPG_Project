@@ -259,7 +259,7 @@ public class BattleUI : MonoBehaviour
         //Todo: Change Displayed Description to selected attacks description
         //Check these a bit more in depth.
         string descKey = gameManager.gameData.AttackList[gameManager.charControl[gameManager.activeCharacter].attacksLearned[attack]].descKey;
-		SelectedAttackDescription.text = LanguageManager.langData.attackDesc[descKey];
+        SelectedAttackDescription.text = descKey; //LanguageManager.langData.attackDesc[descKey];
 		//Change displayed Power and MP to that of the attack 
 		SelectedAttackStats.text = "Power: " + gameManager.gameData.AttackList[gameManager.charControl[gameManager.activeCharacter].attacksLearned[attack]].strength + System.Environment.NewLine + "MP: " + gameManager.gameData.AttackList[gameManager.charControl[gameManager.activeCharacter].attacksLearned[attack]].mpCost;
 
@@ -375,7 +375,7 @@ public class BattleUI : MonoBehaviour
         {
             attackName[i].gameObject.SetActive(true);
             string nameKey = gameManager.gameData.AttackList[gameManager.charControl[gameManager.activeCharacter].attacksLearned[i]].nameKey;
-			attackName[i].text = LanguageManager.langData.attackName[nameKey];
+            attackName[i].text = nameKey; //LanguageManager.langData.attackName[nameKey];
         }
 
         //gameManager.selectedTarget[] = 0;
