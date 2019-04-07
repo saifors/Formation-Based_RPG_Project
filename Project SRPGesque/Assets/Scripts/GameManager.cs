@@ -113,7 +113,8 @@ public class GameManager : MonoBehaviour
 		
 		gameData = GameDataManager.Load(fileName);
 		GameDataManager.Save(gameData, cacheName);
-		
+
+		LanguageManager.LoadLanguage();
 
 		gameState = GameState.Overworld;
 		randomEcountersOn = true;//Depending on the area. Maybe a scene database indicating whether true or false?.
@@ -867,6 +868,7 @@ public class GameManager : MonoBehaviour
 		randEncounter = UnityEngine.Random.Range(0, possibleEncounters.Length);
 
 		enemyGroupID = possibleEncounters[randEncounter];
+		//Debug.Log(enemyGroupID);
 
 		/*if (enemyGroupID == 1) enemyGroupID = 2; //This will later be random
 		else enemyGroupID = 1;*/

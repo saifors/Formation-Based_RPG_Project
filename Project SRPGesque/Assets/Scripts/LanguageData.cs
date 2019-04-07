@@ -22,7 +22,7 @@ public class LanguageData
 
 		if (systemLanguage == SystemLanguage.Spanish) currentLanguage = Language.Spanish;
 		else if (systemLanguage == SystemLanguage.Dutch) currentLanguage = Language.Dutch;
-		else if (systemLanguage == SystemLanguage.German) currentLanguage = Language.German;		
+		//else if (systemLanguage == SystemLanguage.German) currentLanguage = Language.German;		
 		else currentLanguage = Language.English;
 
 		Debug.Log("System language = " + systemLanguage);
