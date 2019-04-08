@@ -101,8 +101,6 @@ MonoBehaviour:
   pausePanel: {fileID: 0}
   pauseMenu: {fileID: 0}
   soundPlayer: {fileID: 1149260100857757719}
-  gameData:
-    Party: []
   fileName: 
   cacheName: 
 --- !u!114 &1149260100857757707
@@ -207,6 +205,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42d9339935fd2f341bd753e8263c553c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
+  particleAnim:
+  - {fileID: 1619778630106235894, guid: d8c16e41829dd6b44bf99520cc33606e, type: 3}
+  step: 0
 --- !u!1 &1149260101636217453
 GameObject:
   m_ObjectHideFlags: 0

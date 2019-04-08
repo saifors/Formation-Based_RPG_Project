@@ -6,6 +6,10 @@ public class BattleAnimation : MonoBehaviour
 {
 	public GameManager gameManager;
 
+	public GameObject[] particleAnim;
+
+	private List<GameObject> parts;
+
 	public int step;
 
 	Coroutine routine;
@@ -14,6 +18,7 @@ public class BattleAnimation : MonoBehaviour
     void Start()
     {
 		gameManager = GetComponent<GameManager>();
+		parts = new List<GameObject>();
 
 		/*routine = StartCoroutine(WaitForAnimation(anim));
 
@@ -34,12 +39,26 @@ public class BattleAnimation : MonoBehaviour
 
 	public void SpellAnim()
 	{
+		List<SpellAnim> spellAnims = new List<SpellAnim>();
 		//Particle animation I guess???
+		for (int target = 0; target < gameManager.selectedTargets.Length; target++)
+		{
+			//Instantiate & play particle animation On targeted tiles. 
+			GameObject particle = Instantiate(particleAnim[0]);
+			parts.Add(particle);
+			spellAnims.Add(particle.GetComponent<SpellAnim>());
+			spellAnims[target].Init();
+			spellAnims[target].trans.position = gameManager.selectedTargetsTransform[target].position;			
+		}
+
+		//WaitForParticleDestruction(spellAnims[0].particles[0].startLifetime);
+
+		FinishedAnim();
 	}
 
 	public void HitAnim(Animator anim)
 	{
-		
+		Debug.Log("HitAnim");
 		StartCoroutine(WaitForAnimation(anim));
 	}
 
@@ -68,9 +87,20 @@ public class BattleAnimation : MonoBehaviour
 	{
 		//wait = true;
 		Debug.Log("Waiting...");
-		yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length + 1);
+		if(anim != null) yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length + 1);
+
 		Debug.Log("Animation ended");
 		//wait = false;
+		FinishedAnim();
+	}
+	IEnumerator WaitForParticleDestruction(float time)
+	{
+		yield return new WaitForSeconds(time);
+		for (int i = 0; i < parts.Count; i++)
+		{
+			Destroy(parts[i]);
+		}
+		//Destroy();
 		FinishedAnim();
 	}
 }

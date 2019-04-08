@@ -272,8 +272,18 @@ public class CharControl_Battle : MonoBehaviour
 
 	public Animator CastAnim()
 	{
-		anim.Play("Cast");
-		return anim;
+		
+
+		try
+		{
+			anim.Play("Cast");
+			return anim;
+		}
+		catch
+		{
+
+			return null;
+		}
 	}
 	public void HurtAnim()
 	{

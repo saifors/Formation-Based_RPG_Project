@@ -426,7 +426,7 @@ public class GameManager : MonoBehaviour
 			}
 			
 		}
-
+		Debug.Log("HitAttack");
 		//Get The longest hit animation
 		longest = -1;
 		longestTime = 0;
