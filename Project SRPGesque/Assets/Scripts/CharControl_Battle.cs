@@ -241,10 +241,14 @@ public class CharControl_Battle : MonoBehaviour
 		HurtAnim();
 
 		//Debug.Log(charId + " has been hit for " + totalDamage + " by combining " + attackPower + "and" + attackerStrength + " leaving it at " + currentHp + " HP");
-
-        if (currentHp <= 0) Die();
+		
         
     }
+
+	public void DeathCheck()
+	{
+		if (currentHp <= 0) Die();
+	}
 
     public void Die()
     {
@@ -287,7 +291,16 @@ public class CharControl_Battle : MonoBehaviour
 	}
 	public void HurtAnim()
 	{
-		anim.Play("Hurt");
-		
+		try
+		{
+			anim.Play("Hurt");
+			
+		}
+		catch
+		{
+			
+		}
 	}
+
+	
 }

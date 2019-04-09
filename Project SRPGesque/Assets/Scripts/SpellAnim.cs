@@ -12,6 +12,6 @@ public class SpellAnim : MonoBehaviour
     {
 		trans = transform;
 		particles = GetComponentsInChildren<ParticleSystem>();
+		
     }
-	
 }

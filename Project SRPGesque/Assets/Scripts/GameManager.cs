@@ -53,6 +53,7 @@ public class GameManager : MonoBehaviour
 	//Battle
 	public ModelAssigner assigner;
 	public BattleAnimation battleAnim;
+	public Vector3 battleCam;
 	//Battle - Move
 	public GameObject cursor; //Prefab
 	private float tileSelectCooldownCounter;
@@ -122,6 +123,7 @@ public class GameManager : MonoBehaviour
 		partyMembers = PlayerPrefs.GetInt("PartyMembers", 1);
 
 		cam = Camera.main;
+		
 		transition = GetComponent<TransitionManager>();
 
 		//Initialization of Objects
@@ -138,6 +140,9 @@ public class GameManager : MonoBehaviour
 		battlefield = GameObject.FindGameObjectWithTag("Battlefield").GetComponent<Transform>();
 		assigner = GetComponent<ModelAssigner>();
 		battleAnim = GetComponent<BattleAnimation>();
+
+		battleCam = battlefield.position + new Vector3(0.6f,0,0.4f);
+		
 		//Databases.
 		currentEncounterMap = 0;
 		possibleEncounters = gameData.MapEncounterCollection[currentEncounterMap].groupIDs;
@@ -357,6 +362,9 @@ public class GameManager : MonoBehaviour
 		}
 
 		//Debug.Log("Start Attack");
+
+		battleUI.partyInfo.SetActive(true);
+
 		for (int i = 0; i < selectedTargets.Length; i++)
 		{
 			if (tileScript.tiles[selectedTargets[i]].isOccupied)
@@ -405,6 +413,7 @@ public class GameManager : MonoBehaviour
 		List<Animator> animes = new List<Animator>();
 		int longest;
 		float longestTime;
+		Debug.Log("startHitAttac");
 		
 		for (int target = 0; target < selectedTargets.Length; target++)
 		{
@@ -419,7 +428,7 @@ public class GameManager : MonoBehaviour
 					{
 						//Debug.Log(charControl[chara].charId + "Has been hit");
 						charControl[chara].Damage(gameData.AttackList[currentAttack].strength, charControl[activeCharacter].atk);
-						animes[chara] = charControl[chara].anim;
+						animes.Add(charControl[chara].anim);
 					}
 					//else Debug.Log(tileScript.tiles[selectedTargets[target]].tileID + "is target but character" + chara + "is on" + charControl[chara].tileID);
 				}
@@ -433,7 +442,12 @@ public class GameManager : MonoBehaviour
 
 		for(int i = 0; i < animes.Count; i++)
 		{
-			float currentLength = animes[i].GetCurrentAnimatorStateInfo(0).length;
+			float currentLength;
+			// I don´t know why this breaks
+			if (animes[i].GetCurrentAnimatorStateInfo(0).IsName("Hurt")) currentLength = animes[i].GetCurrentAnimatorStateInfo(0).length;
+			else currentLength = 0;
+			
+
 			if (currentLength > longestTime)
 			{
 				longest = i;
@@ -860,7 +874,7 @@ public class GameManager : MonoBehaviour
         gameState = GameState.Battle;
         camSet = CameraSetting.BattleCam;
 		selecting = SelectingMenu.selectingAction;
-        cam_T.position = battlefield.position;
+        cam_T.position = battleCam;
         
         enemyDefeated = 0;
 

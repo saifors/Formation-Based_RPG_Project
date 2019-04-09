@@ -187,11 +187,11 @@ public class BattleUI : MonoBehaviour
 		if(notifShown)
 		{
 			textFadeCounter += Time.deltaTime;
-			if(textFadeCounter >= 3)
+			if(textFadeCounter >= 1.5f)
 			{
-                notifAlpha -=  Time.deltaTime;
+                notifAlpha -=  Time.deltaTime * 2;
                 notifTextColor.a = notifAlpha; 
-                notifBgColor.a = notifAlpha/2;
+                notifBgColor.a = notifAlpha;
                 battleNotificationText.color = notifTextColor;
                 battleNotificationBg.color = notifBgColor;
                 if (notifAlpha <= 0)
@@ -435,13 +435,13 @@ public class BattleUI : MonoBehaviour
 		//HP Bar 
 		if(charID < gameManager.partyMembers)
 		{
-			playerInfoBox[charID].barTransform[0].DOSizeDelta(hpSize , 1, true);
+			playerInfoBox[charID].barTransform[0].DOSizeDelta(hpSize , 1, true).OnComplete(gameManager.charControl[charID].DeathCheck);
 			playerInfoBox[charID].barTransform[1].DOSizeDelta(mpSize, 1, true);
 		}
 		else
 		{
 
-			enemyInfoPopUp[charID - gameManager.partyMembers].barTransform[0].DOSizeDelta(hpSize, 1, true);
+			enemyInfoPopUp[charID - gameManager.partyMembers].barTransform[0].DOSizeDelta(hpSize, 1, true).OnComplete(gameManager.charControl[charID].DeathCheck);
 			//MP Bar
 			enemyInfoPopUp[charID - gameManager.partyMembers].barTransform[1].DOSizeDelta(mpSize, 1, true);
 		}
@@ -456,6 +456,7 @@ public class BattleUI : MonoBehaviour
 		rect.sizeDelta = size;*/
         
     }
+
 
     public void ChangeNotifText(string notifText) //This belongs here
 	{

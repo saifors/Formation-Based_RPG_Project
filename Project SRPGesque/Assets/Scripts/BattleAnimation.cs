@@ -40,6 +40,8 @@ public class BattleAnimation : MonoBehaviour
 	public void SpellAnim()
 	{
 		List<SpellAnim> spellAnims = new List<SpellAnim>();
+
+		float finishTime = 0;
 		//Particle animation I guess???
 		for (int target = 0; target < gameManager.selectedTargets.Length; target++)
 		{
@@ -48,12 +50,14 @@ public class BattleAnimation : MonoBehaviour
 			parts.Add(particle);
 			spellAnims.Add(particle.GetComponent<SpellAnim>());
 			spellAnims[target].Init();
-			spellAnims[target].trans.position = gameManager.selectedTargetsTransform[target].position;			
+			spellAnims[target].trans.position = gameManager.selectedTargetsTransform[target].position;
+			if (target == 0) finishTime = spellAnims[target].particles[0].startLifetime + spellAnims[target].particles[0].duration;
+			Destroy(particle, finishTime + 0.2f);
 		}
-
-		//WaitForParticleDestruction(spellAnims[0].particles[0].startLifetime);
-
-		FinishedAnim();
+		Debug.Log("hey" + (finishTime + 0.25f));
+		StartCoroutine(WaitForParticleDestruction(finishTime + 0.1f));
+		Debug.Log("yo");
+		//FinishedAnim();
 	}
 
 	public void HitAnim(Animator anim)
@@ -64,23 +68,28 @@ public class BattleAnimation : MonoBehaviour
 
 	public void FinishedAnim()
 	{
-		if(step == 0)
+
+		if (step == 0)
 		{
+			Debug.Log("step0");
 			//Particle Spell animation
 			SpellAnim();
 		}
 		else if (step == 1)
 		{
+			Debug.Log("step1");
 			gameManager.HitAttack();
 
 		}
 		else if (step == 2)
 		{
 			//Final anim
+			Debug.Log("step2");
 			gameManager.EndTurn();
 		}
 
 		step++;
+		Debug.Log("step is now " + step);
 	}
 	
 	IEnumerator WaitForAnimation(Animator anim)
@@ -95,12 +104,12 @@ public class BattleAnimation : MonoBehaviour
 	}
 	IEnumerator WaitForParticleDestruction(float time)
 	{
+		Debug.Log("Particle start");
+		Debug.Log("wait time " + time);
 		yield return new WaitForSeconds(time);
-		for (int i = 0; i < parts.Count; i++)
-		{
-			Destroy(parts[i]);
-		}
-		//Destroy();
+		Debug.Log("Particle ended");
 		FinishedAnim();
 	}
+
+	
 }
