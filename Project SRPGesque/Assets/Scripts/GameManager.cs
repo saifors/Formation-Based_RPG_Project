@@ -190,7 +190,7 @@ public class GameManager : MonoBehaviour
 					if (playerController.isMoving)
 					{
 						timeCounter += Time.deltaTime;
-						if (timeCounter >= 5)
+						if (timeCounter >= 2.5f)
 						{
 							encounterMinimumPercent -= 2.5f;
 
@@ -443,11 +443,30 @@ public class GameManager : MonoBehaviour
 		for(int i = 0; i < animes.Count; i++)
 		{
 			float currentLength;
-			// I don´t know why this breaks
-			if (animes[i].GetCurrentAnimatorStateInfo(0).IsName("Hurt")) currentLength = animes[i].GetCurrentAnimatorStateInfo(0).length;
-			else currentLength = 0;
-			
+			//I don't understand why this garbage keeps breaking.
 
+			AnimatorStateInfo state;
+			try { state = animes[i].GetCurrentAnimatorStateInfo(0); }
+			catch(Exception e)
+			{
+				Debug.LogError("State error" + e);
+			}
+Debug.Log("why");
+			// I don´t know why this breaks
+			//Debug.Log("current state" + state);
+/*
+			if (state.IsName("Hurt"))
+			{
+				Debug.Log("break my fucking face tonight");
+				currentLength = animes[i].GetCurrentAnimatorStateInfo(0).length;
+			}
+			else
+			{
+				Debug.Log("break yo fucking face tonight");
+				currentLength = 0;
+			}
+			
+			
 			if (currentLength > longestTime)
 			{
 				longest = i;
@@ -457,8 +476,9 @@ public class GameManager : MonoBehaviour
 			{
 				longest = i;
 				longestTime = currentLength;
-			}
+			}*/
 		}
+		//Debug.Log("AND WOULDN IT BE NICE TO LIVE TOGETHER");
 
 		battleAnim.HitAnim(animes[longest]);
 		
