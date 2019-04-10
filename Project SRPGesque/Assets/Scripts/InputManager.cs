@@ -39,7 +39,7 @@ public class InputManager : MonoBehaviour
 
 
 
-		if (gameManager.gameState == GameManager.GameState.Battle && Input.GetKeyDown(KeyCode.R)) gameManager.charControl[0].Damage(10, 30);
+		//if (gameManager.gameState == GameManager.GameState.Battle && Input.GetKeyDown(KeyCode.R)) gameManager.charControl[0].Damage(10, 30);
 
          
         if (Input.GetKeyDown(KeyCode.Z))

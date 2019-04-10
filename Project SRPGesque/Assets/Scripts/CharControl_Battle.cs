@@ -247,7 +247,19 @@ public class CharControl_Battle : MonoBehaviour
 
 	public void DeathCheck()
 	{
-		if (currentHp <= 0) Die();
+		if (currentHp <= 0)
+		{
+			Die();
+			/*try
+			{
+				anim.Play("Fade");
+				StartCoroutine(WaitForFade());
+			}
+			catch
+			{
+				Die();
+			}*/
+		}
 	}
 
     public void Die()
@@ -312,5 +324,10 @@ public class CharControl_Battle : MonoBehaviour
 	{
 		yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length + 1);
 		EndHurtAnim();
+	}
+	IEnumerator WaitForFade()
+	{
+		yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length + 0.25f);
+		Die();
 	}
 }
