@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
 	//Battle Interface (Canvas)    
 	public GameObject battleMenu;
 	public BattleUI battleUI;
-	public enum SelectingMenu { selectingAction, selectingAttack, selectingTarget, selectingMove, victoryScreen, enemyTurn };
+	public enum SelectingMenu { selectingAction, selectingAttack, selectingTarget, selectingMove, victoryScreen, enemyTurn, attacking };
 	public SelectingMenu selecting;
 	public DialogueBox dialogueUI;
 
@@ -373,6 +373,7 @@ public class GameManager : MonoBehaviour
 			if (tileScript.tiles[selectedTargets[i]].isOccupied)
 			{
 				battleUI.partyInfo.SetActive(true);
+				selecting = SelectingMenu.attacking;
 				LaunchAttack();
 				break;
 			}
@@ -442,7 +443,7 @@ public class GameManager : MonoBehaviour
 			}
 
 		}
-		Debug.Log("HitAttack on " + targetEnemies + " targets");
+		//Debug.Log("HitAttack on " + targetEnemies + " targets");
 
 
 
@@ -455,8 +456,8 @@ public class GameManager : MonoBehaviour
 		targetsHit++;
 		if(targetsHit >= targetEnemies)
 		{
-			Debug.Log("All targets have Finished their hurt Animation");
-			battleAnim.FinishedAnim();
+			//Debug.Log("All targets have Finished their hurt Animation");
+			battleAnim.FinishHit();
 			targetsHit = 0;
 		}
 	}
@@ -529,7 +530,7 @@ public class GameManager : MonoBehaviour
 	public void StartTurn()
 	{
 		activeCharacter = turnOrder[turnCounter];
-		Debug.Log(activeCharacter + " has started it's turn");
+		//Debug.Log(activeCharacter + " has started it's turn");
 		charControl[activeCharacter].MyTurn();
 		if(charControl[activeCharacter].alliance == CharacterStats.Alliance.Enemy)
 		{
@@ -545,7 +546,7 @@ public class GameManager : MonoBehaviour
 	}
 	public void EndTurn()
 	{
-		Debug.Log(activeCharacter + " has ended their turn");
+		//Debug.Log(activeCharacter + " has ended their turn");
 		for (int  i = 0; i < selectedTargetsTransform.Length; i++)
 		{
 			Destroy(selectedTargetsTransform[i].gameObject);
@@ -826,11 +827,11 @@ public class GameManager : MonoBehaviour
 				
             }   
         }
-		Debug.Log("Target amount: " + targetsCounter);
+		/*Debug.Log("Target amount: " + targetsCounter);
 		for (int i = 0; i < targetsCounter; i++)
 		{
 			Debug.Log("	" + selectedTargets[i]);
-		}
+		}*/
 
 		//Debug.Log("Char" + activeCharacter + " has " + targetsCounter + "targets");
     }

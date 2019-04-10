@@ -52,20 +52,20 @@ public class BattleAnimation : MonoBehaviour
 			spellAnims[target].Init();
 			if (gameManager.charControl[gameManager.activeCharacter].alliance == CharacterStats.Alliance.Player)
 			{
-				Debug.Log("Player Spell");
+				//Debug.Log("Player Spell");
 				spellAnims[target].trans.position = gameManager.selectedTargetsTransform[target].position;
 			}
 
 			else
 			{
-				Debug.Log("Enemy Spell");
+				//Debug.Log("Enemy Spell");
 				spellAnims[target].trans.position = gameManager.tileScript.tileTransform[gameManager.selectedTargets[target]].position;
 			}
 			if (target == 0) finishTime = spellAnims[target].particles[0].startLifetime + spellAnims[target].particles[0].duration;
 			Destroy(particle, finishTime + 0.2f);
 		}
 		//Debug.Log("hey" + (finishTime + 0.25f));
-		Debug.Log("yo");
+		//Debug.Log("yo");
 		StartCoroutine(WaitForParticleDestruction(finishTime + 0.1f));
 		
 		//FinishedAnim();
@@ -95,18 +95,23 @@ public class BattleAnimation : MonoBehaviour
 
 		if (step < 2)
 		{
-			Debug.Log("step fulfilled " + step);
+			//Debug.Log("step fulfilled " + step);
 			step++;
 			
 		}
 		else
 		{
-			Debug.Log("Final step fulfilled");
+			//Debug.Log("Final step fulfilled");
 			step = 0;
 			gameManager.EndTurn();
 			
 		}
 		
+	}
+
+	public void FinishHit()
+	{
+		Invoke("FinishedAnim", 0.5f);
 	}
 	
 	IEnumerator WaitForAnimation(Animator anim)
@@ -124,7 +129,7 @@ public class BattleAnimation : MonoBehaviour
 		//Debug.Log("Particle start");
 		//Debug.Log("wait time " + time);
 		yield return new WaitForSeconds(time);
-		Debug.Log("Particle ended");
+		//Debug.Log("Particle ended");
 		FinishedAnim();
 	}
 

@@ -68,7 +68,7 @@ public class EnemyAI : MonoBehaviour
 		if (attacksStoredCounter == 0)
 		{
 			//NO MP
-			Debug.Log(charControl.charId + "has not enough Mp to use any of its moves");
+			//Debug.Log(charControl.charId + "has not enough Mp to use any of its moves");
 			gameManager.EndTurn();
 			return;
 		}
@@ -84,7 +84,7 @@ public class EnemyAI : MonoBehaviour
 			//Left off investigation here
 			//
 			victimAmount[attack] = 0;
-			attacksTargetMargin = gameManager.gameData.AttackList[attack].rangeSize;
+			attacksTargetMargin = gameManager.gameData.AttackList[storedAtk[attack]].rangeSize;
 			//Possible confusions: X and Y getting mixed up.
 			for (int tileX = 3; tileX < tileScript.xTiles - (attacksTargetMargin.x); tileX++)
 			{
@@ -115,7 +115,7 @@ public class EnemyAI : MonoBehaviour
 					//End of Double For that check for the optimal target tiles of this attack
 				}
 			}
-			Debug.Log("attack " + attack + "'s optimal origin is " + optimalTileOrigins[attack]);
+			//Debug.Log("attack " + attack + "'s optimal origin is " + optimalTileOrigins[attack]);
 			if (victimAmount[attack] == 0)
 			{
 				//This attacks pattern makes it incapable of reaching anyone.
@@ -172,7 +172,7 @@ public class EnemyAI : MonoBehaviour
 		currentAttack = storedAtk[atkInPoolWithMostTargets];
 		gameManager.targetOrigin = optimalTileOrigins[atkInPoolWithMostTargets];
 		//Debug.Log(optimalTileOrigins[atkInPoolWithMostTargets]);
-		attacksTargetMargin = gameManager.gameData.AttackList[atkInPoolWithMostTargets].rangeSize;
+		attacksTargetMargin = gameManager.gameData.AttackList[currentAttack].rangeSize;
 
 		gameManager.targetMargin = attacksTargetMargin;
 

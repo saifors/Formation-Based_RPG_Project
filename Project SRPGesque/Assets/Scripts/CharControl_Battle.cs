@@ -298,7 +298,7 @@ public class CharControl_Battle : MonoBehaviour
 		}
 		catch
 		{
-			Debug.Log("No hurt anim found");
+			//Debug.Log("No hurt anim found");
 			Invoke("EndHurtAnim", 1);
 		}
 	}
