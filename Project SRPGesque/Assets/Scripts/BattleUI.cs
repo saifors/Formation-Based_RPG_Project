@@ -250,7 +250,7 @@ public class BattleUI : MonoBehaviour
         
         for(int i = 0; i < gameManager.partyMembers + gameManager.enemyAmount; i++)
 		{
-			UpdateLifeBars(i);
+			LoadLifeBars(i);
 		}
     }
 
@@ -399,7 +399,55 @@ public class BattleUI : MonoBehaviour
 		attackMenu.SetActive(false);
 	}
 
-    public void UpdateLifeBars(int charID)
+	public void LoadLifeBars(int charID)
+	{
+		//Percentage of life = (life*100)/MaxHP
+		float lifePercent = (gameManager.charControl[charID].currentHp * 100) / gameManager.charControl[charID].hp;
+		float mpPercent = (gameManager.charControl[charID].currentMp * 100) / gameManager.charControl[charID].mp;
+
+		float maxWidth;
+
+		Vector2 hpSize;
+		Vector2 mpSize;
+
+		if (gameManager.charControl[charID].alliance == CharacterStats.Alliance.Player)
+		{
+			hpSize.y = playerInfoBox[charID].barTransform[0].sizeDelta.y;
+			mpSize.y = playerInfoBox[charID].barTransform[1].sizeDelta.y;
+
+			maxWidth = 235;
+
+			playerInfoBox[charID].barText[0].text = gameManager.charControl[charID].currentHp + "/" + gameManager.charControl[charID].hp;
+			playerInfoBox[charID].barText[1].text = gameManager.charControl[charID].currentMp + "/" + gameManager.charControl[charID].mp;
+		}
+		else
+		{
+			hpSize.y = enemyInfoPopUp[charID - gameManager.partyMembers].barTransform[0].sizeDelta.y;
+			mpSize.y = enemyInfoPopUp[charID - gameManager.partyMembers].barTransform[1].sizeDelta.y;
+
+			maxWidth = 175;
+		}
+
+		hpSize.x = maxWidth * lifePercent / 100;
+
+		mpSize.x = maxWidth * mpPercent / 100;
+
+		//HP Bar 
+		if (charID < gameManager.partyMembers)
+		{
+			playerInfoBox[charID].barTransform[0].sizeDelta = hpSize;
+			playerInfoBox[charID].barTransform[1].sizeDelta = mpSize;
+		}
+		else
+		{
+
+			enemyInfoPopUp[charID - gameManager.partyMembers].barTransform[0].sizeDelta = hpSize;
+			//MP Bar
+			enemyInfoPopUp[charID - gameManager.partyMembers].barTransform[1].sizeDelta = mpSize;
+		}
+	}
+
+	public void UpdateLifeBars(int charID)
     {
         //Percentage of life = (life*100)/MaxHP
         float lifePercent = (gameManager.charControl[charID].currentHp*100)/ gameManager.charControl[charID].hp;
@@ -445,16 +493,6 @@ public class BattleUI : MonoBehaviour
 			//MP Bar
 			enemyInfoPopUp[charID - gameManager.partyMembers].barTransform[1].DOSizeDelta(mpSize, 1, true);
 		}
-
-		//EJEMPLO
-		/*
-		RectTransform rect;
-		Vector2 size = rect.sizeDelta;
-		maxSize = size.x;//width
-		minSize = 0;
-
-		rect.sizeDelta = size;*/
-        
     }
 
 
