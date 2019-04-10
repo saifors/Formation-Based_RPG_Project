@@ -115,6 +115,7 @@ public class EnemyAI : MonoBehaviour
 					//End of Double For that check for the optimal target tiles of this attack
 				}
 			}
+			Debug.Log("attack " + attack + "'s optimal origin is " + optimalTileOrigins[attack]);
 			if (victimAmount[attack] == 0)
 			{
 				//This attacks pattern makes it incapable of reaching anyone.
@@ -170,8 +171,11 @@ public class EnemyAI : MonoBehaviour
 
 		currentAttack = storedAtk[atkInPoolWithMostTargets];
 		gameManager.targetOrigin = optimalTileOrigins[atkInPoolWithMostTargets];
+		//Debug.Log(optimalTileOrigins[atkInPoolWithMostTargets]);
 		attacksTargetMargin = gameManager.gameData.AttackList[atkInPoolWithMostTargets].rangeSize;
+
 		gameManager.targetMargin = attacksTargetMargin;
+
 		gameManager.CalculateTargetAmount();
 		gameManager.TargetPlacement();
 

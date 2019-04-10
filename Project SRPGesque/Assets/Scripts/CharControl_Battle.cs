@@ -294,13 +294,23 @@ public class CharControl_Battle : MonoBehaviour
 		try
 		{
 			anim.Play("Hurt");
-			
+			StartCoroutine(WaitForAnim());
 		}
 		catch
 		{
-			
+			Debug.Log("No hurt anim found");
+			Invoke("EndHurtAnim", 1);
 		}
 	}
 
-	
+	public void EndHurtAnim()
+	{
+		gameManager.FinishHitAttack();
+	}
+
+	IEnumerator WaitForAnim()
+	{
+		yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length + 1);
+		EndHurtAnim();
+	}
 }

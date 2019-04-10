@@ -27,10 +27,10 @@ public class GameManager : MonoBehaviour
 	//Battle Interface (Canvas)    
 	public GameObject battleMenu;
 	public BattleUI battleUI;
-	public enum SelectingMenu { selectingAction, selectingAttack, selectingTarget, selectingMove, victoryScreen, enemyTurn};
+	public enum SelectingMenu { selectingAction, selectingAttack, selectingTarget, selectingMove, victoryScreen, enemyTurn };
 	public SelectingMenu selecting;
 	public DialogueBox dialogueUI;
-		
+
 	//[HideInInspector] public AttackInfoManager attackInfo;
 	[Header("Characters & Enemies")]
 	public GameObject battleCharacterPrefab;
@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour
 	//Playable Characters: Amount, Object and Controller Arrays, Active/Currently Selected, 
 	public int partyMembers;
 	public GameObject[] characters;
-	
+
 	public int activeCharacter;
 
 	//Enemy Characters: Current Amount and start of battle Amount, Object and Controller Arrays, Check Amount alive.
@@ -81,6 +81,9 @@ public class GameManager : MonoBehaviour
 	public Vector2[] selectedTargetVector; //X and Y of all tiles in range
 	public Transform[] selectedTargetsTransform;
 
+	public int targetEnemies;
+	public int targetsHit;
+
 	[Header("Turn System")]
 	//Turn System
 	public int[] turnOrder; //Takes in Combined character Ids of both player and enemy, length will depend on playerAmount, enemy amount and the speed of each and every one.
@@ -93,7 +96,7 @@ public class GameManager : MonoBehaviour
 	// Pause Stuff
 	public bool isPaused;
 	public GameObject pausePanel;
-    public PauseMenuScript pauseMenu;
+	public PauseMenuScript pauseMenu;
 	//Location of the where battles take place
 	private Transform battlefield;
 
@@ -111,7 +114,7 @@ public class GameManager : MonoBehaviour
 	{
 		fileName = PlayerPrefs.GetString("CurrentFile", "spelEen.od");
 		cacheName = "spelQuick.od";
-		
+
 		gameData = GameDataManager.Load(fileName);
 		GameDataManager.Save(gameData, cacheName);
 
@@ -119,11 +122,11 @@ public class GameManager : MonoBehaviour
 
 		gameState = GameState.Overworld;
 		randomEcountersOn = true;//Depending on the area. Maybe a scene database indicating whether true or false?.
-		
+
 		partyMembers = PlayerPrefs.GetInt("PartyMembers", 1);
 
 		cam = Camera.main;
-		
+
 		transition = GetComponent<TransitionManager>();
 
 		//Initialization of Objects
@@ -141,8 +144,8 @@ public class GameManager : MonoBehaviour
 		assigner = GetComponent<ModelAssigner>();
 		battleAnim = GetComponent<BattleAnimation>();
 
-		battleCam = battlefield.position + new Vector3(0.6f,0,0.4f);
-		
+		battleCam = battlefield.position + new Vector3(0.6f, 0, 0.4f);
+
 		//Databases.
 		currentEncounterMap = 0;
 		possibleEncounters = gameData.MapEncounterCollection[currentEncounterMap].groupIDs;
@@ -165,7 +168,7 @@ public class GameManager : MonoBehaviour
 		//MoveFormation(0, charControl[0].tile); //PLACEHOLDER
 		battleUI.Init();
 
-        pauseMenu = pausePanel.GetComponent<PauseMenuScript>();
+		pauseMenu = pausePanel.GetComponent<PauseMenuScript>();
 	}
 
 	// Update
@@ -206,7 +209,7 @@ public class GameManager : MonoBehaviour
 					}
 				}
 			}
-			
+
 			if (debug)
 			{
 
@@ -331,7 +334,7 @@ public class GameManager : MonoBehaviour
 		battleUI.attackMenu.SetActive(false);
 		selecting = SelectingMenu.selectingTarget;
 	}
-	
+
 	public void ReturnToAttackSelect()
 	{
 		soundPlayer.PlaySound(1, true);
@@ -353,7 +356,7 @@ public class GameManager : MonoBehaviour
 	//Attack		
 	public void StartAttack()
 	{
-		if(charControl[activeCharacter].currentMp - gameData.AttackList[charControl[activeCharacter].attacksLearned[battleUI.attackOptionSelected]].mpCost < 0)
+		if (charControl[activeCharacter].currentMp - gameData.AttackList[charControl[activeCharacter].attacksLearned[battleUI.attackOptionSelected]].mpCost < 0)
 		{
 			battleUI.ChangeNotifText("Not enough MP.");
 			soundPlayer.PlaySound(2, true);
@@ -363,12 +366,13 @@ public class GameManager : MonoBehaviour
 
 		//Debug.Log("Start Attack");
 
-		battleUI.partyInfo.SetActive(true);
+		
 
 		for (int i = 0; i < selectedTargets.Length; i++)
 		{
 			if (tileScript.tiles[selectedTargets[i]].isOccupied)
 			{
+				battleUI.partyInfo.SetActive(true);
 				LaunchAttack();
 				break;
 			}
@@ -398,6 +402,11 @@ public class GameManager : MonoBehaviour
 		if (charControl[activeCharacter].alliance == CharacterStats.Alliance.Player) charControl[activeCharacter].UseMp(gameData.AttackList[charControl[activeCharacter].attacksLearned[battleUI.attackOptionSelected]].mpCost);
 		else if (charControl[activeCharacter].alliance == CharacterStats.Alliance.Enemy) charControl[activeCharacter].UseMp(gameData.AttackList[charControl[activeCharacter].ai.currentAttack].mpCost);
 
+		/*for (int i = 0; i < selectedTargets.Length; i++)
+		{
+			Debug.Log(activeCharacter + " launches attack on " + selectedTargets[]);
+		}*/
+
 		battleAnim.LaunchAttackAnim();
 		//Character attack animation
 		//charControl[activeCharacter].anim.Play(attackAnimation);
@@ -409,80 +418,50 @@ public class GameManager : MonoBehaviour
 	}
 	public void HitAttack() //For some reason won't work on enemy turn
 	{
-		//Debug.Log(activeCharacter + "starts hitting its attack");
-		List<Animator> animes = new List<Animator>();
-		int longest;
-		float longestTime;
-		Debug.Log("startHitAttac");
 		
+		targetEnemies = 0;
+		targetsHit = 0;
 		for (int target = 0; target < selectedTargets.Length; target++)
 		{
 			//Debug.Log(activeCharacter + "goes through target" + target + "which has tile ID of " + selectedTargets[target] + "or" + tileScript.tiles[selectedTargets[target]].tileID);
 			if (tileScript.tiles[selectedTargets[target]].isOccupied)
 			{
-				
+
 				//Debug.Log(activeCharacter + "goes through all the character on target tile" + tileScript.tiles[selectedTargets[target]].tileID);
 				for (int chara = 0; chara < partyMembers + enemyAmount; chara++)
 				{
-					if(charControl[chara].tileID == tileScript.tiles[selectedTargets[target]].tileID)
+					if (charControl[chara].tileID == tileScript.tiles[selectedTargets[target]].tileID)
 					{
 						//Debug.Log(charControl[chara].charId + "Has been hit");
 						charControl[chara].Damage(gameData.AttackList[currentAttack].strength, charControl[activeCharacter].atk);
-						animes.Add(charControl[chara].anim);
+
+						targetEnemies++;
 					}
 					//else Debug.Log(tileScript.tiles[selectedTargets[target]].tileID + "is target but character" + chara + "is on" + charControl[chara].tileID);
 				}
 			}
-			
+
 		}
-		Debug.Log("HitAttack");
-		//Get The longest hit animation
-		longest = -1;
-		longestTime = 0;
+		Debug.Log("HitAttack on " + targetEnemies + " targets");
 
-		for(int i = 0; i < animes.Count; i++)
-		{
-			float currentLength;
-			//I don't understand why this garbage keeps breaking.
 
-			AnimatorStateInfo state;
-			try { state = animes[i].GetCurrentAnimatorStateInfo(0); }
-			catch(Exception e)
-			{
-				Debug.LogError("State error" + e);
-			}
-Debug.Log("why");
-			// I don´t know why this breaks
-			//Debug.Log("current state" + state);
-/*
-			if (state.IsName("Hurt"))
-			{
-				Debug.Log("break my fucking face tonight");
-				currentLength = animes[i].GetCurrentAnimatorStateInfo(0).length;
-			}
-			else
-			{
-				Debug.Log("break yo fucking face tonight");
-				currentLength = 0;
-			}
-			
-			
-			if (currentLength > longestTime)
-			{
-				longest = i;
-				longestTime = currentLength;
-			}
-			else if (currentLength == longestTime)
-			{
-				longest = i;
-				longestTime = currentLength;
-			}*/
-		}
-		//Debug.Log("AND WOULDN IT BE NICE TO LIVE TOGETHER");
 
-		battleAnim.HitAnim(animes[longest]);
-		
+		//battleAnim.HitAnim(animes[longest]);
+
 	}
+
+	public void FinishHitAttack()
+	{
+		targetsHit++;
+		if(targetsHit >= targetEnemies)
+		{
+			Debug.Log("All targets have Finished their hurt Animation");
+			battleAnim.FinishedAnim();
+			targetsHit = 0;
+		}
+	}
+
+
 
 	//Defend
 	public void Defend()
@@ -550,6 +529,7 @@ Debug.Log("why");
 	public void StartTurn()
 	{
 		activeCharacter = turnOrder[turnCounter];
+		Debug.Log(activeCharacter + " has started it's turn");
 		charControl[activeCharacter].MyTurn();
 		if(charControl[activeCharacter].alliance == CharacterStats.Alliance.Enemy)
 		{
@@ -565,7 +545,8 @@ Debug.Log("why");
 	}
 	public void EndTurn()
 	{
-		for(int  i = 0; i < selectedTargetsTransform.Length; i++)
+		Debug.Log(activeCharacter + " has ended their turn");
+		for (int  i = 0; i < selectedTargetsTransform.Length; i++)
 		{
 			Destroy(selectedTargetsTransform[i].gameObject);
 		}
@@ -845,6 +826,12 @@ Debug.Log("why");
 				
             }   
         }
+		Debug.Log("Target amount: " + targetsCounter);
+		for (int i = 0; i < targetsCounter; i++)
+		{
+			Debug.Log("	" + selectedTargets[i]);
+		}
+
 		//Debug.Log("Char" + activeCharacter + " has " + targetsCounter + "targets");
     }
 	public void TargetPlacementVisuals()
