@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using TMPro;
 
 public class BattleUI : MonoBehaviour 
 {
@@ -13,6 +14,7 @@ public class BattleUI : MonoBehaviour
     private float scrollCooldownCounter;
     public enum CommandSelection {Attack, Defend, Move, Item, Run};
 	public CommandSelection command;
+	public TextMeshProUGUI[] actions;
 	
 	
 	public GameManager gameManager;
@@ -36,10 +38,11 @@ public class BattleUI : MonoBehaviour
     [Header("Attack Menu")]
     //External Sources definition
     public GameObject attackNames;
-    public Text[] attackName;
+    public TextMeshProUGUI[] attackName;
     private Transform[] attackNamePos;
-    public Text SelectedAttackDescription;
-    public Text SelectedAttackStats;
+    public TextMeshProUGUI SelectedAttackDescription;
+    public TextMeshProUGUI SelectedAttackStats;
+	public Sprite[] portraitSprites;
 
     //Attack Option Selection
     public int attackOptionAmount;
@@ -55,7 +58,7 @@ public class BattleUI : MonoBehaviour
 	public CanvasGroup selectionImage;
 	public Transform selectionImage_trans;
     public Transform attackSelection;
-	public Text battleNotificationText;
+	public TextMeshProUGUI battleNotificationText;
     public Image battleNotificationBg;
     public SoundPlayer soundPlayer;
     [Header("HP, MP and SP Bars")]
@@ -84,7 +87,7 @@ public class BattleUI : MonoBehaviour
             
 
 
-        attackName = attackNames.GetComponentsInChildren<Text>();
+        attackName = attackNames.GetComponentsInChildren<TextMeshProUGUI>();
         attackNamePos = new Transform[attackName.Length];
         for(int i = 0; i < attackNamePos.Length; i++) 
         {
@@ -92,7 +95,8 @@ public class BattleUI : MonoBehaviour
         }
         attackOptionSelected = Mathf.FloorToInt(atkSelVector.y + (atkSelVector.x * 2));
         attackSelection.position = attackNamePos[attackOptionSelected].position;
-        
+
+		LoadActions();
     
         attackMenu.SetActive(false);
         battleMenu.SetActive(false);
@@ -209,6 +213,15 @@ public class BattleUI : MonoBehaviour
         axis = inputAxis;
     }
 
+	private void LoadActions()
+	{
+		actions[0].text = LanguageManager.langData.actions["Action_Atk"];
+		actions[1].text = LanguageManager.langData.actions["Action_Def"];
+		actions[2].text = LanguageManager.langData.actions["Action_Mov"];
+		actions[3].text = LanguageManager.langData.actions["Action_Itm"];
+		actions[4].text = LanguageManager.langData.actions["Action_Run"];
+	}
+
     public void InitializeInfoBoxes()
     {
 		partyInfo.SetActive(true);
@@ -223,6 +236,8 @@ public class BattleUI : MonoBehaviour
 
             playerInfoBox[i] = obj.GetComponent<PlayerInfoBox>();
             playerInfoBox[i].levelNum.text = "Lv." + gameManager.charControl[i].level.ToString();
+			playerInfoBox[i].portrait.sprite = portraitSprites[i];
+
         }
 
 		enemyInfoPopUp = new EnemyInfoPopUp[gameManager.enemyAmount];

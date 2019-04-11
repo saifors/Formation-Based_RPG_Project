@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class EnemyInfoPopUp : MonoBehaviour
 {
     public RectTransform[] barTransform;
-    public Text levelText;
+    public TextMeshProUGUI levelText;
 }
