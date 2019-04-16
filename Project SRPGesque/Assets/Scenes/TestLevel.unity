@@ -766,6 +766,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameUI
       objectReference: {fileID: 0}
+    - target: {fileID: 3271627803946293259, guid: d34e14bad3505694b9ec435ce078b2d9,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3271627803095114859, guid: d34e14bad3505694b9ec435ce078b2d9,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -881,6 +886,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1888884844}
+    - target: {fileID: 3271627802848477162, guid: d34e14bad3505694b9ec435ce078b2d9,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: EncounterAnim
+      objectReference: {fileID: 0}
     - target: {fileID: 3271627802321969144, guid: d34e14bad3505694b9ec435ce078b2d9,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -980,6 +990,31 @@ PrefabInstance:
         type: 3}
       propertyPath: m_isInputParsingRequired
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9214981779475471320, guid: d34e14bad3505694b9ec435ce078b2d9,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.0008544922
+      objectReference: {fileID: 0}
+    - target: {fileID: 7590247780989184040, guid: d34e14bad3505694b9ec435ce078b2d9,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 1080
+      objectReference: {fileID: 0}
+    - target: {fileID: 7590247780989184040, guid: d34e14bad3505694b9ec435ce078b2d9,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 2180
+      objectReference: {fileID: 0}
+    - target: {fileID: 8321537111475640969, guid: d34e14bad3505694b9ec435ce078b2d9,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 2180
+      objectReference: {fileID: 0}
+    - target: {fileID: 8321537111475640969, guid: d34e14bad3505694b9ec435ce078b2d9,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 1080
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d34e14bad3505694b9ec435ce078b2d9, type: 3}
