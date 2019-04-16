@@ -18,6 +18,7 @@ public class BattleUI : MonoBehaviour
 	
 	
 	public GameManager gameManager;
+	public BattleTransition battleTransition;
 
 	[Header("Notifications")]
     public GameObject notifPanel;
@@ -83,6 +84,9 @@ public class BattleUI : MonoBehaviour
 		selectionImage_trans = selectionImage.GetComponent<RectTransform>();
         notifTextColor = battleNotificationText.color;
         notifBgColor = battleNotificationBg.color;
+
+		battleTransition = GetComponentInChildren<BattleTransition>();
+		battleTransition.battleUI = this;
 
 		turnPanelAnim = GetComponentInChildren<TurnAnims>();
 		turnPanel = turnPanelAnim.gameObject;

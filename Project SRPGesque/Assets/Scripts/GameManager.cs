@@ -199,7 +199,7 @@ public class GameManager : MonoBehaviour
 
 							if (UnityEngine.Random.Range(0, 100) >= encounterMinimumPercent)
 							{
-								InitializeEncounter();
+								EncounterAnim();
 								encounterMinimumPercent = 100;
 							}
 							timeCounter = 0;
@@ -892,6 +892,10 @@ public class GameManager : MonoBehaviour
     public void ToggleEncounterRate()
 	{
 		randomEcountersOn = !randomEcountersOn;
+	}
+	public void EncounterAnim()
+	{
+		battleUI.battleTransition.TransitionTo();
 	}
     public void InitializeEncounter()
     {
