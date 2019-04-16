@@ -21,12 +21,15 @@ public class TransitionManager : MonoBehaviour
 	private Image Screen_Img;
 	public Color Screen_Color;
 
+	public float fadeSpeed;
+
 	private int transitionSceneID;
 
 	// Use this for initialization
 	void Start () 
 	{
 		canvas = GameObject.FindGameObjectWithTag("UI");
+		fadeSpeed = 0.5f;
 
 		TransitionScreen = new GameObject("transitionScreen");
 		TransitionScreen.AddComponent<RectTransform>();
@@ -59,7 +62,7 @@ public class TransitionManager : MonoBehaviour
 		if(isFading)
 		{
 			timeCounter += Time.deltaTime;
-			Screen_Color.a = timeCounter * 0.5f;
+			Screen_Color.a = timeCounter * fadeSpeed;
 			Screen_Img.color = Screen_Color;
 			//Debug.Log("Is fading");
 			if(Screen_Color.a >= 1)
@@ -94,6 +97,19 @@ public class TransitionManager : MonoBehaviour
 	}
 	public void FadeTo(Color color)
 	{
+		fadeSpeed = 0.5f;
+		isFaded = false;
+		isFading = true;
+		Screen_Color = color;
+		Screen_Color.a = 0;
+		Screen_Img.color = Screen_Color;
+		TransitionScreen.SetActive(true);
+		
+	}
+
+	public void FadeTo(Color color, float speed)
+	{
+		fadeSpeed = speed;
 		isFaded = false;
 		isFading = true;
 		Screen_Color = color;
@@ -101,7 +117,6 @@ public class TransitionManager : MonoBehaviour
 		Screen_Img.color = Screen_Color;
 		TransitionScreen.SetActive(true);
 
-		
 	}
 
 	public void FadeFrom()

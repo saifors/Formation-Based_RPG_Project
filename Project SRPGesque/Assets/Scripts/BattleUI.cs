@@ -33,9 +33,10 @@ public class BattleUI : MonoBehaviour
     public GameObject attackMenu;
     public GameObject partyInfo;
     public GameObject victoryPanel;
-    
+	public GameObject turnPanel;
+	public TurnAnims turnPanelAnim;
 
-    [Header("Attack Menu")]
+	[Header("Attack Menu")]
     //External Sources definition
     public GameObject attackNames;
     public TextMeshProUGUI[] attackName;
@@ -82,6 +83,11 @@ public class BattleUI : MonoBehaviour
 		selectionImage_trans = selectionImage.GetComponent<RectTransform>();
         notifTextColor = battleNotificationText.color;
         notifBgColor = battleNotificationBg.color;
+
+		turnPanelAnim = GetComponentInChildren<TurnAnims>();
+		turnPanel = turnPanelAnim.gameObject;
+		turnPanelAnim.Init();
+		turnPanel.SetActive(false);
         
         soundPlayer = gameManager.soundPlayer;
             
@@ -406,12 +412,16 @@ public class BattleUI : MonoBehaviour
 		actionMenu.SetActive(true);
 		partyInfo.SetActive(true);
 		attackMenu.SetActive(false);
+		turnPanel.SetActive(true);
+		turnPanelAnim.StartTurnAnim(gameManager.charControl[gameManager.activeCharacter].name, CharacterStats.Alliance.Player);
 	}
 	public void EnemyTurnUIChange()
 	{
 		actionMenu.SetActive(false);
 		partyInfo.SetActive(true);
 		attackMenu.SetActive(false);
+		turnPanel.SetActive(true);
+		turnPanelAnim.StartTurnAnim(gameManager.charControl[gameManager.activeCharacter].name, CharacterStats.Alliance.Enemy);
 	}
 
 	public void LoadLifeBars(int charID)

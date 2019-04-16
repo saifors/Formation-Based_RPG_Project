@@ -69,7 +69,7 @@ public class EnemyAI : MonoBehaviour
 		{
 			//NO MP
 			//Debug.Log(charControl.charId + "has not enough Mp to use any of its moves");
-			gameManager.EndTurn();
+			StartCoroutine(WaitForMPNotif());
 			return;
 		}
 		//Debug.Log(charControl.charId + " stored " + storedAtk[0]);
@@ -181,5 +181,11 @@ public class EnemyAI : MonoBehaviour
 
 		gameManager.LaunchAttack();
 
+	}
+	IEnumerator WaitForMPNotif()
+	{
+		gameManager.battleUI.ChangeNotifText(charControl.name + " lacks enough MP to use an attack!");
+		yield return new WaitForSeconds(2);
+		gameManager.EndTurn();
 	}
 }

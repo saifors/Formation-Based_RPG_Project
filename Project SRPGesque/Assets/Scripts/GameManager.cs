@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
 	//Battle Interface (Canvas)    
 	public GameObject battleMenu;
 	public BattleUI battleUI;
-	public enum SelectingMenu { selectingAction, selectingAttack, selectingTarget, selectingMove, victoryScreen, enemyTurn, attacking };
+	public enum SelectingMenu { selectingAction, selectingAttack, selectingTarget, selectingMove, victoryScreen, enemyTurn, attacking, waiting };
 	public SelectingMenu selecting;
 	public DialogueBox dialogueUI;
 
@@ -469,7 +469,14 @@ public class GameManager : MonoBehaviour
 	{
 		charControl[activeCharacter].isDefending = true;
 		//Change To Defend idle?
+		battleUI.ChangeNotifText(charControl[activeCharacter].name + " takes a defensive posture!");
 
+		StartCoroutine(WaitForDefend());
+	}
+	IEnumerator WaitForDefend()
+	{
+		selecting = SelectingMenu.waiting;
+		yield return new WaitForSeconds(1);
 		EndTurn();
 	}
 //----------------------------------Turn System--------------------------------------------
@@ -531,16 +538,14 @@ public class GameManager : MonoBehaviour
 	{
 		activeCharacter = turnOrder[turnCounter];
 		//Debug.Log(activeCharacter + " has started it's turn");
-		charControl[activeCharacter].MyTurn();
+		selecting = SelectingMenu.waiting;
 		if(charControl[activeCharacter].alliance == CharacterStats.Alliance.Enemy)
 		{
 			battleUI.EnemyTurnUIChange();
-			selecting = SelectingMenu.enemyTurn;
 		}
 		else
 		{
 			battleUI.PlayerTurnUIChange();
-			selecting = SelectingMenu.selectingAction;
 		}
 
 	}
@@ -565,6 +570,19 @@ public class GameManager : MonoBehaviour
 
 		NextTurn();
 	}
+	public void FinishedTurnAnim()
+	{
+		charControl[activeCharacter].MyTurn();
+		if (charControl[activeCharacter].alliance == CharacterStats.Alliance.Enemy)
+		{
+			selecting = SelectingMenu.enemyTurn;
+		}
+		else
+		{
+			selecting = SelectingMenu.selectingAction;
+		}
+	}
+
 	//-------------------------Tile Selection & targets----------------------
 	#region Tile and Target Movement
 	public void FormationMovement()
@@ -938,9 +956,15 @@ public class GameManager : MonoBehaviour
 
 		turnCounter = 0;
 		CalculateTurnOrderInPhase();
-		StartTurn();
+		StartCoroutine(WaitForBattleStart());
 
     }
+	IEnumerator WaitForBattleStart()
+	{
+		selecting = SelectingMenu.waiting;
+		yield return new WaitForSeconds(2);
+		StartTurn();
+	}
 //--------------------------End battle-------------------------------
     public void EndBattle()
     {
@@ -971,20 +995,43 @@ public class GameManager : MonoBehaviour
         {
             if (UnityEngine.Random.Range(0, 3) >= 2)
             {
-                EndBattle();
+                battleUI.ChangeNotifText("Got away!");
+
+				StartCoroutine(WaitForSuccesfulRun());
             }
             else if (debug)
             {
-                EndBattle();
-            }
+				battleUI.ChangeNotifText("Got away!");
+
+				StartCoroutine(WaitForSuccesfulRun());
+			}
             //else failed to run.
             else FailedToRun();
         }
         public void FailedToRun()
         {
             battleUI.ChangeNotifText("Failed to run!");
-			EndTurn();
+			StartCoroutine(WaitForFailedRun()); 
         }
+		
+		IEnumerator WaitForSuccesfulRun()
+		{
+			selecting = SelectingMenu.waiting;
+			yield return new WaitForSeconds(0.5f);
+			
+			transition.FadeTo(Color.black, 1);
+			yield return new WaitForSeconds(0.5f);
+			Debug.Log("FadeFROM");
+			EndBattle();
+			transition.FadeFrom();
+		}
+
+		IEnumerator WaitForFailedRun()
+		{
+			selecting = SelectingMenu.waiting;
+			yield return new WaitForSeconds(1.5f);
+			EndTurn();
+		}
     //----------------------------Victory----------------------------
         public void Victory()
         {

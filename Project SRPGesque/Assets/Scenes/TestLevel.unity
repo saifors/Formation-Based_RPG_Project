@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -577,6 +577,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa27419a674efbf43bb24fb9e49a1dd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1963833406 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6006141445978350173, guid: d34e14bad3505694b9ec435ce078b2d9,
+    type: 3}
+  m_PrefabInstance: {fileID: 3271627802719764793}
+  m_PrefabAsset: {fileID: 0}
+--- !u!225 &1963833409
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1963833406}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &2045106482 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3271627803946293259, guid: d34e14bad3505694b9ec435ce078b2d9,
@@ -873,5 +891,85 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1888884844}
+    - target: {fileID: 2353500461697156412, guid: d34e14bad3505694b9ec435ce078b2d9,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2353500461697156412, guid: d34e14bad3505694b9ec435ce078b2d9,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8174699274810132292, guid: d34e14bad3505694b9ec435ce078b2d9,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8174699274810132292, guid: d34e14bad3505694b9ec435ce078b2d9,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4535543916980194158, guid: d34e14bad3505694b9ec435ce078b2d9,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4535543916980194158, guid: d34e14bad3505694b9ec435ce078b2d9,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7040658589592343418, guid: d34e14bad3505694b9ec435ce078b2d9,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7040658589592343418, guid: d34e14bad3505694b9ec435ce078b2d9,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2042799458647232790, guid: d34e14bad3505694b9ec435ce078b2d9,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2042799458647232790, guid: d34e14bad3505694b9ec435ce078b2d9,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 917747663909178124, guid: d34e14bad3505694b9ec435ce078b2d9,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 917747663909178124, guid: d34e14bad3505694b9ec435ce078b2d9,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9076660904278605442, guid: d34e14bad3505694b9ec435ce078b2d9,
+        type: 3}
+      propertyPath: endPositions.Array.data[0].y
+      value: -65
+      objectReference: {fileID: 0}
+    - target: {fileID: 99242692624132965, guid: d34e14bad3505694b9ec435ce078b2d9,
+        type: 3}
+      propertyPath: m_inputSource
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 99242692624132965, guid: d34e14bad3505694b9ec435ce078b2d9,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 99242692624132965, guid: d34e14bad3505694b9ec435ce078b2d9,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d34e14bad3505694b9ec435ce078b2d9, type: 3}
