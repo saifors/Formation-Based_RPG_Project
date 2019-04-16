@@ -853,6 +853,24 @@ public class GameManager : MonoBehaviour
 
 		//Debug.Log("Char" + activeCharacter + " has " + targetsCounter + "targets");
     }
+	public void EnemyTargetVisuals()
+	{
+		GameObject[] objTarget;
+
+		CalculateTargetAmount();
+
+		objTarget = new GameObject[targetAmount];
+		selectedTargetsTransform = new Transform[targetAmount];
+
+		for (int i = 0; i < targetAmount; i++)
+		{
+			objTarget[i] = Instantiate(targetCursor);
+			objTarget[i].name = "TargetCursor_" + i;
+			selectedTargetsTransform[i] = objTarget[i].GetComponent<Transform>();
+		}
+
+		TargetPlacementVisuals();
+	}
 	public void TargetPlacementVisuals()
 	{
 		for (int i = 0; i < targetAmount; i++)

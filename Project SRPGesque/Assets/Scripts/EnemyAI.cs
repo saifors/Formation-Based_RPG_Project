@@ -178,6 +178,7 @@ public class EnemyAI : MonoBehaviour
 
 		gameManager.CalculateTargetAmount();
 		gameManager.TargetPlacement();
+		gameManager.EnemyTargetVisuals();
 
 		gameManager.LaunchAttack();
 
