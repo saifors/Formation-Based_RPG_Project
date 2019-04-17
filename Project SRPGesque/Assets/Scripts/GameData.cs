@@ -33,6 +33,10 @@ public class GameData
 	[XmlArray("Attacks")]
 	[XmlArrayItem("Attack")]
 	public List<AttackData> AttackList;
+	//Level Exp Requirements
+	[XmlArray("Requirements")]
+	[XmlArrayItem("Requirement")]
+	public List<ExpRequirements> LevelRequirement;
 
 	public GameData()
 	{
@@ -52,6 +56,8 @@ public class GameData
 		LoadFormations();
 
 		LoadEncounters();
+
+		LoadRequirements();
 	}
 
 	public void LoadCharacters()
@@ -120,6 +126,16 @@ public class GameData
 		string[] linesText = DataManager.ReadLinesFromString(fullText);
 
 		for (int i = 1; i < linesText.Length; i++) MapEncounterCollection.Add(new EncounterMap(linesText[i]));
+	}
+
+	public void LoadRequirements()
+	{
+		LevelRequirement = new List<ExpRequirements>();
+		string fullText = DataManager.LoadTextFromFile("Data/ExpRequirements");
+
+		string[] linesText = DataManager.ReadLinesFromString(fullText);
+
+		for (int i = 1; i < linesText.Length; i++) LevelRequirement.Add(new ExpRequirements(linesText[i]));
 	}
 }
 

@@ -54,6 +54,10 @@ public class GameManager : MonoBehaviour
 	public ModelAssigner assigner;
 	public BattleAnimation battleAnim;
 	public Vector3 battleCam;
+
+	public int totalGold;
+	public int totalExp;
+
 	//Battle - Move
 	public GameObject cursor; //Prefab
 	private float tileSelectCooldownCounter;
@@ -531,7 +535,8 @@ public class GameManager : MonoBehaviour
 		turnCounter++;
 		if (turnCounter >= turnAmount) turnCounter = 0;
 
-		StartTurn();
+		if (!charControl[turnOrder[turnCounter]].isDead) StartTurn();
+		else NextTurn();
 	}
 
 	public void StartTurn()
@@ -988,7 +993,20 @@ public class GameManager : MonoBehaviour
 		StartTurn();
 	}
 //--------------------------End battle-------------------------------
-    public void EndBattle()
+	public void CalculateRewards()
+	{
+		totalGold = 0;
+		totalExp = 0;
+
+		for (int i = 0; i < gameData.FullFormationsCollection[enemyGroupID].formations.Length; i++)
+		{
+			totalGold += gameData.EnemyCollection[gameData.FullFormationsCollection[enemyGroupID].formations[i].classID].goldGain;
+			totalExp += gameData.EnemyCollection[gameData.FullFormationsCollection[enemyGroupID].formations[i].classID].expGain;
+		}
+		
+	}
+
+	public void EndBattle()
     {
         gameState = GameState.Overworld;
         camSet = CameraSetting.OverworldCam;
@@ -1012,6 +1030,8 @@ public class GameManager : MonoBehaviour
 		cam_T.position = playerController.trans.position;
         battleMenu.SetActive(false);
     }
+
+
     //------------------------------Run-----------------------------
         public void RunFromBattle()
         {
@@ -1058,9 +1078,22 @@ public class GameManager : MonoBehaviour
         public void Victory()
         {
 		//Debug.Log("Victory");
-			battleUI.victoryPanel.SetActive(true);
-            selecting = SelectingMenu.victoryScreen;
+			battleUI.VictorySequence();
+			selecting = SelectingMenu.waiting;
         }
+		public void EndVictory()
+		{
+			transition.FadeTo(Color.black);
+			StartCoroutine(VictoryFade());
+		}
+		IEnumerator VictoryFade()
+		{
+			
+			yield return new WaitForSeconds(2);
+			battleUI.victoryPanel.SetActive(false);
+			EndBattle();
+			transition.FadeFrom();
+		}
 	//-----------------------------Loss------------------------------
 	public void GameOverCheck()
 	{

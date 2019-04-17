@@ -66,8 +66,8 @@ public class InputManager : MonoBehaviour
                 }
                 else if(gameManager.selecting == GameManager.SelectingMenu.victoryScreen)
                 {
-                    battleUI.victoryPanel.SetActive(false);
-                    gameManager.EndBattle();
+
+					gameManager.EndVictory();
                 }
             }
         }

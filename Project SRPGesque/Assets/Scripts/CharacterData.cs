@@ -318,5 +318,17 @@ public class EncounterMap
 	}
 }
 
+public class ExpRequirements
+{
+	[XmlAttribute("level")]
+	public int level;
+	[XmlElement("experience")]
+	public int exp;
+	public ExpRequirements(string expString)
+	{
+		string[] cols = expString.Split('\t');
 
-
+		level = int.Parse(cols[0]);
+		exp = int.Parse(cols[1]);
+	}
+}

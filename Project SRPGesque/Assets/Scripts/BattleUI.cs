@@ -34,6 +34,7 @@ public class BattleUI : MonoBehaviour
     public GameObject attackMenu;
     public GameObject partyInfo;
     public GameObject victoryPanel;
+	private VictoryPanel vicPanel;
 	public GameObject turnPanel;
 	public TurnAnims turnPanelAnim;
 
@@ -94,8 +95,9 @@ public class BattleUI : MonoBehaviour
 		turnPanel.SetActive(false);
         
         soundPlayer = gameManager.soundPlayer;
-            
 
+		vicPanel = victoryPanel.GetComponent<VictoryPanel>();
+		vicPanel.Init();
 
         attackName = attackNames.GetComponentsInChildren<TextMeshProUGUI>();
         attackNamePos = new Transform[attackName.Length];
@@ -426,6 +428,13 @@ public class BattleUI : MonoBehaviour
 		attackMenu.SetActive(false);
 		turnPanel.SetActive(true);
 		turnPanelAnim.StartTurnAnim(gameManager.charControl[gameManager.activeCharacter].name, CharacterStats.Alliance.Enemy);
+	}
+	public void VictorySequence()
+	{
+		victoryPanel.SetActive(true);
+		actionMenu.SetActive(false);
+		partyInfo.SetActive(false);
+		vicPanel.DisplayVictory();
 	}
 
 	public void LoadLifeBars(int charID)
