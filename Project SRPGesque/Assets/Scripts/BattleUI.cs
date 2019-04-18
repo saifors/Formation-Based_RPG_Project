@@ -34,7 +34,7 @@ public class BattleUI : MonoBehaviour
     public GameObject attackMenu;
     public GameObject partyInfo;
     public GameObject victoryPanel;
-	private VictoryPanel vicPanel;
+	public  VictoryPanel vicPanel;
 	public GameObject turnPanel;
 	public TurnAnims turnPanelAnim;
 

@@ -49,7 +49,7 @@ public class VictoryPanel : MonoBehaviour
 		{
 			GameObject obj = Instantiate(vicInfoPrefab);
 			vicInfo[i] = obj.GetComponent<VicMemberInfo>();
-			vicInfo[i].Init(gameManager.gameData.Party[i].name, gameManager.gameData.Party[i].level, gameManager.gameData.Party[i].exp, expGains, gameManager, battleUI.portraitSprites[i]);
+			vicInfo[i].Init(i, gameManager.gameData.Party[i].name, gameManager.gameData.Party[i].level, gameManager.gameData.Party[i].exp, expGains, gameManager, battleUI.portraitSprites[i]);
 			vicInfo[i].trans.SetParent(trans);
 			vicInfo[i].trans.anchoredPosition = new Vector2(-580, 143);
 			vicInfo[i].trans.localScale = Vector2.one;
@@ -63,5 +63,17 @@ public class VictoryPanel : MonoBehaviour
 	public void FinishAnim()
 	{
 		gameManager.selecting = GameManager.SelectingMenu.victoryScreen;
+		for (int i = 0; i < vicInfo.Length; i++)
+		{
+			vicInfo[i].ExpAnimStart();
+		}
+		
+	}
+	public void DeleteVicInfo()
+	{
+		for (int i = 0; i < vicInfo.Length; i++)
+		{
+			Destroy(vicInfo[i].gameObject);
+		}
 	}
 }

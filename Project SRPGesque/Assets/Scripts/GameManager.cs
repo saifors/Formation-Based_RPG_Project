@@ -1090,6 +1090,7 @@ public class GameManager : MonoBehaviour
 		{
 			
 			yield return new WaitForSeconds(2);
+			battleUI.vicPanel.DeleteVicInfo();
 			battleUI.victoryPanel.SetActive(false);
 			EndBattle();
 			transition.FadeFrom();
