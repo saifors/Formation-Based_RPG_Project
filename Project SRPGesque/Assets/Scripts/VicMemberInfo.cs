@@ -53,31 +53,50 @@ public class VicMemberInfo : MonoBehaviour
 		int subtractExp = 0;
 		for (int i = 1; i < level; i++)
 		{
-			subtractExp += gameManager.gameData.LevelRequirement[i].exp;
+			subtractExp += gameManager.gameData.LevelRequirement[i - 1].exp;
 		}
-		
+		int totalSub = oldExp - subtractExp;
+		Debug.Log("total sub" + totalSub + "from subtract" + subtractExp);
 		//In brackets is the exp from this level which is subtracted from how much exp is required to see the remainder of necessary exp.
-		oldRemainingExp = gameManager.gameData.LevelRequirement[levelOld - 1].exp - (oldGivenExp - subtractExp);
-		//See how much exp will be required. This works like a miracle, the gods themselves have descended to bless this chuck of code and say "it gud". 
+		oldRemainingExp = gameManager.gameData.LevelRequirement[levelOld - 1].exp - totalSub;
+		Debug.Log("Old remain exp" + oldRemainingExp);
+		//See how much exp will be required. 
 //-----------------------------------------------------------------------
-		if(oldRemainingExp - gainedExp <= 0)
+		if(oldRemainingExp - gainedExp <= 0)//If levels up
 		{
-			int expSurpassed = oldRemainingExp - gainedExp;
-			while (expSurpassed < 0)
+			//Standard, if this if is triggered it means it at the very least has leveled up once
+			levelNew++;
+			levelsGained++;
+
+			int expSurpassed = oldRemainingExp - gainedExp; //Guaranteed negative number
+			
+			while (expSurpassed < 0) //As long as its still positive, keep looping
 			{
-				if (expSurpassed + gameManager.gameData.LevelRequirement[levelNew - 1].exp > 0)
+
+				//Is the exp surpassed enough to level up a second or 'n'th time?
+				if (gameManager.gameData.LevelRequirement[levelNew - 1].exp + expSurpassed < 0) // The excess EXP was enough for the level after this so it levels up again
 				{
-					levelsGained++;
+					// Even after the following Exp surpassed will still be negative
 					expSurpassed += gameManager.gameData.LevelRequirement[levelNew - 1].exp;
+					levelsGained++;
 					levelNew++;
+					Debug.Log(levelsGained + "fuck" + expSurpassed);
 				}
-				else break;
+				else //Not enough exp to break through another level, end of the line.
+				{
+
+					break;
+				}
 				
 			}
+			
+			
 
-			newRemainingExp = gameManager.gameData.LevelRequirement[levelNew - 1].exp - (expSurpassed);
+			Debug.Log("exp surpassed when you take aqaye the other level ups" + expSurpassed);
+
+			newRemainingExp = gameManager.gameData.LevelRequirement[levelNew - 1].exp + (expSurpassed);
 		}
-		else newRemainingExp = oldRemainingExp - gainedExp;
+		else newRemainingExp = oldRemainingExp - gainedExp; // if it doesn't level up
 		Debug.Log("[OLD] Level " + levelOld + " with remaining exp " + oldRemainingExp + ". [NEW] level " + levelNew + " with remainging exp " + newRemainingExp + " gaining the following amount of levels " + levelsGained);
 		//After the previous batch we now know: The new level, how many levels have been gained and the new remaining experience for the next level.
 //-----------------------------------------------------------------------
@@ -87,9 +106,9 @@ public class VicMemberInfo : MonoBehaviour
 		remainingExp.text = deltaRemainingExp.ToString();
 		finishedCounting = false;
 
-		
-		gameManager.gameData.Party[id].exp += newExp;
-		gameManager.gameData.Party[id].level += levelNew - 1;
+		Debug.Log("old exp"+ oldExp + "new" + newExp);
+		gameManager.gameData.Party[id].exp = newExp;
+		gameManager.gameData.Party[id].level = levelNew;
 
 
 
@@ -133,7 +152,7 @@ public class VicMemberInfo : MonoBehaviour
 			//------Level Up------
 			levelText.text = (levelOld + levelCounter).ToString();
 			//-------
-			deltaRemainingExp = gameManager.gameData.LevelRequirement[levelOld - 1 + levelCounter].exp;
+			if(deltaRemainingExp == 0) deltaRemainingExp = gameManager.gameData.LevelRequirement[levelOld - 1 + levelCounter].exp;
 			DOTween.To(() => deltaRemainingExp, x => deltaRemainingExp = x, 0, 3 / levelsGained).SetEase(Ease.InOutQuad).OnComplete(ExpAnimLevelCheck);
 			levelCounter++;
 			
