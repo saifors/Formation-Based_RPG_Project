@@ -692,8 +692,8 @@ public class GameManager : MonoBehaviour
         {
             selectedTile = Mathf.FloorToInt(tileSelection.y + (tileSelection.x * tileVectorSize.y));
             selectedTileIndicator.position = tileScript.tileTransform[selectedTile].position;
-
-            tileSelectCooldownCounter = 0;
+			soundPlayer.PlaySound(3, true);
+			tileSelectCooldownCounter = 0;
             //gameManager.MoveFormation(0, selectedTile);
         }
     }
@@ -801,8 +801,8 @@ public class GameManager : MonoBehaviour
         {
             TargetPlacement();
 			TargetPlacementVisuals();
-
-            tileSelectCooldownCounter = 0;
+			soundPlayer.PlaySound(3, true);
+			tileSelectCooldownCounter = 0;
             //gameManager.MoveFormation(0, selectedTile);
         }
 

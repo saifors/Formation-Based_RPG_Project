@@ -34,7 +34,7 @@ public class BattleUI : MonoBehaviour
     public GameObject attackMenu;
     public GameObject partyInfo;
     public GameObject victoryPanel;
-	public  VictoryPanel vicPanel;
+	public VictoryPanel vicPanel;
 	public GameObject turnPanel;
 	public TurnAnims turnPanelAnim;
 
@@ -181,7 +181,8 @@ public class BattleUI : MonoBehaviour
                             atkSelVector.x--;
                         }
                     }
-                    attackOptionSelected = Mathf.FloorToInt(atkSelVector.x + (atkSelVector.y * 2));
+					gameManager.soundPlayer.PlaySound(3, true);
+					attackOptionSelected = Mathf.FloorToInt(atkSelVector.x + (atkSelVector.y * 2));
                     attackSelection.position = attackNamePos[attackOptionSelected].position;
                     scrollCooldownCounter = 0;
                     UpdateAttackInfo(attackOptionSelected); // Make it get the attackID of the characters selected attack
@@ -349,7 +350,7 @@ public class BattleUI : MonoBehaviour
 			default:
 				break;
 		}
-		
+		gameManager.soundPlayer.PlaySound(3, true);
 	}
 
 	public void SelectPreviousCommand()
@@ -376,7 +377,7 @@ public class BattleUI : MonoBehaviour
 			default:
 				break;
 		}
-		
+		gameManager.soundPlayer.PlaySound(3, true);
 	}
 
     public void ReturnToAttackSelect()

@@ -17,7 +17,8 @@ public class VicMemberInfo : MonoBehaviour
 	public Image portrait;
 
 	private float timeCounter;
-	private bool finishedCounting;
+	public bool finishedCounting;
+	public bool lastScroll;
 
 	public int levelOld;
 	public int levelNew;
@@ -38,6 +39,7 @@ public class VicMemberInfo : MonoBehaviour
 	{
 		gameManager = gM;
 		trans = GetComponent<RectTransform>();
+		lastScroll = false;
 		levelsGained = 0;
 		levelCounter = 0;
 		oldExp = oldGivenExp;
@@ -56,10 +58,10 @@ public class VicMemberInfo : MonoBehaviour
 			subtractExp += gameManager.gameData.LevelRequirement[i - 1].exp;
 		}
 		int totalSub = oldExp - subtractExp;
-		Debug.Log("total sub" + totalSub + "from subtract" + subtractExp);
+		//Debug.Log("total sub" + totalSub + "from subtract" + subtractExp);
 		//In brackets is the exp from this level which is subtracted from how much exp is required to see the remainder of necessary exp.
 		oldRemainingExp = gameManager.gameData.LevelRequirement[levelOld - 1].exp - totalSub;
-		Debug.Log("Old remain exp" + oldRemainingExp);
+		//Debug.Log("Old remain exp" + oldRemainingExp);
 		//See how much exp will be required. 
 //-----------------------------------------------------------------------
 		if(oldRemainingExp - gainedExp <= 0)//If levels up
@@ -92,12 +94,12 @@ public class VicMemberInfo : MonoBehaviour
 			
 			
 
-			Debug.Log("exp surpassed when you take aqaye the other level ups" + expSurpassed);
+			//Debug.Log("exp surpassed when you take aqaye the other level ups" + expSurpassed);
 
 			newRemainingExp = gameManager.gameData.LevelRequirement[levelNew - 1].exp + (expSurpassed);
 		}
 		else newRemainingExp = oldRemainingExp - gainedExp; // if it doesn't level up
-		Debug.Log("[OLD] Level " + levelOld + " with remaining exp " + oldRemainingExp + ". [NEW] level " + levelNew + " with remainging exp " + newRemainingExp + " gaining the following amount of levels " + levelsGained);
+		//Debug.Log("[OLD] Level " + levelOld + " with remaining exp " + oldRemainingExp + ". [NEW] level " + levelNew + " with remainging exp " + newRemainingExp + " gaining the following amount of levels " + levelsGained);
 		//After the previous batch we now know: The new level, how many levels have been gained and the new remaining experience for the next level.
 //-----------------------------------------------------------------------
 
@@ -106,7 +108,7 @@ public class VicMemberInfo : MonoBehaviour
 		remainingExp.text = deltaRemainingExp.ToString();
 		finishedCounting = false;
 
-		Debug.Log("old exp"+ oldExp + "new" + newExp);
+		//Debug.Log("old exp"+ oldExp + "new" + newExp);
 		gameManager.gameData.Party[id].exp = newExp;
 		gameManager.gameData.Party[id].level = levelNew;
 
@@ -121,17 +123,12 @@ public class VicMemberInfo : MonoBehaviour
 		if (!finishedCounting)
 		{
 			timeCounter += Time.deltaTime;
-			if (timeCounter >= 0.1f)
-			{
-				//number rising sound.
-				//gameManager.soundPlayer.PlaySound();
-			}
 				if (timeCounter >= 0.05f)
-			{
-			// deltaRemainingExp = deltaExp - ;
-				remainingExp.text = deltaRemainingExp.ToString();
+				{
+				// deltaRemainingExp = deltaExp - ;
+					remainingExp.text = deltaRemainingExp.ToString();
 					timeCounter = 0;
-			}
+				}
 		}
 	}
 
@@ -162,13 +159,13 @@ public class VicMemberInfo : MonoBehaviour
 			levelText.text = levelNew.ToString();
 			deltaRemainingExp = gameManager.gameData.LevelRequirement[levelNew - 1].exp;
 			DOTween.To(() => deltaRemainingExp, x => deltaRemainingExp = x, newRemainingExp, 3 / levelsGained).SetEase(Ease.InOutQuad).OnComplete(ExpAnimFinished);
-			
+			lastScroll = true;
 		}
 	}
 
 	public void ExpAnimFinished()
 	{
-		
+		//Debug.Log("FinishExpAnim");
 		finishedCounting = true;
 		remainingExp.text = newRemainingExp.ToString();
 	}

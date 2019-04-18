@@ -13,6 +13,9 @@ public class VictoryPanel : MonoBehaviour
 	public GameObject vicInfoPrefab;
 	private VicMemberInfo[] vicInfo;
 
+	private bool finishedAnim;
+	private float timeCounter;
+
 	int expGains;
 	int goldGains;
 
@@ -33,9 +36,11 @@ public class VictoryPanel : MonoBehaviour
 		//textForLanguage[0].text = LanguageManager.langData.;
 	}
 
+
 	public void DisplayVictory()
 	{
 		gameManager.CalculateRewards();
+		finishedAnim = false;
 
 		expGains = gameManager.totalExp;
 		goldGains = gameManager.totalGold;
@@ -63,6 +68,7 @@ public class VictoryPanel : MonoBehaviour
 	public void FinishAnim()
 	{
 		gameManager.selecting = GameManager.SelectingMenu.victoryScreen;
+		finishedAnim = true;
 		for (int i = 0; i < vicInfo.Length; i++)
 		{
 			vicInfo[i].ExpAnimStart();
