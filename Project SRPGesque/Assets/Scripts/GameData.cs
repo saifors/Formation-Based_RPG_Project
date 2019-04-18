@@ -13,6 +13,10 @@ public class GameData
 	[XmlArray("Party")]
 	[XmlArrayItem("Character")]
 	public List<CharacterData> Party;
+	//Party
+	[XmlArray("Stats")]
+	[XmlArrayItem("Char")]
+	public List<StatSpread> CharStats;
 	//Party Formation
 	[XmlArray("PartyFormation")]
 	[XmlArrayItem("Member")]
@@ -40,9 +44,11 @@ public class GameData
 
 	public GameData()
 	{
+		Debug.Log("test1");
+		LoadStatSpread();
+		Debug.Log("test2");
 
 		LoadCharacters();
-
 		LoadMonsters();
 
 		LoadAttacks();
@@ -60,6 +66,14 @@ public class GameData
 		LoadRequirements();
 	}
 
+	public void LoadStatSpread()
+	{
+		CharStats = new List<StatSpread>();
+		string fullText = DataManager.LoadTextFromFile("Data/StatSpread");
+		string[] linesText = DataManager.ReadLinesFromString(fullText);
+		for (int i = 1; i < linesText.Length; i++) CharStats.Add(new StatSpread(linesText[i]));
+	}
+
 	public void LoadCharacters()
 	{
 		Party = new List<CharacterData>();
@@ -67,7 +81,7 @@ public class GameData
 																		   //Debug.Log(fullText);
 																		   //Now we need to seperate the text into lines so:
 		string[] linesText = DataManager.ReadLinesFromString(fullText);
-		for (int i = 1; i < linesText.Length; i++) Party.Add(new CharacterData(linesText[i]));
+		for (int i = 1; i < linesText.Length; i++) Party.Add(new CharacterData(linesText[i], CharStats[i-1]));
 	}
 
 	public void LoadMonsters()

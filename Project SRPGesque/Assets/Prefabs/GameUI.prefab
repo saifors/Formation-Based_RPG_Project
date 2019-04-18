@@ -11198,6 +11198,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   battleUI: {fileID: 3271627803095114858}
   gameManager: {fileID: 0}
+  vicLevel: {fileID: 7168661874768095088}
+  vicLevelObject: {fileID: 5677119709867106735}
   vicInfoPrefab: {fileID: 4087900692973811931, guid: 4f208dff883fab04795096c047824398,
     type: 3}
   goldText: {fileID: 6604558659652789587}
@@ -15205,6 +15207,7 @@ GameObject:
   - component: {fileID: 1771523322247433607}
   - component: {fileID: 6511135483399033796}
   - component: {fileID: 3560308221925109289}
+  - component: {fileID: 7168661874768095088}
   m_Layer: 5
   m_Name: Level Up
   m_TagString: Untagged
@@ -15271,6 +15274,45 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+--- !u!114 &7168661874768095088
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5677119709867106735}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66e6ff34f6106a94c8724bfcef495422, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
+  levelUpText: {fileID: 2050012981705027000}
+  statsText:
+  - {fileID: 8030997419055385493}
+  - {fileID: 5440378369952893546}
+  nameText: {fileID: 5674271027468595704}
+  level:
+  - {fileID: 2615503810678299975}
+  - {fileID: 1379565763741694500}
+  hp:
+  - {fileID: 8985545166359071999}
+  - {fileID: 2374118538293386348}
+  mp:
+  - {fileID: 7099940582788427414}
+  - {fileID: 9197288167100337296}
+  atk:
+  - {fileID: 5236153852754983725}
+  - {fileID: 3912189209096533664}
+  def:
+  - {fileID: 6798124250683786541}
+  - {fileID: 1378322816615759473}
+  res:
+  - {fileID: 8546809374865956967}
+  - {fileID: 4559380882709556069}
+  spd:
+  - {fileID: 5971309172954183162}
+  - {fileID: 5619836258281928963}
 --- !u!1 &5955831696294795788
 GameObject:
   m_ObjectHideFlags: 0

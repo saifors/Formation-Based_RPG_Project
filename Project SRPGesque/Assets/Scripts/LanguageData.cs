@@ -14,6 +14,7 @@ public class LanguageData
 	public Dictionary<string, string> attackName; //First string is the key could also be an int to indicate ID number, second could be something else like a GameObject assigned to a key or ID
 	public Dictionary<string, string> attackDesc;
 	public Dictionary<string, string> actions;
+	public Dictionary<string, string> stats;
 	//--------------------
 
 	public LanguageData() //Detect the PCs language to initialize it as the PC language
@@ -30,6 +31,7 @@ public class LanguageData
 		attackName = new Dictionary<string, string>();
 		attackDesc = new Dictionary<string, string>();
 		actions = new Dictionary<string, string>();
+		stats = new Dictionary<string, string>();
 	}
 }
 
@@ -157,6 +159,48 @@ public static class LanguageManager
 						break;
 					case LanguageData.Language.German:
 						langData.actions.Add(rows[0], rows[4]);
+						break;
+					default:
+						break;
+				}
+			}
+
+		}
+		catch (Exception e)
+		{
+			Debug.LogError("Load from error: " + e);
+		}
+	}
+
+	public static void LoadStats() //This isnt an universal void, there needs to be one for each file.
+	{
+		try
+		{
+			langData.stats = new Dictionary<string, string>(); //reinitializing because like this it gets overwritten every time its loaded which is helpful when the language is changed during runtime.
+
+			string fullText = DataManager.LoadTextFromFile("TextData/StatsText"); //No need to put Resources as it´s already loading from inside Resources 
+																				//Debug.Log(fullText);
+																				//Now we need to seperate the text into lines so:
+			string[] linesText = DataManager.ReadLinesFromString(fullText);
+			//Debug.Log(linesText[0]);
+			for (int i = 1; i < linesText.Length; i++) //i is 1 because line 0 is not info for the program
+			{
+				//langData.form //Dictionary, it´s already loaded inside Language Data
+				string[] rows = linesText[i].Split('\t'); //Splits it by tabs inside of the string.
+
+				switch (langData.currentLanguage)
+				{
+					case LanguageData.Language.English:
+						langData.stats.Add(rows[0], rows[1]);
+						break;
+					case LanguageData.Language.Spanish:
+						langData.stats.Add(rows[0], rows[2]);
+						break;
+					case LanguageData.Language.Dutch:
+						langData.stats.Add(rows[0], rows[3]);
+						break;
+					case LanguageData.Language.German:
+						langData.stats.Add(rows[0], rows[4]);
 						break;
 					default:
 						break;

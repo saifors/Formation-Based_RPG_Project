@@ -9,6 +9,8 @@ public class VictoryPanel : MonoBehaviour
 	private RectTransform trans;
 	public BattleUI battleUI;
 	public GameManager gameManager;
+	public VicLevelUp vicLevel;
+	public GameObject vicLevelObject;
 
 	public GameObject vicInfoPrefab;
 	private VicMemberInfo[] vicInfo;
@@ -24,6 +26,7 @@ public class VictoryPanel : MonoBehaviour
 
 	public TextMeshProUGUI[] textForLanguage;
 
+
 	CanvasGroup canvas;
 
 	public void Init()
@@ -32,6 +35,10 @@ public class VictoryPanel : MonoBehaviour
 		trans = GetComponent<RectTransform>();
 		canvas = GetComponent<CanvasGroup>();
 		gameManager = battleUI.gameManager;
+		vicLevel = GetComponentInChildren<VicLevelUp>();
+		vicLevelObject = vicLevel.gameObject;
+		vicLevel.Init(gameManager);
+		vicLevelObject.SetActive(false);
 			//--------Language-----------
 		//textForLanguage[0].text = LanguageManager.langData.;
 	}
@@ -75,6 +82,30 @@ public class VictoryPanel : MonoBehaviour
 		}
 		
 	}
+
+	public void LevelUpCheck(int chara)
+	{
+		Debug.Log(chara);
+
+		//Right here officer
+
+		if (vicInfo[chara].levelNew > vicInfo[chara].levelOld)
+		{
+			vicLevelObject.SetActive(true);
+			vicLevel.DisplayLevelUp(vicInfo[0]);
+			gameManager.levelUpScreenProgress++;
+		}
+		else if (chara == gameManager.partyMembers)
+		{
+			gameManager.EndVictory();
+		}
+		else
+		{
+			gameManager.levelUpScreenProgress++;
+			gameManager.VictoryContinuation(gameManager.levelUpScreenProgress);
+		}
+	}
+
 	public void DeleteVicInfo()
 	{
 		for (int i = 0; i < vicInfo.Length; i++)

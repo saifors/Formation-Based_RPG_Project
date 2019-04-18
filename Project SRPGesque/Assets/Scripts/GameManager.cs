@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
 	public enum SelectingMenu { selectingAction, selectingAttack, selectingTarget, selectingMove, victoryScreen, enemyTurn, attacking, waiting };
 	public SelectingMenu selecting;
 	public DialogueBox dialogueUI;
+	public int levelUpScreenProgress;
 
 	//[HideInInspector] public AttackInfoManager attackInfo;
 	[Header("Characters & Enemies")]
@@ -254,6 +255,20 @@ public class GameManager : MonoBehaviour
 
 
 	}
+	//Data
+	public void UpdateStats(int characterID)
+	{
+		int lvMultiplier = gameData.Party[characterID].level - 1;
+
+		gameData.Party[characterID].hp = gameData.CharStats[characterID].hpBase + Mathf.FloorToInt(gameData.CharStats[characterID].hpGrowth / 100 * lvMultiplier);
+		gameData.Party[characterID].mp = gameData.CharStats[characterID].mpBase + Mathf.FloorToInt(gameData.CharStats[characterID].mpGrowth / 100 * lvMultiplier);
+		gameData.Party[characterID].attack = gameData.CharStats[characterID].attackBase + Mathf.FloorToInt(gameData.CharStats[characterID].attackGrowth / 100 * lvMultiplier);
+		gameData.Party[characterID].defense = gameData.CharStats[characterID].defenseBase + Mathf.FloorToInt(gameData.CharStats[characterID].defenseGrowth / 100 * lvMultiplier);
+		gameData.Party[characterID].resistance = gameData.CharStats[characterID].resistanceBase + Mathf.FloorToInt(gameData.CharStats[characterID].resistanceGrowth / 100 * lvMultiplier);
+		gameData.Party[characterID].speed = gameData.CharStats[characterID].speedBase + Mathf.FloorToInt(gameData.CharStats[characterID].speedGrowth / 100 * lvMultiplier);
+
+	}
+	
 
 	//Input
 	public void ConfirmSelectedCommand()
@@ -1078,6 +1093,7 @@ public class GameManager : MonoBehaviour
         public void Victory()
         {
 		//Debug.Log("Victory");
+			levelUpScreenProgress = 0;
 			battleUI.VictorySequence();
 			selecting = SelectingMenu.waiting;
         }
@@ -1086,6 +1102,14 @@ public class GameManager : MonoBehaviour
 			transition.FadeTo(Color.black);
 			StartCoroutine(VictoryFade());
 		}
+		
+	public void VictoryContinuation(int startNum)
+	{
+		
+		battleUI.vicPanel.LevelUpCheck(startNum);
+		
+		
+	}
 		IEnumerator VictoryFade()
 		{
 			

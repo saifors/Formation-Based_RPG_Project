@@ -35,9 +35,12 @@ public class VicMemberInfo : MonoBehaviour
 
 	public TextMeshProUGUI[] languageText;
 
+	public int ID;
+
 	public void Init(int id, string name, int level, int oldGivenExp, int gainedExp, GameManager gM, Sprite portSprite)
 	{
 		gameManager = gM;
+		ID = id;
 		trans = GetComponent<RectTransform>();
 		lastScroll = false;
 		levelsGained = 0;

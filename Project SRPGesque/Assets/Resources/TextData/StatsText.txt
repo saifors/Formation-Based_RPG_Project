@@ -1,0 +1,9 @@
+Key	English	Spanish	Dutch	German	Observations
+Level	Level	Nivel	Niveau	Niveau	
+Exp	Exp.	Puntos Exp.	Ervaring	Erfahrung	
+HP	HP	PV	HP	HP	
+MP	MP	PM	MP	MP	
+Attack	Attack	Ataque	Aanval	Angriffskraft	
+Defense	Defense	Defensa	Verdediging	Verteidigung	
+Resistance	Resistance	Resistencia	Weerstand	Widerstand	Resistance to magic attacks
+Speed	Speed	Velocidad	Snelheid	Geschwindigkeit	

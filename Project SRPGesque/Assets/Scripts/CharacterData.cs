@@ -38,32 +38,113 @@ public class CharacterData
 	public int attackAmount;
 
 
-	public CharacterData(string characterString)
+	public CharacterData(string characterString, StatSpread statSpread)
 	{
+		Debug.Log("test2.2");
 		string[] cols = characterString.Split('\t');
 		id = int.Parse(cols[0]);
 		name = cols[1];
 		level = int.Parse(cols[2]);
 		exp = int.Parse(cols[3]);
-		hp = int.Parse(cols[4]);
-		mp = int.Parse(cols[5]);
-		attack = int.Parse(cols[6]);
-		defense = int.Parse(cols[7]);
-		resistance = int.Parse(cols[8]);
-		speed = int.Parse(cols[9]);
-		currentHp = int.Parse(cols[10]);
-		currentMp = int.Parse(cols[11]);
+		Debug.Log("test3");
+		hp = statSpread.hpBase;
+		Debug.Log("test4");
+		mp = statSpread.mpBase;
+		attack = statSpread.attackBase;
+		defense = statSpread.defenseBase;
+		resistance = statSpread.resistanceBase;
+		speed = statSpread.speedBase;
+		currentHp = hp;
+		currentMp = mp;
+		
 		modelId = int.Parse(cols[12]);
-
-		attacksLearned = new List<int>();
-		string[] attacks = cols[13].Split(',');
-		for (int i = 0; i < attacks.Length; i++)
-		{
-			attacksLearned.Add(int.Parse(attacks[i]));
-		}
+Debug.Log("test5");
+		attacksLearned = statSpread.baseAttacks;
+		Debug.Log("test6");
 		attackAmount = attacksLearned.Count;
+		Debug.Log("test7");
 	}
 	
+}
+
+public class StatSpread
+{
+	[XmlAttribute("StatID")]
+	public int id;
+
+	[XmlElement("HPBase")]
+	public int hpBase;
+	[XmlElement("MPBase")]
+	public int mpBase;
+	[XmlElement("AttackBase")]
+	public int attackBase;
+	[XmlElement("DefenseBase")]
+	public int defenseBase;
+	[XmlElement("ResistanceBase")]
+	public int resistanceBase;
+	[XmlElement("SpeedBase")]
+	public int speedBase;
+
+	[XmlElement("StartAttacks")]
+	public List<int> baseAttacks;
+
+	[XmlElement("HPGrowth")]
+	public int hpGrowth;
+	[XmlElement("MPGrowth")]
+	public int mpGrowth;
+	[XmlElement("AttackGrowth")]
+	public int attackGrowth;
+	[XmlElement("DefenseBase")]
+	public int defenseGrowth;
+	[XmlElement("ResistanceGrowth")]
+	public int resistanceGrowth;
+	[XmlElement("SpeedGrowth")]
+	public int speedGrowth;
+
+	[XmlElement("LearnableAttacks")]
+	public List<int> learnAttacks;
+	[XmlElement("LevelAttacks")]
+	public List<int> levelAttacks;
+
+	public StatSpread(string statString)
+	{
+		string[] cols = statString.Split('\t');
+		id = int.Parse(cols[0]);
+		hpBase = int.Parse(cols[1]);
+		mpBase = int.Parse(cols[2]);
+		attackBase = int.Parse(cols[3]);
+		defenseBase = int.Parse(cols[4]);
+		resistanceBase = int.Parse(cols[5]);
+		speedBase = int.Parse(cols[6]);
+
+		baseAttacks = new List<int>();
+		string[] bAttacks = cols[7].Split(',');
+		for (int i = 0; i < bAttacks.Length; i++)
+		{
+			baseAttacks.Add(int.Parse(bAttacks[i]));
+		}
+
+		hpGrowth = int.Parse(cols[8]);
+		mpGrowth = int.Parse(cols[9]);
+		attackGrowth = int.Parse(cols[10]);
+		defenseGrowth = int.Parse(cols[11]);
+		resistanceGrowth = int.Parse(cols[12]);
+		speedGrowth = int.Parse(cols[13]);
+
+		learnAttacks = new List<int>();
+		string[] leAttacks = cols[14].Split(',');
+		for (int i = 0; i < leAttacks.Length; i++)
+		{
+			learnAttacks.Add(int.Parse(leAttacks[i]));
+		}
+
+		levelAttacks = new List<int>();
+		string[] lvAttacks = cols[15].Split(',');
+		for (int i = 0; i < lvAttacks.Length; i++)
+		{
+			levelAttacks.Add(int.Parse(lvAttacks[i]));
+		}
+	}
 }
 
 public class EnemyData
@@ -332,3 +413,4 @@ public class ExpRequirements
 		exp = int.Parse(cols[1]);
 	}
 }
+

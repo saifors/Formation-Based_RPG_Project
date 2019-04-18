@@ -26,7 +26,7 @@ public class InputManager : MonoBehaviour
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape)) Application.Quit();
-        if (Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.Return) && gameManager.gameState != GameManager.GameState.Battle)
         {
             gameManager.PauseToggle();
         }
@@ -67,8 +67,9 @@ public class InputManager : MonoBehaviour
                 else if(gameManager.selecting == GameManager.SelectingMenu.victoryScreen)
                 {
 
-					gameManager.EndVictory();
-                }
+					gameManager.VictoryContinuation(gameManager.levelUpScreenProgress);
+
+				}
             }
         }
         else if (Input.GetKeyDown(KeyCode.X))
