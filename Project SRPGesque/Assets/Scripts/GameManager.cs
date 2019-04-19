@@ -1115,7 +1115,7 @@ public class GameManager : MonoBehaviour
 			
 			yield return new WaitForSeconds(2);
 			battleUI.vicPanel.DeleteVicInfo();
-			battleUI.vicPanel.vicLevelObject.SetActive(false);
+			battleUI.vicPanel.PanelActiveReset();
 			battleUI.victoryPanel.SetActive(false);
 		//Debug.Log("new level " + gameData.Party[0].level + " exp " + gameData.Party[0].exp);
 			EndBattle();

@@ -30,6 +30,9 @@ public class VictoryPanel : MonoBehaviour
 
 	CanvasGroup canvas;
 
+	public CanvasGroup[] subCanvases;
+	public RectTransform levelTrans;
+
 	public void Init()
 	{
 		battleUI = GetComponentInParent<BattleUI>();
@@ -84,6 +87,18 @@ public class VictoryPanel : MonoBehaviour
 		
 	}
 
+	public void SwitchToLevelAnim()
+	{
+		vicLevelObject.SetActive(true);
+		gameManager.selecting = GameManager.SelectingMenu.waiting;
+		subCanvases[0].DOFade(0, 0.1f);
+		subCanvases[1].DOFade(0, 0.25f).From();
+		levelTrans.DOAnchorPosY(-200, 0.75f).SetEase(Ease.OutCirc).From().OnComplete(FinishSwitchToLevel);
+	}
+	public void FinishSwitchToLevel()
+	{
+		gameManager.selecting = GameManager.SelectingMenu.victoryScreen;
+	}
 	public void LevelUpCheck(int chara)
 	{
 		//Debug.Log("level new " + vicInfo[chara].levelNew + "old" + vicInfo[chara].levelOld);
@@ -98,7 +113,7 @@ public class VictoryPanel : MonoBehaviour
 
 		if (vicInfo[chara].levelNew > vicInfo[chara].levelOld)
 		{
-			vicLevelObject.SetActive(true);
+			if (!vicLevelObject.activeSelf) SwitchToLevelAnim();
 			vicLevel.DisplayLevelUp(vicInfo[chara]);
 			gameManager.levelUpScreenProgress++;
 		}
@@ -111,6 +126,13 @@ public class VictoryPanel : MonoBehaviour
 			gameManager.levelUpScreenProgress++;
 			gameManager.VictoryContinuation(gameManager.levelUpScreenProgress);
 		}
+	}
+
+	public void PanelActiveReset()
+	{
+		subCanvases[0].alpha = 1;
+		subCanvases[1].alpha = 1;
+		vicLevelObject.SetActive(false);
 	}
 
 	public void DeleteVicInfo()

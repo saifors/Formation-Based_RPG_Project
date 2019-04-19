@@ -796,7 +796,7 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
@@ -1535,7 +1535,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 260, y: 65}
+  m_SizeDelta: {x: 290, y: 87}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &8134435558223909180
 CanvasRenderer:
@@ -1593,7 +1593,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 65.05
+  m_fontSize: 68
   m_fontSizeBase: 54.1
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -11211,6 +11211,10 @@ MonoBehaviour:
   - {fileID: 332551034195930761}
   - {fileID: 7262958683577413580}
   - {fileID: 8697210441103152359}
+  subCanvases:
+  - {fileID: 4507714241752312828}
+  - {fileID: 6864618217256939076}
+  levelTrans: {fileID: 1771523322247433607}
 --- !u!225 &7531510977779629646
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -14536,7 +14540,7 @@ MonoBehaviour:
   m_text: Level Up!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 530b130d45be786459a19c2dffd0d76f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -14544,13 +14548,13 @@ MonoBehaviour:
     serializedVersion: 2
     rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
-  m_enableVertexGradient: 0
-  m_colorMode: 3
+  m_enableVertexGradient: 1
+  m_colorMode: 2
   m_fontColorGradient:
-    topLeft: {r: 1, g: 1, b: 1, a: 1}
-    topRight: {r: 1, g: 1, b: 1, a: 1}
-    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
-    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+    topLeft: {r: 0.9811321, g: 0.9709861, b: 0.71733713, a: 1}
+    topRight: {r: 0.9811321, g: 0.9709861, b: 0.71733713, a: 1}
+    bottomLeft: {r: 0.9811321, g: 0.7073294, b: 0.32858673, a: 1}
+    bottomRight: {r: 0.9811321, g: 0.7073294, b: 0.32858673, a: 1}
   m_fontColorGradientPreset: {fileID: 0}
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
@@ -14561,12 +14565,12 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 105
+  m_fontSize: 100
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 72
-  m_fontSizeMax: 105
+  m_fontSizeMax: 100
   m_fontStyle: 0
   m_textAlignment: 4098
   m_isAlignmentEnumConverted: 1
@@ -15209,6 +15213,7 @@ GameObject:
   - component: {fileID: 6511135483399033796}
   - component: {fileID: 3560308221925109289}
   - component: {fileID: 7168661874768095088}
+  - component: {fileID: 6864618217256939076}
   m_Layer: 5
   m_Name: Level Up
   m_TagString: Untagged
@@ -15236,7 +15241,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -49}
-  m_SizeDelta: {x: 1431.2, y: 780}
+  m_SizeDelta: {x: 1430, y: 780}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6511135483399033796
 CanvasRenderer:
@@ -15259,14 +15264,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.4575472, g: 0.56022346, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 69e4a2848907f5643a32ca9bf4ac7b2c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -15314,6 +15319,18 @@ MonoBehaviour:
   spd:
   - {fileID: 5971309172954183162}
   - {fileID: 5619836258281928963}
+--- !u!225 &6864618217256939076
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5677119709867106735}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &5955831696294795788
 GameObject:
   m_ObjectHideFlags: 0
@@ -15404,7 +15421,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8900795770858360099
 RectTransform:
   m_ObjectHideFlags: 0
@@ -15493,8 +15510,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 351, y: 320}
-  m_SizeDelta: {x: 507, y: 535}
+  m_AnchoredPosition: {x: 351, y: 300}
+  m_SizeDelta: {x: 507, y: 495}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2651402401460630951
 CanvasRenderer:
@@ -15517,7 +15534,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.2264151, g: 0.14056467, b: 0.124955505, a: 1}
+  m_Color: {r: 0.1509434, g: 0.09852946, b: 0.088999644, a: 0.85490197}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -16341,8 +16358,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -351, y: 320.00003}
-  m_SizeDelta: {x: 507, y: 535}
+  m_AnchoredPosition: {x: -351, y: 300.00006}
+  m_SizeDelta: {x: 507, y: 495}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6968106862170237718
 CanvasRenderer:
@@ -16365,7 +16382,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.2264151, g: 0.14056467, b: 0.124955505, a: 1}
+  m_Color: {r: 0.1509434, g: 0.09852946, b: 0.088999644, a: 0.85490197}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -16627,6 +16644,7 @@ GameObject:
   - component: {fileID: 6795621613884112670}
   - component: {fileID: 4436234515531044878}
   - component: {fileID: 1136975497249470553}
+  - component: {fileID: 4507714241752312828}
   m_Layer: 5
   m_Name: Victory
   m_TagString: Untagged
@@ -16691,3 +16709,15 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+--- !u!225 &4507714241752312828
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8918430966281339348}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
