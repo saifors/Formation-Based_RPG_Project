@@ -11196,6 +11196,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5b3edc010a1ac94b855ca9008afe125, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  vicTrans: {fileID: 6795621613884112670}
   battleUI: {fileID: 3271627803095114858}
   gameManager: {fileID: 0}
   vicLevel: {fileID: 7168661874768095088}

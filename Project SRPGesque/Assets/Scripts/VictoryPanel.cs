@@ -7,6 +7,7 @@ using DG.Tweening;
 public class VictoryPanel : MonoBehaviour
 {
 	private RectTransform trans;
+	public RectTransform vicTrans;
 	public BattleUI battleUI;
 	public GameManager gameManager;
 	public VicLevelUp vicLevel;
@@ -62,7 +63,7 @@ public class VictoryPanel : MonoBehaviour
 			GameObject obj = Instantiate(vicInfoPrefab);
 			vicInfo[i] = obj.GetComponent<VicMemberInfo>();
 			vicInfo[i].Init(i, gameManager.gameData.Party[i].name, gameManager.gameData.Party[i].level, gameManager.gameData.Party[i].exp, expGains, gameManager, battleUI.portraitSprites[i]);
-			vicInfo[i].trans.SetParent(trans);
+			vicInfo[i].trans.SetParent(vicTrans);
 			vicInfo[i].trans.anchoredPosition = new Vector2(-580, 143);
 			vicInfo[i].trans.localScale = Vector2.one;
 		}
@@ -85,21 +86,27 @@ public class VictoryPanel : MonoBehaviour
 
 	public void LevelUpCheck(int chara)
 	{
-		Debug.Log(chara);
+		//Debug.Log("level new " + vicInfo[chara].levelNew + "old" + vicInfo[chara].levelOld);
 
 		//Right here officer
+		if(chara >= gameManager.partyMembers) //chara don't exist
+		{
+			gameManager.EndVictory();
+
+			return;
+		}
 
 		if (vicInfo[chara].levelNew > vicInfo[chara].levelOld)
 		{
 			vicLevelObject.SetActive(true);
-			vicLevel.DisplayLevelUp(vicInfo[0]);
+			vicLevel.DisplayLevelUp(vicInfo[chara]);
 			gameManager.levelUpScreenProgress++;
 		}
-		else if (chara == gameManager.partyMembers)
+		else if (chara == gameManager.partyMembers - 1) //if no level up and this is last char
 		{
 			gameManager.EndVictory();
 		}
-		else
+		else //if no level up but more char after this one to calculate
 		{
 			gameManager.levelUpScreenProgress++;
 			gameManager.VictoryContinuation(gameManager.levelUpScreenProgress);
