@@ -114,6 +114,7 @@ public class VictoryPanel : MonoBehaviour
 		if (vicInfo[chara].levelNew > vicInfo[chara].levelOld)
 		{
 			if (!vicLevelObject.activeSelf) SwitchToLevelAnim();
+			
 			vicLevel.DisplayLevelUp(vicInfo[chara]);
 			gameManager.levelUpScreenProgress++;
 		}

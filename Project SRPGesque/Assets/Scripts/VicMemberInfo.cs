@@ -35,18 +35,27 @@ public class VicMemberInfo : MonoBehaviour
 
 	public TextMeshProUGUI[] languageText;
 
+	public Image levelUpGraphic;
+	public CanvasGroup levelUpCanvas;
+	public Animator levelUpAnim;
+	private bool levelAnimStarted;
+
 	public int ID;
 
 	public void Init(int id, string name, int level, int oldGivenExp, int gainedExp, GameManager gM, Sprite portSprite)
 	{
 		gameManager = gM;
 		ID = id;
+		levelAnimStarted = false;
 		trans = GetComponent<RectTransform>();
 		lastScroll = false;
 		levelsGained = 0;
 		levelCounter = 0;
 		oldExp = oldGivenExp;
 		newExp = oldExp + gainedExp;
+
+		levelUpCanvas.alpha = 0;
+		levelUpAnim.enabled = false;
 
 		nameText.text = name;
 		levelOld = level;
@@ -133,6 +142,14 @@ public class VicMemberInfo : MonoBehaviour
 					timeCounter = 0;
 				}
 		}
+
+		if(levelAnimStarted)
+		{
+			if(levelUpAnim.GetCurrentAnimatorStateInfo(0).IsName("AnimEnded"))
+			{
+				LevelUpAnimFinished();
+			}
+		}
 	}
 
 	public void ExpAnimStart()
@@ -151,8 +168,9 @@ public class VicMemberInfo : MonoBehaviour
 		{
 			//------Level Up------
 			levelText.text = (levelOld + levelCounter).ToString();
+			if(levelCounter > 0) LevelUpAnim();
 			//-------
-			if(deltaRemainingExp == 0) deltaRemainingExp = gameManager.gameData.LevelRequirement[levelOld - 1 + levelCounter].exp;
+			if (deltaRemainingExp == 0) deltaRemainingExp = gameManager.gameData.LevelRequirement[levelOld - 1 + levelCounter].exp;
 			DOTween.To(() => deltaRemainingExp, x => deltaRemainingExp = x, 0, 3 / levelsGained).SetEase(Ease.InOutQuad).OnComplete(ExpAnimLevelCheck);
 			levelCounter++;
 			
@@ -160,6 +178,7 @@ public class VicMemberInfo : MonoBehaviour
 		else if (levelCounter == levelsGained)
 		{
 			levelText.text = levelNew.ToString();
+			LevelUpAnim();
 			deltaRemainingExp = gameManager.gameData.LevelRequirement[levelNew - 1].exp;
 			DOTween.To(() => deltaRemainingExp, x => deltaRemainingExp = x, newRemainingExp, 3 / levelsGained).SetEase(Ease.InOutQuad).OnComplete(ExpAnimFinished);
 			lastScroll = true;
@@ -172,4 +191,19 @@ public class VicMemberInfo : MonoBehaviour
 		finishedCounting = true;
 		remainingExp.text = newRemainingExp.ToString();
 	}
+
+	public void LevelUpAnim()
+	{
+		levelUpCanvas.alpha = 1;
+		levelAnimStarted = true;
+		levelUpAnim.enabled = true;
+		levelUpAnim.Play("LevelBurstAnim");
+	}
+	public void LevelUpAnimFinished()
+	{
+		levelAnimStarted = false;
+		levelUpCanvas.alpha = 0;
+		levelUpAnim.enabled = false;
+	}
+	
 }
