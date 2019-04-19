@@ -33,6 +33,8 @@ public class VicLevelUp : MonoBehaviour
 	
 	public void DisplayLevelUp(VicMemberInfo vicInfo)
 	{
+		nameText.text = vicInfo.nameText.text;
+
 		level[0].text = vicInfo.levelOld.ToString();
 		level[1].text = vicInfo.levelNew.ToString();
 
