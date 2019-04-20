@@ -19,10 +19,40 @@ public class VicLevelUp : MonoBehaviour
 	public TextMeshProUGUI[] def;
 	public TextMeshProUGUI[] res;
 	public TextMeshProUGUI[] spd;
+
+	public RectTransform burstTrans;
+	CanvasGroup burstCanvas;
+	Animator burstAnim;
+
+	bool statAnimStarted;
+	Vector3 burstMargin;
+
+	RectTransform[] newStatTrans;
+	int statUpCounter;
+	VicMemberInfo vInfo;
 	
 	public void Init(GameManager gM)
     {
 		gameManager = gM;
+		statUpCounter = 0;
+		statAnimStarted = false;
+		burstMargin = new Vector3(100,-40);
+
+		burstAnim = burstTrans.GetComponent<Animator>();
+		burstCanvas = burstTrans.GetComponent<CanvasGroup>();
+
+		burstAnim.enabled = false;
+		burstCanvas.alpha = 1;
+
+		List<RectTransform> nSTList = new List<RectTransform>();
+		nSTList.Add(level[1].GetComponent<RectTransform>());
+		nSTList.Add(hp[1].GetComponent<RectTransform>());
+		nSTList.Add(mp[1].GetComponent<RectTransform>());
+		nSTList.Add(atk[1].GetComponent<RectTransform>());
+		nSTList.Add(def[1].GetComponent<RectTransform>());
+		nSTList.Add(res[1].GetComponent<RectTransform>());
+		nSTList.Add(spd[1].GetComponent<RectTransform>());
+		newStatTrans = nSTList.ToArray();
 
 		for (int i = 0; i < statsText.Length; i++)
 		{
@@ -30,13 +60,23 @@ public class VicLevelUp : MonoBehaviour
 			//statsText[i].text = LanguageManager.langData.stats["Level"] + '\n' + LanguageManager.langData.stats["HP"] + '\n' + LanguageManager.langData.stats["MP"] + '\n' + LanguageManager.langData.stats["Attack"] + '\n' + LanguageManager.langData.stats["Defense"] + '\n' + LanguageManager.langData.stats["Resistance"] + '\n' + LanguageManager.langData.stats["Speed"];
 		}
     }
-	
+
+	private void Update()
+	{
+		if (statAnimStarted)
+		{
+			if (burstAnim.GetCurrentAnimatorStateInfo(0).IsName("AnimEnded"))
+			{
+				StatUpAnimFinished();
+			}
+		}
+	}
+
 	public void DisplayLevelUp(VicMemberInfo vicInfo)
 	{
 		nameText.text = vicInfo.nameText.text;
 
 		level[0].text = vicInfo.levelOld.ToString();
-		level[1].text = vicInfo.levelNew.ToString();
 
 		hp[0].text = gameManager.gameData.Party[vicInfo.ID].hp.ToString(); 
 		mp[0].text = gameManager.gameData.Party[vicInfo.ID].mp.ToString(); 
@@ -47,11 +87,70 @@ public class VicLevelUp : MonoBehaviour
 
 		gameManager.UpdateStats(vicInfo.ID);
 
-		hp[1].text = gameManager.gameData.Party[vicInfo.ID].hp.ToString();
-		mp[1].text = gameManager.gameData.Party[vicInfo.ID].mp.ToString();
-		atk[1].text = gameManager.gameData.Party[vicInfo.ID].attack.ToString();
-		def[1].text = gameManager.gameData.Party[vicInfo.ID].defense.ToString();
-		res[1].text = gameManager.gameData.Party[vicInfo.ID].resistance.ToString();
-		spd[1].text = gameManager.gameData.Party[vicInfo.ID].speed.ToString();
+		vInfo = vicInfo;
+
+		gameManager.selecting = GameManager.SelectingMenu.waiting;
+		StatUpCalc();
+	}
+
+	public void StatUpCalc()
+	{
+		switch (statUpCounter)
+		{
+			case 0:
+				level[1].text = vInfo.levelNew.ToString();
+				break;
+			case 1:
+				hp[1].text = gameManager.gameData.Party[vInfo.ID].hp.ToString();		
+				break;
+			case 2:
+				mp[1].text = gameManager.gameData.Party[vInfo.ID].mp.ToString();		
+				break;
+			case 3:
+				atk[1].text = gameManager.gameData.Party[vInfo.ID].attack.ToString();		
+				break;
+			case 4:
+				def[1].text = gameManager.gameData.Party[vInfo.ID].defense.ToString();		
+				break;
+			case 5:
+				res[1].text = gameManager.gameData.Party[vInfo.ID].resistance.ToString();		
+				break;
+			case 6:
+				spd[1].text = gameManager.gameData.Party[vInfo.ID].speed.ToString();
+				break;
+			default:
+				break;
+		}
+
+		BurstAnim();
+		
+	}
+
+	public void BurstAnim()
+	{
+		burstTrans.localPosition = newStatTrans[statUpCounter].localPosition + burstMargin;
+		
+		statUpCounter++;
+		StatUpAnim();
+	}
+
+	public void StatUpAnim()
+	{
+		burstCanvas.alpha = 1;
+		statAnimStarted = true;
+		burstAnim.enabled = true;
+		burstAnim.Play("LevelBurstAnim");
+	}
+	public void StatUpAnimFinished()
+	{
+		statAnimStarted = false;
+		burstCanvas.alpha = 0;
+		burstAnim.enabled = false;
+		if (statUpCounter < 7) StatUpCalc();
+		else
+		{
+			statUpCounter = 0;
+			gameManager.selecting = GameManager.SelectingMenu.victoryScreen;
+		}
 	}
 }

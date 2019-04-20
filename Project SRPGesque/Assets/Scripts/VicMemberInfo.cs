@@ -34,8 +34,7 @@ public class VicMemberInfo : MonoBehaviour
 	public int newRemainingExp;
 
 	public TextMeshProUGUI[] languageText;
-
-	public Image levelUpGraphic;
+	
 	public CanvasGroup levelUpCanvas;
 	public Animator levelUpAnim;
 	private bool levelAnimStarted;
