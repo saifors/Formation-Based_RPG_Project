@@ -259,13 +259,14 @@ public class GameManager : MonoBehaviour
 	public void UpdateStats(int characterID)
 	{
 		int lvMultiplier = gameData.Party[characterID].level - 1;
-
-		gameData.Party[characterID].hp = gameData.CharStats[characterID].hpBase + Mathf.FloorToInt(gameData.CharStats[characterID].hpGrowth / 100 * lvMultiplier);
-		gameData.Party[characterID].mp = gameData.CharStats[characterID].mpBase + Mathf.FloorToInt(gameData.CharStats[characterID].mpGrowth / 100 * lvMultiplier);
-		gameData.Party[characterID].attack = gameData.CharStats[characterID].attackBase + Mathf.FloorToInt(gameData.CharStats[characterID].attackGrowth / 100 * lvMultiplier);
-		gameData.Party[characterID].defense = gameData.CharStats[characterID].defenseBase + Mathf.FloorToInt(gameData.CharStats[characterID].defenseGrowth / 100 * lvMultiplier);
-		gameData.Party[characterID].resistance = gameData.CharStats[characterID].resistanceBase + Mathf.FloorToInt(gameData.CharStats[characterID].resistanceGrowth / 100 * lvMultiplier);
-		gameData.Party[characterID].speed = gameData.CharStats[characterID].speedBase + Mathf.FloorToInt(gameData.CharStats[characterID].speedGrowth / 100 * lvMultiplier);
+		
+		//Something is going wrong here, even when the result of growth and lvmultiplier should be higher.
+		gameData.Party[characterID].hp = gameData.CharStats[characterID].hpBase + Mathf.FloorToInt((gameData.CharStats[characterID].hpGrowth / 100) * lvMultiplier);
+		gameData.Party[characterID].mp = gameData.CharStats[characterID].mpBase + Mathf.FloorToInt((gameData.CharStats[characterID].mpGrowth / 100) * lvMultiplier);
+		gameData.Party[characterID].attack = gameData.CharStats[characterID].attackBase + Mathf.FloorToInt((gameData.CharStats[characterID].attackGrowth / 100) * lvMultiplier);
+		gameData.Party[characterID].defense = gameData.CharStats[characterID].defenseBase + Mathf.FloorToInt((gameData.CharStats[characterID].defenseGrowth / 100) * lvMultiplier);
+		gameData.Party[characterID].resistance = gameData.CharStats[characterID].resistanceBase + Mathf.FloorToInt((gameData.CharStats[characterID].resistanceGrowth / 100) * lvMultiplier);
+		gameData.Party[characterID].speed = gameData.CharStats[characterID].speedBase + Mathf.FloorToInt((gameData.CharStats[characterID].speedGrowth / 100) * lvMultiplier);
 
 	}
 	
