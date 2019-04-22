@@ -67,7 +67,16 @@ public class VictoryPanel : MonoBehaviour
 			vicInfo[i] = obj.GetComponent<VicMemberInfo>();
 			vicInfo[i].Init(i, gameManager.gameData.Party[i].name, gameManager.gameData.Party[i].level, gameManager.gameData.Party[i].exp, expGains, gameManager, battleUI.portraitSprites[i]);
 			vicInfo[i].trans.SetParent(vicTrans);
-			vicInfo[i].trans.anchoredPosition = new Vector2(-580, 143);
+
+			float xTemp;
+			float yTemp;
+
+			if((i + 1)%2 == 0) xTemp = -20; //even (2nd row)
+			else xTemp = -580; //odd (1st row)
+			if (i > 1) yTemp = - 165; // 2nd collumn
+			else yTemp = 143; //1st collumn
+
+			vicInfo[i].trans.anchoredPosition = new Vector2(xTemp, yTemp);
 			vicInfo[i].trans.localScale = Vector2.one;
 		}
 

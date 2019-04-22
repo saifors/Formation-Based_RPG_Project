@@ -41,6 +41,13 @@ public class GameData
 	[XmlArray("Requirements")]
 	[XmlArrayItem("Requirement")]
 	public List<ExpRequirements> LevelRequirement;
+	//Item & Inventory
+	[XmlArray("Items")]
+	[XmlArrayItem("Item")]
+	public List<ItemData> ItemsCollection;
+	[XmlArray("Inventory")]
+	[XmlArrayItem("InventorySlot")]
+	public List<InventoryData> ItemInventory;
 
 	public GameData()
 	{
@@ -64,6 +71,9 @@ public class GameData
 		LoadEncounters();
 
 		LoadRequirements();
+
+		LoadItems();
+		LoadInventory();
 	}
 
 	public void LoadStatSpread()
@@ -110,24 +120,13 @@ public class GameData
 		string fullText = DataManager.LoadTextFromFile("Data/FullFormations");
 
 		string[] linesText = DataManager.ReadLinesFromString(fullText);
-
-		
-
-		
-		//Another fulltext to input instead of formCount????
-
 		for (int i = 1; i < linesText.Length; i++)
-		{
-			
+		{			
 			if (i <= 1) formCount = 0;
 			else
 			{
-				
-				//Debug.Log(FullFormationsCollection[i - 2].formations.Length); // - 2 one fore previosu another to make up for it starting at 1.
 				formCount += FullFormationsCollection[i - 2].formations.Length; // FUCK THIS SHIIIIT
 			}
-			
-			//Debug.Log("FormCount: " + formCount);
 			FullFormationsCollection.Add(new FullFormationData(linesText[i], formCount));
 		}
 	}
@@ -150,6 +149,24 @@ public class GameData
 		string[] linesText = DataManager.ReadLinesFromString(fullText);
 
 		for (int i = 1; i < linesText.Length; i++) LevelRequirement.Add(new ExpRequirements(linesText[i]));
+	}
+
+	public void LoadItems()
+	{
+		ItemsCollection = new List<ItemData>();
+		string fullText = DataManager.LoadTextFromFile("Data/Items");
+
+		string[] linesText = DataManager.ReadLinesFromString(fullText);
+		for (int i = 1; i < linesText.Length; i++) ItemsCollection.Add(new ItemData(linesText[i]));
+	}
+
+	public void LoadInventory()
+	{
+		ItemInventory = new List<InventoryData>();
+		string fullText = DataManager.LoadTextFromFile("Data/Inventory");
+
+		string[] linesText = DataManager.ReadLinesFromString(fullText);
+		for (int i = 1; i < linesText.Length; i++) ItemInventory.Add(new InventoryData(linesText[i]));
 	}
 }
 

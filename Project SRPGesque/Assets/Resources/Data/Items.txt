@@ -1,0 +1,4 @@
+ID	Name	Description	Effect
+0	N_SmallPotion	D_SmallPotion	Heal20
+1	N_Potion	D_Potion	Heal50
+2	N_Elixir	D_Elixir	Recover50

@@ -245,6 +245,15 @@ public class CharControl_Battle : MonoBehaviour
         
     }
 
+	public void Heal(Recovery.RecoveryType type, int healValue)
+	{
+		Recovery.Recover(type, healValue, this);
+		gameManager.battleUI.UpdateLifeBars(charId);
+		if (alliance == CharacterStats.Alliance.Player) gameData.Party[charId].currentHp = currentHp;
+
+		gameManager.EndTurn();
+	}
+
 	public void DeathCheck()
 	{
 		if (currentHp <= 0)

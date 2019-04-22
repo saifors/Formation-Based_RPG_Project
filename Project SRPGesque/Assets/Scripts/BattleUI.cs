@@ -32,6 +32,8 @@ public class BattleUI : MonoBehaviour
     public GameObject battleMenu;
     public GameObject actionMenu;
     public GameObject attackMenu;
+	public GameObject itemMenu;
+	public ItemBoxBattle itemBox;
     public GameObject partyInfo;
     public GameObject victoryPanel;
 	public VictoryPanel vicPanel;
@@ -96,6 +98,8 @@ public class BattleUI : MonoBehaviour
         
         soundPlayer = gameManager.soundPlayer;
 
+		itemBox = itemMenu.GetComponent<ItemBoxBattle>();
+		itemBox.Init(gameManager);
 		vicPanel = victoryPanel.GetComponent<VictoryPanel>();
 		vicPanel.Init();
 
@@ -109,13 +113,11 @@ public class BattleUI : MonoBehaviour
         attackSelection.position = attackNamePos[attackOptionSelected].position;
 
 		LoadActions();
+		SetAttackScroll();
     
         attackMenu.SetActive(false);
         battleMenu.SetActive(false);
-        
-
-        SetAttackScroll();
-
+        actionMenu.SetActive(false);
 	}
 	
 	// Update is called once per frame

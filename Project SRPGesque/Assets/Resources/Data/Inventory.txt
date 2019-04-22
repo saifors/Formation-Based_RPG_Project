@@ -1,0 +1,4 @@
+Slot	ItemID	Amount
+0	2	10
+1	0	5
+2	1	7

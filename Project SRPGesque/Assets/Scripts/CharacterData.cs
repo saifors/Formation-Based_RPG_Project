@@ -262,7 +262,7 @@ public class AttackData
 		//Debug.Log("end" + attackString);
 	}
 }
-/*
+
 public class ItemData
 {
 	public enum ItemEffect { Heal20, Heal50, Heal100, Heal200, Heal500, Recover50, Recover100, Recover300, CurePoison };//Heal is HP, Recover is MP Cure is Status effect
@@ -275,31 +275,38 @@ public class ItemData
 	[XmlElement("Effect")]
 	public ItemEffect effect;
 
-	public ItemData(int createID)
+	public ItemData(string itemString)
 	{
-		id = createID;
-		switch(id)
-		{
-			case 0:
-				name = "Cheap Potion";
-				effect = ItemEffect.Heal20;
-				break;
-			case 1:
-				name = "Potion";
-				effect = ItemEffect.Heal50;
-				break;
-			case 2:
-				name = "High Potion";
-				effect = ItemEffect.Heal100;
-				break;
-			case 3:
-				break;
-			default:
-				break;
-		}
+		string[] cols = itemString.Split('\t');
+
+		id = int.Parse(cols[0]);
+		name = cols[1];
+		description = cols[2];
+		effect = (ItemEffect)System.Enum.Parse(typeof(ItemEffect), cols[3]);
 	}
 }
-*/
+
+public class InventoryData
+{
+	[XmlAttribute("SlotID")]
+	public int slot;
+	[XmlElement("ItemID")]
+	public int itemId;
+	[XmlElement("Amount")]
+	public int amount;
+	/*[XmlElement("Item")]
+	public ItemData item;*/
+
+	public InventoryData(string inventoryString)
+	{
+		string[] cols = inventoryString.Split('\t');
+
+		slot = int.Parse(cols[0]);
+		itemId = int.Parse(cols[1]);
+		amount = int.Parse(cols[2]);
+	}
+}
+
 public class FormationData
 {
 	[XmlAttribute("FormationCharID")]
