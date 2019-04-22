@@ -10,6 +10,5 @@ The game will be displayed from an isometric camera angle.
 
 **Member** | **Roles**
 --- | ---
-Dion Schreuder | Main Programmer, Game Designer, some Concept art
-David Nicolas | Game Designer, Concept artist, Assistant Programmer
-Mireia Zuluaga | Concept Artist, 3D Modelling
+Dion Schreuder | Main Programmer, Game Designer, some Concept art, UI Graphic Design.
+David Nicolas | 3D Modelling, Texture, Animation, Concept Art,
