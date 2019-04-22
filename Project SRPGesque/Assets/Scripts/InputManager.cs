@@ -60,7 +60,11 @@ public class InputManager : MonoBehaviour
                 {
                     gameManager.ConfirmAttackSelection();
                 }
-                else if(gameManager.selecting == GameManager.SelectingMenu.selectingTarget)
+				else if (gameManager.selecting == GameManager.SelectingMenu.selectingItem)
+				{
+					gameManager.ConfirmItemSelection();
+				}
+				else if(gameManager.selecting == GameManager.SelectingMenu.selectingTarget)
                 {
                     gameManager.StartAttack();
                 }

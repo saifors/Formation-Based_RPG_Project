@@ -57,9 +57,13 @@ public class BattleUI : MonoBehaviour
     public int atkHorizontalLimit;//depending on atkSelVector.y and attacksAmount of charControl is either 1 or 2.
     public int atkVerticalLimit; // depenidng on atkSelVector.x and attacksAmount of charControl is between 1 and three
     public int currentAtkHorizontalLimit; 
-    public int currentAtkVerticalLimit; 
+    public int currentAtkVerticalLimit;
 
-    [Header("Images behind the selections")]
+	[Header("Item Menu")]
+	public Vector2 itemSelVector;
+	public int itemVertLimit;
+
+	[Header("Images behind the selections")]
 	public CanvasGroup selectionImage;
 	public Transform selectionImage_trans;
     public Transform attackSelection;
@@ -176,7 +180,7 @@ public class BattleUI : MonoBehaviour
                 }
                 if(axis != Vector2.zero)
                 {
-                    if (attackOptionAmount % 2 != 0)
+                    if (attackOptionAmount % 2 != 0) //odd
                     {
                         if (atkSelVector.x >= atkHorizontalLimit-1 && atkSelVector.y >= atkVerticalLimit-1)//make it so diagonal won't work to bug shit.
                         {
@@ -185,14 +189,63 @@ public class BattleUI : MonoBehaviour
                     }
 					gameManager.soundPlayer.PlaySound(3, true);
 					attackOptionSelected = Mathf.FloorToInt(atkSelVector.x + (atkSelVector.y * 2));
-                    attackSelection.position = attackNamePos[attackOptionSelected].position;
+					attackSelection.position = attackNamePos[attackOptionSelected].position;
                     scrollCooldownCounter = 0;
                     UpdateAttackInfo(attackOptionSelected); // Make it get the attackID of the characters selected attack
                     
                 }
             }
         }
-        else if(gameManager.selecting == GameManager.SelectingMenu.selectingTarget)
+		else if (gameManager.selecting == GameManager.SelectingMenu.selectingItem)
+		{
+			if (scrollCooldownCounter >= scrollCooldown)
+			{
+				if(axis.x > 0)
+				{
+					itemSelVector.x++;
+				}
+				else if (axis.x < 0)
+				{
+					itemSelVector.x--;
+				}
+				if (axis.y > 0)
+				{
+					itemSelVector.y--;
+				}
+				else if (axis.y < 0)
+				{
+					itemSelVector.y++;
+				}
+				if (axis != Vector2.zero)
+				{
+					if (itemSelVector.x < 0) itemSelVector.x++;
+					else if (itemSelVector.x > 1) itemSelVector.x--;
+
+					if (itemSelVector.y < 0) itemSelVector.y++;
+
+					if(itemSelVector.x == 0)
+					{
+						itemVertLimit = itemBox.vertLimits[0];
+					}
+					else
+					{
+						itemVertLimit = itemBox.vertLimits[1];
+					}
+
+					if (itemSelVector.y > itemVertLimit - 1)
+					{
+						itemSelVector.y--;
+					}
+
+					scrollCooldownCounter = 0;
+
+					itemBox.selected = Mathf.FloorToInt(itemSelVector.x + (itemSelVector.y * 2)); ;
+					itemBox.PlaceSelection();
+				}
+			}
+
+		}
+		else if(gameManager.selecting == GameManager.SelectingMenu.selectingTarget)
         {
             
             
@@ -327,6 +380,14 @@ public class BattleUI : MonoBehaviour
             }
         }
     }
+
+	public void OpenItemMenu()
+	{
+		itemMenu.SetActive(true);
+		actionMenu.SetActive(false);
+		partyInfo.SetActive(false);
+		itemBox.CalculateItemBox();
+	}
 
 	public void SelectNextCommand()
 	{

@@ -18,15 +18,16 @@ public class ItemBoxBattle : MonoBehaviour
 	public RectTransform selection;
 	public int selected;
 	private Vector2 selectionMargin;
+	public int[] vertLimits;
 
 	public void Init(GameManager gM)
     {
 		gameManager = gM;
 		selectionMargin = new Vector2(0, -50);
+		vertLimits = new int[2];
 
 		CalculateItemBox();
-		selected = 0;
-		PlaceSelection();
+		
 	}
 
     public void CalculateItemBox()
@@ -64,19 +65,37 @@ public class ItemBoxBattle : MonoBehaviour
 			itemTrans[i].anchoredPosition = new Vector2(xT, yT);
 			itemTrans[i].localScale = Vector3.one;
 
-			itemTexts[i].name.text = gameManager.gameData.ItemsCollection[gameManager.gameData.ItemInventory[i].itemId].name;
+			//Debug.Log(gameManager.gameData.ItemsCollection[gameManager.gameData.ItemInventory[i].itemId].name);
+			itemTexts[i].name.text = LanguageManager.langData.itemName[ gameManager.gameData.ItemsCollection[gameManager.gameData.ItemInventory[i].itemId].name ];
 			itemTexts[i].amount.text = "x" + gameManager.gameData.ItemInventory[i].amount.ToString();
 	
 		}
 		itemObj = itemTemp.ToArray();
+		selected = 0;
+		PlaceSelection();
+		
+		vertLimits[1] = Mathf.FloorToInt(itemTexts.Length/2);
+		if(itemTexts.Length % 2 == 0)//even 2, 4 
+		{
+			vertLimits[0] = Mathf.FloorToInt(itemTexts.Length / 2);
+		}
+		else
+		{
+			vertLimits[0] = Mathf.FloorToInt(itemTexts.Length / 2) + 1;
+		}
 	}
 
 	public void PlaceSelection()
 	{
-
 		if (itemTrans.Length > 0)
 		{
 			selection.anchoredPosition = itemTrans[selected].anchoredPosition + selectionMargin;
+			description.text = itemTexts[selected].name.text + ": " + LanguageManager.langData.itemDesc[gameManager.gameData.ItemsCollection[gameManager.gameData.ItemInventory[selected].itemId].description];
+		}
+		else
+		{
+			selection.anchoredPosition = new Vector2(-800, 0);
+			description.text = "N/A";
 		}
 	}
 }

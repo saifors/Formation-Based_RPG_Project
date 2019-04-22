@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
 	//Battle Interface (Canvas)    
 	public GameObject battleMenu;
 	public BattleUI battleUI;
-	public enum SelectingMenu { selectingAction, selectingAttack, selectingTarget, selectingMove, victoryScreen, enemyTurn, attacking, waiting };
+	public enum SelectingMenu { selectingAction, selectingAttack, selectingTarget, selectingMove, selectingItem, victoryScreen, enemyTurn, attacking, waiting };
 	public SelectingMenu selecting;
 	public DialogueBox dialogueUI;
 	public int levelUpScreenProgress;
@@ -300,6 +300,7 @@ public class GameManager : MonoBehaviour
 		else if (battleUI.command == BattleUI.CommandSelection.Item)
 		{
 			//Go to Item Menu
+			Item();
 		}
 		else if (battleUI.command == BattleUI.CommandSelection.Run)
 		{
@@ -317,6 +318,7 @@ public class GameManager : MonoBehaviour
 		selecting = SelectingMenu.selectingAction;
 		selectedTileIndicator.gameObject.SetActive(false);
 		battleUI.attackMenu.SetActive(false);
+		battleUI.itemMenu.SetActive(false);
 		battleUI.partyInfo.SetActive(true);
 		battleUI.actionMenu.SetActive(true);
 	}
@@ -366,6 +368,12 @@ public class GameManager : MonoBehaviour
 		selectedTargetsTransform = new Transform[0];
 
 		battleUI.InitiateAttackSelection();
+	}
+
+	public void ConfirmItemSelection()
+	{
+		//Use the item selected
+		UseItem();
 	}
 
 	public void SetAxis(Vector2 inputAxis)
@@ -498,6 +506,68 @@ public class GameManager : MonoBehaviour
 		selecting = SelectingMenu.waiting;
 		yield return new WaitForSeconds(1);
 		EndTurn();
+	}
+
+	//Item
+	public void Item()
+	{
+		selecting = SelectingMenu.selectingItem;
+		battleUI.OpenItemMenu();
+	}
+	public void UseItem()
+	{
+		battleUI.itemMenu.SetActive(false);
+		battleUI.partyInfo.SetActive(true);
+
+		int currentItem = gameData.ItemInventory[battleUI.itemBox.selected].itemId;
+
+		switch (gameData.ItemsCollection[currentItem].effect)
+		{
+			case ItemData.ItemEffect.Heal20_F:
+				charControl[activeCharacter].Heal(Recovery.RecoveryType.FixedHeal, 20);
+				break;
+			case ItemData.ItemEffect.Heal50_F:
+				charControl[activeCharacter].Heal(Recovery.RecoveryType.FixedHeal, 50);
+				break;
+			case ItemData.ItemEffect.Heal100_F:
+				charControl[activeCharacter].Heal(Recovery.RecoveryType.FixedHeal, 100);
+				break;
+			case ItemData.ItemEffect.Heal200_F:
+				charControl[activeCharacter].Heal(Recovery.RecoveryType.FixedHeal, 200);
+				break;
+			case ItemData.ItemEffect.Heal500_F:
+				charControl[activeCharacter].Heal(Recovery.RecoveryType.FixedHeal, 500);
+				break;
+			case ItemData.ItemEffect.Heal50_P:
+				charControl[activeCharacter].Heal(Recovery.RecoveryType.PercentHeal, 50);
+				break;
+			case ItemData.ItemEffect.Heal100_P:
+				charControl[activeCharacter].Heal(Recovery.RecoveryType.PercentHeal, 100);
+				break;
+			case ItemData.ItemEffect.Recover50_F:
+				charControl[activeCharacter].Heal(Recovery.RecoveryType.FixedRecover, 50);
+				break;
+			case ItemData.ItemEffect.Recover100_F:
+				charControl[activeCharacter].Heal(Recovery.RecoveryType.FixedRecover, 100);
+				break;
+			case ItemData.ItemEffect.Recover300_F:
+				charControl[activeCharacter].Heal(Recovery.RecoveryType.FixedRecover, 300);
+				break;
+			case ItemData.ItemEffect.Recover50_P:
+				charControl[activeCharacter].Heal(Recovery.RecoveryType.PercentRecover, 50);
+				break;
+			case ItemData.ItemEffect.Recover100_P:
+				charControl[activeCharacter].Heal(Recovery.RecoveryType.PercentRecover, 100);
+				break;
+			case ItemData.ItemEffect.CurePoison:
+				break;
+			default:
+				break;
+		}
+		selecting = SelectingMenu.waiting;
+		//Invoke("EndTurn", 2);
+
+		/*charControl[activeCharacter].Heal(gameData.)*/
 	}
 //----------------------------------Turn System--------------------------------------------
 	public void CalculateTurnOrderInPhase()

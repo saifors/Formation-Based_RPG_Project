@@ -40,15 +40,15 @@ public class CharacterData
 
 	public CharacterData(string characterString, StatSpread statSpread)
 	{
-		Debug.Log("test2.2");
+		//Debug.Log("test2.2");
 		string[] cols = characterString.Split('\t');
 		id = int.Parse(cols[0]);
 		name = cols[1];
 		level = int.Parse(cols[2]);
 		exp = int.Parse(cols[3]);
-		Debug.Log("test3");
+		//Debug.Log("test3");
 		hp = statSpread.hpBase;
-		Debug.Log("test4");
+		//Debug.Log("test4");
 		mp = statSpread.mpBase;
 		attack = statSpread.attackBase;
 		defense = statSpread.defenseBase;
@@ -58,11 +58,11 @@ public class CharacterData
 		currentMp = mp;
 		
 		modelId = int.Parse(cols[12]);
-Debug.Log("test5");
+//Debug.Log("test5");
 		attacksLearned = statSpread.baseAttacks;
-		Debug.Log("test6");
+		//Debug.Log("test6");
 		attackAmount = attacksLearned.Count;
-		Debug.Log("test7");
+		//Debug.Log("test7");
 	}
 	
 }
@@ -265,7 +265,7 @@ public class AttackData
 
 public class ItemData
 {
-	public enum ItemEffect { Heal20, Heal50, Heal100, Heal200, Heal500, Recover50, Recover100, Recover300, CurePoison };//Heal is HP, Recover is MP Cure is Status effect
+	public enum ItemEffect { Heal20_F, Heal50_F, Heal100_F, Heal200_F, Heal500_F, Heal50_P, Heal100_P, Recover50_F, Recover100_F, Recover300_F, Recover50_P, Recover100_P, CurePoison };//Heal is HP, Recover is MP Cure is Status effect
 	[XmlAttribute("ItemID")]
 	public int id;
 	[XmlElement("Name")]

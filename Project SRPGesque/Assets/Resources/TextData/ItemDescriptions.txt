@@ -1,0 +1,4 @@
+Key	English	Spanish	Dutch	German	Observations
+D_SmallPotion	Heals 20 HP	Cura 20 PV	A	A	
+D_Potion	Heals half HP	Cura mitad de los PV	A	A	
+D_Elixir	Recover 50 MP	Recupera 50 PM	A	A	

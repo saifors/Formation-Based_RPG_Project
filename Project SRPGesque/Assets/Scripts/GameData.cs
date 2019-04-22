@@ -51,9 +51,9 @@ public class GameData
 
 	public GameData()
 	{
-		Debug.Log("test1");
+		//Debug.Log("test1");
 		LoadStatSpread();
-		Debug.Log("test2");
+		//Debug.Log("test2");
 
 		LoadCharacters();
 		LoadMonsters();

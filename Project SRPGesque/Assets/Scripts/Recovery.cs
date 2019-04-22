@@ -24,6 +24,8 @@ public static class Recovery
 				break;
 			default:
 				break;
-		};
+		}
+		if (character.currentHp > character.hp) character.currentHp = character.hp;
+		if (character.currentMp > character.mp) character.currentMp = character.mp;
 	}
 }
