@@ -89,6 +89,9 @@ public class VicLevelUp : MonoBehaviour
 
 		vInfo = vicInfo;
 
+		//Full recovery on level up
+		gameManager.FullHeal(vInfo.ID);
+
 		gameManager.selecting = GameManager.SelectingMenu.waiting;
 		StatUpCalc();
 	}

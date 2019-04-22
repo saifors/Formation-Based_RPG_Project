@@ -26,7 +26,7 @@ public class ItemBoxBattle : MonoBehaviour
 		selectionMargin = new Vector2(0, -50);
 		vertLimits = new int[2];
 
-		CalculateItemBox();
+		//CalculateItemBox();
 		
 	}
 
@@ -97,5 +97,14 @@ public class ItemBoxBattle : MonoBehaviour
 			selection.anchoredPosition = new Vector2(-800, 0);
 			description.text = "N/A";
 		}
+	}
+
+	public void DestroyItemText()
+	{
+		for (int i = 0; i < itemObj.Length; i++)
+		{
+			Destroy(itemObj[i]);
+		}
+		
 	}
 }

@@ -386,6 +386,7 @@ public class BattleUI : MonoBehaviour
 		itemMenu.SetActive(true);
 		actionMenu.SetActive(false);
 		partyInfo.SetActive(false);
+		itemSelVector = Vector2.zero;
 		itemBox.CalculateItemBox();
 	}
 

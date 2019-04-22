@@ -516,11 +516,8 @@ public class GameManager : MonoBehaviour
 	}
 	public void UseItem()
 	{
-		battleUI.itemMenu.SetActive(false);
-		battleUI.partyInfo.SetActive(true);
-
 		int currentItem = gameData.ItemInventory[battleUI.itemBox.selected].itemId;
-
+		
 		switch (gameData.ItemsCollection[currentItem].effect)
 		{
 			case ItemData.ItemEffect.Heal20_F:
@@ -564,12 +561,19 @@ public class GameManager : MonoBehaviour
 			default:
 				break;
 		}
-		selecting = SelectingMenu.waiting;
-		//Invoke("EndTurn", 2);
-
-		/*charControl[activeCharacter].Heal(gameData.)*/
 	}
-//----------------------------------Turn System--------------------------------------------
+	public void EndItem()
+	{
+		gameData.ItemInventory[battleUI.itemBox.selected].amount--;
+		battleUI.itemBox.DestroyItemText();
+		Invoke("EndTurn", 2);
+	}
+	public void FullHeal(int charaID)
+	{
+		gameData.Party[charaID].currentHp = gameData.Party[charaID].hp;
+		gameData.Party[charaID].currentMp = gameData.Party[charaID].mp;
+	}
+	//----------------------------------Turn System--------------------------------------------
 	public void CalculateTurnOrderInPhase()
 	{		
 		turnAmount = partyMembers + enemyAmount;
