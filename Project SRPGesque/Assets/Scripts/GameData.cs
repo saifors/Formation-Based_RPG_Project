@@ -48,6 +48,10 @@ public class GameData
 	[XmlArray("Inventory")]
 	[XmlArrayItem("InventorySlot")]
 	public List<InventoryData> ItemInventory;
+	//Dialogue
+	[XmlArray("Dialogues")]
+	[XmlArrayItem("Dialogue")]
+	public List<DialogueData> DialogueCollection;
 
 	public GameData()
 	{
@@ -167,6 +171,15 @@ public class GameData
 
 		string[] linesText = DataManager.ReadLinesFromString(fullText);
 		for (int i = 1; i < linesText.Length; i++) ItemInventory.Add(new InventoryData(linesText[i]));
+	}
+
+	public void LoadDialogue()
+	{
+		DialogueCollection = new List<DialogueData>();
+		string fullText = DataManager.LoadTextFromFile("Data/Dialogue");
+
+		string[] linesText = DataManager.ReadLinesFromString(fullText);
+		for (int i = 1; i < linesText.Length; i++) DialogueCollection.Add(new DialogueData(linesText[i]));
 	}
 }
 

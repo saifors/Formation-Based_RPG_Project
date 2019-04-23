@@ -30,7 +30,9 @@ public class GameManager : MonoBehaviour
 	public enum SelectingMenu { selectingAction, selectingAttack, selectingTarget, selectingMove, selectingItem, victoryScreen, enemyTurn, attacking, waiting };
 	public SelectingMenu selecting;
 	public DialogueBox dialogueUI;
+	private GameObject dialogueObj;
 	public int levelUpScreenProgress;
+
 
 	//[HideInInspector] public AttackInfoManager attackInfo;
 	[Header("Characters & Enemies")]
@@ -139,8 +141,11 @@ public class GameManager : MonoBehaviour
 
 		playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<OWPlayerController>();
 		battleUI = GameObject.FindGameObjectWithTag("UI").GetComponent<BattleUI>();
-		//dialogueUI = GameObject.FindGameObjectWithTag("DialogueUI").GetComponent<DialogueBox>();
-		//dialogueUI.gameObject.SetActive(false);
+		dialogueUI = battleUI.GetComponentInChildren<DialogueBox>();
+		dialogueUI.Init(this);
+		dialogueObj = dialogueUI.gameObject;
+		dialogueObj.SetActive(false);
+		
 
 		soundPlayer = gameObject.GetComponent<SoundPlayer>();
 		tileScript = GameObject.FindGameObjectWithTag("TileManager").GetComponent<TileScript>();

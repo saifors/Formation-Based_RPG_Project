@@ -222,15 +222,24 @@ public class CharControl_Battle : MonoBehaviour
     public void Damage(int attackPower, int attackerStrength)
     {
 		int totalDamage;
-		
 
-		if (isDefending)
+		int defResStat;
+		if (!gameManager.gameData.AttackList[gameManager.currentAttack].isMagic)
 		{
-			totalDamage = Mathf.FloorToInt( (attackPower + attackerStrength)/2 - (def * 0.25f) );
+			defResStat = def;
 		}
 		else
 		{
-			totalDamage = Mathf.FloorToInt( (attackPower + attackerStrength)/2 - def*0.5f );
+			defResStat = res;
+		}
+
+			if (isDefending)
+		{
+			totalDamage = Mathf.FloorToInt( (attackPower + attackerStrength)/2 - (defResStat * 0.25f) );
+		}
+		else
+		{
+			totalDamage = Mathf.FloorToInt( (attackPower + attackerStrength)/2 - defResStat * 0.5f );
 		}
 		if (totalDamage < 0) totalDamage = 0;
 		currentHp -= totalDamage;
