@@ -14,10 +14,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GameOverScene.unity
     guid: f5185f3d458f5f64c8cf918ba95efb6e
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/TestLevel Blocking.unity
     guid: 24f250d39d9721e4aaca68d3dc5c7799
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/TestLevel.unity
     guid: b905af8c0985c864ab7afd7313ee62b1
   m_configObjects: {}

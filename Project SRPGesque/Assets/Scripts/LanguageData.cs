@@ -23,10 +23,38 @@ public class LanguageData
 	{
 		SystemLanguage systemLanguage = Application.systemLanguage;
 
-		if (systemLanguage == SystemLanguage.Spanish) currentLanguage = Language.Spanish;
-		else if (systemLanguage == SystemLanguage.Dutch) currentLanguage = Language.Dutch;
-		//else if (systemLanguage == SystemLanguage.German) currentLanguage = Language.German;		
-		else currentLanguage = Language.English;
+		if(PlayerPrefs.HasKey("gameLanguage"))
+		{
+			int langID = PlayerPrefs.GetInt("gameLanguage");
+			switch (langID)
+			{
+				case 0:
+					currentLanguage = Language.English;
+					break;
+				case 1:
+					currentLanguage = Language.Spanish;
+					break;
+				case 2:
+					currentLanguage = Language.Dutch;
+					break;
+				case 3:
+					currentLanguage = Language.German;
+					break;
+				default:
+					currentLanguage = Language.English;
+					break;
+			}
+		}
+		else
+		{	
+			if (systemLanguage == SystemLanguage.Spanish) currentLanguage = Language.Spanish;
+			else if (systemLanguage == SystemLanguage.Dutch) currentLanguage = Language.Dutch;
+			else if (systemLanguage == SystemLanguage.German) currentLanguage = Language.German;		
+			else currentLanguage = Language.English;
+			int langID = (int)currentLanguage;
+
+			PlayerPrefs.SetInt("gameLanguage", langID);
+		}
 
 		Debug.Log("System language = " + systemLanguage);
 		Debug.Log("Current language = " + currentLanguage);

@@ -1,3 +1,3 @@
 ID	Name	Level	HP	MP	Atk	Def	Res	Spd	ExpGain	GoldGain	Model ID	Attacks Learned
-0	Green Slime	1	25	10	10	10	10	10	60	10	5	1,2
+0	Green Slime	1	50	100	20	25	30	10	60	10	5	1,2
 1	Skeleton	1	50	10	10	10	10	10	10	10	4	0,1

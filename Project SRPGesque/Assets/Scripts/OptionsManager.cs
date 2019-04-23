@@ -12,6 +12,7 @@ public class OptionsManager : MonoBehaviour
     public string[] qualities;
 
 	public Slider[] volumeSliders;
+	public Dropdown language;
 
 	private SoundPlayer soundPlayer;
 
@@ -31,6 +32,9 @@ public class OptionsManager : MonoBehaviour
 
 		volumeSliders[0].value = PlayerPrefs.GetFloat("Sound_Volume");
 		volumeSliders[1].value = PlayerPrefs.GetFloat("Music_Volume");
+
+		LanguageManager.LoadLanguage();
+		if(PlayerPrefs.HasKey("gameLanguage")) language.value = PlayerPrefs.GetInt("gameLanguage");
 
 		UpdateResolution();
     }
@@ -89,5 +93,14 @@ public class OptionsManager : MonoBehaviour
 	public void UpdateQuality()
 	{
 		QualitySettings.SetQualityLevel(qualityOption, true);
+	}
+	
+
+	public void ChangeLanguage()
+	{
+		//Debug.Log(language.value);
+		PlayerPrefs.SetInt("gameLanguage", language.value);
+
+		LanguageManager.LoadLanguage();
 	}
 }
