@@ -14,13 +14,16 @@ public static class Recovery
 				character.currentHp += healValue;
 				break;
 			case RecoveryType.PercentHeal:
-				character.currentHp += healValue / 100 * character.hp;
+				
+				float multiplierH = (float)healValue / 100;
+				character.currentHp += Mathf.FloorToInt(multiplierH * character.hp);
 				break;
 			case RecoveryType.FixedRecover:
 				character.currentMp += healValue;
 				break;
 			case RecoveryType.PercentRecover:
-				character.currentMp += healValue / 100 * character.hp;
+				float multiplierM = (float)healValue / 100;
+				character.currentMp += Mathf.FloorToInt(multiplierM * character.hp);
 				break;
 			default:
 				break;
