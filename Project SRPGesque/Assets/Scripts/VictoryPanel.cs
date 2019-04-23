@@ -21,9 +21,11 @@ public class VictoryPanel : MonoBehaviour
 
 	int expGains;
 	int goldGains;
+	int[] itemGains;
 
 	public TextMeshProUGUI goldText;
 	public TextMeshProUGUI expText;
+	public TextMeshProUGUI itemText;
 
 	public TextMeshProUGUI[] textForLanguage;
 
@@ -55,9 +57,14 @@ public class VictoryPanel : MonoBehaviour
 
 		expGains = gameManager.totalExp;
 		goldGains = gameManager.totalGold;
+		itemGains = gameManager.allItems.ToArray();
 
 		goldText.text = goldGains.ToString();
 		expText.text = expGains.ToString();
+
+		//------- Items gained
+		ItemCalc();
+		//-------
 
 		vicInfo = new VicMemberInfo[gameManager.partyMembers];
 
@@ -94,6 +101,35 @@ public class VictoryPanel : MonoBehaviour
 			vicInfo[i].ExpAnimStart();
 		}
 		
+	}
+
+	public void ItemCalc() // For Item Rewards
+	{
+		itemText.text = "";
+		for (int i = 0; i < itemGains.Length; i++)
+		{
+			itemText.text += LanguageManager.langData.itemName[gameManager.gameData.ItemsCollection[itemGains[i]].name] + '\n';
+
+			bool cont = true;
+
+			for (int e = 0; e < gameManager.gameData.ItemInventory.Count; e++)
+			{
+				if (cont)
+				{
+					if (itemGains[i] == gameManager.gameData.ItemInventory[e].itemId) //You already have one of this item in your inventory
+					{
+						gameManager.gameData.ItemInventory[e].amount++;
+						break;
+					}
+					else if (e == gameManager.gameData.ItemInventory.Count - 1) //final of the loop and still no match with items in inevntory
+					{
+						string newItem = gameManager.gameData.ItemInventory.Count.ToString() + '\t' + gameManager.gameData.ItemsCollection[itemGains[i]].id.ToString() + '\t' + 1;
+						gameManager.gameData.ItemInventory.Add(new InventoryData(newItem));
+						cont = false;
+					}
+				}
+			}
+		}
 	}
 
 	public void SwitchToLevelAnim()

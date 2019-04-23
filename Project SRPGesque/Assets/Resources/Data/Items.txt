@@ -1,4 +1,4 @@
-ID	Name	Description	Effect
-0	N_SmallPotion	D_SmallPotion	Heal20_F
-1	N_Potion	D_Potion	Heal50_P
-2	N_Elixir	D_Elixir	Recover50_F
+ID	Name	Description	Effect	Rarity
+0	N_SmallPotion	D_SmallPotion	Heal20_F	100
+1	N_Potion	D_Potion	Heal50_P	5
+2	N_Elixir	D_Elixir	Recover50_F	20

@@ -178,6 +178,8 @@ public class EnemyData
 	[XmlElement("Attacks")]
 	public List<int> attacksLearned;
 	public int attackAmount;
+	[XmlElement("Drops")]
+	public int[] itemDrops;
 
 	public EnemyData(string monsterString)
 	{
@@ -205,7 +207,16 @@ public class EnemyData
 			attacksLearned.Add(int.Parse(attacks[i]));
 		}
 
-		attackAmount = attacksLearned.Count;
+		if(cols.Length > 13)
+		{
+			attackAmount = attacksLearned.Count;
+			string[] drops = cols[13].Split(',');
+			itemDrops = new int[drops.Length];
+			for (int i = 0; i < drops.Length; i++)
+			{
+				itemDrops[i] = int.Parse(drops[i]);
+			}
+		}
 	}
 }
 
@@ -274,6 +285,8 @@ public class ItemData
 	public string description;
 	[XmlElement("Effect")]
 	public ItemEffect effect;
+	[XmlElement("Rarity")]
+	public int rarity;
 
 	public ItemData(string itemString)
 	{
@@ -283,6 +296,7 @@ public class ItemData
 		name = cols[1];
 		description = cols[2];
 		effect = (ItemEffect)System.Enum.Parse(typeof(ItemEffect), cols[3]);
+		rarity = int.Parse(cols[4]);
 	}
 }
 

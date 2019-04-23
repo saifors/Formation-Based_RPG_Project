@@ -60,6 +60,7 @@ public class GameManager : MonoBehaviour
 
 	public int totalGold;
 	public int totalExp;
+	public List<int> allItems;
 
 	//Battle - Move
 	public GameObject cursor; //Prefab
@@ -1092,11 +1093,20 @@ public class GameManager : MonoBehaviour
 	{
 		totalGold = 0;
 		totalExp = 0;
+		allItems = new List<int>();
 
 		for (int i = 0; i < gameData.FullFormationsCollection[enemyGroupID].formations.Length; i++)
 		{
 			totalGold += gameData.EnemyCollection[gameData.FullFormationsCollection[enemyGroupID].formations[i].classID].goldGain;
 			totalExp += gameData.EnemyCollection[gameData.FullFormationsCollection[enemyGroupID].formations[i].classID].expGain;
+			for (int e = 0; e < gameData.EnemyCollection[gameData.FullFormationsCollection[enemyGroupID].formations[i].classID].itemDrops.Length; e++)
+			{
+				int itemD = gameData.EnemyCollection[gameData.FullFormationsCollection[enemyGroupID].formations[i].classID].itemDrops[e];
+				if(UnityEngine.Random.Range(0, 100) <= gameData.ItemsCollection[itemD].rarity)
+				{
+					allItems.Add(itemD);
+				}
+			}
 		}
 		
 	}
