@@ -871,6 +871,7 @@ GameObject:
   - component: {fileID: 692649590}
   - component: {fileID: 692649589}
   - component: {fileID: 692649588}
+  - component: {fileID: 692649592}
   m_Layer: 0
   m_Name: Battlefield
   m_TagString: Battlefield
@@ -982,6 +983,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &692649592
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 692649587}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2403ed88ffbb34d40bffb775c678f05d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  encounterID: 0
 --- !u!1001 &697627708
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3177,26 +3191,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -0.0008544922
       objectReference: {fileID: 0}
-    - target: {fileID: 7590247780989184040, guid: d34e14bad3505694b9ec435ce078b2d9,
-        type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 1080
-      objectReference: {fileID: 0}
-    - target: {fileID: 7590247780989184040, guid: d34e14bad3505694b9ec435ce078b2d9,
-        type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 2180
-      objectReference: {fileID: 0}
-    - target: {fileID: 8321537111475640969, guid: d34e14bad3505694b9ec435ce078b2d9,
-        type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 2180
-      objectReference: {fileID: 0}
-    - target: {fileID: 8321537111475640969, guid: d34e14bad3505694b9ec435ce078b2d9,
-        type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 1080
-      objectReference: {fileID: 0}
     - target: {fileID: 3821361801761549356, guid: d34e14bad3505694b9ec435ce078b2d9,
         type: 3}
       propertyPath: m_Mesh
@@ -3721,6 +3715,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -50
+      objectReference: {fileID: 0}
+    - target: {fileID: 7590247780989184040, guid: d34e14bad3505694b9ec435ce078b2d9,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 1080
+      objectReference: {fileID: 0}
+    - target: {fileID: 7590247780989184040, guid: d34e14bad3505694b9ec435ce078b2d9,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 2180
+      objectReference: {fileID: 0}
+    - target: {fileID: 8321537111475640969, guid: d34e14bad3505694b9ec435ce078b2d9,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 2180
+      objectReference: {fileID: 0}
+    - target: {fileID: 8321537111475640969, guid: d34e14bad3505694b9ec435ce078b2d9,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 1080
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d34e14bad3505694b9ec435ce078b2d9, type: 3}
