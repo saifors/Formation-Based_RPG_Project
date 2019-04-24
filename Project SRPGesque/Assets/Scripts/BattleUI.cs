@@ -242,7 +242,7 @@ public class BattleUI : MonoBehaviour
 					}
 
 					scrollCooldownCounter = 0;
-
+					gameManager.soundPlayer.PlaySound(3, true);
 					itemBox.selected = Mathf.FloorToInt(itemSelVector.x + (itemSelVector.y * 2)); ;
 					itemBox.PlaceSelection();
 				}

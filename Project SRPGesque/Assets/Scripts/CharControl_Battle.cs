@@ -260,8 +260,8 @@ public class CharControl_Battle : MonoBehaviour
 		{
 			gameManager.battleUI.itemMenu.SetActive(false);
 			gameManager.battleUI.partyInfo.SetActive(true);
+			gameManager.soundPlayer.PlaySound(0, true);
 
-			
 
 			Recovery.Recover(type, healValue, this);
 			gameManager.battleUI.UpdateLifeBars(charId);
@@ -273,6 +273,7 @@ public class CharControl_Battle : MonoBehaviour
 		else
 		{
 			//That's a bad idea lads.
+			gameManager.soundPlayer.PlaySound(2, true);
 		}
 
 		
