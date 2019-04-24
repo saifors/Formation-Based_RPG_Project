@@ -1032,9 +1032,10 @@ public class GameManager : MonoBehaviour
 
 		int randEncounter;
 		randEncounter = UnityEngine.Random.Range(0, possibleEncounters.Length);
+		//Debug.Log(randEncounter);
 
 		enemyGroupID = possibleEncounters[randEncounter];
-		//Debug.Log(enemyGroupID);
+		//Debug.Log("enemy Group" + enemyGroupID);
 
 		/*if (enemyGroupID == 1) enemyGroupID = 2; //This will later be random
 		else enemyGroupID = 1;*/
@@ -1046,7 +1047,6 @@ public class GameManager : MonoBehaviour
         
         characters = new GameObject[partyMembers + enemyAmount];
 		charControl = new CharControl_Battle[partyMembers + enemyAmount];
-
 		
         
         for (int i = 0; i < partyMembers + enemyAmount; i++)
@@ -1058,24 +1058,29 @@ public class GameManager : MonoBehaviour
 			if(i < partyMembers)characters[i].name = "Battle_Char_" + i;
 			else characters[i].name = "Battle_Enemy_" + i;
 
-			
+
 
 			//Up to here is good.
-
 			
 
-				//gameData.FullFormationsCollection[].formation[]
+			//gameData.FullFormationsCollection[].formation[]
 
-				if (i < partyMembers)charControl[i].Init(i, true);
-			else charControl[i].Init(i, false);
+			if (i < partyMembers)
+			{
+				charControl[i].Init(i, true);
+			}
+			else
+			{
+				charControl[i].Init(i, false);
+			}
 			charControl[i].UpdateTileID();
             PlaceCharacterOnTheirTile(i);
             tileScript.tiles[charControl[i].tileID].isOccupied = true;
 			
-        }
-		
+		}
+		Debug.Log(enemyGroupID + "test4");
 
-        battleUI.InitializeInfoBoxes();
+		battleUI.InitializeInfoBoxes();
         battleUI.attackOptionAmount = charControl[activeCharacter].attacksAmount;
         battleMenu.SetActive(true);
         battleUI.ChangeNotifText("Encountered an enemy!");

@@ -62,6 +62,8 @@ public class CharControl_Battle : MonoBehaviour
 		gameData = gameManager.gameData;
 
 		trans = transform;
+		
+
 		try
 		{
 			anim = GetComponentInChildren<Animator>();
@@ -71,7 +73,6 @@ public class CharControl_Battle : MonoBehaviour
 		{
 			lacksAnimator = false;
 		}
-		
 
 		if (isPlayer)
         {
@@ -84,8 +85,9 @@ public class CharControl_Battle : MonoBehaviour
         }
 
 		charId = charID;
+		
 
-		if(isPlayer)
+		if (isPlayer)
 		{
 			classID = gameData.FullFormationsCollection[0].formations[charID].classID;
 			//tile formation from game data here pls
@@ -115,30 +117,34 @@ public class CharControl_Battle : MonoBehaviour
 			int enemyID;
 			enemyID = charID - gameManager.partyMembers; //PLACEHOLDER UNTIL I HAVE SHIT THAT ACTUALLY WORKS
 			//Debug.Log(charId + "Is enemy" + enemyID);
-
 			//Debug.Log(enemyID);
 			classID = gameData.FullFormationsCollection[gameManager.enemyGroupID].formations[enemyID].classID;
 			//Debug.Log(charID + "class is " + classID);
 			tile = gameData.FullFormationsCollection[gameManager.enemyGroupID].formations[enemyID].tiles;
 			
 
-			name = gameData.EnemyCollection[enemyID].name;
+			name = gameData.EnemyCollection[classID].name;
 
-			level = gameData.EnemyCollection[enemyID].level;
+			level = gameData.EnemyCollection[classID].level;
 
-			hp = gameData.EnemyCollection[enemyID].hp;
-			mp = gameData.EnemyCollection[enemyID].mp;
-			atk = gameData.EnemyCollection[enemyID].attack;
-			def = gameData.EnemyCollection[enemyID].defense;
-			res = gameData.EnemyCollection[enemyID].resistance;
-			spd = gameData.EnemyCollection[enemyID].speed;
+			
+
+			hp = gameData.EnemyCollection[classID].hp;
+			mp = gameData.EnemyCollection[classID].mp;
+			atk = gameData.EnemyCollection[classID].attack;
+			def = gameData.EnemyCollection[classID].defense;
+			res = gameData.EnemyCollection[classID].resistance;
+			spd = gameData.EnemyCollection[classID].speed;
 
 			currentHp = hp;
 			currentMp = mp;
+			
 
 			modelID = gameData.EnemyCollection[gameData.FullFormationsCollection[gameManager.enemyGroupID].formations[enemyID].classID].modelId;
 
 		}
+
+		
 
 		gameManager.assigner.Assign(this, modelID);
 		if (isPlayer) trans.eulerAngles = playerRot;
