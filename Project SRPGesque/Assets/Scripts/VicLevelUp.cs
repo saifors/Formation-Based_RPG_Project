@@ -30,6 +30,8 @@ public class VicLevelUp : MonoBehaviour
 	RectTransform[] newStatTrans;
 	int statUpCounter;
 	VicMemberInfo vInfo;
+
+	public TextMeshProUGUI attackLearned;
 	
 	public void Init(GameManager gM)
     {
@@ -85,9 +87,13 @@ public class VicLevelUp : MonoBehaviour
 		res[0].text = gameManager.gameData.Party[vicInfo.ID].resistance.ToString(); 
 		spd[0].text = gameManager.gameData.Party[vicInfo.ID].speed.ToString();
 
+		vInfo = vicInfo;
+		attackLearned.text = "";
+		LearnAttacks();
+
 		gameManager.UpdateStats(vicInfo.ID);
 
-		vInfo = vicInfo;
+		
 
 		//Full recovery on level up
 		gameManager.FullHeal(vInfo.ID);
@@ -154,6 +160,32 @@ public class VicLevelUp : MonoBehaviour
 		{
 			statUpCounter = 0;
 			gameManager.selecting = GameManager.SelectingMenu.victoryScreen;
+		}
+	}
+
+	public void LearnAttacks()
+	{
+
+		for (int i = 0; i < gameManager.gameData.CharStats[vInfo.ID].learnAttacks.Count; i++)
+		{
+			Debug.Log("Yo1");
+			if (vInfo.levelOld < gameManager.gameData.CharStats[vInfo.ID].levelAttacks[i] && vInfo.levelNew >= gameManager.gameData.CharStats[vInfo.ID].levelAttacks[i])
+			{
+				Debug.Log("Yo2");
+
+				//Gained attack i with this level
+				if (attackLearned.text == "")
+				{
+					attackLearned.text = "Learned: " + LanguageManager.langData.attackName[gameManager.gameData.AttackList[gameManager.gameData.CharStats[vInfo.ID].learnAttacks[i]].nameKey];
+				}
+				else
+				{
+					attackLearned.text += ", " + LanguageManager.langData.attackName[gameManager.gameData.AttackList[gameManager.gameData.CharStats[vInfo.ID].learnAttacks[i]].nameKey];
+				}
+
+				gameManager.gameData.Party[vInfo.ID].attacksLearned.Add(gameManager.gameData.CharStats[vInfo.ID].learnAttacks[i]);
+				gameManager.gameData.Party[vInfo.ID].attackAmount++;
+			}
 		}
 	}
 }
