@@ -22,6 +22,8 @@ public class BattleUI : MonoBehaviour
 
 	[Header("Notifications")]
     public GameObject notifPanel;
+	private RectTransform notifTrans;
+	private Vector2 notifStartMeasurements;
     private Color notifTextColor;
 	private Color notifBgColor;
 	private float textFadeCounter;
@@ -89,6 +91,8 @@ public class BattleUI : MonoBehaviour
 
 		gameManager = GameObject.FindGameObjectWithTag("Manager").GetComponent<GameManager>();
 		selectionImage_trans = selectionImage.GetComponent<RectTransform>();
+		notifTrans = notifPanel.GetComponent<RectTransform>();
+		notifStartMeasurements = new Vector2(0,138);
         notifTextColor = battleNotificationText.color;
         notifBgColor = battleNotificationBg.color;
 
@@ -603,6 +607,7 @@ public class BattleUI : MonoBehaviour
 	{
 		notifShown = true;
         notifPanel.SetActive(true);
+		notifTrans.DOSizeDelta(notifStartMeasurements, 0.25f, true).From().SetEase(Ease.OutSine);
         battleNotificationText.text = notifText;
         notifTextColor.a = 1;
         notifBgColor.a = 0.5f;
