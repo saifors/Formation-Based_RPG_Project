@@ -20,8 +20,11 @@ public class GameManager : MonoBehaviour
 	private TransitionManager transition;
 
 	//Encounters
+	[Header("Encounters")]
 	public bool randomEcountersOn;
 	public float encounterMinimumPercent = 100;
+	private EncounterMapID encounterSpecs;
+	public int currentEncounterMap;
 
 	[Header("User Interface")]
 	//Battle Interface (Canvas)    
@@ -49,7 +52,6 @@ public class GameManager : MonoBehaviour
 	public int enemyAmount;
 	public int enemyGroupID;
 	public int enemyDefeated;
-	public int currentEncounterMap;
 	public int[] possibleEncounters;
 
 	[Header("Battle")]
@@ -152,13 +154,14 @@ public class GameManager : MonoBehaviour
 		tileScript = GameObject.FindGameObjectWithTag("TileManager").GetComponent<TileScript>();
 		tileScript.Init();
 		battlefield = GameObject.FindGameObjectWithTag("Battlefield").GetComponent<Transform>();
+		encounterSpecs = battlefield.GetComponent<EncounterMapID>();
 		assigner = GetComponent<ModelAssigner>();
 		battleAnim = GetComponent<BattleAnimation>();
 
 		battleCam = battlefield.position + new Vector3(0.6f, 0, 0.4f);
 
 		//Databases.
-		currentEncounterMap = 0;
+		currentEncounterMap = encounterSpecs.encounterID;
 		possibleEncounters = gameData.MapEncounterCollection[currentEncounterMap].groupIDs;
 
 		//Create a cursor for Formation Movement
@@ -267,12 +270,12 @@ public class GameManager : MonoBehaviour
 		int lvMultiplier = gameData.Party[characterID].level - 1;
 		
 		//Something is going wrong here, even when the result of growth and lvmultiplier should be higher.
-		gameData.Party[characterID].hp = gameData.CharStats[characterID].hpBase + Mathf.FloorToInt((gameData.CharStats[characterID].hpGrowth / 100) * lvMultiplier);
-		gameData.Party[characterID].mp = gameData.CharStats[characterID].mpBase + Mathf.FloorToInt((gameData.CharStats[characterID].mpGrowth / 100) * lvMultiplier);
-		gameData.Party[characterID].attack = gameData.CharStats[characterID].attackBase + Mathf.FloorToInt((gameData.CharStats[characterID].attackGrowth / 100) * lvMultiplier);
-		gameData.Party[characterID].defense = gameData.CharStats[characterID].defenseBase + Mathf.FloorToInt((gameData.CharStats[characterID].defenseGrowth / 100) * lvMultiplier);
-		gameData.Party[characterID].resistance = gameData.CharStats[characterID].resistanceBase + Mathf.FloorToInt((gameData.CharStats[characterID].resistanceGrowth / 100) * lvMultiplier);
-		gameData.Party[characterID].speed = gameData.CharStats[characterID].speedBase + Mathf.FloorToInt((gameData.CharStats[characterID].speedGrowth / 100) * lvMultiplier);
+		gameData.Party[characterID].hp = gameData.CharStats[characterID].hpBase + Mathf.FloorToInt(( (float)gameData.CharStats[characterID].hpGrowth / 100f) * lvMultiplier);
+		gameData.Party[characterID].mp = gameData.CharStats[characterID].mpBase + Mathf.FloorToInt(( (float)gameData.CharStats[characterID].mpGrowth / 100) * lvMultiplier);
+		gameData.Party[characterID].attack = gameData.CharStats[characterID].attackBase + Mathf.FloorToInt(((float)gameData.CharStats[characterID].attackGrowth / 100f) * lvMultiplier);
+		gameData.Party[characterID].defense = gameData.CharStats[characterID].defenseBase + Mathf.FloorToInt(((float)gameData.CharStats[characterID].defenseGrowth / 100f) * lvMultiplier);
+		gameData.Party[characterID].resistance = gameData.CharStats[characterID].resistanceBase + Mathf.FloorToInt(((float)gameData.CharStats[characterID].resistanceGrowth / 100f) * lvMultiplier);
+		gameData.Party[characterID].speed = gameData.CharStats[characterID].speedBase + Mathf.FloorToInt(((float)gameData.CharStats[characterID].speedGrowth / 100f) * lvMultiplier);
 
 	}
 	

@@ -44,7 +44,7 @@ public class BattleUI : MonoBehaviour
     //External Sources definition
     public GameObject attackNames;
     public TextMeshProUGUI[] attackName;
-    private Transform[] attackNamePos;
+    private RectTransform[] attackNamePos;
     public TextMeshProUGUI SelectedAttackDescription;
     public TextMeshProUGUI SelectedAttackStats;
 	public Sprite[] portraitSprites;
@@ -66,7 +66,7 @@ public class BattleUI : MonoBehaviour
 	[Header("Images behind the selections")]
 	public CanvasGroup selectionImage;
 	public Transform selectionImage_trans;
-    public Transform attackSelection;
+    public RectTransform attackSelection;
 	public TextMeshProUGUI battleNotificationText;
     public Image battleNotificationBg;
     public SoundPlayer soundPlayer;
@@ -108,13 +108,13 @@ public class BattleUI : MonoBehaviour
 		vicPanel.Init();
 
         attackName = attackNames.GetComponentsInChildren<TextMeshProUGUI>();
-        attackNamePos = new Transform[attackName.Length];
+        attackNamePos = new RectTransform[attackName.Length];
         for(int i = 0; i < attackNamePos.Length; i++) 
         {
-            attackNamePos[i] = attackName[i].GetComponent<Transform>();
+            attackNamePos[i] = attackName[i].GetComponent<RectTransform>();
         }
         attackOptionSelected = Mathf.FloorToInt(atkSelVector.y + (atkSelVector.x * 2));
-        attackSelection.position = attackNamePos[attackOptionSelected].position;
+        attackSelection.localPosition = attackNamePos[attackOptionSelected].localPosition;
 
 		LoadActions();
 		SetAttackScroll();
@@ -189,7 +189,7 @@ public class BattleUI : MonoBehaviour
                     }
 					gameManager.soundPlayer.PlaySound(3, true);
 					attackOptionSelected = Mathf.FloorToInt(atkSelVector.x + (atkSelVector.y * 2));
-					attackSelection.position = attackNamePos[attackOptionSelected].position;
+					attackSelection.localPosition = attackNamePos[attackOptionSelected].localPosition;
                     scrollCooldownCounter = 0;
                     UpdateAttackInfo(attackOptionSelected); // Make it get the attackID of the characters selected attack
                     
