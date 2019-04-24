@@ -30,11 +30,14 @@ public class OptionsManager : MonoBehaviour
 		resolutionOption = PlayerPrefs.GetInt("currentResolution",0);
         qualityOption = PlayerPrefs.GetInt("currentQuality",0);
 
-		volumeSliders[0].value = PlayerPrefs.GetFloat("Sound_Volume");
-		volumeSliders[1].value = PlayerPrefs.GetFloat("Music_Volume");
+		if (volumeSliders.Length > 0)
+		{
+			volumeSliders[0].value = PlayerPrefs.GetFloat("Sound_Volume");
+			volumeSliders[1].value = PlayerPrefs.GetFloat("Music_Volume");
+		}
 
 		LanguageManager.LoadLanguage();
-		if(PlayerPrefs.HasKey("gameLanguage")) language.value = PlayerPrefs.GetInt("gameLanguage");
+		if(PlayerPrefs.HasKey("gameLanguage") && language != null) language.value = PlayerPrefs.GetInt("gameLanguage");
 
 		UpdateResolution();
     }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using DG.Tweening;
 
 public class TransitionManager : MonoBehaviour 
 {
@@ -37,11 +38,12 @@ public class TransitionManager : MonoBehaviour
 		Screen_Trans.parent = canvas.transform;
 		Screen_Trans.localPosition = Vector2.zero;
 		Screen_Trans.sizeDelta = new Vector2(1920,1080);
+
 		TransitionScreen.AddComponent<Image>();
 		Screen_Img = TransitionScreen.GetComponent<Image>();
 		if(PlayerPrefs.GetInt("fadeisBlack", 1) == 0) Screen_Color = Color.white; 		// ABSOLUTE SHIT, PlayerPrefs are stored in memory so it doesn´t reset each time you restart the game.
 		else Screen_Color = Color.black; 		
-		if(PlayerPrefs.GetInt("fadedFrom",0) == 0) PlayerPrefs.SetInt("fadedFrom", 0);
+		if(PlayerPrefs.GetInt("fadedFrom", 0) == 0) PlayerPrefs.SetInt("fadedFrom", 0);
 		if(PlayerPrefs.GetInt("fadedFrom") == 1) FadeFrom();
 		else 
 		{
@@ -55,98 +57,81 @@ public class TransitionManager : MonoBehaviour
 
 	}
 	
-	// Update is called once per frame
-	void Update () 
-	{
-		
-		if(isFading)
-		{
-			timeCounter += Time.deltaTime;
-			Screen_Color.a = timeCounter * fadeSpeed;
-			Screen_Img.color = Screen_Color;
-			//Debug.Log("Is fading");
-			if(Screen_Color.a >= 1)
-			{
-				isFaded = true;
-				Screen_Color.a = 1;
-				isFading = false;	
-			}
-		}
-		if(fadeToSceneChange && isFaded)
-		{
-			//Debug.Log("scene change");
-			PlayerPrefs.SetInt("fadedFrom", 1);
-			if(Screen_Color == Color.black) PlayerPrefs.SetInt("fadeisBlack", 1);
-			else PlayerPrefs.SetInt("fadeisBlack", 0);
-			SceneManager.LoadScene(transitionSceneID);
-		}
-		if(fadingFrom)
-		{
-			
-			Screen_Color.a -= Time.deltaTime * 0.5f;
-			Screen_Img.color = Screen_Color;
-			//Debug.Log("Is fading");
-			if(Screen_Color.a <= 0)
-			{
-				
-				Screen_Color.a = 0;
-				fadingFrom = false;	
-				TransitionScreen.SetActive(false);
-			}
-		}
-	}
 	public void FadeTo(Color color)
 	{
-		fadeSpeed = 0.5f;
-		isFaded = false;
+		if (isFading) return;
+
+		//Debug.Log("fadeTo");
 		isFading = true;
+		fadeSpeed = 0.5f;
 		Screen_Color = color;
 		Screen_Color.a = 0;
 		Screen_Img.color = Screen_Color;
+		Screen_Img.DOFade(1, fadeSpeed).OnComplete(FinishFadeTo);
 		TransitionScreen.SetActive(true);
 		
 	}
 
 	public void FadeTo(Color color, float speed)
 	{
-		fadeSpeed = speed;
-		isFaded = false;
+		if (isFading) return;
+
+		//Debug.Log("fadeTo");
 		isFading = true;
+		fadeSpeed = speed;
 		Screen_Color = color;
 		Screen_Color.a = 0;
 		Screen_Img.color = Screen_Color;
+
+		Screen_Img.DOFade(1, fadeSpeed).OnComplete(FinishFadeTo);
 		TransitionScreen.SetActive(true);
 
+	}
+
+	public void FinishFadeTo()
+	{
+		if(fadeToSceneChange)
+		{
+			PlayerPrefs.SetInt("fadedFrom", 1);
+			SceneManager.LoadScene(transitionSceneID);
+		}
+		else
+		{
+			
+		}
 	}
 
 	public void FadeFrom()
 	{
-		fadingFrom = true;
-		isFaded = false;
-		isFading = false;
+
+		Debug.Log("fadeFrom");
 		Screen_Color.a = 1;
 		Screen_Img.color = Screen_Color;
+		Screen_Img.DOFade(0, fadeSpeed).OnComplete(FinishFadeFrom);
 		TransitionScreen.SetActive(true);
+	}
 
-		
+	public void FinishFadeFrom()
+	{
+		TransitionScreen.SetActive(false);
+		isFading = false;
 	}
 
 	public void FadeToSceneChange(bool fadeColor, int sceneNum)
 	{
+		fadeToSceneChange = true;
+		transitionSceneID = sceneNum;
 		//Debug.Log("FadeToSceneChanged" + fadeColor + sceneNum);
-		if(fadeColor == false)
-		{			
+		if (fadeColor == false)
+		{
 			FadeTo(Color.black);
-			//Debug.Log("Fade To Black");
-			fadeToSceneChange = true;
-			transitionSceneID = sceneNum;
+			PlayerPrefs.SetInt("fadeisBlack", 1);
 		}
+
 		else
 		{
 			FadeTo(Color.white);
-			//Debug.Log("Fade To white");
-			fadeToSceneChange = true;
-			transitionSceneID = sceneNum;
+			PlayerPrefs.SetInt("fadeisBlack", 0);
 		}
 	}
 

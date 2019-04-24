@@ -32,8 +32,9 @@ public class BattleAnimation : MonoBehaviour
 
 		gameManager.battleUI.ChangeNotifText(LanguageManager.langData.attackName[nameKey]);
 		step = 0;
-		Animator anim = gameManager.charControl[gameManager.activeCharacter].CastAnim();
-		StartCoroutine(WaitForAnimation(anim));
+		StartCoroutine(WaitForNotif());
+		
+		
 		
 	}
 
@@ -112,6 +113,13 @@ public class BattleAnimation : MonoBehaviour
 	public void FinishHit()
 	{
 		Invoke("FinishedAnim", 0.5f);
+	}
+
+	IEnumerator WaitForNotif()
+	{
+		yield return new WaitForSeconds(0.5f);
+		Animator anim = gameManager.charControl[gameManager.activeCharacter].CastAnim();
+		StartCoroutine(WaitForAnimation(anim));
 	}
 	
 	IEnumerator WaitForAnimation(Animator anim)

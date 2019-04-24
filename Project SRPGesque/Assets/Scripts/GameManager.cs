@@ -1171,7 +1171,7 @@ public class GameManager : MonoBehaviour
 			
 			transition.FadeTo(Color.black, 1);
 			yield return new WaitForSeconds(0.5f);
-			Debug.Log("FadeFROM");
+			//Debug.Log("FadeFROM");
 			EndBattle();
 			transition.FadeFrom();
 		}
