@@ -262,6 +262,11 @@ public class CharControl_Battle : MonoBehaviour
 			gameManager.battleUI.partyInfo.SetActive(true);
 			gameManager.soundPlayer.PlaySound(0, true);
 
+			GameObject particle = Instantiate(gameManager.battleAnim.particleAnim[1]);
+			SpellAnim partSpell = particle.GetComponent<SpellAnim>();
+			partSpell.Init();
+			partSpell.trans.position = trans.position;
+			Destroy(particle, partSpell.particles[0].startLifetime + partSpell.particles[0].duration + 0.1f);
 
 			Recovery.Recover(type, healValue, this);
 			gameManager.battleUI.UpdateLifeBars(charId);

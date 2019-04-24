@@ -57,10 +57,12 @@ MonoBehaviour:
   gameState: 0
   randomEcountersOn: 1
   encounterMinimumPercent: 80
+  currentEncounterMap: 0
   battleMenu: {fileID: 0}
   battleUI: {fileID: 0}
   selecting: 0
   dialogueUI: {fileID: 0}
+  levelUpScreenProgress: 0
   battleCharacterPrefab: {fileID: 1542637486942168, guid: d5258dd58b4531e478789f5a3bdfdf86,
     type: 3}
   charControl: []
@@ -71,13 +73,13 @@ MonoBehaviour:
   enemyAmount: 0
   enemyGroupID: 0
   enemyDefeated: 0
-  currentEncounterMap: 0
   possibleEncounters: 
   assigner: {fileID: 0}
   battleAnim: {fileID: 0}
   battleCam: {x: 0, y: 0, z: 0}
   totalGold: 0
   totalExp: 0
+  allItems: 
   cursor: {fileID: 1483354850765374, guid: 43cacd41c2b3d72448ccf2443039dca2, type: 3}
   targetCursor: {fileID: 1483354850765374, guid: 6045aaa1e5898a3488922882648e4754,
     type: 3}
@@ -215,6 +217,7 @@ MonoBehaviour:
   gameManager: {fileID: 0}
   particleAnim:
   - {fileID: 1619778630106235894, guid: d8c16e41829dd6b44bf99520cc33606e, type: 3}
+  - {fileID: 8315246682423042777, guid: dfdebaae8f525204da29bb88920110a6, type: 3}
   step: 0
 --- !u!1 &1149260101636217453
 GameObject:
