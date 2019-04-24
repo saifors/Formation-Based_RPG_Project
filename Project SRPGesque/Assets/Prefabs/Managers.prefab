@@ -171,6 +171,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 5a7cda2761e4d9b4aa77a1694ea434b9, type: 3}
   - {fileID: 8300000, guid: fe4246ec079e7bb41b2e2e8f1d6501dd, type: 3}
   - {fileID: 8300000, guid: 071042a1715cc9248b49c2185881d9a5, type: 3}
+  - {fileID: 8300000, guid: dda3467eec7cbf64fbc796f5a891d914, type: 3}
+  - {fileID: 8300000, guid: b82c45bf67bd56b468a16f3176fdb97d, type: 3}
   musicClips:
   - {fileID: 8300000, guid: d150306745c4521448e2aa4856406374, type: 3}
   soundSource: []

@@ -138,7 +138,7 @@ public class VicLevelUp : MonoBehaviour
 	public void BurstAnim()
 	{
 		burstTrans.localPosition = newStatTrans[statUpCounter].localPosition + burstMargin;
-		
+		gameManager.soundPlayer.PlaySound(4, true);
 		statUpCounter++;
 		StatUpAnim();
 	}

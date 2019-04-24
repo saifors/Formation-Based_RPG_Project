@@ -17,8 +17,10 @@ public class VicMemberInfo : MonoBehaviour
 	public Image portrait;
 
 	private float timeCounter;
+	private float expTimeCounter;
 	public bool finishedCounting;
 	public bool lastScroll;
+	public bool startedCounting;
 
 	public int levelOld;
 	public int levelNew;
@@ -118,6 +120,7 @@ public class VicMemberInfo : MonoBehaviour
 		deltaRemainingExp = oldRemainingExp;
 		remainingExp.text = deltaRemainingExp.ToString();
 		finishedCounting = false;
+		startedCounting = false;
 
 		//Debug.Log("old exp"+ oldExp + "new" + newExp);
 		gameManager.gameData.Party[id].exp = newExp;
@@ -131,15 +134,24 @@ public class VicMemberInfo : MonoBehaviour
 
 	private void Update()
 	{
-		if (!finishedCounting)
+		if (!finishedCounting && startedCounting)
 		{
 			timeCounter += Time.deltaTime;
 				if (timeCounter >= 0.05f)
 				{
 				// deltaRemainingExp = deltaExp - ;
 					remainingExp.text = deltaRemainingExp.ToString();
+					
 					timeCounter = 0;
 				}
+
+			expTimeCounter += Time.deltaTime;
+			if(expTimeCounter >= 0.5f)
+			{
+				gameManager.soundPlayer.PlaySound(5, true);
+				expTimeCounter = 0;
+			}
+			
 		}
 
 		if(levelAnimStarted)
@@ -154,7 +166,10 @@ public class VicMemberInfo : MonoBehaviour
 	public void ExpAnimStart()
 	{
 		//Tween for the visual feedback.
-		if(levelsGained > 0)
+		startedCounting = true;
+
+
+		if (levelsGained > 0)
 		{
 			ExpAnimLevelCheck();
 		}
@@ -188,6 +203,7 @@ public class VicMemberInfo : MonoBehaviour
 	{
 		//Debug.Log("FinishExpAnim");
 		finishedCounting = true;
+		startedCounting = false;
 		remainingExp.text = newRemainingExp.ToString();
 	}
 
@@ -196,6 +212,7 @@ public class VicMemberInfo : MonoBehaviour
 		levelUpCanvas.alpha = 1;
 		levelAnimStarted = true;
 		levelUpAnim.enabled = true;
+		gameManager.soundPlayer.PlaySound(4, true);
 		levelUpAnim.Play("LevelBurstAnim");
 	}
 	public void LevelUpAnimFinished()
