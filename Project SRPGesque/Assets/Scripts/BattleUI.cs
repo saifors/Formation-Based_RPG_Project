@@ -457,6 +457,7 @@ public class BattleUI : MonoBehaviour
     public void InitiateAttackSelection()
     {
         gameManager.selecting = GameManager.SelectingMenu.selectingAttack;
+		attackOptionAmount = gameManager.charControl[gameManager.activeCharacter].attacksAmount;
 
         atkSelVector = Vector2.zero;
         attackOptionSelected = Mathf.FloorToInt(atkSelVector.y + (atkSelVector.x * 2));
@@ -590,15 +591,15 @@ public class BattleUI : MonoBehaviour
 		//HP Bar 
 		if(charID < gameManager.partyMembers)
 		{
-			playerInfoBox[charID].barTransform[0].DOSizeDelta(hpSize , 1, true).OnComplete(gameManager.charControl[charID].DeathCheck);
-			playerInfoBox[charID].barTransform[1].DOSizeDelta(mpSize, 1, true);
+			playerInfoBox[charID].barTransform[0].DOSizeDelta(hpSize , 0.75f, true).OnComplete(gameManager.charControl[charID].DeathCheck);
+			playerInfoBox[charID].barTransform[1].DOSizeDelta(mpSize, 0.75f, true);
 		}
 		else
 		{
 
-			enemyInfoPopUp[charID - gameManager.partyMembers].barTransform[0].DOSizeDelta(hpSize, 1, true).OnComplete(gameManager.charControl[charID].DeathCheck);
+			enemyInfoPopUp[charID - gameManager.partyMembers].barTransform[0].DOSizeDelta(hpSize, 0.75f, true).OnComplete(gameManager.charControl[charID].DeathCheck);
 			//MP Bar
-			enemyInfoPopUp[charID - gameManager.partyMembers].barTransform[1].DOSizeDelta(mpSize, 1, true);
+			enemyInfoPopUp[charID - gameManager.partyMembers].barTransform[1].DOSizeDelta(mpSize, 0.75f, true);
 		}
     }
 

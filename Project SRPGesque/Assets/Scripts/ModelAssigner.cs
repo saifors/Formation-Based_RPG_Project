@@ -16,6 +16,7 @@ public class ModelAssigner : MonoBehaviour
 	{
 		GameObject model = Instantiate(modelsPrefabs[modelID]);
 		Transform modelTrans = model.transform; 
+		modelTrans.position = character.trans.position;
 		modelTrans.SetParent(character.trans);
 		//modelTrans.eulerAngles = Vector3.zero;
 	}

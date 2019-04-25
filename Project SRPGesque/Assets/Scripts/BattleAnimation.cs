@@ -67,7 +67,7 @@ public class BattleAnimation : MonoBehaviour
 		}
 		//Debug.Log("hey" + (finishTime + 0.25f));
 		//Debug.Log("yo");
-		StartCoroutine(WaitForParticleDestruction(finishTime + 0.1f));
+		StartCoroutine(WaitForParticleDestruction(finishTime));
 		
 		//FinishedAnim();
 	}
@@ -126,7 +126,7 @@ public class BattleAnimation : MonoBehaviour
 	{
 		//wait = true;
 		//Debug.Log("Waiting...");
-		if(anim != null) yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length + 1);
+		if(anim != null) yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length + 0.1f);
 
 		//Debug.Log("Animation ended");
 		//wait = false;

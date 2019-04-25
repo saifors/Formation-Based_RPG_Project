@@ -182,7 +182,7 @@ public class VicLevelUp : MonoBehaviour
 				{
 					attackLearned.text += ", " + LanguageManager.langData.attackName[gameManager.gameData.AttackList[gameManager.gameData.CharStats[vInfo.ID].learnAttacks[i]].nameKey];
 				}
-
+				Debug.Log(vInfo.ID + "is" + gameManager.gameData.Party[vInfo.ID].name + "attack learned" + gameManager.gameData.CharStats[vInfo.ID].learnAttacks[i]);
 				gameManager.gameData.Party[vInfo.ID].attacksLearned.Add(gameManager.gameData.CharStats[vInfo.ID].learnAttacks[i]);
 				gameManager.gameData.Party[vInfo.ID].attackAmount++;
 			}

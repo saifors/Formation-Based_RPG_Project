@@ -64,16 +64,6 @@ public class CharControl_Battle : MonoBehaviour
 		trans = transform;
 		
 
-		try
-		{
-			anim = GetComponentInChildren<Animator>();
-			anim.Play("Idle");
-		}
-		catch
-		{
-			lacksAnimator = false;
-		}
-
 		if (isPlayer)
         {
             alliance = CharacterStats.Alliance.Player;
@@ -147,6 +137,16 @@ public class CharControl_Battle : MonoBehaviour
 		
 
 		gameManager.assigner.Assign(this, modelID);
+		try
+		{
+			anim = GetComponentInChildren<Animator>();
+			anim.Play("BattleIdle");
+			Debug.Log("Success");
+		}
+		catch
+		{
+			lacksAnimator = false;
+		}
 		if (isPlayer) trans.eulerAngles = playerRot;
 		else trans.eulerAngles = enemyRot;
 
@@ -310,14 +310,15 @@ public class CharControl_Battle : MonoBehaviour
 
     public void Die()
     {
-        currentHp = 0;
+        
+		currentHp = 0;
         isDead = true;
 		
         gameManager.tileScript.tiles[tileID].isOccupied = false;
         gameObject.SetActive(false);
         if(alliance == CharacterStats.Alliance.Enemy)//if enemy
         {
-            //Debug.Log(charId + "died");
+            Debug.Log(charId + "died");
 			gameManager.battleUI.enemyInfoPopUp[charId - gameManager.partyMembers].gameObject.SetActive(false);
             gameManager.enemyDefeated++;
 			/*for (int i = 0; i < gameManager.enemyAmount; i++)
@@ -349,16 +350,16 @@ public class CharControl_Battle : MonoBehaviour
 	}
 	public void HurtAnim()
 	{
-		try
+		/*try
 		{
 			anim.Play("Hurt");
 			StartCoroutine(WaitForAnim());
 		}
 		catch
-		{
+		{ */
 			//Debug.Log("No hurt anim found");
-			Invoke("EndHurtAnim", 1);
-		}
+			Invoke("EndHurtAnim", 0.2f);
+		/*}*/
 	}
 
 	public void EndHurtAnim()
@@ -368,7 +369,7 @@ public class CharControl_Battle : MonoBehaviour
 
 	IEnumerator WaitForAnim()
 	{
-		yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length + 1);
+		yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length + 0.1f);
 		EndHurtAnim();
 	}
 	IEnumerator WaitForFade()
