@@ -1,21 +1,72 @@
 fileFormatVersion: 2
-guid: 6481d4e86e4eecc498f144b487780e59
+guid: 0a019526060e8204abccd1eab1fc9a03
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
     100000: //RootNode
+    100002: Cubito
+    100004: Cubito001
+    100006: Deat
+    100008: Deat001
+    100010: Hed
+    100012: Object001
+    100014: Object002
+    100016: Object003
+    100018: Object004
+    100020: Object005
+    100022: Object006
     400000: //RootNode
-    2100000: 'Material #41'
-    2100002: 'Material #29'
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: Box004
+    400002: Cubito
+    400004: Cubito001
+    400006: Deat
+    400008: Deat001
+    400010: Hed
+    400012: Object001
+    400014: Object002
+    400016: Object003
+    400018: Object004
+    400020: Object005
+    400022: Object006
+    2100000: No Name
+    2300000: Cubito
+    2300002: Cubito001
+    2300004: Deat
+    2300006: Deat001
+    2300008: Hed
+    2300010: Object001
+    2300012: Object002
+    2300014: Object003
+    2300016: Object004
+    2300018: Object005
+    2300020: Object006
+    3300000: Cubito
+    3300002: Cubito001
+    3300004: Deat
+    3300006: Deat001
+    3300008: Hed
+    3300010: Object001
+    3300012: Object002
+    3300014: Object003
+    3300016: Object004
+    3300018: Object005
+    3300020: Object006
+    4300000: Cubito
+    4300002: Cubito001
+    4300004: Deat
+    4300006: Deat001
+    4300008: Hed
+    4300010: Object001
+    4300012: Object002
+    4300014: Object003
+    4300016: Object004
+    4300018: Object005
+    4300020: Object006
   externalObjects:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: 'Material #41'
-    second: {fileID: 2100000, guid: c62de6585f1a4894891aeab760289a36, type: 2}
+      name: No Name
+    second: {fileID: 2100000, guid: 32ddf02267f4b9e4ba186e36219ff19a, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
@@ -46,7 +97,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 3
+    globalScale: 1
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
