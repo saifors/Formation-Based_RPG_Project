@@ -19,23 +19,27 @@ public class TurnAnims : MonoBehaviour
 	public float[] startPositions;
 	public Vector2[] endPositions;
 	public CanvasGroup canvas;
+
+	GameManager gameManager;
 	
 
 	// Start is called before the first frame update
-	public void Init()
+	public void Init(GameManager gM)
     {
 		trans = this.GetComponent<RectTransform>();
 		battleUI = GetComponentInParent<BattleUI>();
 		gObject = this.gameObject;
 		canvas = GetComponent<CanvasGroup>();
 
-
+		gameManager = gM;
     }
 
     public void StartTurnAnim(string name, CharacterStats.Alliance alliance)
 	{
 		
 		canvas.alpha = 1;
+
+		gameManager.soundPlayer.PlaySound(7, true);
 
 		turnText.text = name + " Turn";
 		if(alliance == CharacterStats.Alliance.Player)

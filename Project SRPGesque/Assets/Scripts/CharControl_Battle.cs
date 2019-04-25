@@ -280,6 +280,7 @@ public class CharControl_Battle : MonoBehaviour
 
 			if(gameManager.selecting == GameManager.SelectingMenu.selectingItem) gameManager.EndItem();
 			gameManager.selecting = GameManager.SelectingMenu.waiting;
+			gameManager.soundPlayer.PlaySound(6, true);
 		}
 		else
 		{

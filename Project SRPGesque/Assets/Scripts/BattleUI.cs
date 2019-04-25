@@ -97,11 +97,11 @@ public class BattleUI : MonoBehaviour
         notifBgColor = battleNotificationBg.color;
 
 		battleTransition = GetComponentInChildren<BattleTransition>();
-		battleTransition.battleUI = this;
+		battleTransition.Init(gameManager);
 
 		turnPanelAnim = GetComponentInChildren<TurnAnims>();
 		turnPanel = turnPanelAnim.gameObject;
-		turnPanelAnim.Init();
+		turnPanelAnim.Init(gameManager);
 		turnPanel.SetActive(false);
         
         soundPlayer = gameManager.soundPlayer;
