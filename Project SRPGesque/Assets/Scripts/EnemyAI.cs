@@ -39,6 +39,7 @@ public class EnemyAI : MonoBehaviour
 
 	public void EnemyAILogic()
 	{
+
 		int[] storedAtk = new int[charControl.attacksLearned.Length]; //max amount of attacks, some maybe empty.
 		attacksStoredCounter = 0;
 
