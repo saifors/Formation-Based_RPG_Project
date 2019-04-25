@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+	int tempBattleCounter = 0;
+
 	//Debug
 	public bool debug;
 	public GameObject debugMenu;
@@ -1033,6 +1035,23 @@ public class GameManager : MonoBehaviour
 		int randEncounter;
 		randEncounter = UnityEngine.Random.Range(0, possibleEncounters.Length);
 		//Debug.Log(randEncounter);
+		///-------------------------------------------
+		///
+		/// 
+		/// THE FOLLOWING IS FOR DEMONSTRATION PURPOSES ONLY
+		/// 
+		/// 
+		///-------------------------------------------
+		if (tempBattleCounter == 0)
+		{
+			randEncounter = 2;
+			tempBattleCounter++;
+		}
+		else if (tempBattleCounter == 1)
+		{
+			randEncounter = 1;
+			tempBattleCounter++;
+		}
 
 		enemyGroupID = possibleEncounters[randEncounter];
 		//Debug.Log("enemy Group" + enemyGroupID);
@@ -1078,7 +1097,7 @@ public class GameManager : MonoBehaviour
             tileScript.tiles[charControl[i].tileID].isOccupied = true;
 			
 		}
-		Debug.Log(enemyGroupID + "test4");
+		//Debug.Log(enemyGroupID + "test4");
 
 		battleUI.InitializeInfoBoxes();
         battleUI.attackOptionAmount = charControl[activeCharacter].attacksAmount;

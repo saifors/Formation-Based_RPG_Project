@@ -140,8 +140,8 @@ public class CharControl_Battle : MonoBehaviour
 		try
 		{
 			anim = GetComponentInChildren<Animator>();
-			anim.Play("BattleIdle");
-			Debug.Log("Success");
+			if(isPlayer)anim.Play("BattleIdle");
+			//Debug.Log("Success");
 		}
 		catch
 		{
@@ -221,7 +221,7 @@ public class CharControl_Battle : MonoBehaviour
 		//Debug.Log(charId + "used" + mpAmount + "mp");
 		if (currentMp - mpAmount < 0)Debug.Log(charId + "used more MP than it has");
 		currentMp -= mpAmount;
-		gameManager.battleUI.UpdateLifeBars(gameManager.activeCharacter);
+		gameManager.battleUI.UpdateMPBar(gameManager.activeCharacter);
         if(alliance == CharacterStats.Alliance.Player) gameData.Party[charId].currentMp = currentMp;
 	}
 
@@ -251,7 +251,7 @@ public class CharControl_Battle : MonoBehaviour
 		currentHp -= totalDamage;
 
 		if (currentHp < 0) currentHp = 0;
-		gameManager.battleUI.UpdateLifeBars(charId);
+		gameManager.battleUI.UpdateHPBar(charId);
 		if (alliance == CharacterStats.Alliance.Player) gameData.Party[charId].currentHp = currentHp;
 		HurtAnim();
 
@@ -306,6 +306,7 @@ public class CharControl_Battle : MonoBehaviour
 				Die();
 			}*/
 		}
+		gameManager.battleUI.finishedHPBarAnim = true;
 	}
 
     public void Die()
@@ -339,8 +340,13 @@ public class CharControl_Battle : MonoBehaviour
 
 		try
 		{
-			anim.Play("Cast");
-			return anim;
+			if (alliance == CharacterStats.Alliance.Player)
+			{
+				if (gameData.AttackList[gameManager.currentAttack].isMagic) anim.Play("Cast");
+				else anim.Play("Attack");
+				return anim;
+			}
+			else return null;
 		}
 		catch
 		{

@@ -67,7 +67,7 @@ public class BattleAnimation : MonoBehaviour
 		}
 		//Debug.Log("hey" + (finishTime + 0.25f));
 		//Debug.Log("yo");
-		StartCoroutine(WaitForParticleDestruction(finishTime));
+		StartCoroutine(WaitForParticleDestruction(finishTime + 0.1f));
 		
 		//FinishedAnim();
 	}
@@ -112,7 +112,8 @@ public class BattleAnimation : MonoBehaviour
 
 	public void FinishHit()
 	{
-		Invoke("FinishedAnim", 0.5f);
+		if (gameManager.battleUI.finishedHPBarAnim) Invoke("FinishedAnim", 0.5f);
+		else Invoke("FinishHit", 0.25f);
 	}
 
 	IEnumerator WaitForNotif()
@@ -126,7 +127,16 @@ public class BattleAnimation : MonoBehaviour
 	{
 		//wait = true;
 		//Debug.Log("Waiting...");
-		if(anim != null) yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length + 0.1f);
+		if (anim != null)
+		{
+			if (anim.GetCurrentAnimatorStateInfo(0).length + 0.1f > 1)
+			{
+				yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length + 0.1f);
+			}
+			else yield return new WaitForSeconds(1);
+		}
+
+		else yield return new WaitForSeconds(1);
 
 		//Debug.Log("Animation ended");
 		//wait = false;

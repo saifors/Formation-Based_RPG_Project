@@ -173,7 +173,7 @@ public class VicMemberInfo : MonoBehaviour
 		{
 			ExpAnimLevelCheck();
 		}
-		else DOTween.To(() => deltaRemainingExp, x => deltaRemainingExp = x, newRemainingExp, 3).SetEase(Ease.InOutQuad);
+		else DOTween.To(() => deltaRemainingExp, x => deltaRemainingExp = x, newRemainingExp, 3).SetEase(Ease.InOutQuad).OnComplete(ExpAnimFinished);
 	}
 
 	public void ExpAnimLevelCheck()

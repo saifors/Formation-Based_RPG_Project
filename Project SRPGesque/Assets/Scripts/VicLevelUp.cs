@@ -168,10 +168,10 @@ public class VicLevelUp : MonoBehaviour
 
 		for (int i = 0; i < gameManager.gameData.CharStats[vInfo.ID].learnAttacks.Count; i++)
 		{
-			Debug.Log("Yo1");
+			//Debug.Log("Yo1");
 			if (vInfo.levelOld < gameManager.gameData.CharStats[vInfo.ID].levelAttacks[i] && vInfo.levelNew >= gameManager.gameData.CharStats[vInfo.ID].levelAttacks[i])
 			{
-				Debug.Log("Yo2");
+				//Debug.Log("Yo2");
 
 				//Gained attack i with this level
 				if (attackLearned.text == "")
@@ -182,7 +182,7 @@ public class VicLevelUp : MonoBehaviour
 				{
 					attackLearned.text += ", " + LanguageManager.langData.attackName[gameManager.gameData.AttackList[gameManager.gameData.CharStats[vInfo.ID].learnAttacks[i]].nameKey];
 				}
-				Debug.Log(vInfo.ID + "is" + gameManager.gameData.Party[vInfo.ID].name + "attack learned" + gameManager.gameData.CharStats[vInfo.ID].learnAttacks[i]);
+				//Debug.Log(vInfo.ID + "is" + gameManager.gameData.Party[vInfo.ID].name + "attack learned" + gameManager.gameData.CharStats[vInfo.ID].learnAttacks[i]);
 				gameManager.gameData.Party[vInfo.ID].attacksLearned.Add(gameManager.gameData.CharStats[vInfo.ID].learnAttacks[i]);
 				gameManager.gameData.Party[vInfo.ID].attackAmount++;
 			}
