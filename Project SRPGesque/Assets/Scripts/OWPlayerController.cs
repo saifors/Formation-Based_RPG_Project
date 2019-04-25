@@ -21,6 +21,8 @@ public class OWPlayerController : MonoBehaviour
 
     private Animator anim;
 
+	public float timeCounter;
+
     private GameManager gameManager;
 
     bool isRotating;// make it so it can't move when rotating and only starts moving when completed rotation.
@@ -91,12 +93,38 @@ public class OWPlayerController : MonoBehaviour
 		else if (isMoving == true && isRunning == false)
 		{
 			anim.Play("Walk");
+
 		}
 		else if (isMoving == true && isRunning == true)
 		{
 			anim.Play("Run");
 		}
+		
+		//-------------Footstep SFX
+		if (timeCounter < 1) timeCounter += Time.deltaTime;
 
+		if(isMoving)
+		{
+			if (!isRunning)
+			{
+				if (timeCounter >= 0.5)
+				{
+					int footStepSFX = Random.Range(8, 12);
+					gameManager.soundPlayer.PlaySound(footStepSFX, true);
+					timeCounter = 0;
+				}
+			}
+			else
+			{
+				if (timeCounter >= 0.35f)
+				{
+					int footStepSFX = Random.Range(8, 12);
+					gameManager.soundPlayer.PlaySound(footStepSFX, true);
+					timeCounter = 0;
+				}
+			}
+		} 
+		//------
     }
 
     public void DetermineDirection()  
