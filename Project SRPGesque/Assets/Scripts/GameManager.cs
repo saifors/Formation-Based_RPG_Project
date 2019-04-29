@@ -185,6 +185,11 @@ public class GameManager : MonoBehaviour
 		battleUI.Init();
 
 		pauseMenu = pausePanel.GetComponent<PauseMenuScript>();
+
+		for (int i = 0; i < partyMembers; i++)
+		{
+			UpdateStats(i);
+		}
 	}
 
 	// Update
@@ -989,7 +994,7 @@ public class GameManager : MonoBehaviour
 		targetAmount = 0;
 		targetMargin = gameData.AttackList[currentAttack].rangeSize;
 
-		for (int i = 0; i < targetMargin.x * targetMargin.y; i++)
+		for (int i = 0; i < targetMargin.x * targetMargin.y; i++) //each of them is at least 1
 		{
 			if (gameData.AttackList[currentAttack].rangeActive[i]  == 1)
 			{

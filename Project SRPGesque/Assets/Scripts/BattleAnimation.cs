@@ -129,14 +129,14 @@ public class BattleAnimation : MonoBehaviour
 		//Debug.Log("Waiting...");
 		if (anim != null)
 		{
-			if (anim.GetCurrentAnimatorStateInfo(0).length > 1)
+			if (anim.GetCurrentAnimatorStateInfo(0).length > 0.75f)
 			{
 				yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
 			}
-			else yield return new WaitForSeconds(1);
+			else yield return new WaitForSeconds(0.75f);
 		}
 
-		else yield return new WaitForSeconds(1);
+		else yield return new WaitForSeconds(0.75f);
 
 		//Debug.Log("Animation ended");
 		//wait = false;

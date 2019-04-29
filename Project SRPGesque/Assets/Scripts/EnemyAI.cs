@@ -83,15 +83,18 @@ public class EnemyAI : MonoBehaviour
 		//Go through each of the attacks with enough mp. And get their best tile placement
 		for (int attack = 0; attack < attacksStoredCounter; attack++)
 		{
+			Debug.Log("attack"+attack + " is " + gameManager.gameData.AttackList[storedAtk[attack]].nameKey);
 			//Left off investigation here
 			//
 			victimAmount[attack] = 0;
 			attacksTargetMargin = gameManager.gameData.AttackList[storedAtk[attack]].rangeSize;
 			//Possible confusions: X and Y getting mixed up.
-			for (int tileX = 3; tileX < tileScript.xTiles - (attacksTargetMargin.x); tileX++)
+			for (int tileX = 3; tileX < tileScript.xTiles - (attacksTargetMargin.y - 1); tileX++)
 			{
-				for (int tileY = 0; tileY < tileScript.yTiles - (attacksTargetMargin.y); tileY++)
+				Debug.Log("x"+tileX);
+				for (int tileY = 0; tileY < tileScript.yTiles - (attacksTargetMargin.x - 1); tileY++)
 				{
+					Debug.Log("y"+tileY);
 					gameManager.targetOrigin.x = tileX;
 					gameManager.targetOrigin.y = tileY;
 
@@ -117,6 +120,7 @@ public class EnemyAI : MonoBehaviour
 					//End of Double For that check for the optimal target tiles of this attack
 				}
 			}
+			Debug.Log(gameManager.gameData.AttackList[storedAtk[attack]].nameKey + "´s most optimal tile origin is " + optimalTileOrigins[attack] + " hitting " + victimAmount[attack]);
 			//Debug.Log("attack " + attack + "'s optimal origin is " + optimalTileOrigins[attack]);
 			if (victimAmount[attack] == 0)
 			{
@@ -169,6 +173,11 @@ public class EnemyAI : MonoBehaviour
 				}
 			}
 		}
+		if (highestTargetAmount <= 0)
+		{
+			WaitForInsufficientTargetNotif();
+			return;
+		}
 		//Debug.Log(atkInPoolWithMostTargets + "or moreso known as " + storedAtk[atkInPoolWithMostTargets] + "shall be used by " + charControl.charId);
 
 		currentAttack = storedAtk[atkInPoolWithMostTargets];
@@ -190,6 +199,12 @@ public class EnemyAI : MonoBehaviour
 		gameManager.battleUI.ChangeNotifText(charControl.name + " lacks enough MP to use an attack!");
 		yield return new WaitForSeconds(2);
 		Debug.Log("End turn");
+		gameManager.EndTurn();
+	}
+	IEnumerator WaitForInsufficientTargetNotif()
+	{
+		gameManager.battleUI.ChangeNotifText(charControl.name + " can´t hit anyone!");
+		yield return new WaitForSeconds(2);
 		gameManager.EndTurn();
 	}
 }

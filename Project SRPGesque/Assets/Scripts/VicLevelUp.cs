@@ -78,14 +78,17 @@ public class VicLevelUp : MonoBehaviour
 	{
 		nameText.text = vicInfo.nameText.text;
 
-		level[0].text = vicInfo.levelOld.ToString();
-
-		hp[0].text = gameManager.gameData.Party[vicInfo.ID].hp.ToString(); 
-		mp[0].text = gameManager.gameData.Party[vicInfo.ID].mp.ToString(); 
-		atk[0].text = gameManager.gameData.Party[vicInfo.ID].attack.ToString(); 
-		def[0].text = gameManager.gameData.Party[vicInfo.ID].defense.ToString(); 
-		res[0].text = gameManager.gameData.Party[vicInfo.ID].resistance.ToString(); 
-		spd[0].text = gameManager.gameData.Party[vicInfo.ID].speed.ToString();
+		for (int i = 0; i < 2; i++)
+		{
+			level[i].text = vicInfo.levelOld.ToString();
+			hp[i].text = gameManager.gameData.Party[vicInfo.ID].hp.ToString(); 
+			mp[i].text = gameManager.gameData.Party[vicInfo.ID].mp.ToString(); 
+			atk[i].text = gameManager.gameData.Party[vicInfo.ID].attack.ToString(); 
+			def[i].text = gameManager.gameData.Party[vicInfo.ID].defense.ToString(); 
+			res[i].text = gameManager.gameData.Party[vicInfo.ID].resistance.ToString(); 
+			spd[i].text = gameManager.gameData.Party[vicInfo.ID].speed.ToString();
+		}
+		
 
 		vInfo = vicInfo;
 		attackLearned.text = "";
