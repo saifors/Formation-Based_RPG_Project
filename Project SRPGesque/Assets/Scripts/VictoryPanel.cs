@@ -147,6 +147,11 @@ public class VictoryPanel : MonoBehaviour
 	public void LevelUpCheck(int chara)
 	{
 		//Debug.Log("level new " + vicInfo[chara].levelNew + "old" + vicInfo[chara].levelOld);
+		for (int i = 0; i < vicInfo.Length; i++)
+		{
+			vicInfo[i].ExpAnimFinished();
+		}
+
 
 		//Right here officer
 		if(chara >= gameManager.partyMembers) //chara don't exist

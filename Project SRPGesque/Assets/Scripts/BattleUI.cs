@@ -587,17 +587,28 @@ public class BattleUI : MonoBehaviour
 		}
 
 		hpSize.x = maxWidth * lifePercent / 100;
+
 		
 
 		//HP Bar 
 		if (charID < gameManager.partyMembers)
 		{
-			playerInfoBox[charID].barTransform[0].DOSizeDelta(hpSize, 0.75f, true).OnComplete(gameManager.charControl[charID].DeathCheck);
+			float duration;
+			//faster depending on how much goes down
+			float oldLifeP = playerInfoBox[charID].barTransform[0].sizeDelta.x * 100 / maxWidth;
+			if(oldLifeP - lifePercent > 0) duration = ( oldLifeP - lifePercent )/*Percent difference*/ / 100f * 1.5f; 
+			else duration = (lifePercent - oldLifeP) / 100f * 1.5f;
+			if (duration < 0.2f) duration = 0.2f;
+			playerInfoBox[charID].barTransform[0].DOSizeDelta(hpSize, duration, true).OnComplete(gameManager.charControl[charID].DeathCheck);
 		}
 		else
 		{
-
-			enemyInfoPopUp[charID - gameManager.partyMembers].barTransform[0].DOSizeDelta(hpSize, 0.75f, true).OnComplete(gameManager.charControl[charID].DeathCheck);
+			float duration;
+			float oldLifeP = enemyInfoPopUp[charID - gameManager.partyMembers].barTransform[0].sizeDelta.x * 100 / maxWidth;
+			if (oldLifeP - lifePercent > 0) duration = (oldLifeP - lifePercent)/*Percent difference*/ / 100f * 1.5f;
+			else duration = (lifePercent - oldLifeP) / 100f * 1.5f;
+			if (duration < 0.2f) duration = 0.2f;
+			enemyInfoPopUp[charID - gameManager.partyMembers].barTransform[0].DOSizeDelta(hpSize, duration, true).OnComplete(gameManager.charControl[charID].DeathCheck);
 		}
 	}
 
@@ -625,15 +636,26 @@ public class BattleUI : MonoBehaviour
 		}
 
 		mpSize.x = maxWidth * mpPercent / 100;
+		
 
 		//HP Bar 
 		if (charID < gameManager.partyMembers)
 		{
-			playerInfoBox[charID].barTransform[1].DOSizeDelta(mpSize, 0.75f, true);
+			float duration;
+			float oldMpP = playerInfoBox[charID].barTransform[1].sizeDelta.x * 100 / maxWidth;
+			if (oldMpP - mpPercent > 0) duration = (oldMpP - mpPercent)/*Percent difference*/ / 100f * 1.5f;
+			else duration = (mpPercent - oldMpP) / 100f * 1.5f;
+			if (duration < 0.2f) duration = 0.2f;
+			playerInfoBox[charID].barTransform[1].DOSizeDelta(mpSize, duration, true);
 		}
 		else
 		{
-			enemyInfoPopUp[charID - gameManager.partyMembers].barTransform[1].DOSizeDelta(mpSize, 0.75f, true);
+			float duration;
+			float oldMpP = enemyInfoPopUp[charID - gameManager.partyMembers].barTransform[1].sizeDelta.x * 100 / maxWidth;
+			if (oldMpP - mpPercent > 0) duration = (oldMpP - mpPercent)/*Percent difference*/ / 100f * 1.5f;
+			else duration = (mpPercent - oldMpP) / 100f * 1.5f;
+			if (duration < 0.2f) duration = 0.2f;
+			enemyInfoPopUp[charID - gameManager.partyMembers].barTransform[1].DOSizeDelta(mpSize, duration, true);
 		}
 	}
 

@@ -51,7 +51,7 @@ public class TurnAnims : MonoBehaviour
 
 			trans.anchoredPosition = endPositions[0];
 
-			trans.DOAnchorPosX(startPositions[0], 0.75f, true).From().OnComplete(FadeAway);
+			trans.DOAnchorPosX(startPositions[0], 0.25f, true).From().OnComplete(FadeAway);
 		}
 		else if (alliance == CharacterStats.Alliance.Enemy)
 		{
@@ -60,13 +60,13 @@ public class TurnAnims : MonoBehaviour
 				images[i].color = allianceColors[1];
 			}
 			trans.anchoredPosition = endPositions[1];
-			trans.DOAnchorPosX(startPositions[1], 0.75f, true).From().OnComplete(FadeAway);
+			trans.DOAnchorPosX(startPositions[1], 0.25f, true).From().OnComplete(FadeAway);
 		}
 	}
 
 	public void FadeAway()
 	{
-		canvas.DOFade(0, 0.25f).SetDelay(0.5f).OnComplete(FinishedFade);
+		canvas.DOFade(0, 0.15f).SetDelay(0.4f).OnComplete(FinishedFade);
 	}
 
 	public void FinishedFade()

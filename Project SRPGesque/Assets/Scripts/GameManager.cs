@@ -1042,7 +1042,7 @@ public class GameManager : MonoBehaviour
 		/// 
 		/// 
 		///-------------------------------------------
-		if (tempBattleCounter == 0)
+		/*if (tempBattleCounter == 0)
 		{
 			randEncounter = 2;
 			tempBattleCounter++;
@@ -1051,7 +1051,7 @@ public class GameManager : MonoBehaviour
 		{
 			randEncounter = 1;
 			tempBattleCounter++;
-		}
+		}*/
 
 		enemyGroupID = possibleEncounters[randEncounter];
 		//Debug.Log("enemy Group" + enemyGroupID);

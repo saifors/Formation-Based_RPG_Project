@@ -67,7 +67,7 @@ public class BattleAnimation : MonoBehaviour
 		}
 		//Debug.Log("hey" + (finishTime + 0.25f));
 		//Debug.Log("yo");
-		StartCoroutine(WaitForParticleDestruction(finishTime + 0.1f));
+		StartCoroutine(WaitForParticleDestruction(finishTime - 0.1f));
 		
 		//FinishedAnim();
 	}
@@ -118,7 +118,7 @@ public class BattleAnimation : MonoBehaviour
 
 	IEnumerator WaitForNotif()
 	{
-		yield return new WaitForSeconds(0.5f);
+		yield return new WaitForSeconds(0.1f);
 		Animator anim = gameManager.charControl[gameManager.activeCharacter].CastAnim();
 		StartCoroutine(WaitForAnimation(anim));
 	}
@@ -129,9 +129,9 @@ public class BattleAnimation : MonoBehaviour
 		//Debug.Log("Waiting...");
 		if (anim != null)
 		{
-			if (anim.GetCurrentAnimatorStateInfo(0).length + 0.1f > 1)
+			if (anim.GetCurrentAnimatorStateInfo(0).length > 1)
 			{
-				yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length + 0.1f);
+				yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
 			}
 			else yield return new WaitForSeconds(1);
 		}
