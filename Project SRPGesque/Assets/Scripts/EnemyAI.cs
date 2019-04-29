@@ -85,18 +85,21 @@ public class EnemyAI : MonoBehaviour
 		{
 			Debug.Log("attack"+attack + " is " + gameManager.gameData.AttackList[storedAtk[attack]].nameKey);
 			//Left off investigation here
+			gameManager.currentAttack = storedAtk[attack];
 			//
 			victimAmount[attack] = 0;
 			attacksTargetMargin = gameManager.gameData.AttackList[storedAtk[attack]].rangeSize;
 			//Possible confusions: X and Y getting mixed up.
-			for (int tileX = 3; tileX < tileScript.xTiles - (attacksTargetMargin.y); tileX++)
+			for (int tileX = 3; tileX < tileScript.xTiles - (attacksTargetMargin.y-1); tileX++)
 			{
 				Debug.Log("x"+tileX);
-				for (int tileY = 0; tileY < tileScript.yTiles - (attacksTargetMargin.x); tileY++)
+				for (int tileY = 0; tileY < tileScript.yTiles - (attacksTargetMargin.x-1); tileY++)
 				{
 					Debug.Log("y"+tileY);
 					gameManager.targetOrigin.x = tileX;
 					gameManager.targetOrigin.y = tileY;
+
+					
 
 					gameManager.CalculateTargetAmount();
 					gameManager.TargetPlacement();
@@ -110,6 +113,7 @@ public class EnemyAI : MonoBehaviour
 						{
 							onTileVictimAmount++;
 						}
+						Debug.Log("e" + e);
 					}
 
 					if(onTileVictimAmount > victimAmount[attack])//In the case of the amount of victims in this tile combination being higher than the previous highest for this attack.
@@ -119,6 +123,7 @@ public class EnemyAI : MonoBehaviour
 					}
 					//End of Double For that check for the optimal target tiles of this attack
 				}
+				Debug.Log("2x" + tileX);
 			}
 			Debug.Log(gameManager.gameData.AttackList[storedAtk[attack]].nameKey + "´s most optimal tile origin is " + optimalTileOrigins[attack] + " hitting " + victimAmount[attack]);
 			//Debug.Log("attack " + attack + "'s optimal origin is " + optimalTileOrigins[attack]);
