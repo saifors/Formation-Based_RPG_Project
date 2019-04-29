@@ -89,10 +89,10 @@ public class EnemyAI : MonoBehaviour
 			victimAmount[attack] = 0;
 			attacksTargetMargin = gameManager.gameData.AttackList[storedAtk[attack]].rangeSize;
 			//Possible confusions: X and Y getting mixed up.
-			for (int tileX = 3; tileX < tileScript.xTiles - (attacksTargetMargin.y - 1); tileX++)
+			for (int tileX = 3; tileX < tileScript.xTiles - (attacksTargetMargin.y); tileX++)
 			{
 				Debug.Log("x"+tileX);
-				for (int tileY = 0; tileY < tileScript.yTiles - (attacksTargetMargin.x - 1); tileY++)
+				for (int tileY = 0; tileY < tileScript.yTiles - (attacksTargetMargin.x); tileY++)
 				{
 					Debug.Log("y"+tileY);
 					gameManager.targetOrigin.x = tileX;
@@ -181,6 +181,7 @@ public class EnemyAI : MonoBehaviour
 		//Debug.Log(atkInPoolWithMostTargets + "or moreso known as " + storedAtk[atkInPoolWithMostTargets] + "shall be used by " + charControl.charId);
 
 		currentAttack = storedAtk[atkInPoolWithMostTargets];
+		gameManager.currentAttack = currentAttack;
 		gameManager.targetOrigin = optimalTileOrigins[atkInPoolWithMostTargets];
 		//Debug.Log(optimalTileOrigins[atkInPoolWithMostTargets]);
 		attacksTargetMargin = gameManager.gameData.AttackList[currentAttack].rangeSize;
