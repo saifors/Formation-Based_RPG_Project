@@ -38,9 +38,9 @@ public class DialogueBox : MonoBehaviour
 	public void StartDialogue(int diaID)
 	{
 
-		Debug.Log("test2");
+		//Debug.Log("test2");
 		gameObject.SetActive(true);
-		Debug.Log("test3");
+		//Debug.Log("test3");
 		diaData = gameManager.gameData.DialogueCollection[diaID];
 		gameManager.gameState = GameManager.GameState.Text;
 		diaProgress = 0;

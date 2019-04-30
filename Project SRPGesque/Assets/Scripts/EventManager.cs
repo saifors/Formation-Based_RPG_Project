@@ -12,7 +12,7 @@ public class EventManager : MonoBehaviour
 	public EventScript[] events;
 
 	public enum TypeOfEvent { Interaction, Range};
-	public enum InteractEvents { None, Dialogue, Chest, ReceiveItem};
+	public enum InteractEvents { None, Dialogue, Chest, ReceiveItem, Fight};
 
 	public int currentEvent;
 
@@ -100,10 +100,13 @@ public class EventManager : MonoBehaviour
 				case InteractEvents.ReceiveItem:
 					GainItem(events[currentEvent].interactID[eventProgress]);
 					break;
+				case InteractEvents.Fight:
+					StartFight(events[currentEvent].interactID[eventProgress]);
+					break;
 				default:
 					break;
 			}
-			eventProgress++;
+			
 		}
 		else
 		{
@@ -120,6 +123,7 @@ public class EventManager : MonoBehaviour
 	{
 		//Debug.Log("test1");
 		dialogueBox.StartDialogue(id);
+		eventProgress++;
 	}
 	public void GainItem(int id)
 	{
@@ -137,6 +141,13 @@ public class EventManager : MonoBehaviour
 					
 			}
 		}
+		eventProgress++;
+		ContinueEvent();
+	}
+	public void StartFight(int id)
+	{
+		gameManager.SpecifiedBattleEncounterAnim(id);
+		eventProgress++;
 	}
 
 	

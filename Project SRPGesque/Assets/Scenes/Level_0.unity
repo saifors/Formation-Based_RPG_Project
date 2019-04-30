@@ -594,8 +594,8 @@ MonoBehaviour:
   ID: 0
   trans: {fileID: 0}
   eventType: 0
-  interactEvent: 01000000
-  interactID: 00000000
+  interactEvent: 01000000040000000300000001000000
+  interactID: 00000000010000000200000001000000
 --- !u!65 &85564511
 BoxCollider:
   m_ObjectHideFlags: 0

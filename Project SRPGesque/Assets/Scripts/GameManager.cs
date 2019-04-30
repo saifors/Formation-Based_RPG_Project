@@ -1118,7 +1118,7 @@ public class GameManager : MonoBehaviour
 		turnCounter = 0;
 		CalculateTurnOrderInPhase();
 		StartCoroutine(WaitForBattleStart());
-		specifiedEncounter = false;
+		
 
     }
 	public void InitializeEncounter(bool isGroupSpecified, int fightGroupID)
@@ -1188,7 +1188,7 @@ public class GameManager : MonoBehaviour
 		CalculateTurnOrderInPhase();
 		StartCoroutine(WaitForBattleStart());
 
-		specifiedEncounter = false;
+		
 	}
 	IEnumerator WaitForBattleStart()
 	{
@@ -1242,26 +1242,40 @@ public class GameManager : MonoBehaviour
 
 		cam_T.position = playerController.trans.position;
         battleMenu.SetActive(false);
+		if(specifiedEncounter)
+		{
+			Debug.Log("les go");
+			specifiedEncounter = false;
+			eventManager.ContinueEvent();
+		}
     }
 
 
     //------------------------------Run-----------------------------
         public void RunFromBattle()
         {
-            if (UnityEngine.Random.Range(0, 3) >= 2)
-            {
-                battleUI.ChangeNotifText("Got away!");
+			if (!specifiedEncounter)
+			{
+				if (UnityEngine.Random.Range(0, 3) >= 2)
+				{
+					battleUI.ChangeNotifText("Got away!");
 
-				StartCoroutine(WaitForSuccesfulRun());
-            }
-            else if (debug)
-            {
-				battleUI.ChangeNotifText("Got away!");
+					StartCoroutine(WaitForSuccesfulRun());
+				}
+				else if (debug)
+				{
+					battleUI.ChangeNotifText("Got away!");
 
-				StartCoroutine(WaitForSuccesfulRun());
+					StartCoroutine(WaitForSuccesfulRun());
+				}
+				//else failed to run.
+				else FailedToRun();
 			}
-            //else failed to run.
-            else FailedToRun();
+			else
+			{
+				battleUI.ChangeNotifText("Can't run from this fight");
+			}
+
         }
         public void FailedToRun()
         {
