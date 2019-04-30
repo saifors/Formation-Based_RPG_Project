@@ -132,7 +132,22 @@ public class OWPlayerController : MonoBehaviour
 		//------
     }
 
-    public void DetermineDirection()  
+	public void OnTriggerEnter(Collider collision)
+	{
+		
+		if (collision.gameObject.tag == "Event")
+		{
+			//Debug.Log("Help me end it all");
+			EventScript eventScript = collision.gameObject.GetComponent<EventScript>();
+			if(eventScript.eventType == EventManager.TypeOfEvent.Range)
+			{
+				gameManager.eventManager.EnterEventRange(eventScript);
+			}
+			
+		}
+	}
+
+	public void DetermineDirection()  
     {
         if (axis.y > 0)
         {

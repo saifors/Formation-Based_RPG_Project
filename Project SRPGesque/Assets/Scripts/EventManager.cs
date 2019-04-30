@@ -55,33 +55,52 @@ public class EventManager : MonoBehaviour
 		for (int i = 0; i < receiveEvents.Length; i++)
 		{
 			receiveEvents[i] = receivers[i].GetComponent<EventScript>();
+			if (receiveEvents[i].eventType == TypeOfEvent.Interaction)
+			{
 
-			if(i == 0 )
-			{
-				shortestDistance = Vector3.Distance(playerController.trans.position, receiveEvents[i].trans.position);
-				closest = i;
-			}
-			else if(Vector3.Distance(playerController.trans.position, receiveEvents[i].trans.position) < shortestDistance)
-			{
-				shortestDistance = Vector3.Distance(playerController.trans.position, receiveEvents[i].trans.position);
-				closest = i;
-			}
-			else if (Vector3.Distance(playerController.trans.position, receiveEvents[i].trans.position) == shortestDistance)
-			{
-				if(Random.Range(0,1) == 1)
+				if (i == 0)
 				{
 					shortestDistance = Vector3.Distance(playerController.trans.position, receiveEvents[i].trans.position);
 					closest = i;
 				}
+				else if (Vector3.Distance(playerController.trans.position, receiveEvents[i].trans.position) < shortestDistance)
+				{
+					shortestDistance = Vector3.Distance(playerController.trans.position, receiveEvents[i].trans.position);
+					closest = i;
+				}
+				else if (Vector3.Distance(playerController.trans.position, receiveEvents[i].trans.position) == shortestDistance)
+				{
+					if (Random.Range(0, 1) == 1)
+					{
+						shortestDistance = Vector3.Distance(playerController.trans.position, receiveEvents[i].trans.position);
+						closest = i;
+					}
+				}
 			}
 		}
-
+		//Fom here on is general stuff.
 		currentEvent = receiveEvents[closest].ID;
 		playerController.isMoving = false;
 		playerController.isRunning = false;
 
 		eventProgress = 0;
 		ContinueEvent();
+	}
+
+	public void EnterEventRange(EventScript receiveEvent)
+	{
+		if (receiveEvent.hasBeenTriggered) return;
+
+		currentEvent = receiveEvent.ID;
+		playerController.isMoving = false;
+		playerController.isRunning = false;
+
+		eventProgress = 0;
+		ContinueEvent();
+
+		events[currentEvent].hasBeenTriggered = true;
+		//gameManager.gameData.EventCollection[EventTriggerID].triggered = events[currentEvent].hasBeenTriggered;
+		//Debug.Log("Enter event " + currentEvent);
 	}
 
 	public void ContinueEvent()
