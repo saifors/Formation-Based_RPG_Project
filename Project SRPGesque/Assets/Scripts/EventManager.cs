@@ -132,7 +132,7 @@ public class EventManager : MonoBehaviour
 			if (id == gameManager.gameData.ItemInventory[e].itemId) //You already have one of this item in your inventory
 			{
 				gameManager.gameData.ItemInventory[e].amount++;
-					
+				break;	
 			}
 			else if (e == gameManager.gameData.ItemInventory.Count - 1) //final of the loop and still no match with items in inevntory
 			{

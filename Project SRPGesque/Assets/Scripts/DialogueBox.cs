@@ -11,6 +11,7 @@ public class DialogueBox : MonoBehaviour
 	public TextMeshProUGUI textBoxText;
 
 	public RectTransform speakerBox;
+	public Vector2[] speakerPositions;
 	private TextMeshProUGUI speakerName;
 
 	public TextMeshProUGUI[] options;
@@ -29,6 +30,9 @@ public class DialogueBox : MonoBehaviour
 		{
 			optionsTrans[i] = options[i].GetComponent<RectTransform>();
 		}
+		speakerPositions = new Vector2[2];
+		speakerPositions[0] = new Vector2(-615, 20);
+		speakerPositions[1] = new Vector2(615, 20);
 
 		speakerName = speakerBox.GetComponentInChildren<TextMeshProUGUI>();
 
@@ -49,8 +53,19 @@ public class DialogueBox : MonoBehaviour
 
 	public void DialogueLoop()
 	{
-		Debug.Log(diaData.dialogueTexts[diaProgress]);
+		//Debug.Log(diaData.dialogueTexts[diaProgress]);
 		textBoxText.text = LanguageManager.langData.dialogue[ diaData.dialogueTexts[diaProgress] ];
+
+		if (diaData.speakerDirection[diaProgress] == false)
+		{
+			speakerBox.anchoredPosition = speakerPositions[0];
+			speakerName.text = diaData.dialogueSpeakerL.ToString();
+		}
+		else if (diaData.speakerDirection[diaProgress] == true)
+		{
+			speakerBox.anchoredPosition = speakerPositions[1];
+			speakerName.text = diaData.dialogueSpeakerR.ToString();
+		}
 		diaProgress++;
 	}
 
