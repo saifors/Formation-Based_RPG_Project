@@ -5,6 +5,7 @@ using UnityEngine;
 public class OWPlayerController : MonoBehaviour
 {
 
+
     public Vector2 axis;
     private Vector2 previousAxis;
     public enum FacingDirection { North, NorthWest, West, SouthWest, South, SouthEast, East, NorthEast};
@@ -24,6 +25,8 @@ public class OWPlayerController : MonoBehaviour
 	public float timeCounter;
 
     private GameManager gameManager;
+
+	private InteractionOverlapCollider overlap;
 
     bool isRotating;// make it so it can't move when rotating and only starts moving when completed rotation.
 
@@ -53,6 +56,8 @@ public class OWPlayerController : MonoBehaviour
     {
         trans = transform;
         gameManager = GameObject.FindGameObjectWithTag("Manager").GetComponent<GameManager>();
+		overlap = GetComponent<InteractionOverlapCollider>();
+		overlap.Init(this, gameManager);
         anim = GetComponentInChildren<Animator>();
     }
 	

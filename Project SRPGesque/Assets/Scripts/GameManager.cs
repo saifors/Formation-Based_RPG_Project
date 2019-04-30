@@ -136,8 +136,7 @@ public class GameManager : MonoBehaviour
 
 		LanguageManager.LoadLanguage();
 
-		eventManager = GetComponent<EventManager>();
-		eventManager.Init(this);
+		
 
 		gameState = GameState.Overworld;
 		randomEcountersOn = true;//Depending on the area. Maybe a scene database indicating whether true or false?.
@@ -189,8 +188,13 @@ public class GameManager : MonoBehaviour
 		selectionLimit[2] = new Vector2(0, 0);
 		selectionLimit[3] = new Vector2(tileVectorSize.x / 2, tileVectorSize.y);
 
+		eventManager = GetComponent<EventManager>();
+		eventManager.Init(this, playerController);
+		
 		//MoveFormation(0, charControl[0].tile); //PLACEHOLDER
 		battleUI.Init();
+
+		
 
 		pauseMenu = pausePanel.GetComponent<PauseMenuScript>();
 

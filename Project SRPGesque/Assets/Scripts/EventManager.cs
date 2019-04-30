@@ -5,19 +5,25 @@ using UnityEngine;
 public class EventManager : MonoBehaviour
 {
 	public GameManager gameManager;
+	private OWPlayerController playerController;
+
 	public GameObject[] eventObj;
 	public EventScript[] events;
 
 	public enum TypeOfEvent { Interaction, Range};
+	
 
-    public void Init(GameManager gM)
+    public void Init(GameManager gM, OWPlayerController pC)
     {
 		gameManager = gM;
-
+		playerController = pC;
+		
 		GetAllEvents();
 
 	}
+
 	
+
 	public void GetAllEvents()
 	{
 		eventObj = GameObject.FindGameObjectsWithTag("Event");
@@ -29,8 +35,15 @@ public class EventManager : MonoBehaviour
 		}
 	}
 
+	public void Interact()
+	{
+		//Generate a collision box in front of character to see if there is any Events script in its range.
+	}
+
 	public void DialogueEvent()
 	{
 
 	}
+
+	
 }
