@@ -33,15 +33,16 @@ public class BattleTransition : MonoBehaviour
 		
 		if (step == 2)
 		{
-			StartCoroutine(WaitForTransition());
+			StartCoroutine(WaitForTransition(gameManager.specifiedEncounter));
 		}
 	}
 
-	IEnumerator WaitForTransition()
+	IEnumerator WaitForTransition(bool specifiedGroup)
 	{
 		yield return new WaitForSeconds(0.1f);
 		gameManager.soundPlayer.PlaySound(7, true);
-		battleUI.gameManager.InitializeEncounter();
+		if(specifiedGroup == false) battleUI.gameManager.InitializeEncounter(specifiedGroup);
+		else battleUI.gameManager.InitializeEncounter(specifiedGroup, gameManager.specEncounterID);
 		right.DOAnchorPosX(0, duration, true).SetEase(Ease.InOutQuart);
 		left.DOAnchorPosX(0, duration, true).SetEase(Ease.InOutQuart);
 	}

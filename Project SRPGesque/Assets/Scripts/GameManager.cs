@@ -28,6 +28,9 @@ public class GameManager : MonoBehaviour
 	private EncounterMapID encounterSpecs;
 	public int currentEncounterMap;
 
+	public bool specifiedEncounter;
+	public int specEncounterID;
+
 	[Header("User Interface")]
 	//Battle Interface (Canvas)    
 	public GameObject battleMenu;
@@ -165,6 +168,7 @@ public class GameManager : MonoBehaviour
 		//Databases.
 		currentEncounterMap = encounterSpecs.encounterID;
 		possibleEncounters = gameData.MapEncounterCollection[currentEncounterMap].groupIDs;
+		specifiedEncounter = false;
 
 		//Create a cursor for Formation Movement
 		GameObject objCursor;
@@ -1026,7 +1030,15 @@ public class GameManager : MonoBehaviour
 	{
 		battleUI.battleTransition.TransitionTo();
 	}
-    public void InitializeEncounter()
+	public void SpecifiedBattleEncounterAnim(int encounterIdentity)
+	{
+		specifiedEncounter = true;
+		specEncounterID = encounterIdentity;
+
+		battleUI.battleTransition.TransitionTo();
+	}
+
+    public void InitializeEncounter(bool isGroupSpecified)
     {
 		if (gameState == GameState.Battle) return;
 		playerController.isMoving = false;
@@ -1037,28 +1049,14 @@ public class GameManager : MonoBehaviour
         
         enemyDefeated = 0;
 
-		int randEncounter;
-		randEncounter = UnityEngine.Random.Range(0, possibleEncounters.Length);
-		//Debug.Log(randEncounter);
-		///-------------------------------------------
-		///
-		/// 
-		/// THE FOLLOWING IS FOR DEMONSTRATION PURPOSES ONLY
-		/// 
-		/// 
-		///-------------------------------------------
-		/*if (tempBattleCounter == 0)
+		if (!isGroupSpecified)
 		{
-			randEncounter = 2;
-			tempBattleCounter++;
-		}
-		else if (tempBattleCounter == 1)
-		{
-			randEncounter = 1;
-			tempBattleCounter++;
-		}*/
+			int randEncounter;
+			randEncounter = UnityEngine.Random.Range(0, possibleEncounters.Length);
 
-		enemyGroupID = possibleEncounters[randEncounter];
+
+			enemyGroupID = possibleEncounters[randEncounter];
+		}
 		//Debug.Log("enemy Group" + enemyGroupID);
 
 		/*if (enemyGroupID == 1) enemyGroupID = 2; //This will later be random
@@ -1112,8 +1110,78 @@ public class GameManager : MonoBehaviour
 		turnCounter = 0;
 		CalculateTurnOrderInPhase();
 		StartCoroutine(WaitForBattleStart());
+		specifiedEncounter = false;
 
     }
+	public void InitializeEncounter(bool isGroupSpecified, int fightGroupID)
+	{
+		enemyGroupID = fightGroupID;
+		if (gameState == GameState.Battle) return;
+		playerController.isMoving = false;
+		gameState = GameState.Battle;
+		camSet = CameraSetting.BattleCam;
+		selecting = SelectingMenu.selectingAction;
+		cam_T.position = battleCam;
+
+		enemyDefeated = 0;
+
+		
+		//Debug.Log("enemy Group" + enemyGroupID);
+
+		/*if (enemyGroupID == 1) enemyGroupID = 2; //This will later be random
+		else enemyGroupID = 1;*/
+
+		enemyAmount = gameData.FullFormationsCollection[enemyGroupID].formations.Length; //PLACHEOLDER
+
+		partyMembers = PlayerPrefs.GetInt("PartyMembers", 1);
+
+
+		characters = new GameObject[partyMembers + enemyAmount];
+		charControl = new CharControl_Battle[partyMembers + enemyAmount];
+
+
+		for (int i = 0; i < partyMembers + enemyAmount; i++)
+		{
+			characters[i] = Instantiate(battleCharacterPrefab);
+
+			charControl[i] = characters[i].GetComponent<CharControl_Battle>();
+			charControl[i].rowSize = tileScript.yTiles;
+			if (i < partyMembers) characters[i].name = "Battle_Char_" + i;
+			else characters[i].name = "Battle_Enemy_" + i;
+
+
+
+			//Up to here is good.
+
+
+			//gameData.FullFormationsCollection[].formation[]
+
+			if (i < partyMembers)
+			{
+				charControl[i].Init(i, true);
+			}
+			else
+			{
+				charControl[i].Init(i, false);
+			}
+			charControl[i].UpdateTileID();
+			PlaceCharacterOnTheirTile(i);
+			tileScript.tiles[charControl[i].tileID].isOccupied = true;
+
+		}
+		//Debug.Log(enemyGroupID + "test4");
+
+		battleUI.InitializeInfoBoxes();
+		battleUI.attackOptionAmount = charControl[activeCharacter].attacksAmount;
+		battleMenu.SetActive(true);
+		battleUI.ChangeNotifText("Encountered an enemy!");
+
+		turnCounter = 0;
+		CalculateTurnOrderInPhase();
+		StartCoroutine(WaitForBattleStart());
+
+		specifiedEncounter = false;
+	}
 	IEnumerator WaitForBattleStart()
 	{
 		selecting = SelectingMenu.waiting;

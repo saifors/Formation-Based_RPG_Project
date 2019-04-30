@@ -101,10 +101,11 @@ public class InputManager : MonoBehaviour
 
         //debug
         if(Input.GetKeyDown(KeyCode.F10)) gameManager.ToggleDebug();
-        /*if(gameManager.debug)
+		/*if(gameManager.debug)
         {*/
-            if(Input.GetKeyDown(KeyCode.B)) gameManager.EncounterAnim();
-            if(Input.GetKeyDown(KeyCode.N)) gameManager.randomEcountersOn = !gameManager.randomEcountersOn;
+		if (Input.GetKeyDown(KeyCode.B)) gameManager.SpecifiedBattleEncounterAnim(2);
+
+			if (Input.GetKeyDown(KeyCode.N)) gameManager.randomEcountersOn = !gameManager.randomEcountersOn;
         /*}*/
 
     }
