@@ -17,6 +17,8 @@ public class LanguageData
 	public Dictionary<string, string> itemDesc;
 	public Dictionary<string, string> actions;
 	public Dictionary<string, string> stats;
+
+	public Dictionary<string, string> dialogue;
 	//--------------------
 
 	public LanguageData() //Detect the PCs language to initialize it as the PC language
@@ -64,7 +66,9 @@ public class LanguageData
 		itemDesc = new Dictionary<string, string>();
 		actions = new Dictionary<string, string>();
 		stats = new Dictionary<string, string>();
-	}
+
+		dialogue = new Dictionary<string, string>();
+}
 }
 
 public static class LanguageManager
@@ -335,4 +339,45 @@ public static class LanguageManager
 		}
 	}
 
+	public static void LoadDialogue()
+	{
+		try
+		{
+			langData.dialogue = new Dictionary<string, string>(); //reinitializing because like this it gets overwritten every time its loaded which is helpful when the language is changed during runtime.
+
+			string fullText = DataManager.LoadTextFromFile("TextData/DialogueText"); //No need to put Resources as it´s already loading from inside Resources 
+																				  //Debug.Log(fullText);
+																				  //Now we need to seperate the text into lines so:
+			string[] linesText = DataManager.ReadLinesFromString(fullText);
+			//Debug.Log(linesText[0]);
+			for (int i = 1; i < linesText.Length; i++) //i is 1 because line 0 is not info for the program
+			{
+				//langData.form //Dictionary, it´s already loaded inside Language Data
+				string[] rows = linesText[i].Split('\t'); //Splits it by tabs inside of the string.
+
+				switch (langData.currentLanguage)
+				{
+					case LanguageData.Language.English:
+						langData.dialogue.Add(rows[0], rows[1]);
+						break;
+					case LanguageData.Language.Spanish:
+						langData.dialogue.Add(rows[0], rows[2]);
+						break;
+					case LanguageData.Language.Dutch:
+						langData.dialogue.Add(rows[0], rows[3]);
+						break;
+					case LanguageData.Language.German:
+						langData.dialogue.Add(rows[0], rows[4]);
+						break;
+					default:
+						break;
+				}
+			}
+
+		}
+		catch (Exception e)
+		{
+			Debug.LogError("Load from error: " + e);
+		}
+	}
 }

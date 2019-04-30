@@ -13,6 +13,7 @@ TagManager:
   - TitleScreenOptions
   - BattleMenu
   - DialogueUI
+  - Event
   layers:
   - Default
   - TransparentFX

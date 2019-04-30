@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 1149260100857757719}
   - component: {fileID: 1149260100857757718}
   - component: {fileID: 4895986158329190311}
+  - component: {fileID: 8270597524673986596}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Manager
@@ -58,6 +59,8 @@ MonoBehaviour:
   randomEcountersOn: 1
   encounterMinimumPercent: 80
   currentEncounterMap: 0
+  specifiedEncounter: 0
+  specEncounterID: 0
   battleMenu: {fileID: 0}
   battleUI: {fileID: 0}
   selecting: 0
@@ -228,6 +231,18 @@ MonoBehaviour:
   - {fileID: 1619778630106235894, guid: d8c16e41829dd6b44bf99520cc33606e, type: 3}
   - {fileID: 8315246682423042777, guid: dfdebaae8f525204da29bb88920110a6, type: 3}
   step: 0
+--- !u!114 &8270597524673986596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1149260100857757710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb41e01ffca8d6341a40f80093d7405c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1149260101636217453
 GameObject:
   m_ObjectHideFlags: 0

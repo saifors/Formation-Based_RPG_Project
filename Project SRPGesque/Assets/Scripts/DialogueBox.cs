@@ -20,6 +20,8 @@ public class DialogueBox : MonoBehaviour
 
 	private DialogueData diaData;
 
+	private int diaProgress;
+
 	public void Init(GameManager gM)
 	{
 		optionsTrans = new RectTransform[options.Length];
@@ -36,5 +38,27 @@ public class DialogueBox : MonoBehaviour
 	public void StartDialogue(int diaID)
 	{
 		diaData = gameManager.gameData.DialogueCollection[diaID];
+		diaProgress = 0;
+		DialogueLoop();
+	}
+
+	public void DialogueLoop()
+	{
+		textBoxText.text = LanguageManager.langData.dialogue[ diaData.dialogueTexts[diaProgress].ToString() ];
+		diaProgress = 0;
+		if (diaProgress >= diaData.dialogueTexts.Length) //has reached the end of the dialogue.
+		{
+			//end
+			DialogueEnd();
+		}
+		else
+		{
+			DialogueLoop();
+		}
+	}
+
+	public void DialogueEnd()
+	{
+		//gameManager.eventManager.
 	}
 }

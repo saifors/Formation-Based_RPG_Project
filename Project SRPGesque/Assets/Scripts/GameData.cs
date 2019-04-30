@@ -78,6 +78,8 @@ public class GameData
 
 		LoadItems();
 		LoadInventory();
+
+		LoadDialogue();
 	}
 
 	public void LoadStatSpread()

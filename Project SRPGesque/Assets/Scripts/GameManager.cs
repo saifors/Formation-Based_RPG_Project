@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
 	public enum GameState { Overworld, Battle, GameMenu };
 	public GameState gameState;
 	private TransitionManager transition;
+	public EventManager eventManager;
 
 	//Encounters
 	[Header("Encounters")]
@@ -134,6 +135,9 @@ public class GameManager : MonoBehaviour
 		GameDataManager.Save(gameData, cacheName);
 
 		LanguageManager.LoadLanguage();
+
+		eventManager = GetComponent<EventManager>();
+		eventManager.Init(this);
 
 		gameState = GameState.Overworld;
 		randomEcountersOn = true;//Depending on the area. Maybe a scene database indicating whether true or false?.
