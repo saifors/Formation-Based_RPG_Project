@@ -199,6 +199,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   battleUI: {fileID: 0}
+  gameManager: {fileID: 0}
   left: {fileID: 7590247780989184040}
   right: {fileID: 8321537111475640969}
 --- !u!1 &611497407821909483
@@ -6665,6 +6666,7 @@ MonoBehaviour:
   playerInfoPrefab: {fileID: 1054355355362116, guid: 693c71de3e3fb0548a85da3289689133,
     type: 3}
   playerInfoBox: []
+  finishedHPBarAnim: 0
 --- !u!1 &3271627803100749236
 GameObject:
   m_ObjectHideFlags: 0
@@ -17745,7 +17747,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3664324246694130074
 RectTransform:
   m_ObjectHideFlags: 0

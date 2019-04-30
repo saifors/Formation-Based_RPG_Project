@@ -37,6 +37,7 @@ public class DialogueBox : MonoBehaviour
 
 	public void StartDialogue(int diaID)
 	{
+		gameObject.SetActive(true);
 		diaData = gameManager.gameData.DialogueCollection[diaID];
 		diaProgress = 0;
 		DialogueLoop();
@@ -44,8 +45,8 @@ public class DialogueBox : MonoBehaviour
 
 	public void DialogueLoop()
 	{
-		textBoxText.text = LanguageManager.langData.dialogue[ diaData.dialogueTexts[diaProgress].ToString() ];
-		diaProgress = 0;
+		textBoxText.text = "DAB";//LanguageManager.langData.dialogue[ diaData.dialogueTexts[diaProgress].ToString() ];
+		diaProgress = 0;/*
 		if (diaProgress >= diaData.dialogueTexts.Length) //has reached the end of the dialogue.
 		{
 			//end
@@ -54,7 +55,7 @@ public class DialogueBox : MonoBehaviour
 		else
 		{
 			DialogueLoop();
-		}
+		}*/
 	}
 
 	public void DialogueEnd()

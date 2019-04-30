@@ -26,7 +26,7 @@ public class OWPlayerController : MonoBehaviour
 
     private GameManager gameManager;
 
-	private InteractionOverlapCollider overlap;
+	public InteractionOverlapCollider overlap;
 
     bool isRotating;// make it so it can't move when rotating and only starts moving when completed rotation.
 

@@ -82,13 +82,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d35db163919e9040a43d30db7ccbb9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerController: {fileID: 0}
-  gameManager: {fileID: 0}
-  center: {x: 0, y: 0, z: 0}
-  halfSize: {x: 0, y: 0, z: 0}
+  hitColliders: []
+  boxSize: {x: 0.6, y: 1.2, z: 0.6}
+  offset: {x: 0, y: 0.6, z: 0.4}
   mask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 512
 --- !u!1001 &4709655687213622079
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -96,10 +95,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2180017395058473658}
     m_Modifications:
-    - target: {fileID: 100000, guid: 9a0fe3bac4928f74f952ade60c8e056b, type: 3}
-      propertyPath: m_Name
-      value: AenComplete
-      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 9a0fe3bac4928f74f952ade60c8e056b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -143,6 +138,10 @@ PrefabInstance:
     - target: {fileID: 400000, guid: 9a0fe3bac4928f74f952ade60c8e056b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 9a0fe3bac4928f74f952ade60c8e056b, type: 3}
+      propertyPath: m_Name
+      value: AenComplete
       objectReference: {fileID: 0}
     - target: {fileID: 9500000, guid: 9a0fe3bac4928f74f952ade60c8e056b, type: 3}
       propertyPath: m_Controller

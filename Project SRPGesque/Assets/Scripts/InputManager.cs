@@ -75,6 +75,10 @@ public class InputManager : MonoBehaviour
 
 				}
             }
+			else if (gameManager.gameState == GameManager.GameState.Overworld)
+			{
+				gameManager.eventManager.Interact();
+			}
         }
         else if (Input.GetKeyDown(KeyCode.X))
         {
