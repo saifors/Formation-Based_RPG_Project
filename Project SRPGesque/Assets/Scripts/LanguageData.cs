@@ -18,7 +18,7 @@ public class LanguageData
 	public Dictionary<string, string> actions;
 	public Dictionary<string, string> stats;
 
-	public Dictionary<string, string> dialogue;
+	public Dictionary<int, string> dialogue;
 	//--------------------
 
 	public LanguageData() //Detect the PCs language to initialize it as the PC language
@@ -67,7 +67,7 @@ public class LanguageData
 		actions = new Dictionary<string, string>();
 		stats = new Dictionary<string, string>();
 
-		dialogue = new Dictionary<string, string>();
+		dialogue = new Dictionary<int, string>();
 }
 }
 
@@ -87,6 +87,8 @@ public static class LanguageManager
 
 		LoadActionCommands();
 		LoadStats();
+
+		LoadDialogue();
 	}
 
 	public static void LoadAttackNames() //This isnt an universal void, there needs to be one for each file.
@@ -343,7 +345,7 @@ public static class LanguageManager
 	{
 		try
 		{
-			langData.dialogue = new Dictionary<string, string>(); //reinitializing because like this it gets overwritten every time its loaded which is helpful when the language is changed during runtime.
+			langData.dialogue = new Dictionary<int, string>(); //reinitializing because like this it gets overwritten every time its loaded which is helpful when the language is changed during runtime.
 
 			string fullText = DataManager.LoadTextFromFile("TextData/DialogueText"); //No need to put Resources as it´s already loading from inside Resources 
 																				  //Debug.Log(fullText);
@@ -358,16 +360,16 @@ public static class LanguageManager
 				switch (langData.currentLanguage)
 				{
 					case LanguageData.Language.English:
-						langData.dialogue.Add(rows[0], rows[1]);
+						langData.dialogue.Add(int.Parse(rows[0]), rows[1]);
 						break;
 					case LanguageData.Language.Spanish:
-						langData.dialogue.Add(rows[0], rows[2]);
+						langData.dialogue.Add(int.Parse(rows[0]), rows[2]);
 						break;
 					case LanguageData.Language.Dutch:
-						langData.dialogue.Add(rows[0], rows[3]);
+						langData.dialogue.Add(int.Parse(rows[0]), rows[3]);
 						break;
 					case LanguageData.Language.German:
-						langData.dialogue.Add(rows[0], rows[4]);
+						langData.dialogue.Add(int.Parse(rows[0]), rows[4]);
 						break;
 					default:
 						break;

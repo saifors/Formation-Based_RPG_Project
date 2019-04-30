@@ -79,6 +79,10 @@ public class InputManager : MonoBehaviour
 			{
 				gameManager.eventManager.Interact();
 			}
+			else if (gameManager.gameState == GameManager.GameState.Text)
+			{
+				gameManager.dialogueUI.DialogueNext();
+			}
         }
         else if (Input.GetKeyDown(KeyCode.X))
         {

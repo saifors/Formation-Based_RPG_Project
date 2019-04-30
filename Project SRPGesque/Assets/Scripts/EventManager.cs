@@ -12,9 +12,11 @@ public class EventManager : MonoBehaviour
 	public EventScript[] events;
 
 	public enum TypeOfEvent { Interaction, Range};
-	public enum InteractEvents { None, Dialogue, Chest};
+	public enum InteractEvents { None, Dialogue, Chest, ReceiveItem};
 
 	public int currentEvent;
+
+	public int eventProgress;
 
     public void Init(GameManager gM, OWPlayerController pC)
     {
@@ -75,24 +77,66 @@ public class EventManager : MonoBehaviour
 		}
 
 		currentEvent = receiveEvents[closest].ID;
+		playerController.isMoving = false;
+		playerController.isRunning = false;
 
-		switch (receiveEvents[closest].interactEvent)
-		{
-			case InteractEvents.None:
-				break;
-			case InteractEvents.Dialogue:
-				DialogueEvent();
-				break;
-			case InteractEvents.Chest:
-				break;
-			default:
-				break;
-		}
+		eventProgress = 0;
+		ContinueEvent();
 	}
 
-	public void DialogueEvent()
+	public void ContinueEvent()
 	{
-		dialogueBox.StartDialogue(events[currentEvent].interactID);
+		if (eventProgress < events[currentEvent].interactEvent.Length)
+		{
+			switch (events[currentEvent].interactEvent[eventProgress])
+			{
+				case InteractEvents.None:
+					break;
+				case InteractEvents.Dialogue:
+					DialogueEvent(events[currentEvent].interactID[eventProgress]);
+					break;
+				case InteractEvents.Chest:
+					break;
+				case InteractEvents.ReceiveItem:
+					GainItem(events[currentEvent].interactID[eventProgress]);
+					break;
+				default:
+					break;
+			}
+			eventProgress++;
+		}
+		else
+		{
+			EndEvent();
+		}	
+	}
+
+	public void EndEvent()
+	{
+		gameManager.gameState = GameManager.GameState.Overworld;
+	}
+
+	public void DialogueEvent(int id)
+	{
+		//Debug.Log("test1");
+		dialogueBox.StartDialogue(id);
+	}
+	public void GainItem(int id)
+	{
+		for (int e = 0; e < gameManager.gameData.ItemInventory.Count; e++)
+		{
+			if (id == gameManager.gameData.ItemInventory[e].itemId) //You already have one of this item in your inventory
+			{
+				gameManager.gameData.ItemInventory[e].amount++;
+					
+			}
+			else if (e == gameManager.gameData.ItemInventory.Count - 1) //final of the loop and still no match with items in inevntory
+			{
+				string newItem = gameManager.gameData.ItemInventory.Count.ToString() + '\t' + id.ToString() + '\t' + 1;
+				gameManager.gameData.ItemInventory.Add(new InventoryData(newItem));
+					
+			}
+		}
 	}
 
 	

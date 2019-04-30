@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
 	private OWPlayerController playerController;
 	public enum CameraSetting { OverworldCam, BattleCam, CutsceneCam }; public CameraSetting camSet;
 	public Camera cam;
-	public enum GameState { Overworld, Battle, GameMenu };
+	public enum GameState { Overworld, Battle, GameMenu, Text };
 	public GameState gameState;
 	private TransitionManager transition;
 	public EventManager eventManager;

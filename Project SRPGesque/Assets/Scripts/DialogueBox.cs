@@ -37,16 +37,25 @@ public class DialogueBox : MonoBehaviour
 
 	public void StartDialogue(int diaID)
 	{
+
+		Debug.Log("test2");
 		gameObject.SetActive(true);
+		Debug.Log("test3");
 		diaData = gameManager.gameData.DialogueCollection[diaID];
+		gameManager.gameState = GameManager.GameState.Text;
 		diaProgress = 0;
 		DialogueLoop();
 	}
 
 	public void DialogueLoop()
 	{
-		textBoxText.text = "DAB";//LanguageManager.langData.dialogue[ diaData.dialogueTexts[diaProgress].ToString() ];
-		diaProgress = 0;/*
+		Debug.Log(diaData.dialogueTexts[diaProgress]);
+		textBoxText.text = LanguageManager.langData.dialogue[ diaData.dialogueTexts[diaProgress] ];
+		diaProgress++;
+	}
+
+	public void DialogueNext()
+	{
 		if (diaProgress >= diaData.dialogueTexts.Length) //has reached the end of the dialogue.
 		{
 			//end
@@ -55,11 +64,14 @@ public class DialogueBox : MonoBehaviour
 		else
 		{
 			DialogueLoop();
-		}*/
+		}
 	}
 
 	public void DialogueEnd()
 	{
-		//gameManager.eventManager.
+		gameObject.SetActive(false);
+		gameManager.eventManager.ContinueEvent();
+
+		
 	}
 }
