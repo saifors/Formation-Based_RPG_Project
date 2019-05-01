@@ -35,8 +35,8 @@ public class DialogueBox : MonoBehaviour
 			optionsTrans[i] = options[i].GetComponent<RectTransform>();
 		}
 		speakerPositions = new Vector2[2];
-		speakerPositions[0] = new Vector2(-615, 20);
-		speakerPositions[1] = new Vector2(615, 20);
+		speakerPositions[0] = new Vector2(-545, 20);
+		speakerPositions[1] = new Vector2(545, 20);
 		
 		portSprites = new Sprite[gameManager.gameData.speakerPortrait.Length];
 		for (int i = 0; i < portSprites.Length; i++)
