@@ -8,6 +8,7 @@ The game will be displayed from an isometric camera angle.
 
 ## Synopsis
 In a medieval fantasy world where magic is normal, due to a mistak Leech, a dark elf girl, and A'en, a human prince curse each other by accident and journey across the continent in hopes of finding a magical item to dispel the curse placed upon them.
+Now you take control of this party in a strategy focused RPG as you coordinate and manage them through the turn based battles all the while making them stronger to overcome the hardships of their journey.
 
 ## The team:
 ![logo](https://github.com/saifors/Formation-Based_RPG_Project/blob/master/WikiResources/wish%20boundarycdscaso.png)
