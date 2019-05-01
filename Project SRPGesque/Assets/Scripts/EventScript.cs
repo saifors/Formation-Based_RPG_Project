@@ -18,6 +18,8 @@ public class EventScript : MonoBehaviour
 
 	public bool hasBeenTriggered;
 
+	public Animator anim;
+
 	public void Init(EventManager eM, GameManager gM, int index)
     {
 		eM = eventManager;
@@ -26,6 +28,15 @@ public class EventScript : MonoBehaviour
 		trans = transform;
 		if (typeEvent.Length != typeEventID.Length) Debug.LogError("Event " + ID + "'s array lengths or Events and event IDs don't align");
 		hasBeenTriggered = gameManager.gameData.EventCollection[eventTriggerID].hasBeenTriggered;
+
+		for (int i = 0; i < typeEvent.Length; i++)
+		{
+			if(typeEvent[i] == EventManager.Events.Chest)
+			{
+				anim = GetComponentInChildren<Animator>();
+				break;
+			}
+		}
     }
 
 

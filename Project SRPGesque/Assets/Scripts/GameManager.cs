@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
 	private OWPlayerController playerController;
 	public enum CameraSetting { OverworldCam, BattleCam, CutsceneCam }; public CameraSetting camSet;
 	public Camera cam;
-	public enum GameState { Overworld, Battle, GameMenu, Text };
+	public enum GameState { Overworld, Battle, GameMenu, Text, Event };
 	public GameState gameState;
 	private TransitionManager transition;
 	public EventManager eventManager;
@@ -42,6 +42,7 @@ public class GameManager : MonoBehaviour
 	private GameObject dialogueObj;
 	public int levelUpScreenProgress;
 
+	public NotificationBox notifBox;
 
 	//[HideInInspector] public AttackInfoManager attackInfo;
 	[Header("Characters & Enemies")]
@@ -150,13 +151,16 @@ public class GameManager : MonoBehaviour
 		//Initialization of Objects
 		cam_T = GameObject.FindGameObjectWithTag("CamTarget").GetComponent<Transform>();
 
+		
+
 		playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<OWPlayerController>();
 		battleUI = GameObject.FindGameObjectWithTag("UI").GetComponent<BattleUI>();
 		dialogueUI = battleUI.GetComponentInChildren<DialogueBox>();
 		dialogueUI.Init(this);
 		dialogueObj = dialogueUI.gameObject;
 		dialogueObj.SetActive(false);
-		
+		notifBox = battleUI.GetComponentInChildren<NotificationBox>();
+		notifBox.Init(this);
 
 		soundPlayer = gameObject.GetComponent<SoundPlayer>();
 		tileScript = GameObject.FindGameObjectWithTag("TileManager").GetComponent<TileScript>();
@@ -1036,6 +1040,7 @@ public class GameManager : MonoBehaviour
 	}
 	public void EncounterAnim()
 	{
+		specifiedEncounter = false;
 		battleUI.battleTransition.TransitionTo();
 	}
 	public void SpecifiedBattleEncounterAnim(int encounterIdentity)

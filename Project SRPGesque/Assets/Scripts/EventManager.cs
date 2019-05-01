@@ -122,6 +122,7 @@ public class EventManager : MonoBehaviour
 
 	public void ContinueEvent()
 	{
+		gameManager.gameState = GameManager.GameState.Event;
 		if (eventProgress < events[currentEvent].typeEvent.Length)
 		{
 			switch (events[currentEvent].typeEvent[eventProgress])
@@ -132,6 +133,7 @@ public class EventManager : MonoBehaviour
 					DialogueEvent(events[currentEvent].typeEventID[eventProgress]);
 					break;
 				case Events.Chest:
+					OpenChest(events[currentEvent].typeEventID[eventProgress]);
 					break;
 				case Events.ReceiveItem:
 					GainItem(events[currentEvent].typeEventID[eventProgress]);
@@ -209,11 +211,41 @@ public class EventManager : MonoBehaviour
 		eventProgress++;
 		ContinueEvent();
 	}
+
+	public void OpenChest(int id)
+	{
+		events[currentEvent].anim.Play("Open");
+		
+		for (int e = 0; e < gameManager.gameData.ItemInventory.Count; e++)
+		{
+			if (id == gameManager.gameData.ItemInventory[e].itemId) //You already have one of this item in your inventory
+			{
+				gameManager.gameData.ItemInventory[e].amount++;
+				break;
+			}
+			else if (e == gameManager.gameData.ItemInventory.Count - 1) //final of the loop and still no match with items in inevntory
+			{
+				string newItem = gameManager.gameData.ItemInventory.Count.ToString() + '\t' + id.ToString() + '\t' + 1;
+				gameManager.gameData.ItemInventory.Add(new InventoryData(newItem));
+
+			}
+		}
+
+		StartCoroutine(WaitForChest(id));
+		
+	}
 	public void StartFight(int id)
 	{
 		gameManager.SpecifiedBattleEncounterAnim(id);
 		eventProgress++;
 	}
 
-	
+	IEnumerator WaitForChest(int id)
+	{
+		yield return new WaitForSeconds(0.25f);
+		gameManager.notifBox.DisplayNotif("Received " + LanguageManager.langData.itemName[gameManager.gameData.ItemsCollection[id].name]);
+		yield return new WaitForSeconds(1);
+		eventProgress++;
+		ContinueEvent();
+	}
 }
