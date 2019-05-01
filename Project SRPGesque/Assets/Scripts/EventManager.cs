@@ -12,7 +12,7 @@ public class EventManager : MonoBehaviour
 	public EventScript[] events;
 
 	public enum TypeOfEvent { Interaction, Range, StartMap};
-	public enum Events { None, Dialogue, Chest, ReceiveItem, Fight, CheckTrigger};
+	public enum Events { None, Dialogue, Chest, ReceiveItem, Fight, CheckTrigger, DestroyMe};
 
 	public int currentEvent;
 
@@ -142,6 +142,9 @@ public class EventManager : MonoBehaviour
 				case Events.CheckTrigger:
 					CheckEventIDTriggered();
 					break;
+				case Events.DestroyMe:
+					DestroyEvent();
+					break;
 				default:
 					break;
 			}
@@ -172,6 +175,13 @@ public class EventManager : MonoBehaviour
 		{
 			EndEvent();
 		}
+	}
+
+	public void DestroyEvent()
+	{
+		Destroy(eventObj[currentEvent]);
+		eventProgress++;
+		ContinueEvent();
 	}
 
 	public void DialogueEvent(int id)
