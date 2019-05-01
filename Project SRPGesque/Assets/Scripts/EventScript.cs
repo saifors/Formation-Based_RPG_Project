@@ -34,6 +34,7 @@ public class EventScript : MonoBehaviour
 			if(typeEvent[i] == EventManager.Events.Chest)
 			{
 				anim = GetComponentInChildren<Animator>();
+				if (hasBeenTriggered) anim.Play("IdleOpen");
 				break;
 			}
 		}

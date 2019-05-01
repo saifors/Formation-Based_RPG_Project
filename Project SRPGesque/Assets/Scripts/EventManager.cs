@@ -231,7 +231,7 @@ public class EventManager : MonoBehaviour
 			}
 		}
 
-		StartCoroutine(WaitForChest(id));
+		StartCoroutine(WaitForChest(id, events[currentEvent].anim.GetCurrentAnimatorStateInfo(0).length));
 		
 	}
 	public void StartFight(int id)
@@ -240,9 +240,9 @@ public class EventManager : MonoBehaviour
 		eventProgress++;
 	}
 
-	IEnumerator WaitForChest(int id)
+	IEnumerator WaitForChest(int id, float length)
 	{
-		yield return new WaitForSeconds(0.25f);
+		yield return new WaitForSeconds(length - 0.1f);
 		gameManager.notifBox.DisplayNotif("Received " + LanguageManager.langData.itemName[gameManager.gameData.ItemsCollection[id].name]);
 		yield return new WaitForSeconds(1);
 		eventProgress++;
