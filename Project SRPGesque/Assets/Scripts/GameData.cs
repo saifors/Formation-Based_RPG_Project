@@ -52,6 +52,11 @@ public class GameData
 	[XmlArray("Dialogues")]
 	[XmlArrayItem("Dialogue")]
 	public List<DialogueData> DialogueCollection;
+	//Speaker
+	[XmlArray("Speakers")]
+	[XmlArrayItem("Speaker")]
+	public List<SpeakerData> SpeakerCol;
+	public Sprite[] speakerPortrait;
 	//Events
 	[XmlArray("Events")]
 	[XmlArrayItem("Event")]
@@ -84,6 +89,8 @@ public class GameData
 		LoadInventory();
 
 		LoadDialogue();
+		LoadSpeakers();
+		LoadSpeakerPortraits();
 		LoadEvents();
 	}
 
@@ -189,6 +196,15 @@ public class GameData
 		for (int i = 1; i < linesText.Length; i++) DialogueCollection.Add(new DialogueData(linesText[i]));
 	}
 
+	public void LoadSpeakers()
+	{
+		SpeakerCol = new List<SpeakerData>();
+		string fullText = DataManager.LoadTextFromFile("Data/DialogueSpeakers");
+
+		string[] linesText = DataManager.ReadLinesFromString(fullText);
+		for (int i = 1; i < linesText.Length; i++) SpeakerCol.Add(new SpeakerData(linesText[i]));
+	}
+
 	public void LoadEvents()
 	{
 		EventCollection = new List<EventData>();
@@ -196,6 +212,17 @@ public class GameData
 
 		string[] linesText = DataManager.ReadLinesFromString(fullText);
 		for (int i = 1; i < linesText.Length; i++) EventCollection.Add(new EventData(linesText[i]));
+	}
+
+	public void LoadSpeakerPortraits()
+	{
+		
+		object[] loadedSprites = Resources.LoadAll<Sprite>("Sprites/SpeakerPortraits");
+		speakerPortrait = new Sprite[loadedSprites.Length];
+		for (int i = 0; i < loadedSprites.Length; i++)
+		{
+			speakerPortrait[i] = (Sprite)loadedSprites[i];
+		}
 	}
 }
 

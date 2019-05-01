@@ -1,0 +1,4 @@
+SpeakerId	NameKey	PortraitID
+0	A'en	0
+1	Leech	1
+2	Fenia	2

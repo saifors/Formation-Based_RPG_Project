@@ -43,3 +43,17 @@ public class DialogueData
 		
 	}
 }
+
+public class SpeakerData
+{
+	public int speakerID;
+	public string nameKey;
+	public int portraitID;
+	public SpeakerData(string speakString)
+	{
+		string[] cols = speakString.Split('\t');
+		speakerID = int.Parse(cols[0]);
+		nameKey = cols[1];
+		portraitID = int.Parse(cols[2]);
+	}
+}

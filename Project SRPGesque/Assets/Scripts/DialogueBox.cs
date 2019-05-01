@@ -23,8 +23,12 @@ public class DialogueBox : MonoBehaviour
 
 	private int diaProgress;
 
+	public Sprite[] portSprites;
+	public Color[] activityColors;
+
 	public void Init(GameManager gM)
 	{
+		gameManager = gM;
 		optionsTrans = new RectTransform[options.Length];
 		for (int i = 0; i < optionsTrans.Length; i++)
 		{
@@ -33,10 +37,16 @@ public class DialogueBox : MonoBehaviour
 		speakerPositions = new Vector2[2];
 		speakerPositions[0] = new Vector2(-615, 20);
 		speakerPositions[1] = new Vector2(615, 20);
+		
+		portSprites = new Sprite[gameManager.gameData.speakerPortrait.Length];
+		for (int i = 0; i < portSprites.Length; i++)
+		{
+			portSprites[i] = gameManager.gameData.speakerPortrait[i];
+		}
 
 		speakerName = speakerBox.GetComponentInChildren<TextMeshProUGUI>();
 
-		gameManager = gM;
+		
 	}
 
 	public void StartDialogue(int diaID)
@@ -46,6 +56,13 @@ public class DialogueBox : MonoBehaviour
 		gameObject.SetActive(true);
 		//Debug.Log("test3");
 		diaData = gameManager.gameData.DialogueCollection[diaID];
+		
+
+		
+		if(portSprites.Length > gameManager.gameData.SpeakerCol[diaData.dialogueSpeakerL].portraitID) portraits[0].sprite = portSprites[ gameManager.gameData.SpeakerCol[diaData.dialogueSpeakerL].portraitID ];
+		
+		if (portSprites.Length > gameManager.gameData.SpeakerCol[diaData.dialogueSpeakerR].portraitID) portraits[1].sprite = portSprites[ gameManager.gameData.SpeakerCol[diaData.dialogueSpeakerR].portraitID ];
+		
 		gameManager.gameState = GameManager.GameState.Text;
 		diaProgress = 0;
 		DialogueLoop();
@@ -59,12 +76,17 @@ public class DialogueBox : MonoBehaviour
 		if (diaData.speakerDirection[diaProgress] == false)
 		{
 			speakerBox.anchoredPosition = speakerPositions[0];
-			speakerName.text = diaData.dialogueSpeakerL.ToString();
+			
+			portraits[0].color = activityColors[1];
+			portraits[1].color = activityColors[0];
+			speakerName.text = gameManager.gameData.SpeakerCol[ diaData.dialogueSpeakerL ].nameKey;
 		}
 		else if (diaData.speakerDirection[diaProgress] == true)
 		{
 			speakerBox.anchoredPosition = speakerPositions[1];
-			speakerName.text = diaData.dialogueSpeakerR.ToString();
+			portraits[0].color = activityColors[0];
+			portraits[1].color = activityColors[1];
+			speakerName.text = gameManager.gameData.SpeakerCol[ diaData.dialogueSpeakerR ].nameKey;
 		}
 		diaProgress++;
 	}
