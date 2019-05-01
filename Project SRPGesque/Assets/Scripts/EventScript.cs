@@ -13,8 +13,8 @@ public class EventScript : MonoBehaviour
 	public Transform trans;
 	public EventManager.TypeOfEvent eventType;
 
-	public EventManager.InteractEvents[] interactEvent;
-	public int[] interactID; //Can be dialogue or whatever is needed.
+	public EventManager.Events[] typeEvent;
+	public int[] typeEventID; //Can be dialogue or whatever is needed.
 
 	public bool hasBeenTriggered;
 
@@ -24,8 +24,8 @@ public class EventScript : MonoBehaviour
 		gameManager = gM;
 		ID = index;
 		trans = transform;
-		//hasBeenTriggered = false;
-		hasBeenTriggered = gameManager.gameData.EventCollection[0].hasBeenTriggered;
+		if (typeEvent.Length != typeEventID.Length) Debug.LogError("Event " + ID + "'s array lengths or Events and event IDs don't align");
+		hasBeenTriggered = gameManager.gameData.EventCollection[eventTriggerID].hasBeenTriggered;
     }
 
 

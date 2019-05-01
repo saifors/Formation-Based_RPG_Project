@@ -11,8 +11,8 @@ public class EventManager : MonoBehaviour
 	public GameObject[] eventObj;
 	public EventScript[] events;
 
-	public enum TypeOfEvent { Interaction, Range};
-	public enum InteractEvents { None, Dialogue, Chest, ReceiveItem, Fight, CheckTrigger};
+	public enum TypeOfEvent { Interaction, Range, StartMap};
+	public enum Events { None, Dialogue, Chest, ReceiveItem, Fight, CheckTrigger};
 
 	public int currentEvent;
 
@@ -26,6 +26,14 @@ public class EventManager : MonoBehaviour
 		
 		GetAllEvents();
 
+		for (int i = 0; i < events.Length; i++)
+		{
+			if(events[i].eventType == TypeOfEvent.StartMap)
+			{
+				MapStartEvent(events[i]);
+				break;
+			}
+		}
 	}
 
 	
@@ -89,7 +97,7 @@ public class EventManager : MonoBehaviour
 
 	public void EnterEventRange(EventScript receiveEvent)
 	{
-		if (receiveEvent.hasBeenTriggered) return;
+		//if (receiveEvent.hasBeenTriggered) return;
 
 		currentEvent = receiveEvent.ID;
 		playerController.isMoving = false;
@@ -102,26 +110,36 @@ public class EventManager : MonoBehaviour
 		//Debug.Log("Enter event " + currentEvent);
 	}
 
+	public void MapStartEvent(EventScript receiveEvent)
+	{
+		currentEvent = receiveEvent.ID;
+		playerController.isMoving = false;
+		playerController.isRunning = false;
+
+		eventProgress = 0;
+		ContinueEvent();
+	}
+
 	public void ContinueEvent()
 	{
-		if (eventProgress < events[currentEvent].interactEvent.Length)
+		if (eventProgress < events[currentEvent].typeEvent.Length)
 		{
-			switch (events[currentEvent].interactEvent[eventProgress])
+			switch (events[currentEvent].typeEvent[eventProgress])
 			{
-				case InteractEvents.None:
+				case Events.None:
 					break;
-				case InteractEvents.Dialogue:
-					DialogueEvent(events[currentEvent].interactID[eventProgress]);
+				case Events.Dialogue:
+					DialogueEvent(events[currentEvent].typeEventID[eventProgress]);
 					break;
-				case InteractEvents.Chest:
+				case Events.Chest:
 					break;
-				case InteractEvents.ReceiveItem:
-					GainItem(events[currentEvent].interactID[eventProgress]);
+				case Events.ReceiveItem:
+					GainItem(events[currentEvent].typeEventID[eventProgress]);
 					break;
-				case InteractEvents.Fight:
-					StartFight(events[currentEvent].interactID[eventProgress]);
+				case Events.Fight:
+					StartFight(events[currentEvent].typeEventID[eventProgress]);
 					break;
-				case InteractEvents.CheckTrigger:
+				case Events.CheckTrigger:
 					CheckEventIDTriggered();
 					break;
 				default:
