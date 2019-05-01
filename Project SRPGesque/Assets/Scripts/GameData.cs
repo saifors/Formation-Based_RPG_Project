@@ -52,6 +52,10 @@ public class GameData
 	[XmlArray("Dialogues")]
 	[XmlArrayItem("Dialogue")]
 	public List<DialogueData> DialogueCollection;
+	//Events
+	[XmlArray("Events")]
+	[XmlArrayItem("Event")]
+	public List<EventData> EventCollection;
 
 	public GameData()
 	{
@@ -80,6 +84,7 @@ public class GameData
 		LoadInventory();
 
 		LoadDialogue();
+		LoadEvents();
 	}
 
 	public void LoadStatSpread()
@@ -182,6 +187,15 @@ public class GameData
 
 		string[] linesText = DataManager.ReadLinesFromString(fullText);
 		for (int i = 1; i < linesText.Length; i++) DialogueCollection.Add(new DialogueData(linesText[i]));
+	}
+
+	public void LoadEvents()
+	{
+		EventCollection = new List<EventData>();
+		string fullText = DataManager.LoadTextFromFile("Data/Events");
+
+		string[] linesText = DataManager.ReadLinesFromString(fullText);
+		for (int i = 1; i < linesText.Length; i++) EventCollection.Add(new EventData(linesText[i]));
 	}
 }
 

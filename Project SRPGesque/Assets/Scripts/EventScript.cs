@@ -6,9 +6,10 @@ public class EventScript : MonoBehaviour
 {
 	[HideInInspector]
 	public EventManager eventManager;
+	public GameManager gameManager;
 
 	public int ID;
-	public int EventTriggerID;
+	public int eventTriggerID;
 	public Transform trans;
 	public EventManager.TypeOfEvent eventType;
 
@@ -17,13 +18,14 @@ public class EventScript : MonoBehaviour
 
 	public bool hasBeenTriggered;
 
-	public void Init(EventManager eM, int index)
+	public void Init(EventManager eM, GameManager gM, int index)
     {
 		eM = eventManager;
+		gameManager = gM;
 		ID = index;
 		trans = transform;
-		hasBeenTriggered = false;
-		//hasBeenTriggered = eventManager.gameManager.gameData.EventCollection[EventTriggerID];
+		//hasBeenTriggered = false;
+		hasBeenTriggered = gameManager.gameData.EventCollection[0].hasBeenTriggered;
     }
 
 

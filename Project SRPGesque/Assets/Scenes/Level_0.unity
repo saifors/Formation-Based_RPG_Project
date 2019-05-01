@@ -591,8 +591,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eventManager: {fileID: 0}
+  gameManager: {fileID: 0}
   ID: 0
-  EventTriggerID: 0
+  eventTriggerID: 0
   trans: {fileID: 0}
   eventType: 0
   interactEvent: 01000000040000000300000001000000
@@ -12149,12 +12150,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eventManager: {fileID: 0}
+  gameManager: {fileID: 0}
   ID: 0
-  EventTriggerID: 0
+  eventTriggerID: 1
   trans: {fileID: 0}
   eventType: 1
-  interactEvent: 01000000040000000300000001000000
-  interactID: 00000000010000000200000001000000
+  interactEvent: 050000000100000003000000
+  interactID: 000000000100000002000000
   hasBeenTriggered: 0
 --- !u!65 &1858889604
 BoxCollider:

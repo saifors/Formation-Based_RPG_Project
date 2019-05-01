@@ -12,7 +12,7 @@ public class EventManager : MonoBehaviour
 	public EventScript[] events;
 
 	public enum TypeOfEvent { Interaction, Range};
-	public enum InteractEvents { None, Dialogue, Chest, ReceiveItem, Fight};
+	public enum InteractEvents { None, Dialogue, Chest, ReceiveItem, Fight, CheckTrigger};
 
 	public int currentEvent;
 
@@ -37,7 +37,7 @@ public class EventManager : MonoBehaviour
 		for (int i = 0; i < eventObj.Length; i++)
 		{
 			events[i] = eventObj[i].GetComponent<EventScript>();
-			events[i].Init(this, i);
+			events[i].Init(this, gameManager, i);
 		}
 	}
 
@@ -98,8 +98,7 @@ public class EventManager : MonoBehaviour
 		eventProgress = 0;
 		ContinueEvent();
 
-		events[currentEvent].hasBeenTriggered = true;
-		//gameManager.gameData.EventCollection[EventTriggerID].triggered = events[currentEvent].hasBeenTriggered;
+		
 		//Debug.Log("Enter event " + currentEvent);
 	}
 
@@ -122,6 +121,9 @@ public class EventManager : MonoBehaviour
 				case InteractEvents.Fight:
 					StartFight(events[currentEvent].interactID[eventProgress]);
 					break;
+				case InteractEvents.CheckTrigger:
+					CheckEventIDTriggered();
+					break;
 				default:
 					break;
 			}
@@ -135,7 +137,23 @@ public class EventManager : MonoBehaviour
 
 	public void EndEvent()
 	{
+		events[currentEvent].hasBeenTriggered = true;
+		gameManager.gameData.EventCollection[events[currentEvent].eventTriggerID].hasBeenTriggered = events[currentEvent].hasBeenTriggered;
+
 		gameManager.gameState = GameManager.GameState.Overworld;
+	}
+
+	public void CheckEventIDTriggered()
+	{
+		if(!gameManager.gameData.EventCollection[events[currentEvent].eventTriggerID].hasBeenTriggered)
+		{
+			eventProgress++;
+			ContinueEvent();
+		}
+		else
+		{
+			EndEvent();
+		}
 	}
 
 	public void DialogueEvent(int id)

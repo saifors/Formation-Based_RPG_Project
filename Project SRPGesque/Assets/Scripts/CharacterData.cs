@@ -435,3 +435,17 @@ public class ExpRequirements
 	}
 }
 
+public class EventData
+{
+	public int id;
+	public bool hasBeenTriggered;
+	public EventData(string eventsString)
+	{
+		string[] cols = eventsString.Split('\t');
+
+		id = int.Parse(cols[0]);
+		hasBeenTriggered = bool.Parse(cols[1]);
+		//Debug.Log(id + " is " + hasBeenTriggered);
+	}
+}
+
