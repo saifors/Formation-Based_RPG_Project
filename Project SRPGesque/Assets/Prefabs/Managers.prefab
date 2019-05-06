@@ -56,6 +56,7 @@ MonoBehaviour:
   camSet: 0
   cam: {fileID: 0}
   gameState: 0
+  eventManager: {fileID: 0}
   randomEcountersOn: 1
   encounterMinimumPercent: 80
   currentEncounterMap: 0
@@ -66,6 +67,7 @@ MonoBehaviour:
   selecting: 0
   dialogueUI: {fileID: 0}
   levelUpScreenProgress: 0
+  notifBox: {fileID: 0}
   battleCharacterPrefab: {fileID: 1542637486942168, guid: d5258dd58b4531e478789f5a3bdfdf86,
     type: 3}
   charControl: []
@@ -205,9 +207,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   modelsPrefabs:
   - {fileID: 3858551518035096116, guid: 5415d8c0bbf0acd4d8bc4e78d4159ed1, type: 3}
-  - {fileID: 2718651199090173535, guid: 934145134cc8f6a4cb37a01ea29ce005, type: 3}
-  - {fileID: 2718651199090173535, guid: 934145134cc8f6a4cb37a01ea29ce005, type: 3}
-  - {fileID: 2718651199090173535, guid: 934145134cc8f6a4cb37a01ea29ce005, type: 3}
+  - {fileID: 3858551518035096116, guid: 5415d8c0bbf0acd4d8bc4e78d4159ed1, type: 3}
+  - {fileID: 3858551518035096116, guid: 5415d8c0bbf0acd4d8bc4e78d4159ed1, type: 3}
+  - {fileID: 3858551518035096116, guid: 5415d8c0bbf0acd4d8bc4e78d4159ed1, type: 3}
   - {fileID: 4797710552982084772, guid: 403f37973a2169b4ebd1b3c79d412111, type: 3}
   - {fileID: 1080951226, guid: ed2521b5732a1064b8297c2a1b8c9065, type: 3}
   - {fileID: 2718651199090173535, guid: 934145134cc8f6a4cb37a01ea29ce005, type: 3}
@@ -243,6 +245,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb41e01ffca8d6341a40f80093d7405c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
+  eventObj: []
+  events: []
+  currentEvent: 0
+  eventProgress: 0
 --- !u!1 &1149260101636217453
 GameObject:
   m_ObjectHideFlags: 0

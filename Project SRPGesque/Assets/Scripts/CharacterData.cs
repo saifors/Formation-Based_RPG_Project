@@ -276,7 +276,7 @@ public class AttackData
 
 public class ItemData
 {
-	public enum ItemEffect { Heal20_F, Heal50_F, Heal100_F, Heal200_F, Heal500_F, Heal50_P, Heal100_P, Recover50_F, Recover100_F, Recover300_F, Recover50_P, Recover100_P, CurePoison };//Heal is HP, Recover is MP Cure is Status effect
+	public enum ItemEffect { Heal20_F, Heal50_F, Heal100_F, Heal200_F, Heal500_F, Heal50_P, Heal100_P, Recover50_F, Recover100_F, Recover300_F, Recover50_P, Recover100_P, CurePoison, None };//Heal is HP, Recover is MP Cure is Status effect
 	[XmlAttribute("ItemID")]
 	public int id;
 	[XmlElement("Name")]

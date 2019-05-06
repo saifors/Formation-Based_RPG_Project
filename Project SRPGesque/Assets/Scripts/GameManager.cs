@@ -142,7 +142,7 @@ public class GameManager : MonoBehaviour
 		gameState = GameState.Overworld;
 		randomEcountersOn = true;//Depending on the area. Maybe a scene database indicating whether true or false?.
 
-		partyMembers = PlayerPrefs.GetInt("PartyMembers", 1);
+		partyMembers = 3; //PlayerPrefs.GetInt("PartyMembers", 3);
 
 		cam = Camera.main;
 
@@ -1077,7 +1077,7 @@ public class GameManager : MonoBehaviour
 
 		enemyAmount = gameData.FullFormationsCollection[enemyGroupID].formations.Length; //PLACHEOLDER
 
-		partyMembers = PlayerPrefs.GetInt("PartyMembers", 1);
+		partyMembers = 3; //PlayerPrefs.GetInt("PartyMembers", 3);
 		
         
         characters = new GameObject[partyMembers + enemyAmount];
@@ -1146,7 +1146,7 @@ public class GameManager : MonoBehaviour
 
 		enemyAmount = gameData.FullFormationsCollection[enemyGroupID].formations.Length; //PLACHEOLDER
 
-		partyMembers = PlayerPrefs.GetInt("PartyMembers", 1);
+		partyMembers = 3; //PlayerPrefs.GetInt("PartyMembers", 3);
 
 
 		characters = new GameObject[partyMembers + enemyAmount];

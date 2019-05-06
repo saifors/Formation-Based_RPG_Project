@@ -2,3 +2,5 @@ Key	English	Spanish	Dutch	German	Observations
 N_SmallPotion	Small Potion	Poción Pequeña	Toverdrankje	Kleiner Trank	
 N_Potion	Potion	Poción	Toverdrank	Trank	
 N_Elixir	Elixir	Elixir	Elixer	Elixier	
+N_HolyWater	Holy Water	Agua Bendita	Heilig Water	Weihwasser	
+N_MagicItem	Magic Item	Objeto Magico	Magisch Voorwerp	Magischer Gegenstand	
