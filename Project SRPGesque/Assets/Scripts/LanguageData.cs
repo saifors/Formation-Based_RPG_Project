@@ -357,19 +357,21 @@ public static class LanguageManager
 				//langData.form //Dictionary, it´s already loaded inside Language Data
 				string[] rows = linesText[i].Split('\t'); //Splits it by tabs inside of the string.
 
+				
+
 				switch (langData.currentLanguage)
 				{
 					case LanguageData.Language.English:
-						langData.dialogue.Add(int.Parse(rows[0]), rows[1]);
+						langData.dialogue.Add(int.Parse(rows[0]), LineSkips(rows[1]));
 						break;
 					case LanguageData.Language.Spanish:
-						langData.dialogue.Add(int.Parse(rows[0]), rows[2]);
+						langData.dialogue.Add(int.Parse(rows[0]), LineSkips(rows[2]));
 						break;
 					case LanguageData.Language.Dutch:
-						langData.dialogue.Add(int.Parse(rows[0]), rows[3]);
+						langData.dialogue.Add(int.Parse(rows[0]), LineSkips(rows[3]));
 						break;
 					case LanguageData.Language.German:
-						langData.dialogue.Add(int.Parse(rows[0]), rows[4]);
+						langData.dialogue.Add(int.Parse(rows[0]), LineSkips(rows[4]));
 						break;
 					default:
 						break;
@@ -381,5 +383,26 @@ public static class LanguageManager
 		{
 			Debug.LogError("Load from error: " + e);
 		}
+	}
+
+	public static string LineSkips(string inputText)
+	{
+		string phrase;
+		string[] phrases = inputText.Split(new[] { "[/n]" }, StringSplitOptions.None);
+		//Debug.Log(phrases.Length);
+		if(phrases.Length > 1)
+		{
+			phrase = phrases[0];
+			for (int i = 1; i < phrases.Length; i++)
+			{
+				phrase += '\n' + phrases[i];
+			}
+		}
+		else
+		{
+			phrase = phrases[0];
+		}
+
+		return phrase;
 	}
 }

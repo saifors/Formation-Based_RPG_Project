@@ -12,7 +12,7 @@ public class EventManager : MonoBehaviour
 	public EventScript[] events;
 
 	public enum TypeOfEvent { Interaction, Range, StartMap};
-	public enum Events { None, Dialogue, Chest, ReceiveItem, Fight, CheckTrigger, DestroyMe};
+	public enum Events { None, Dialogue, Chest, ReceiveItem, Fight, CheckTrigger, CheckOther, DestroyMe};
 
 	public int currentEvent;
 
@@ -144,6 +144,9 @@ public class EventManager : MonoBehaviour
 				case Events.CheckTrigger:
 					CheckEventIDTriggered();
 					break;
+				case Events.CheckOther:
+					CheckOtherEvent(events[currentEvent].typeEventID[eventProgress]);
+					break;
 				case Events.DestroyMe:
 					DestroyEvent();
 					break;
@@ -154,13 +157,13 @@ public class EventManager : MonoBehaviour
 		}
 		else
 		{
-			EndEvent();
+			EndEvent(true);
 		}	
 	}
 
-	public void EndEvent()
+	public void EndEvent(bool trigger)
 	{
-		events[currentEvent].hasBeenTriggered = true;
+		if(trigger) events[currentEvent].hasBeenTriggered = true;
 		gameManager.gameData.EventCollection[events[currentEvent].eventTriggerID].hasBeenTriggered = events[currentEvent].hasBeenTriggered;
 
 		gameManager.gameState = GameManager.GameState.Overworld;
@@ -168,14 +171,28 @@ public class EventManager : MonoBehaviour
 
 	public void CheckEventIDTriggered()
 	{
-		if(!gameManager.gameData.EventCollection[events[currentEvent].eventTriggerID].hasBeenTriggered)
+		if (!gameManager.gameData.EventCollection[events[currentEvent].eventTriggerID].hasBeenTriggered)
 		{
 			eventProgress++;
 			ContinueEvent();
 		}
 		else
 		{
-			EndEvent();
+			EndEvent(false);
+		}
+	}
+
+	public void CheckOtherEvent(int id)
+	{
+		
+		if (gameManager.gameData.EventCollection[id].hasBeenTriggered)
+		{
+			eventProgress++;
+			ContinueEvent();
+		}
+		else
+		{
+			EndEvent(false);
 		}
 	}
 
@@ -208,8 +225,7 @@ public class EventManager : MonoBehaviour
 					
 			}
 		}
-		eventProgress++;
-		ContinueEvent();
+		StartCoroutine(WaitForItemNotif(id));
 	}
 
 	public void OpenChest(int id)
@@ -243,6 +259,14 @@ public class EventManager : MonoBehaviour
 	IEnumerator WaitForChest(int id, float length)
 	{
 		yield return new WaitForSeconds(length - 0.1f);
+		gameManager.notifBox.DisplayNotif("Received " + LanguageManager.langData.itemName[gameManager.gameData.ItemsCollection[id].name]);
+		yield return new WaitForSeconds(1);
+		eventProgress++;
+		ContinueEvent();
+	}
+
+	IEnumerator WaitForItemNotif(int id)
+	{
 		gameManager.notifBox.DisplayNotif("Received " + LanguageManager.langData.itemName[gameManager.gameData.ItemsCollection[id].name]);
 		yield return new WaitForSeconds(1);
 		eventProgress++;
