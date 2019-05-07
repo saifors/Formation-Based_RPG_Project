@@ -9,8 +9,8 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: CrystalMaterial
   m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: _ALPHAPREMULTIPLY_ON
-  m_LightmapFlags: 4
+  m_ShaderKeywords: _ALPHAPREMULTIPLY_ON _EMISSION
+  m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: 3000
@@ -74,5 +74,5 @@ Material:
     - _UVSec: 0
     - _ZWrite: 0
     m_Colors:
-    - _Color: {r: 0.32240117, g: 0.99056596, b: 0.6992289, a: 0.62352943}
-    - _EmissionColor: {r: 1.1195567, g: 3.011765, b: 2.6490917, a: 1}
+    - _Color: {r: 0.32240114, g: 0.99056596, b: 0.6992289, a: 0.26666668}
+    - _EmissionColor: {r: 0.55977833, g: 1.5058825, b: 1.3245459, a: 1}
