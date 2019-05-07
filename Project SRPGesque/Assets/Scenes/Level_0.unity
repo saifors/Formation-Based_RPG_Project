@@ -10429,8 +10429,8 @@ MonoBehaviour:
   eventTriggerID: 1
   trans: {fileID: 0}
   eventType: 1
-  typeEvent: 05000000010000000400000003000000010000000100000007000000
-  typeEventID: 00000000020000000100000004000000030000000400000000000000
+  typeEvent: 05000000010000000400000003000000010000000100000008000000
+  typeEventID: 00000000020000000100000004000000030000000400000004000000
   hasBeenTriggered: 0
   anim: {fileID: 0}
 --- !u!65 &1523948283
@@ -12858,7 +12858,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400086, guid: 72063bed4bbaadd44b34002e56c6bc1d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.32448292
+      value: 0.47
       objectReference: {fileID: 0}
     - target: {fileID: 400086, guid: 72063bed4bbaadd44b34002e56c6bc1d, type: 3}
       propertyPath: m_LocalRotation.x

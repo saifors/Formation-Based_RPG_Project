@@ -12,7 +12,7 @@ public class EventManager : MonoBehaviour
 	public EventScript[] events;
 
 	public enum TypeOfEvent { Interaction, Range, StartMap};
-	public enum Events { None, Dialogue, Chest, ReceiveItem, Fight, CheckTrigger, CheckOther, DestroyMe};
+	public enum Events { None, Dialogue, Chest, ReceiveItem, Fight, CheckTrigger, CheckOther, DestroyMe, transitionScene};
 
 	public int currentEvent;
 
@@ -150,6 +150,9 @@ public class EventManager : MonoBehaviour
 				case Events.DestroyMe:
 					DestroyEvent();
 					break;
+				case Events.transitionScene:
+					TransitionToScene(events[currentEvent].typeEventID[eventProgress]);
+					break;
 				default:
 					break;
 			}
@@ -254,6 +257,11 @@ public class EventManager : MonoBehaviour
 	{
 		gameManager.SpecifiedBattleEncounterAnim(id);
 		eventProgress++;
+	}
+
+	public void TransitionToScene(int id)
+	{
+		gameManager.transition.FadeToSceneChange(false, id);
 	}
 
 	IEnumerator WaitForChest(int id, float length)

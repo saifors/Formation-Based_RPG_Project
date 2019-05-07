@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
 	public Camera cam;
 	public enum GameState { Overworld, Battle, GameMenu, Text, Event };
 	public GameState gameState;
-	private TransitionManager transition;
+	public TransitionManager transition;
 	public EventManager eventManager;
 
 	//Encounters
