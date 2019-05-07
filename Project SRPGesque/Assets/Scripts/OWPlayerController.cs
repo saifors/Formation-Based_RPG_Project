@@ -76,8 +76,17 @@ public class OWPlayerController : PhysicsCollision
 			if ((axis.x != 0 || axis.y != 0)) // How to minimize slide (Input Lag?)?
 			{
 				/*trans.position*/
-				rb.velocity = movementIndicator * speed /* * Time.deltaTime*/;
-				isMoving = true;
+				if(isTouchingWall && (facing == FacingDirection.NorthEast || facing == FacingDirection.NorthWest || facing == FacingDirection.SouthEast || facing == FacingDirection.SouthWest) )
+				{
+					rb.velocity = movementIndicator * 0;
+					isMoving = false;
+				}
+				else
+				{
+					rb.velocity = movementIndicator * speed /* * Time.deltaTime*/;
+					isMoving = true;
+				}
+				
 			}
 			else
 			{
@@ -108,7 +117,7 @@ public class OWPlayerController : PhysicsCollision
             if(trans.rotation != targetRotation)
             {
                 isRotating = true;
-				Flip();
+				//Flip();
             }
             else isRotating = false;
 
@@ -252,7 +261,8 @@ public class OWPlayerController : PhysicsCollision
     {
         targetRotation = Quaternion.Euler(0, directionalAngle, 0);
         trans.rotation = Quaternion.Slerp(trans.rotation, targetRotation, turnSpeed * Time.deltaTime);
-    }
+		Flip();
+	}
 
 
 }

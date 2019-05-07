@@ -93,15 +93,18 @@ public class PhysicsCollision : MonoBehaviour
 		justTouchingWall = false;
 		justTouchingWall = false;
 		int altNegPosNr = 1;
-		Vector3 pos = transform.position;
+		Vector3 pos = trans.position;
+		//Debug.Log("CheckWall");
 		for (int i = 0; i < wNumRays; i++)
 		{
 			RaycastHit hit = new RaycastHit();
 			Ray ray = new Ray(pos, wDirection);
 			if (Physics.Raycast(ray, out hit, wDistance, wMask))
 			{
-				if (Mathf.Abs(hit.normal.x) > 0.85f)
+				//Debug.Log("Wall touchy" + Mathf.Abs(hit.normal.z));
+				if (Mathf.Abs(hit.normal.z) > 0.85f || Mathf.Abs(hit.normal.x) > 0.85f)
 				{
+					
 					isTouchingWall = true;
 					if (!wasTouchingWall) justTouchingWall = true;
 
@@ -122,7 +125,7 @@ public class PhysicsCollision : MonoBehaviour
 		//isFacingRight = !isFacingRight;
 		facingRotation = trans.rotation.y;
 
-		wDirection = Vector3.forward * facingRotation;
+		wDirection = trans.forward; //Quaternion.Euler(new Vector3(0, facingRotation, 0)) * Vector3.forward;
 
 		/*if (isFacingRight) wDirection = Vector3.right;
 		else wDirection = Vector3.left;*/
