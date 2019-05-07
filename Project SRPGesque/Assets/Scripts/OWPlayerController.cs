@@ -76,7 +76,7 @@ public class OWPlayerController : PhysicsCollision
 			if ((axis.x != 0 || axis.y != 0)) // How to minimize slide (Input Lag?)?
 			{
 				/*trans.position*/
-				rb.velocity = movementIndicator * speed /** Time.deltaTime*/;
+				rb.velocity = movementIndicator * speed /* * Time.deltaTime*/;
 				isMoving = true;
 			}
 			else
