@@ -322,7 +322,7 @@ public class GameManager : MonoBehaviour
 			//Go to move menu
 			selecting = SelectingMenu.selectingMove;
 
-			tileSelection = charControl[0].tile; //0 is a placeholder for now Will be replaced with an Int indicating the active character when that's a thing            
+			tileSelection = charControl[activeCharacter].tile; //0 is a placeholder for now Will be replaced with an Int indicating the active character when that's a thing            
 			selectedTile = Mathf.FloorToInt(tileSelection.y + (tileSelection.x * tileVectorSize.y));
 			selectedTileIndicator.gameObject.SetActive(true);
 			selectedTileIndicator.position = tileScript.tileTransform[selectedTile].position;
@@ -460,6 +460,7 @@ public class GameManager : MonoBehaviour
 	public void LaunchAttack()
 	{
 		//Debug.Log("Attack Launched");
+		battleUI.actionMenu.SetActive(false);
 		if (charControl[activeCharacter].alliance == CharacterStats.Alliance.Player) charControl[activeCharacter].UseMp(gameData.AttackList[charControl[activeCharacter].attacksLearned[battleUI.attackOptionSelected]].mpCost);
 		else if (charControl[activeCharacter].alliance == CharacterStats.Alliance.Enemy) charControl[activeCharacter].UseMp(gameData.AttackList[charControl[activeCharacter].ai.currentAttack].mpCost);
 
@@ -1023,14 +1024,17 @@ public class GameManager : MonoBehaviour
     {
 		gameData.FullFormationsCollection[0].formations[charID].tiles = tiles;
 		//CharacterStats.SetTileOccupied(charID, tiles, tileScript.yTiles);
-        charControl[charID].UpdateTileID();
+        
         PlaceCharacterOnTheirTile(charID);
     }
     public void PlaceCharacterOnTheirTile(int charID)
     {
+		tileScript.tiles[charControl[charID].tileID].isOccupied = false;
+		charControl[charID].UpdateTileID();
 		charControl[charID].trans.position = tileScript.tileTransform[charControl[charID].tileID].position;
-			//tileScript.tileTransform[gameData PlayerPrefs.GetInt(charID + "_TileID")].position;
-		
+		tileScript.tiles[charControl[charID].tileID].isOccupied = true;
+		//tileScript.tileTransform[gameData PlayerPrefs.GetInt(charID + "_TileID")].position;
+
 	}
 
 //-------------------------Start Battle-------------------------
@@ -1108,9 +1112,7 @@ public class GameManager : MonoBehaviour
 			{
 				charControl[i].Init(i, false);
 			}
-			charControl[i].UpdateTileID();
             PlaceCharacterOnTheirTile(i);
-            tileScript.tiles[charControl[i].tileID].isOccupied = true;
 			
 		}
 		//Debug.Log(enemyGroupID + "test4");
@@ -1177,9 +1179,9 @@ public class GameManager : MonoBehaviour
 			{
 				charControl[i].Init(i, false);
 			}
-			charControl[i].UpdateTileID();
+			//charControl[i].UpdateTileID();
 			PlaceCharacterOnTheirTile(i);
-			tileScript.tiles[charControl[i].tileID].isOccupied = true;
+			//tileScript.tiles[charControl[i].tileID].isOccupied = true;
 
 		}
 		//Debug.Log(enemyGroupID + "test4");
