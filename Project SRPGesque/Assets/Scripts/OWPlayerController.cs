@@ -2,37 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OWPlayerController : MonoBehaviour
+public class OWPlayerController : PhysicsCollision
 {
-
-
-    public Vector2 axis;
-    private Vector2 previousAxis;
-    public enum FacingDirection { North, NorthWest, West, SouthWest, South, SouthEast, East, NorthEast};
-    public FacingDirection facing;
-    Quaternion targetRotation;
-    public Transform trans;
-    public Vector3 movementIndicator;
-    private float speed;
-    public float walkSpeed;
-    public float runSpeed;
-    public float turnSpeed = 20;
-    public bool isMoving;
-    public bool isRunning;
-
-    private Animator anim;
+	
+	private Animator anim;
+	private GameManager gameManager;
+	public InteractionOverlapCollider overlap;
 
 	public float timeCounter;
 
-    private GameManager gameManager;
-
-	public InteractionOverlapCollider overlap;
-
-    bool isRotating;// make it so it can't move when rotating and only starts moving when completed rotation.
-
-    float directionalAngle;
-    //Could this be done as an enum?
-    #region 
+	[Header("Input")]
+    public Vector2 axis;
+    private Vector2 previousAxis;
+	
+	public enum FacingDirection { North, NorthWest, West, SouthWest, South, SouthEast, East, NorthEast};
+    [Header("Direction")]
+	public FacingDirection facing;
+    Quaternion targetRotation;
+	float directionalAngle;
+	#region 
     float angle_N = 45;
     float angle_NW = 90;
     float angle_NE = 0;
@@ -49,18 +37,65 @@ public class OWPlayerController : MonoBehaviour
     Vector3 movement_SE = new Vector3(-1,0,0);
     Vector3 movement_W = new Vector3(1,0,-1);
     Vector3 movement_E = new Vector3(-1,0,1);
-    #endregion
+	#endregion
 
-    // Use this for initialization
-    void Start ()
+	[Header("Movement State")]
+	public Vector3 movementIndicator;
+    private float speed;
+    public float walkSpeed;
+    public float runSpeed;
+    public float turnSpeed = 20;
+    public bool isMoving;
+    public bool isRunning;
+	bool isRotating;// make it so it can't move when rotating and only starts moving when completed rotation.
+
+
+	// Use this for initialization
+	protected override void Start ()
     {
-        trans = transform;
+		base.Start();
         gameManager = GameObject.FindGameObjectWithTag("Manager").GetComponent<GameManager>();
 		overlap = GetComponent<InteractionOverlapCollider>();
 		overlap.Init(this, gameManager);
         anim = GetComponentInChildren<Animator>();
     }
-	
+
+	protected override void FixedUpdate()
+	{
+		base.FixedUpdate();
+
+		/*if (jump)
+		{
+			rb.velocity = new Vector3(rb.velocity.x, 0, 0);
+			rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+			jump = false;
+		}*/
+
+		if (gameManager.gameState == GameManager.GameState.Overworld)
+		{
+			if ((axis.x != 0 || axis.y != 0)) // How to minimize slide (Input Lag?)?
+			{
+				/*trans.position*/
+				rb.velocity = movementIndicator * speed /** Time.deltaTime*/;
+				isMoving = true;
+			}
+			else
+			{
+				rb.velocity = movementIndicator * 0;
+				isMoving = false;
+			}
+
+			DetermineDirection();
+			previousAxis = axis; //Store axis of last frame
+		}
+		else
+		{
+			rb.velocity = movementIndicator * 0;
+			isMoving = false;
+		}
+							 //rb.velocity = new Vector3(speed, rb.velocity.y, 0); //Unity APi says don´t do this, teacher says do this, teacher is smart, be like teacher.
+	}
+
 	// Update is called once per frame
 	void Update ()
     {
@@ -73,22 +108,25 @@ public class OWPlayerController : MonoBehaviour
             if(trans.rotation != targetRotation)
             {
                 isRotating = true;
+				Flip();
             }
             else isRotating = false;
 
             Rotate();
-            //Still has some kinks to work out
-            if ((axis.x != 0 || axis.y != 0) ) // How to minimize slide (Input Lag?)?
+			
+
+			//Still has some kinks to work out
+			/*if ((axis.x != 0 || axis.y != 0) ) // How to minimize slide (Input Lag?)?
             {
                 trans.position += movementIndicator * speed * Time.deltaTime;
                 isMoving = true;
             }
-            else isMoving = false;
+            else isMoving = false;*/
 
 
-            DetermineDirection();
-            previousAxis = axis; //Store axis of last frame
-        }
+			/*DetermineDirection();
+            previousAxis = axis; //Store axis of last frame*/
+		}
 		//Animation
 
 		if (isMoving == false)
