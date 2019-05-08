@@ -262,7 +262,7 @@ public class CharControl_Battle : MonoBehaviour
 
 	public void Heal(Recovery.RecoveryType type, int healValue)
 	{
-		if ( ((type == Recovery.RecoveryType.FixedHeal || type == Recovery.RecoveryType.PercentHeal) && currentHp < hp) || ((type == Recovery.RecoveryType.FixedRecover || type == Recovery.RecoveryType.PercentRecover) && currentMp < mp) )
+		if ( ( (type == Recovery.RecoveryType.FixedHeal || type == Recovery.RecoveryType.PercentHeal) && currentHp < hp) || ((type == Recovery.RecoveryType.FixedRecover || type == Recovery.RecoveryType.PercentRecover) && currentMp < mp) )
 		{
 			gameManager.battleUI.itemMenu.SetActive(false);
 			gameManager.battleUI.partyInfo.SetActive(true);

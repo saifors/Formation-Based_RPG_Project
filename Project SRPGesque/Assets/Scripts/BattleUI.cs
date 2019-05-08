@@ -223,29 +223,36 @@ public class BattleUI : MonoBehaviour
 				}
 				if (axis != Vector2.zero)
 				{
-					if (itemSelVector.x < 0) itemSelVector.x++;
-					else if (itemSelVector.x > 1) itemSelVector.x--;
-
-					if (itemSelVector.y < 0) itemSelVector.y++;
-
-					if(itemSelVector.x == 0)
+					if (itemBox.itemTexts.Length != 0)
 					{
-						itemVertLimit = itemBox.vertLimits[0];
-					}
-					else
-					{
-						itemVertLimit = itemBox.vertLimits[1];
-					}
+						if (itemBox.itemTexts.Length < 2 && itemSelVector.x > 0)
+						{
+							itemSelVector.x--;
+						}
+						if (itemSelVector.x < 0) itemSelVector.x++;
+						else if (itemSelVector.x > 1) itemSelVector.x--;
 
-					if (itemSelVector.y > itemVertLimit - 1)
-					{
-						itemSelVector.y--;
-					}
+						if (itemSelVector.y < 0) itemSelVector.y++;
 
-					scrollCooldownCounter = 0;
-					gameManager.soundPlayer.PlaySound(3, true);
-					itemBox.selected = Mathf.FloorToInt(itemSelVector.x + (itemSelVector.y * 2)); ;
-					itemBox.PlaceSelection();
+						if (itemSelVector.x == 0)
+						{
+							itemVertLimit = itemBox.vertLimits[0];
+						}
+						else
+						{
+							itemVertLimit = itemBox.vertLimits[1];
+						}
+
+						if (itemSelVector.y > itemVertLimit - 1)
+						{
+							itemSelVector.y--;
+						}
+
+						scrollCooldownCounter = 0;
+						gameManager.soundPlayer.PlaySound(3, true);
+						itemBox.selected = Mathf.FloorToInt(itemSelVector.x + (itemSelVector.y * 2)); ;
+						itemBox.PlaceSelection();
+					}
 				}
 			}
 
@@ -475,7 +482,13 @@ public class BattleUI : MonoBehaviour
             string nameKey = gameManager.gameData.AttackList[gameManager.charControl[gameManager.activeCharacter].attacksLearned[i]].nameKey;
             attackName[i].text = LanguageManager.langData.attackName[nameKey];
         }
-
+		/*
+		for (int i = 0; i < gameManager.gameData.AttackList.Count; i++)
+		{
+			Debug.Log(i + "iteration " + gameManager.gameData.AttackList[i].id);
+			Debug.Log(gameManager.gameData.AttackList[i].nameKey);
+		}*/
+		
         //gameManager.selectedTarget[] = 0;
         //gameManager.selectedTargetsTransform[].position = gameManager.tileScript.tileTransform[selectedTarget].position;
         //gameManager.selectedTargetsTransform[].gameObject.SetActive(false);

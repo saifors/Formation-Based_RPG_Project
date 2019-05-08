@@ -1,4 +1,8 @@
 Key	English	Spanish	Dutch	German	Observations
 Name_FireBolt	Fire Bolt	Rayo de Fuego	Vlammenschicht	Feuer Blitz	
-Name_IcePike	Ice Pike	Empalamiento Helado	Ijs Speer	Eis Spieß	
+Name_IcePike	Ice Pike	Lanza Hielo	Ijs Speer	Eis Spieß	
 Name_BladeStrike	Blade Strike	Impacto de Espada	Kling Slag	Schwertschlag	
+Name_BodySlam	Body Slam	Golpe Corpal	Body Slam	Bodyslam	
+Name_MeagerSwipe	Meager Swipe	Golpeo pobre	Magere Slag	Mager Streichen	
+Name_RavagingClaws	Ravaging Claws	Garras Devastadoras	Ravende Klauwen	Verwüstende Klauen	
+Name_FlameWall	Flame Wall	Murro de Llamas	Vlammuur	Flammenwand	

@@ -603,6 +603,10 @@ public class GameManager : MonoBehaviour
 	public void EndItem()
 	{
 		gameData.ItemInventory[battleUI.itemBox.selected].amount--;
+		if(gameData.ItemInventory[battleUI.itemBox.selected].amount <= 0)
+		{
+			gameData.ItemInventory.Remove(gameData.ItemInventory[battleUI.itemBox.selected]);
+		}
 		battleUI.itemBox.DestroyItemText();
 		Invoke("EndTurn", 2);
 	}
