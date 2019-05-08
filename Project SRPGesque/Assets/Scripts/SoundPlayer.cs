@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class SoundPlayer : MonoBehaviour
 {
@@ -14,18 +15,33 @@ public class SoundPlayer : MonoBehaviour
 	public float musicVol;
 
 	public int soundCounter;
-	public int musicCounter;
+	public int cutsceneMusicCounter;
 
-	private void Start()
+	public int currentMusic;
+	public int newMusic;
+
+	public enum MusicType { Overworld, Battle, BossBattle, Cutscene1, Cutscene2, Victory};
+
+	private GameManager gameManager;
+
+	public void Init(GameManager gM)
 	{
+		gameManager = gM;
 		soundVol = PlayerPrefs.GetFloat("Sound_Volume", 1);
 		musicVol = PlayerPrefs.GetFloat("Music_Volume", 1);
 
 		soundSource = new AudioSource[10];
-		musicSource = new AudioSource[3];
+		musicSource = new AudioSource[6]; //0 is Overworld, 1 is Battle 2 is special Battle 3 & 4 are cutscene. 5 is Victory
 
 		soundCounter = 0;
-		musicCounter = 0;
+		cutsceneMusicCounter = 0;
+		currentMusic = -1;
+
+		InitOWMusic();
+		InitBattleMusic();
+		InitBossBattleMusic();
+		InitCutsceneMusic();
+		InitVictoryMusic();
 	}
 
 	public void PlaySound(int num, bool is2D)
@@ -91,24 +107,177 @@ public class SoundPlayer : MonoBehaviour
     }
 
     //PlayMusicLoop?
-    //UNFINISHED, TODO: Figure out how to loop.
-    public void PlayMusic(int num)
-    {
-		
+	public void InitOWMusic()
+	{
 		GameObject obj = new GameObject();
-        obj.transform.position = transform.position;
-        obj.name = "MUSIC_" + musicClips[num].name;
+		obj.transform.position = Vector3.zero;
 
-        AudioSource source = obj.AddComponent<AudioSource>();
-		musicSource[musicCounter] = source;
+		int musicID = gameManager.gameData.MapEncounterCollection[gameManager.currentEncounterMap].owMusicID;
+
+		obj.name = "MUSIC_" + musicClips[musicID].name;
+
+		AudioSource source = obj.AddComponent<AudioSource>();
+		musicSource[0] = source;
+		//AddToMusicCounter();
+		source.clip = musicClips[musicID];
+		source.volume = musicVol;
+		source.spatialBlend = 0;
+		source.loop = true;
+	}
+	public void InitBattleMusic()
+	{
+		GameObject obj = new GameObject();
+		obj.transform.position = Vector3.zero;
+
+		int musicID = gameManager.gameData.MapEncounterCollection[gameManager.currentEncounterMap].battleMusicID;
+
+		obj.name = "MUSIC_" + musicClips[musicID].name;
+
+		AudioSource source = obj.AddComponent<AudioSource>();
+		musicSource[1] = source;
+		//AddToMusicCounter();
+		source.clip = musicClips[musicID];
+		source.volume = musicVol;
+		source.spatialBlend = 0;
+		source.loop = true;
+	}
+	
+	public void InitBossBattleMusic()
+	{
+		GameObject obj = new GameObject();
+		obj.transform.position = Vector3.zero;
+		
+		obj.name = "MUSIC_Boss";
+
+		AudioSource source = obj.AddComponent<AudioSource>();
+		musicSource[2] = source;
+		//AddToMusicCounter();
+		//source.clip = musicClips[musicID];
+		source.volume = musicVol;
+		source.spatialBlend = 0;
+		source.loop = true;
+	}
+	public void InitCutsceneMusic()
+	{
+		GameObject[] obj;
+		obj = new GameObject[2];
+		for (int i = 0; i < 2; i++)
+		{
+			obj[i] = new GameObject();
+			obj[i].transform.position = Vector3.zero;
+			
+
+			obj[i].name = "MUSIC_Cutscene" + i;
+
+			AudioSource source = obj[i].AddComponent<AudioSource>();
+			musicSource[3+i] = source;
+			//AddToMusicCounter();
+			//source.clip = musicClips[musicID];
+			source.volume = musicVol;
+			source.spatialBlend = 0;
+			source.loop = true;
+		}
+	}
+	public void InitVictoryMusic()
+	{
+		GameObject obj = new GameObject();
+		obj.transform.position = Vector3.zero;
+
+		//int musicID = gameManager.gameData.MapEncounterCollection[gameManager.currentEncounterMap].battleMusicID;
+
+		obj.name = "MUSIC_Victory";
+
+		AudioSource source = obj.AddComponent<AudioSource>();
+		musicSource[5] = source;
+		//Victory Clip needed
+		source.clip = musicClips[0];
+		source.volume = musicVol;
+		source.spatialBlend = 0;
+		source.loop = true;
+	}
+
+	public void PlayMusic(MusicType mType)
+    {
+		int id;
+
+		switch (mType)
+		{
+			case MusicType.Overworld:
+				id = 0;
+				break;
+			case MusicType.Battle:
+				id = 1;
+				break;
+			case MusicType.BossBattle:
+				id = 2;
+				break;
+			case MusicType.Cutscene1:
+				id = 3;
+				break;
+			case MusicType.Cutscene2:
+				id = 4;
+				break;
+			case MusicType.Victory:
+				id = 5;
+				break;
+			default:
+				id = 1;
+				break;
+		}
+		
+		if (currentMusic >= 0)
+		{
+			CrossfadeMusic(id, 1.5f);
+		}
+		else
+		{
+			musicSource[id].Play();
+			currentMusic = id;
+		}
+	}
+
+	public void CrossfadeMusic(int nM, float duration)
+	{
+		newMusic = nM;
+
+		musicSource[newMusic].Play();
+		musicSource[newMusic].volume = musicVol;
+		musicSource[newMusic].DOFade(0, duration).From();
+
+		musicSource[currentMusic].DOFade(0, duration).OnComplete(FinishCrossFade);
+	}
+
+	public void NewCutsceneMusic(int musID)
+	{
+
+		int id = cutsceneMusicCounter + 3;
+
+		musicSource[id].clip = musicClips[musID];
+
+		if(id == 3) PlayMusic(MusicType.Cutscene1);
+		else PlayMusic(MusicType.Cutscene2);
+		
+		
 		AddToMusicCounter();
-		source.clip = musicClips[num];
-        source.volume = musicVol;
-        source.spatialBlend = 1;
-        source.loop = true;
-        source.Play();
+	}
 
-    }
+	public void NewBossMusic(int musID)
+	{
+		musicSource[2].clip = musicClips[musID];
+		PlayMusic(MusicType.BossBattle);
+	}
+
+	public void FinishCrossFade()
+	{
+		musicSource[currentMusic].Stop();
+
+		currentMusic = newMusic;
+	}
+
+	public void StopMusic(int i)
+	{
+		Destroy(musicSource[i]);
+	}
 
 	public void UpdateSoundVol()
 	{
@@ -137,10 +306,10 @@ public class SoundPlayer : MonoBehaviour
 	}
 	public void AddToMusicCounter()
 	{
-		musicCounter++;
-		if (musicCounter >= musicSource.Length)
+		cutsceneMusicCounter++;
+		if (cutsceneMusicCounter > 1)
 		{
-			musicCounter = 0;
+			cutsceneMusicCounter = 0;
 		}
 	}
 }

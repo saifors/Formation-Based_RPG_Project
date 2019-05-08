@@ -402,6 +402,10 @@ public class EncounterMap
 	public int id;
 	[XmlElement("FormationGroups")]
 	public int[] groupIDs;
+	[XmlElement("BattleMusic")]
+	public int battleMusicID;
+	[XmlElement("OverworldMusic")]
+	public int owMusicID;
 	public EncounterMap(string encounterString)
 	{
 		string[] cols = encounterString.Split('\t');
@@ -417,6 +421,9 @@ public class EncounterMap
 		}
 
 		groupIDs = tempGroup.ToArray();
+
+		battleMusicID = int.Parse(cols[2]);
+		owMusicID = int.Parse(cols[3]);
 	}
 }
 

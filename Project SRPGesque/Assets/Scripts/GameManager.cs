@@ -162,7 +162,7 @@ public class GameManager : MonoBehaviour
 		notifBox = battleUI.GetComponentInChildren<NotificationBox>();
 		notifBox.Init(this);
 
-		soundPlayer = gameObject.GetComponent<SoundPlayer>();
+		
 		tileScript = GameObject.FindGameObjectWithTag("TileManager").GetComponent<TileScript>();
 		tileScript.Init();
 		battlefield = GameObject.FindGameObjectWithTag("Battlefield").GetComponent<Transform>();
@@ -176,6 +176,9 @@ public class GameManager : MonoBehaviour
 		currentEncounterMap = encounterSpecs.encounterID;
 		possibleEncounters = gameData.MapEncounterCollection[currentEncounterMap].groupIDs;
 		specifiedEncounter = false;
+
+		soundPlayer = gameObject.GetComponent<SoundPlayer>();
+		soundPlayer.Init(this);
 
 		//Create a cursor for Formation Movement
 		GameObject objCursor;
@@ -206,6 +209,8 @@ public class GameManager : MonoBehaviour
 		{
 			UpdateStats(i);
 		}
+
+		PlayOverworldMusic();
 	}
 
 	// Update
@@ -1125,8 +1130,8 @@ public class GameManager : MonoBehaviour
 		turnCounter = 0;
 		CalculateTurnOrderInPhase();
 		StartCoroutine(WaitForBattleStart());
-		
 
+		PlayBattleMusic();
     }
 	public void InitializeEncounter(bool isGroupSpecified, int fightGroupID)
 	{
@@ -1255,6 +1260,8 @@ public class GameManager : MonoBehaviour
 			specifiedEncounter = false;
 			eventManager.ContinueEvent();
 		}
+
+		PlayOverworldMusic();
     }
 
 
@@ -1313,6 +1320,7 @@ public class GameManager : MonoBehaviour
         {
 		//Debug.Log("Victory");
 			levelUpScreenProgress = 0;
+			PlayVictoryMusic();
 			battleUI.VictorySequence();
 			selecting = SelectingMenu.waiting;
         }
@@ -1374,6 +1382,20 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+	//-----------------------------Audio-------------------------------
+	public void PlayOverworldMusic()
+	{
+		soundPlayer.PlayMusic(SoundPlayer.MusicType.Overworld);
+	}
+
+	public void PlayBattleMusic()
+	{
+		soundPlayer.PlayMusic(SoundPlayer.MusicType.Battle);
+	}
+	public void PlayVictoryMusic()
+	{
+		soundPlayer.PlayMusic(SoundPlayer.MusicType.Victory);
+	}
 //------------------------------Debug----------------------------------
 	public void ToggleDebug()
 	{
