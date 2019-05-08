@@ -1131,7 +1131,7 @@ public class GameManager : MonoBehaviour
 		CalculateTurnOrderInPhase();
 		StartCoroutine(WaitForBattleStart());
 
-		PlayBattleMusic();
+		PlayBattleMusic(isGroupSpecified);
     }
 	public void InitializeEncounter(bool isGroupSpecified, int fightGroupID)
 	{
@@ -1200,7 +1200,7 @@ public class GameManager : MonoBehaviour
 		CalculateTurnOrderInPhase();
 		StartCoroutine(WaitForBattleStart());
 
-		
+		PlayBattleMusic(isGroupSpecified);
 	}
 	IEnumerator WaitForBattleStart()
 	{
@@ -1388,9 +1388,10 @@ public class GameManager : MonoBehaviour
 		soundPlayer.PlayMusic(SoundPlayer.MusicType.Overworld);
 	}
 
-	public void PlayBattleMusic()
+	public void PlayBattleMusic(bool isSpec)
 	{
-		soundPlayer.PlayMusic(SoundPlayer.MusicType.Battle);
+		if (!isSpec) soundPlayer.PlayMusic(SoundPlayer.MusicType.Battle);
+		else soundPlayer.NewBossMusic(gameData.FullFormationsCollection[enemyGroupID].music);
 	}
 	public void PlayVictoryMusic()
 	{

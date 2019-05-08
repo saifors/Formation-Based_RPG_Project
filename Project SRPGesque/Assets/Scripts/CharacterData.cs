@@ -366,7 +366,8 @@ public class FullFormationData
 	public int iterations; //Iterations = how many Formation Datas does this take into the group of formations
 	[XmlElement("EnemyFormation")]
 	public FormationData[] formations;
-	
+	[XmlElement("Music")]
+	public int music;
 
 	public FullFormationData(string uniFormString, int formCount)
 	{
@@ -391,6 +392,8 @@ public class FullFormationData
 			
 		}
 		formations = formation.ToArray();
+
+		music = int.Parse(cols[2]);
 		//Debug.Log(formations.Length);
 		//This can be done because its being created inside a for in gameData
 	}
