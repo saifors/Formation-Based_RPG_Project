@@ -238,6 +238,8 @@ public class AttackData
 	public Vector2 rangeSize;
 	[XmlElement("RangeActive")]
 	public int[] rangeActive;
+	[XmlElement("Particle")]
+	public int partID;
 
 	public AttackData(string attackString)
 	{
@@ -271,6 +273,8 @@ public class AttackData
 
 		rangeActive = tempRange.ToArray();
 		//Debug.Log("end" + attackString);
+
+		partID = int.Parse(cols[8]);
 	}
 }
 

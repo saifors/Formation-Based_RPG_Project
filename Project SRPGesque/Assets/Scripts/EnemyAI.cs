@@ -71,7 +71,7 @@ public class EnemyAI : MonoBehaviour
 			//NO MP
 			//Debug.Log(charControl.charId + "has not enough Mp to use any of its moves");
 			StartCoroutine(WaitForMPNotif());
-			Debug.Log("Not enough MP");
+			//Debug.Log("Not enough MP");
 			return;
 		}
 		//Debug.Log(charControl.charId + " stored " + storedAtk[0]);
@@ -83,7 +83,7 @@ public class EnemyAI : MonoBehaviour
 		//Go through each of the attacks with enough mp. And get their best tile placement
 		for (int attack = 0; attack < attacksStoredCounter; attack++)
 		{
-			Debug.Log("attack"+attack + " is " + gameManager.gameData.AttackList[storedAtk[attack]].nameKey);
+			//Debug.Log("attack"+attack + " is " + gameManager.gameData.AttackList[storedAtk[attack]].nameKey);
 			//Left off investigation here
 			gameManager.currentAttack = storedAtk[attack];
 			//
@@ -92,10 +92,10 @@ public class EnemyAI : MonoBehaviour
 			//Possible confusions: X and Y getting mixed up.
 			for (int tileX = 3; tileX < tileScript.xTiles - (attacksTargetMargin.y-1); tileX++)
 			{
-				Debug.Log("x"+tileX);
+				//Debug.Log("x"+tileX);
 				for (int tileY = 0; tileY < tileScript.yTiles - (attacksTargetMargin.x-1); tileY++)
 				{
-					Debug.Log("y"+tileY);
+					//Debug.Log("y"+tileY);
 					gameManager.targetOrigin.x = tileX;
 					gameManager.targetOrigin.y = tileY;
 
@@ -113,7 +113,7 @@ public class EnemyAI : MonoBehaviour
 						{
 							onTileVictimAmount++;
 						}
-						Debug.Log("e" + e);
+						//Debug.Log("e" + e);
 					}
 
 					if(onTileVictimAmount > victimAmount[attack])//In the case of the amount of victims in this tile combination being higher than the previous highest for this attack.
@@ -123,10 +123,10 @@ public class EnemyAI : MonoBehaviour
 					}
 					//End of Double For that check for the optimal target tiles of this attack
 				}
-				Debug.Log("2x" + tileX);
+				//Debug.Log("2x" + tileX);
 			}
-			Debug.Log(gameManager.gameData.AttackList[storedAtk[attack]].nameKey + "´s most optimal tile origin is " + optimalTileOrigins[attack] + " hitting " + victimAmount[attack]);
-			//Debug.Log("attack " + attack + "'s optimal origin is " + optimalTileOrigins[attack]);
+			//Debug.Log(gameManager.gameData.AttackList[storedAtk[attack]].nameKey + "´s most optimal tile origin is " + optimalTileOrigins[attack] + " hitting " + victimAmount[attack]);
+			
 			if (victimAmount[attack] == 0)
 			{
 				//This attacks pattern makes it incapable of reaching anyone.
@@ -204,7 +204,7 @@ public class EnemyAI : MonoBehaviour
 	{
 		gameManager.battleUI.ChangeNotifText(charControl.name + " lacks enough MP to use an attack!");
 		yield return new WaitForSeconds(2);
-		Debug.Log("End turn");
+		//Debug.Log("End turn");
 		gameManager.EndTurn();
 	}
 	IEnumerator WaitForInsufficientTargetNotif()

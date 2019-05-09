@@ -264,6 +264,8 @@ public class CharControl_Battle : MonoBehaviour
 	{
 		if ( ( (type == Recovery.RecoveryType.FixedHeal || type == Recovery.RecoveryType.PercentHeal) && currentHp < hp) || ((type == Recovery.RecoveryType.FixedRecover || type == Recovery.RecoveryType.PercentRecover) && currentMp < mp) )
 		{
+
+			Debug.Log(charId + " healed to " + currentHp + healValue);
 			gameManager.battleUI.itemMenu.SetActive(false);
 			gameManager.battleUI.partyInfo.SetActive(true);
 			gameManager.soundPlayer.PlaySound(0, true);

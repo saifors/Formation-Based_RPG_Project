@@ -47,7 +47,7 @@ public class BattleAnimation : MonoBehaviour
 		for (int target = 0; target < gameManager.selectedTargets.Length; target++)
 		{
 			//Instantiate & play particle animation On targeted tiles. 
-			GameObject particle = Instantiate(particleAnim[0]);
+			GameObject particle = Instantiate(particleAnim[gameManager.gameData.AttackList[gameManager.currentAttack].partID ]);
 			parts.Add(particle);
 			spellAnims.Add(particle.GetComponent<SpellAnim>());
 			spellAnims[target].Init();

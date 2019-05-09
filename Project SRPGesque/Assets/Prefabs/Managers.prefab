@@ -237,6 +237,7 @@ MonoBehaviour:
   particleAnim:
   - {fileID: 1619778630106235894, guid: d8c16e41829dd6b44bf99520cc33606e, type: 3}
   - {fileID: 8315246682423042777, guid: dfdebaae8f525204da29bb88920110a6, type: 3}
+  - {fileID: 1619778630106235894, guid: 83c8d8cc38507ad4d9c4c90628a9511b, type: 3}
   step: 0
 --- !u!114 &8270597524673986596
 MonoBehaviour:
