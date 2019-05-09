@@ -113,22 +113,58 @@ public class VicLevelUp : MonoBehaviour
 				level[1].text = vInfo.levelNew.ToString();
 				break;
 			case 1:
-				hp[1].text = gameManager.gameData.Party[vInfo.ID].hp.ToString();		
+				if(hp[1].text != gameManager.gameData.Party[vInfo.ID].hp.ToString()) hp[1].text = gameManager.gameData.Party[vInfo.ID].hp.ToString();	
+				else
+				{
+					statUpCounter++;
+					StatUpAnimFinished();
+					return;
+				}
 				break;
 			case 2:
-				mp[1].text = gameManager.gameData.Party[vInfo.ID].mp.ToString();		
+				if(mp[1].text != gameManager.gameData.Party[vInfo.ID].mp.ToString()) mp[1].text = gameManager.gameData.Party[vInfo.ID].mp.ToString();	
+				else
+				{
+					statUpCounter++;
+					StatUpAnimFinished();
+					return;
+				}
 				break;
 			case 3:
-				atk[1].text = gameManager.gameData.Party[vInfo.ID].attack.ToString();		
+				if(atk[1].text != gameManager.gameData.Party[vInfo.ID].attack.ToString()) atk[1].text = gameManager.gameData.Party[vInfo.ID].attack.ToString();	
+				else
+				{
+					statUpCounter++;
+					StatUpAnimFinished();
+					return;
+				}
 				break;
 			case 4:
-				def[1].text = gameManager.gameData.Party[vInfo.ID].defense.ToString();		
+				if(def[1].text != gameManager.gameData.Party[vInfo.ID].defense.ToString()) def[1].text = gameManager.gameData.Party[vInfo.ID].defense.ToString();	
+				else
+				{
+					statUpCounter++;
+					StatUpAnimFinished();
+					return;
+				}
 				break;
 			case 5:
-				res[1].text = gameManager.gameData.Party[vInfo.ID].resistance.ToString();		
+				if(res[1].text != gameManager.gameData.Party[vInfo.ID].resistance.ToString()) res[1].text = gameManager.gameData.Party[vInfo.ID].resistance.ToString();	
+				else
+				{
+					statUpCounter++;
+					StatUpAnimFinished();
+					return;
+				}
 				break;
 			case 6:
-				spd[1].text = gameManager.gameData.Party[vInfo.ID].speed.ToString();
+				if(spd[1].text != gameManager.gameData.Party[vInfo.ID].speed.ToString()) spd[1].text = gameManager.gameData.Party[vInfo.ID].speed.ToString();
+				else
+				{
+					statUpCounter++;
+					StatUpAnimFinished();
+					return;
+				}
 				break;
 			default:
 				break;

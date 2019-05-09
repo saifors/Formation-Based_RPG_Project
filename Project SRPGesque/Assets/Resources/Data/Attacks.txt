@@ -1,8 +1,8 @@
 ID	Name	Description	IsMagic?	Strength	MPCost	Range size	Range Active	ParticleID
 0	Name_FireBolt	Desc_FireBolt	true	20	15	3,2	1,0,1,0,1,0	0
 1	Name_IcePike	Desc_IcePike	true	24	11	1,2	1,1	2
-2	Name_BladeStrike	Desc_BladeStrike	false	40	2	1,1	1	0
-3	Name_BodySlam	Desc_BodySlam	false	25	5	2,1	1,1	0
-4	Name_MeagerSwipe	Desc_MeagerSwipe	false	30	1	1,1	1	0
-5	Name_RavagingClaws	Desc_RavagingClaws	false	20	5	1,3	1,1,1	0
+2	Name_BladeStrike	Desc_BladeStrike	false	40	2	1,1	1	3
+3	Name_BodySlam	Desc_BodySlam	false	25	5	2,1	1,1	3
+4	Name_MeagerSwipe	Desc_MeagerSwipe	false	30	1	1,1	1	3
+5	Name_RavagingClaws	Desc_RavagingClaws	false	20	5	1,3	1,1,1	3
 6	Name_FlameWall	Desc_FlameWall	true	15	20	5,2	0,1,0,1,0,1,0,1,0,1	0
