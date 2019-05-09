@@ -7,6 +7,7 @@ TextureImporter:
     21300004: SwipeSheet_2
     21300006: SwipeSheet_3
     21300008: SwipeSheet_4
+    21300010: SwipeSheet_5
   externalObjects: {}
   serializedVersion: 9
   mipmaps:
@@ -95,7 +96,7 @@ TextureImporter:
         x: 0
         y: 0
         width: 200
-        height: 100
+        height: 200
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -103,7 +104,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 015b90ee10eec4247ac5859ba00c9aaf
+      spriteID: ae00926232c9b41478469b9a050dc3c6
       vertices: []
       indices: 
       edges: []
@@ -115,7 +116,7 @@ TextureImporter:
         x: 200
         y: 0
         width: 200
-        height: 100
+        height: 200
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -123,7 +124,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0f51bc7228af3844583650a3d5b69400
+      spriteID: b2d8bc79884f0dc4dae5e6b24034108b
       vertices: []
       indices: 
       edges: []
@@ -135,7 +136,7 @@ TextureImporter:
         x: 400
         y: 0
         width: 200
-        height: 100
+        height: 200
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -143,7 +144,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7b34cbd4324c6134ab3db9cda7c8f8d1
+      spriteID: 4673737c8510d044791337889d98a875
       vertices: []
       indices: 
       edges: []
@@ -155,7 +156,7 @@ TextureImporter:
         x: 600
         y: 0
         width: 200
-        height: 100
+        height: 200
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -163,7 +164,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a3239ac839f88224fb707ab316288e51
+      spriteID: 61cab737ac742ff499025507506de8ce
       vertices: []
       indices: 
       edges: []
@@ -175,7 +176,7 @@ TextureImporter:
         x: 800
         y: 0
         width: 200
-        height: 100
+        height: 200
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -183,7 +184,27 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c13ce0241d427054eac3f95c71400cf4
+      spriteID: dc1581237b864384dab42f4dd7cc6c2e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SwipeSheet_5
+      rect:
+        serializedVersion: 2
+        x: 1000
+        y: 0
+        width: 200
+        height: 200
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bde410213401e3244838102178f8b370
       vertices: []
       indices: 
       edges: []

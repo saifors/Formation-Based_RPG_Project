@@ -6,6 +6,7 @@ public class SpellAnim : MonoBehaviour
 {
 	public Transform trans;
 	public ParticleSystem[] particles;
+	public int[] sfxID;
 
 	// Start is called before the first frame update
     public void Init()
