@@ -1,6 +1,6 @@
-Key	English	Spanish	Dutch	German	Observations
+﻿Key	English	Spanish	Dutch	German	Observations
 0	So this is the place, huh? This isn´t looking like it will be done soon. [/n]Worst case, we won't be on time for dinner.	a	a	a	
-1	This place is filled with monsters like undead and you're worried about dinner?! [/n]What about our lives? Maybe worry about that first of all.	a	a	a	
+1	This place is filled with monsters like undead and you're worried about dinner?! [/n]What about our lives? Maybe worry more about that.	a	a	a	
 2	Oh you're such a worrywart, we'll be fine I am here. [/n]No creatures of the night can match me!	a	a	a	
 3	It's because you're here I'm even more worried, meathead.	a	a	a	
 4	Now is not the time for your squabbling, we came here with a purpose.	a	a	a	

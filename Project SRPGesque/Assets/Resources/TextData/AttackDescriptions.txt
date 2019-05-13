@@ -6,3 +6,4 @@ Desc_BodySlam	Physical: Stretches out ones body to slam with all its weight into
 Desc_MeagerSwipe	Physical: A weak swipe from the users limbs.	Fisico: Golpe de fuerza leve utilizando los extemidades.	Fysiek: Zwakke slag van de armen.	Körperlich:	
 Desc_RavagingClaws	Physical: Shreds straight though an enemy formation with claws like steel.	Fisico:Rompe por medio de la formación enemiga con garras como acero.	Fysiek: Breek door de vijands formatie met staale klauwen.	Körperlich:	
 Desc_FlameWall	Magic: Spawn a wall of fire.	Magia: Invoca una pared de fuego.	Magie:  Brengt voort een muur van vuur.	Zauber:	
+Desc_FlameBreath	Magic: Spew flames across an area	Magia: Lanza llamas en un area	Magie: Spuwt vuur over een plek heen.	Zauber:	

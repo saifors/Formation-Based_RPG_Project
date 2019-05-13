@@ -101,6 +101,8 @@ public class GameManager : MonoBehaviour
 	public int targetEnemies;
 	public int targetsHit;
 
+	public GameObject confirmTargetFX;
+
 	[Header("Turn System")]
 	//Turn System
 	public int[] turnOrder; //Takes in Combined character Ids of both player and enemy, length will depend on playerAmount, enemy amount and the speed of each and every one.
@@ -435,6 +437,8 @@ public class GameManager : MonoBehaviour
 
 		for (int i = 0; i < selectedTargets.Length; i++)
 		{
+			
+
 			if (tileScript.tiles[selectedTargets[i]].isOccupied)
 			{
 				battleUI.partyInfo.SetActive(true);
@@ -468,6 +472,13 @@ public class GameManager : MonoBehaviour
 		battleUI.actionMenu.SetActive(false);
 		if (charControl[activeCharacter].alliance == CharacterStats.Alliance.Player) charControl[activeCharacter].UseMp(gameData.AttackList[charControl[activeCharacter].attacksLearned[battleUI.attackOptionSelected]].mpCost);
 		else if (charControl[activeCharacter].alliance == CharacterStats.Alliance.Enemy) charControl[activeCharacter].UseMp(gameData.AttackList[charControl[activeCharacter].ai.currentAttack].mpCost);
+
+		for (int i = 0; i < selectedTargets.Length; i++)
+		{
+			GameObject obj = Instantiate(confirmTargetFX);
+			obj.transform.position = tileScript.tiles[selectedTargets[i]].transform.position;
+			Destroy(obj, 1);
+		}
 
 		/*for (int i = 0; i < selectedTargets.Length; i++)
 		{

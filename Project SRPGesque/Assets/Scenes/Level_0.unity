@@ -12198,7 +12198,7 @@ MonoBehaviour:
   trans: {fileID: 0}
   eventType: 1
   typeEvent: 05000000010000000400000003000000010000000100000008000000
-  typeEventID: 00000000020000000100000004000000030000000400000004000000
+  typeEventID: 00000000020000000500000004000000030000000400000004000000
   hasBeenTriggered: 0
   anim: {fileID: 0}
 --- !u!65 &1523948283
@@ -14692,6 +14692,10 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 13700000, guid: 72063bed4bbaadd44b34002e56c6bc1d, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 99efaf59df5c25f4285733fedc640f13, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 72063bed4bbaadd44b34002e56c6bc1d, type: 3}
 --- !u!1001 &1841561410

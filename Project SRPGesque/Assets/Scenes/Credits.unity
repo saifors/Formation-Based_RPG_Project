@@ -297,8 +297,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -1535.4}
-  m_SizeDelta: {x: 1630, y: 1990.8}
+  m_AnchoredPosition: {x: 0, y: -1858.5}
+  m_SizeDelta: {x: 1630, y: 2637}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &701952409
 GameObject:
@@ -656,8 +656,9 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: "Dion Screuder\nDavid Nicolas\n\nDion Schreuder\n\nDavid Nicolas\n\nDion
     Schreuder\n\nDavid Nicolas\nDion Schreuder\n\nDion Schreuder\n\nDavid Nicolas\n\nDion
-    Schreuder\n\nDavid Nicolas\n\nDion Schreuder\n\nDion Schreuder \n\nSergio Martinez\n(PONER
-    MAS)"
+    Schreuder\n\nDavid Nicolas\n\nDion Schreuder\n\nDion Schreuder \n\nSergio Martinez\nRoger
+    Borniquel\nDavid Moreno\nSantiago Garau\nDaniel Gomez\nDani Gomez\nConde Javier
+    Urios\nOscar Iba\xF1ez\nIvan Mesa\nGonzalo Fernandez\nLiam Foley"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 36f87c14ba8f00642901c3fe89e87c26, type: 2}
@@ -726,12 +727,12 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 1333383253}
-    characterCount: 228
+    characterCount: 355
     spriteCount: 0
-    spaceCount: 41
-    wordCount: 30
+    spaceCount: 60
+    wordCount: 49
     linkCount: 0
-    lineCount: 26
+    lineCount: 35
     pageCount: 1
     materialCount: 1
   m_havePropertiesChanged: 0
