@@ -159,16 +159,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 686213822326830699, guid: 50e57351c180e674f81a039330f7e3ff,
-        type: 3}
-      propertyPath: m_Lightmapping
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 686213822326830699, guid: 50e57351c180e674f81a039330f7e3ff,
-        type: 3}
-      propertyPath: m_BounceIntensity
-      value: 5.43
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 50e57351c180e674f81a039330f7e3ff, type: 3}
 --- !u!4 &6632296044544675299 stripped
