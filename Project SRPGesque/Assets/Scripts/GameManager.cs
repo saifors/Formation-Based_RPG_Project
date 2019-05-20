@@ -691,6 +691,8 @@ public class GameManager : MonoBehaviour
 	public void StartTurn()
 	{
 		activeCharacter = turnOrder[turnCounter];
+
+		battleUI.TurnActiveVisuals(activeCharacter);
 		//Debug.Log(activeCharacter + " has started it's turn");
 		selecting = SelectingMenu.waiting;
 		if(charControl[activeCharacter].alliance == CharacterStats.Alliance.Enemy)

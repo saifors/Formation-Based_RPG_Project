@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224188145953269850}
   - component: {fileID: 114510722793276332}
+  - component: {fileID: 6455898081404438337}
   m_Layer: 5
   m_Name: PartyMemberInfo
   m_TagString: Untagged
@@ -58,6 +59,20 @@ MonoBehaviour:
   - {fileID: 224325701365077274}
   - {fileID: 224857309496344924}
   portrait: {fileID: 114690303834401362}
+  canvas: {fileID: 6455898081404438337}
+  trans: {fileID: 224188145953269850}
+--- !u!225 &6455898081404438337
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1054355355362116}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1110055986183398
 GameObject:
   m_ObjectHideFlags: 0

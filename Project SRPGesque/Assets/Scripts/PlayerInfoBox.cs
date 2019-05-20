@@ -10,5 +10,6 @@ public class PlayerInfoBox : MonoBehaviour
     public TextMeshProUGUI[] barText;
     public RectTransform[] barTransform;
 	public Image portrait;
-
+	public CanvasGroup canvas;
+	public RectTransform trans;
 }

@@ -686,7 +686,23 @@ public class BattleUI : MonoBehaviour
         notifAlpha = 1;
         
 	}
-    
+
+	public void TurnActiveVisuals(int activeId)
+	{
+		for (int i = 0; i < playerInfoBox.Length; i++)
+		{
+			if (i != activeId)
+			{
+				playerInfoBox[i].canvas.DOFade(0.5f, 0.2f);
+				playerInfoBox[i].trans.DOAnchorPosY(0, 0.25f, true);
+			}
+			else
+			{
+				playerInfoBox[i].canvas.DOFade(1, 0.2f);
+				playerInfoBox[i].trans.DOAnchorPosY(20, 0.25f, true);
+			}
+		}
+	}
 
 	#region Sets
 
