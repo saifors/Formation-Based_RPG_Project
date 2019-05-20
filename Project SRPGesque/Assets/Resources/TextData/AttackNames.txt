@@ -7,3 +7,4 @@ Name_MeagerSwipe	Meager Swipe	Golpeo pobre	Magere Slag	Mager Streichen
 Name_RavagingClaws	Ravaging Claws	Garras Devastadoras	Ravende Klauwen	Verwüstende Klauen	
 Name_FlameWall	Flame Wall	Murro de Llamas	Vlammuur	Flammenwand	
 Name_FlameBreath	Flame Breath	Lanzallamas	Vuurspuwen	Flammenatem	
+Name_Tornado	Tornado	Tornado	Tornado	Tornado	

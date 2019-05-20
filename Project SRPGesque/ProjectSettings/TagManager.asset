@@ -14,6 +14,8 @@ TagManager:
   - BattleMenu
   - DialogueUI
   - Event
+  - CullingManager
+  - StaticObj
   layers:
   - Default
   - TransparentFX

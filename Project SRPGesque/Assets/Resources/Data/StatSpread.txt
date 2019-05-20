@@ -1,5 +1,5 @@
 ID	Base HP	Base MP	Base Atk	Base Def	Base Res	Base Spd	Start Attacks	Growth HP	Growth MP	Growth Atk	Growth Def	Growth Res	Growth Spd	Learnable Attacks	Learned Level
 0	200	150	40	45	35	35	2,1	470	470	160	180	90	110	0,6	2,4
-1	120	220	30	30	50	25	0,1	430	550	90	80	170	80	6	2
-2	260	180	45	40	20	50	5,1	520	420	110	120	60	90	1	2
+1	120	220	35	30	50	25	0,1	430	550	90	80	170	80	6	2
+2	260	180	45	40	20	50	5,1	520	420	110	120	60	90	8	2
 3	10	10	10	10	10	10	0	500	500	180	180	180	180	1	2

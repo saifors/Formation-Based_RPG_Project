@@ -9498,6 +9498,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.57395196, y: 0.5739521, z: 1.8049912}
   m_Center: {x: -0.00000023698708, y: 0.00000025102628, z: 0.9024956}
+--- !u!114 &4449687846986932627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7409873497015728800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 348f607ff2b944d45bc5db2beff21b32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7409873497015827456
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9512,6 +9524,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: 19d241f19523189409a30e0a1bf319f3, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 19d241f19523189409a30e0a1bf319f3, type: 3}
+      propertyPath: m_TagString
+      value: StaticObj
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 19d241f19523189409a30e0a1bf319f3, type: 3}
       propertyPath: m_LocalPosition.x
