@@ -240,6 +240,8 @@ public class AttackData
 	public int[] rangeActive;
 	[XmlElement("Particle")]
 	public int partID;
+	[XmlElement("SFX")]
+	public int soundID;
 
 	public AttackData(string attackString)
 	{
@@ -275,6 +277,7 @@ public class AttackData
 		//Debug.Log("end" + attackString);
 
 		partID = int.Parse(cols[8]);
+		soundID = int.Parse(cols[9]);
 	}
 }
 

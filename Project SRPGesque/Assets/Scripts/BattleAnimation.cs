@@ -42,6 +42,8 @@ public class BattleAnimation : MonoBehaviour
 	{
 		List<SpellAnim> spellAnims = new List<SpellAnim>();
 
+		gameManager.soundPlayer.PlaySound(gameManager.gameData.AttackList[gameManager.currentAttack].soundID, true);
+
 		float finishTime = 0;
 		//Particle animation I guess???
 		for (int target = 0; target < gameManager.selectedTargets.Length; target++)

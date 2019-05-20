@@ -470,8 +470,14 @@ public class GameManager : MonoBehaviour
 	{
 		//Debug.Log("Attack Launched");
 		battleUI.actionMenu.SetActive(false);
-		if (charControl[activeCharacter].alliance == CharacterStats.Alliance.Player) charControl[activeCharacter].UseMp(gameData.AttackList[charControl[activeCharacter].attacksLearned[battleUI.attackOptionSelected]].mpCost);
+		if (charControl[activeCharacter].alliance == CharacterStats.Alliance.Player)
+		{
+			charControl[activeCharacter].UseMp(gameData.AttackList[charControl[activeCharacter].attacksLearned[battleUI.attackOptionSelected]].mpCost);
+			soundPlayer.PlaySound(0, true);
+		}
 		else if (charControl[activeCharacter].alliance == CharacterStats.Alliance.Enemy) charControl[activeCharacter].UseMp(gameData.AttackList[charControl[activeCharacter].ai.currentAttack].mpCost);
+
+		soundPlayer.PlaySound(6, true, 0.75f);
 
 		for (int i = 0; i < selectedTargets.Length; i++)
 		{
