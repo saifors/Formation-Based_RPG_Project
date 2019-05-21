@@ -1073,6 +1073,9 @@ public class GameManager : MonoBehaviour
 	public void EncounterAnim()
 	{
 		specifiedEncounter = false;
+		gameState = GameState.Event;
+		playerController.isMoving = false;
+		playerController.isRunning = false;
 		battleUI.battleTransition.TransitionTo();
 	}
 	public void SpecifiedBattleEncounterAnim(int encounterIdentity)
