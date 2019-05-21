@@ -39,6 +39,7 @@ public class ObjectCulling : CullingGroupBase
 
 	protected override void OnStateChanged(CullingGroupEvent sphere)
 	{
+		//Debug.Log(sphere.index);
 		if (sphere.hasBecomeInvisible)
 		{
 			cullee[sphere.index].HasBecomeInvisible();
