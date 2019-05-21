@@ -32,6 +32,7 @@ public class ObjectCulling : CullingGroupBase
 	{
 		for (int i = 0; i < cullingObj.Length; i++)
 		{
+			//Debug.Log(i);
 			spheres[i].position = cullingObj[i].position;
 		}
 	}

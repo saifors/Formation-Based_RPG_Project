@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 631124695083060533}
   m_Layer: 0
   m_Name: Crystal2
-  m_TagString: Untagged
+  m_TagString: StaticObj
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295

@@ -20039,6 +20039,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Crystal1
       objectReference: {fileID: 0}
+    - target: {fileID: 1517377146, guid: b023d91f7dc7d67449c0febdbf56975b, type: 3}
+      propertyPath: m_TagString
+      value: StaticObj
+      objectReference: {fileID: 0}
     - target: {fileID: 2072043134, guid: b023d91f7dc7d67449c0febdbf56975b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.9

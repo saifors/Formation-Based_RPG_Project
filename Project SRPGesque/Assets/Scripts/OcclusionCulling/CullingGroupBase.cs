@@ -20,10 +20,12 @@ public class CullingGroupBase : MonoBehaviour
 		group = new CullingGroup();
 		//-----------------------------------For culling depending on Visibility.--------------------------------------
 		group.targetCamera = Camera.main;
-		spheres = new BoundingSphere[100];
+		
 
 		len = cullingObj.Length;
-		if (len > 100) len = 100;
+
+		spheres = new BoundingSphere[len];
+		//if (len > 100) len = 100;
 		for (int i = 0; i < len; i++)
 		{
 			spheres[i] = new BoundingSphere(cullingObj[i].position, cullingSphereRadius);
