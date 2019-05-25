@@ -757,6 +757,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 8e274e2222e47164db027125eb3362fe, type: 2}
+    - target: {fileID: 2300006, guid: e1bf19927cc5dee42a5caf2ea31ec409, type: 3}
+      propertyPath: m_ProbeAnchor
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 2300008, guid: e1bf19927cc5dee42a5caf2ea31ec409, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -905,6 +909,14 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 2893f01750e7f3e4c8da1346937bb7dc, type: 2}
+    - target: {fileID: 2300080, guid: e1bf19927cc5dee42a5caf2ea31ec409, type: 3}
+      propertyPath: m_ReflectionProbeUsage
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2300080, guid: e1bf19927cc5dee42a5caf2ea31ec409, type: 3}
+      propertyPath: m_ProbeAnchor
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 2300082, guid: e1bf19927cc5dee42a5caf2ea31ec409, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -12833,8 +12845,8 @@ ReflectionProbe:
   m_TimeSlicingMode: 0
   m_Resolution: 128
   m_UpdateFrequency: 0
-  m_BoxSize: {x: 1.9439231, y: 3.0043182, z: 9.62388}
-  m_BoxOffset: {x: -0.10593504, y: 0.30566788, z: 0.56587505}
+  m_BoxSize: {x: 1.9439231, y: 3.0043182, z: 9.9891815}
+  m_BoxOffset: {x: -0.10593504, y: 0.30566788, z: 0.3832245}
   m_NearClip: 0.3
   m_FarClip: 1000
   m_ShadowDistance: 100
