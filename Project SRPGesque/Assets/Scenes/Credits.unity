@@ -297,8 +297,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -1858.5}
-  m_SizeDelta: {x: 1630, y: 2637}
+  m_AnchoredPosition: {x: 0, y: -845.7}
+  m_SizeDelta: {x: 1630, y: 2744.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &701952409
 GameObject:
@@ -312,7 +312,7 @@ GameObject:
   - component: {fileID: 701952412}
   - component: {fileID: 701952411}
   m_Layer: 5
-  m_Name: Roles
+  m_Name: Names
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -335,7 +335,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 815, y: 300}
+  m_SizeDelta: {x: 815, y: 1511.9}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &701952411
 MonoBehaviour:
@@ -357,42 +357,35 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: 'Game Design
+  m_text: 'Dion Schreuder
 
 
 
-    Programming
-
-
-    3D Modelling
-
-
-    UI Design
-
-
-    Concept Art
 
 
 
-    Audio Design
 
 
-    Animation
 
 
-    Particle Effects
+
+    David Nicolas
 
 
-    Texture Artist
 
 
-    Lighting
 
 
-    Writing
+
+    Special Thanks
 
 
-    Special Thanks'
+
+
+
+
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 36f87c14ba8f00642901c3fe89e87c26, type: 2}
@@ -438,7 +431,7 @@ MonoBehaviour:
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: 26
+  m_firstOverflowCharacterIndex: 61
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
@@ -461,10 +454,10 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 701952411}
-    characterCount: 158
+    characterCount: 66
     spriteCount: 0
-    spaceCount: 32
-    wordCount: 20
+    spaceCount: 28
+    wordCount: 6
     linkCount: 0
     lineCount: 25
     pageCount: 1
@@ -509,7 +502,7 @@ GameObject:
   - component: {fileID: 1320189194}
   m_Layer: 5
   m_Name: Canvas
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -609,7 +602,7 @@ GameObject:
   - component: {fileID: 1333383254}
   - component: {fileID: 1333383253}
   m_Layer: 5
-  m_Name: Names
+  m_Name: Roles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -632,7 +625,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 815, y: 300}
+  m_SizeDelta: {x: 815, y: 2350.1}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &1333383253
 MonoBehaviour:
@@ -654,11 +647,11 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: "Dion Screuder\nDavid Nicolas\n\nDion Schreuder\n\nDavid Nicolas\n\nDion
-    Schreuder\n\nDavid Nicolas\nDion Schreuder\n\nDion Schreuder\n\nDavid Nicolas\n\nDion
-    Schreuder\n\nDavid Nicolas\n\nDion Schreuder\n\nDion Schreuder \n\nSergio Martinez\nRoger
-    Borniquel\nDavid Moreno\nSantiago Garau\nDaniel Gomez\nDani Gomez\nConde Javier
-    Urios\nOscar Iba\xF1ez\nIvan Mesa\nGonzalo Fernandez\nLiam Foley"
+  m_text: "\nProgrammer\nLead Game Designer\nLevel Designer\nLighting\nUI Designer\nUI
+    Artist\nVFX Artist\nSound Designer\nAssistant Concept Artist\n\n\nLead Concept
+    Artist\nGame Designer\n3D Artist\nTexture Artist\nAnimator\n\n\nMireia Zuluaga\nSergio
+    Martinez\nGonzalo Fernandes\nRoger Borniquel\nDavid Moreno\nIvan mesa\nDani Gomez\nDaniel
+    Gomez\nSantiago Garau\nJavier Urios\nOscar Iba\xF1ez\nLiam Foley\n\n\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 36f87c14ba8f00642901c3fe89e87c26, type: 2}
@@ -704,7 +697,7 @@ MonoBehaviour:
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: 44
+  m_firstOverflowCharacterIndex: 364
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
@@ -727,12 +720,12 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 1333383253}
-    characterCount: 355
+    characterCount: 366
     spriteCount: 0
-    spaceCount: 60
-    wordCount: 49
+    spaceCount: 59
+    wordCount: 53
     linkCount: 0
-    lineCount: 35
+    lineCount: 33
     pageCount: 1
     materialCount: 1
   m_havePropertiesChanged: 0
@@ -826,6 +819,56 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1777607026
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1777607028}
+  - component: {fileID: 1777607027}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1777607027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1777607026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db5af2e05086e6e46bbe1957d30db147, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isFaded: 0
+  isFading: 0
+  fadingFrom: 0
+  IsNotFaded: 0
+  fadeToSceneChange: 0
+  Screen_Color: {r: 0, g: 0, b: 0, a: 0}
+  fadeSpeed: 0
+--- !u!4 &1777607028
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1777607026}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1799959313
 GameObject:
