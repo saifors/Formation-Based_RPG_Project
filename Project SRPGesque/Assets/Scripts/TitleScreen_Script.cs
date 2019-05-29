@@ -66,7 +66,7 @@ public class TitleScreen_Script : MonoBehaviour
 		titleCanvas.DOFade(0, 1.5f).From().SetDelay(0.7f);
 		selectionGroupCanvasGroup.DOFade(0, 1).From().SetDelay(2.5f).OnComplete(FinishAnim);
 
-		
+		soundPlayer.Init(null, false);
 	}
 	
 	// Update is called once per frame

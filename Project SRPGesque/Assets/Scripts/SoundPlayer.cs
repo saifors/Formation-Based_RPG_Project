@@ -24,7 +24,7 @@ public class SoundPlayer : MonoBehaviour
 
 	private GameManager gameManager;
 
-	public void Init(GameManager gM)
+	public void Init(GameManager gM, bool initMapMusic)
 	{
 		gameManager = gM;
 		soundVol = PlayerPrefs.GetFloat("Sound_Volume", 1);
@@ -37,11 +37,7 @@ public class SoundPlayer : MonoBehaviour
 		cutsceneMusicCounter = 0;
 		currentMusic = -1;
 
-		InitOWMusic();
-		InitBattleMusic();
-		InitBossBattleMusic();
-		InitCutsceneMusic();
-		InitVictoryMusic();
+		if(initMapMusic) InitMapMusic();
 	}
 
 	public void PlaySound(int num, bool is2D)
@@ -105,6 +101,30 @@ public class SoundPlayer : MonoBehaviour
 
         Destroy(obj, soundClips[num].length); //Don't mistake length(length of clip) with "L"ength (Length of array)
     }
+
+	public void InitMapMusic()
+	{
+		InitOWMusic();
+		InitBattleMusic();
+		InitBossBattleMusic();
+		InitCutsceneMusic();
+		InitVictoryMusic();
+	}
+
+	public void PlayMusic(int num)
+	{
+		GameObject obj = new GameObject();
+		obj.transform.position = transform.position;
+		obj.name = "Music_" + musicClips[num].name;
+
+		AudioSource source = obj.AddComponent<AudioSource>();
+		source.loop = true;
+		source.clip = musicClips[num];
+		source.volume = musicVol;
+		source.spatialBlend = 0;
+		
+		source.Play();
+	}
 
     //PlayMusicLoop?
 	public void InitOWMusic()

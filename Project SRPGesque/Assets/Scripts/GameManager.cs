@@ -153,9 +153,10 @@ public class GameManager : MonoBehaviour
 		//Initialization of Objects
 		cam_T = GameObject.FindGameObjectWithTag("CamTarget").GetComponent<Transform>();
 
-		
-
 		playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<OWPlayerController>();
+
+		cam_T.position = playerController.trans.position;
+
 		battleUI = GameObject.FindGameObjectWithTag("UI").GetComponent<BattleUI>();
 		dialogueUI = battleUI.GetComponentInChildren<DialogueBox>();
 		dialogueUI.Init(this);
@@ -180,7 +181,7 @@ public class GameManager : MonoBehaviour
 		specifiedEncounter = false;
 
 		soundPlayer = gameObject.GetComponent<SoundPlayer>();
-		soundPlayer.Init(this);
+		soundPlayer.Init(this, true);
 
 		//Create a cursor for Formation Movement
 		GameObject objCursor;
