@@ -195,8 +195,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: c88b704e8048d8c4f8a94ef75633335a, type: 3}
   musicClips:
   - {fileID: 8300000, guid: 3cf3a4bd80963184da78bacfb9cd6d0f, type: 3}
-  - {fileID: 8300000, guid: fd959c9b66c518b448b0e46a65646297, type: 3}
-  - {fileID: 8300000, guid: b25607386751ecb4086bf47a85f2b7cd, type: 3}
+  - {fileID: 8300000, guid: 523995ac4c5309a4bb3ee425495543da, type: 3}
+  - {fileID: 8300000, guid: c3743a7bb9352814a81366ebf4487ec2, type: 3}
+  - {fileID: 8300000, guid: 5820fd2a30c20ae4c91e3917f98e7797, type: 3}
   soundSource: []
   musicSource: []
   soundVol: 0
@@ -219,7 +220,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   modelsPrefabs:
   - {fileID: 3858551518035096116, guid: 5415d8c0bbf0acd4d8bc4e78d4159ed1, type: 3}
-  - {fileID: 3858551518035096116, guid: 5415d8c0bbf0acd4d8bc4e78d4159ed1, type: 3}
+  - {fileID: 4642929365696894962, guid: 4e058b65b8b658d43bb0cd1570f67fc5, type: 3}
   - {fileID: 4982293443765151733, guid: 60f368671d93f724081e08c0314da6c9, type: 3}
   - {fileID: 3858551518035096116, guid: 5415d8c0bbf0acd4d8bc4e78d4159ed1, type: 3}
   - {fileID: 4797710552982084772, guid: 403f37973a2169b4ebd1b3c79d412111, type: 3}
