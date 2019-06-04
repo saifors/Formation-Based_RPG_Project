@@ -1,5 +1,5 @@
 ID	Name	Description	Effect	Rarity
-0	N_SmallPotion	D_SmallPotion	Heal20_F	80
+0	N_SmallPotion	D_SmallPotion	Heal20_F	60
 1	N_Potion	D_Potion	Heal50_P	5
 2	N_Elixir	D_Elixir	Recover50_F	20
 3	N_HolyWater	D_HolyWater	Recover50_P	10

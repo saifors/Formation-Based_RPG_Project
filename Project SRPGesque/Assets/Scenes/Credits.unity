@@ -335,7 +335,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 815, y: 2550.4}
+  m_SizeDelta: {x: 764.7, y: 2550.4}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &701952411
 MonoBehaviour:
@@ -388,7 +388,7 @@ MonoBehaviour:
 
     Slash SFX
 
-    Ice SFX
+    "Glass Smash, Bottle, A.wav"
 
 
     Special Thanks
@@ -445,7 +445,7 @@ MonoBehaviour:
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: -1
+  m_firstOverflowCharacterIndex: 156
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
@@ -468,12 +468,12 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 701952411}
-    characterCount: 136
+    characterCount: 157
     spriteCount: 0
-    spaceCount: 44
-    wordCount: 19
+    spaceCount: 46
+    wordCount: 22
     linkCount: 0
-    lineCount: 33
+    lineCount: 34
     pageCount: 1
     materialCount: 1
   m_havePropertiesChanged: 0
@@ -657,7 +657,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 815, y: 2550.4}
+  m_SizeDelta: {x: 865.3, y: 2550.4}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &1333383253
 MonoBehaviour:
@@ -682,9 +682,10 @@ MonoBehaviour:
   m_text: "\nProgrammer\nLead Game Designer\nLevel Designer\nLighting\nUI Designer\nUI
     Artist\nVFX Designer\nVFX Artist\nSound Designer\nAssistant Concept Artist\n\n\nLead
     Concept Artist\nGame Designer\n3D Artist\nTexture Artist\n3D Animator\n\n\nJohn
-    Theodore \nYouFulca\ntommcann\nNekoNinja\nInspectorJ\n\n\nMireia Zuluaga\nSergio
-    Martinez\nGonzalo Fernandes\nRoger Borniquel\nDavid Moreno\nIvan Mesa\nDani Gomez\nDaniel
-    Gomez\nSantiago Garau\nJavier Urios\nOscar Iba\xF1ez\nLiam Foley\n\n\n"
+    Theodore \nYouFulca\ntommcann\nNekoNinja\nInspectorJ (www.jshaw.co.uk) of Freesound.org\n\nMireia
+    Zuluaga\nSergio Martinez\nGonzalo Fernandes\nRoger Borniquel\nDavid Moreno\nIvan
+    Mesa\nDani Gomez\nDaniel Gomez\nSantiago Garau\nJavier Urios\nOscar Iba\xF1ez\nLiam
+    Foley\n\n\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 36f87c14ba8f00642901c3fe89e87c26, type: 2}
@@ -730,7 +731,7 @@ MonoBehaviour:
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: 360
+  m_firstOverflowCharacterIndex: 394
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
@@ -753,10 +754,10 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 1333383253}
-    characterCount: 438
+    characterCount: 472
     spriteCount: 0
-    spaceCount: 71
-    wordCount: 62
+    spaceCount: 73
+    wordCount: 69
     linkCount: 0
     lineCount: 41
     pageCount: 1
