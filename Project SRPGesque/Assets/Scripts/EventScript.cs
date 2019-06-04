@@ -18,7 +18,10 @@ public class EventScript : MonoBehaviour
 
 	public bool hasBeenTriggered;
 
+	
 	public Animator anim;
+
+	public NPCEvent[] npc;
 
 	public void Init(EventManager eM, GameManager gM, int index)
     {
@@ -37,6 +40,12 @@ public class EventScript : MonoBehaviour
 				if (hasBeenTriggered) anim.Play("IdleOpen");
 				break;
 			}
+		}
+
+		npc = GetComponentsInChildren<NPCEvent>();
+		for (int i = 0; i < npc.Length; i++)
+		{
+			npc[i].Init();
 		}
     }
 
