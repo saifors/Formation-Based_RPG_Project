@@ -154,6 +154,9 @@ ModelImporter:
     2100000: 'Material #31'
     2100002: 'Material #43'
     2100004: No Name
+    2100006: 'Material #44'
+    2100008: 'Material #45'
+    2100010: 'Material #46'
     2300000: Box1
     2300002: Cylinder002
     3300000: Box1
@@ -214,7 +217,7 @@ ModelImporter:
       name: BattleIdle
       takeName: Take 001
       firstFrame: 150
-      lastFrame: 190
+      lastFrame: 210
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -241,8 +244,8 @@ ModelImporter:
     - serializedVersion: 16
       name: Attack
       takeName: Take 001
-      firstFrame: 150
-      lastFrame: 190
+      firstFrame: 215
+      lastFrame: 280
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -269,8 +272,8 @@ ModelImporter:
     - serializedVersion: 16
       name: Cast
       takeName: Take 001
-      firstFrame: 150
-      lastFrame: 190
+      firstFrame: 295
+      lastFrame: 375
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
