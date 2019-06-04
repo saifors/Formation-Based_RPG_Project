@@ -145,6 +145,7 @@ ModelImporter:
     2100002: 'Material #423'
     2100004: 'Material #389'
     2100006: No Name
+    2100008: 'Material #435'
     2300000: Ba nd001
     2300002: Box003
     3300000: Ba nd001
@@ -252,7 +253,7 @@ ModelImporter:
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
     useFileScale: 1
-    previousCalculatedGlobalScale: 0.012499999
+    previousCalculatedGlobalScale: 0.01
     hasPreviousCalculatedGlobalScale: 1
   tangentSpace:
     normalSmoothAngle: 60
