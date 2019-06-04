@@ -12,7 +12,7 @@ public class EventManager : MonoBehaviour
 	public EventScript[] events;
 
 	public enum TypeOfEvent { Interaction, Range, StartMap};
-	public enum Events { None, Dialogue, Chest, ReceiveItem, Fight, CheckTrigger, CheckOther, DestroyMe, transitionScene};
+	public enum Events { None, Dialogue, Chest, ReceiveItem, Fight, CheckTrigger, CheckOther, DestroyNPC, transitionScene};
 
 	public int currentEvent;
 
@@ -147,8 +147,8 @@ public class EventManager : MonoBehaviour
 				case Events.CheckOther:
 					CheckOtherEvent(events[currentEvent].typeEventID[eventProgress]);
 					break;
-				case Events.DestroyMe:
-					DestroyEvent();
+				case Events.DestroyNPC:
+					DestroyNPC(events[currentEvent].typeEventID[eventProgress]);
 					break;
 				case Events.transitionScene:
 					TransitionToScene(events[currentEvent].typeEventID[eventProgress]);
@@ -199,9 +199,11 @@ public class EventManager : MonoBehaviour
 		}
 	}
 
-	public void DestroyEvent()
+	public void DestroyNPC(int id)
 	{
-		Destroy(eventObj[currentEvent]);
+		Destroy(events[currentEvent].npc[id].gameObject);
+
+
 		eventProgress++;
 		ContinueEvent();
 	}
