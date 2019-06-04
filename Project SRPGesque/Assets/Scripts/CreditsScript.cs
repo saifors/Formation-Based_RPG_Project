@@ -11,9 +11,11 @@ public class CreditsScript : MonoBehaviour
 
 	public TransitionManager transition;
 
+	public float duration = 15;
+
 	private void Start()
 	{
-		credits.DOAnchorPosY(0, 15, true).SetEase(Ease.Linear).SetDelay(1).OnComplete(Fin);
+		credits.DOAnchorPosY(0, duration, true).SetEase(Ease.Linear).SetDelay(1).OnComplete(Fin);
 		transition = GameObject.FindGameObjectWithTag("Manager").GetComponent<TransitionManager>();
 	}
 

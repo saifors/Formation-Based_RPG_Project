@@ -297,8 +297,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -3539}
-  m_SizeDelta: {x: 1630, y: 2460}
+  m_AnchoredPosition: {x: 0, y: -4034.9}
+  m_SizeDelta: {x: 1630, y: 2955.9}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!1 &701952409
 GameObject:
@@ -335,7 +335,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 815, y: 1511.9}
+  m_SizeDelta: {x: 815, y: 2550.4}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &701952411
 MonoBehaviour:
@@ -376,6 +376,19 @@ MonoBehaviour:
 
 
 
+
+
+    Audio
+
+    Cave Music
+
+    Battle Music 1 & 2
+
+    Explosion SFX
+
+    Slash SFX
+
+    Ice SFX
 
 
     Special Thanks
@@ -432,7 +445,7 @@ MonoBehaviour:
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: 61
+  m_firstOverflowCharacterIndex: -1
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
@@ -455,12 +468,12 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 701952411}
-    characterCount: 67
+    characterCount: 136
     spriteCount: 0
-    spaceCount: 29
-    wordCount: 6
+    spaceCount: 44
+    wordCount: 19
     linkCount: 0
-    lineCount: 26
+    lineCount: 33
     pageCount: 1
     materialCount: 1
   m_havePropertiesChanged: 0
@@ -608,6 +621,7 @@ MonoBehaviour:
   credits: {fileID: 270795309}
   end: {fileID: 1543844130}
   transition: {fileID: 0}
+  duration: 16
 --- !u!1 &1333383251
 GameObject:
   m_ObjectHideFlags: 0
@@ -667,10 +681,10 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: "\nProgrammer\nLead Game Designer\nLevel Designer\nLighting\nUI Designer\nUI
     Artist\nVFX Designer\nVFX Artist\nSound Designer\nAssistant Concept Artist\n\n\nLead
-    Concept Artist\nGame Designer\n3D Artist\nTexture Artist\n3D Animator\n\n\nMireia
-    Zuluaga\nSergio Martinez\nGonzalo Fernandes\nRoger Borniquel\nDavid Moreno\nIvan
-    Mesa\nDani Gomez\nDaniel Gomez\nSantiago Garau\nJavier Urios\nOscar Iba\xF1ez\nLiam
-    Foley\n\n\n"
+    Concept Artist\nGame Designer\n3D Artist\nTexture Artist\n3D Animator\n\n\nJohn
+    Theodore \nYouFulca\ntommcann\nNekoNinja\nInspectorJ\n\n\nMireia Zuluaga\nSergio
+    Martinez\nGonzalo Fernandes\nRoger Borniquel\nDavid Moreno\nIvan Mesa\nDani Gomez\nDaniel
+    Gomez\nSantiago Garau\nJavier Urios\nOscar Iba\xF1ez\nLiam Foley\n\n\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 36f87c14ba8f00642901c3fe89e87c26, type: 2}
@@ -716,7 +730,7 @@ MonoBehaviour:
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: 381
+  m_firstOverflowCharacterIndex: 360
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
@@ -739,12 +753,12 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 1333383253}
-    characterCount: 382
+    characterCount: 438
     spriteCount: 0
-    spaceCount: 62
-    wordCount: 56
+    spaceCount: 71
+    wordCount: 62
     linkCount: 0
-    lineCount: 34
+    lineCount: 41
     pageCount: 1
     materialCount: 1
   m_havePropertiesChanged: 0
