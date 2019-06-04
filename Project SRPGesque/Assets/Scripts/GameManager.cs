@@ -207,6 +207,7 @@ public class GameManager : MonoBehaviour
 		
 
 		pauseMenu = pausePanel.GetComponent<PauseMenuScript>();
+		pauseMenu.Init(this);
 
 		for (int i = 0; i < partyMembers; i++)
 		{
