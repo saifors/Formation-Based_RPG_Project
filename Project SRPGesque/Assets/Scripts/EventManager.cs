@@ -234,6 +234,7 @@ public class EventManager : MonoBehaviour
 	public void OpenChest(int id)
 	{
 		events[currentEvent].anim.Play("Open");
+		gameManager.soundPlayer.PlaySound(18, true);
 		
 		for (int e = 0; e < gameManager.gameData.ItemInventory.Count; e++)
 		{

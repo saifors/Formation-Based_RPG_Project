@@ -86,10 +86,13 @@ public class InputManager : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.X))
         {
-			if (gameManager.selecting == GameManager.SelectingMenu.selectingItem) gameManager.battleUI.itemBox.DestroyItemText();
+			if(gameManager.gameState == GameManager.GameState.Battle)
+			{
+				if (gameManager.selecting == GameManager.SelectingMenu.selectingItem) gameManager.battleUI.itemBox.DestroyItemText();
 
-			if (gameManager.selecting != GameManager.SelectingMenu.selectingTarget && gameManager.selecting != GameManager.SelectingMenu.enemyTurn && gameManager.selecting != GameManager.SelectingMenu.victoryScreen && gameManager.selecting != GameManager.SelectingMenu.attacking) gameManager.ReturnToCommandSelection();
-			else if (gameManager.selecting == GameManager.SelectingMenu.selectingTarget) { gameManager.ReturnToAttackSelect(); }
+				if (gameManager.selecting == GameManager.SelectingMenu.selectingAttack || gameManager.selecting == GameManager.SelectingMenu.selectingMove || gameManager.selecting == GameManager.SelectingMenu.selectingItem) gameManager.ReturnToCommandSelection();
+				else if (gameManager.selecting == GameManager.SelectingMenu.selectingTarget) { gameManager.ReturnToAttackSelect(); }
+			}
 			
 				
         }

@@ -93,6 +93,7 @@ public class DialogueBox : MonoBehaviour
 
 	public void DialogueNext()
 	{
+		gameManager.soundPlayer.PlaySound(0, true);
 		if (diaProgress >= diaData.dialogueTexts.Length) //has reached the end of the dialogue.
 		{
 			//end
