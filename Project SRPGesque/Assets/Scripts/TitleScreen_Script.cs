@@ -88,14 +88,16 @@ public class TitleScreen_Script : MonoBehaviour
             {
                 if (inputAxis <= -1)
                 {
-                    if (titleSelection >= selectionOption.Length - 1) SelectOption(0);
-                    else SelectOption(titleSelection + 1);
+					if (titleSelection >= selectionOption.Length - 1) SelectOption(0);
+					else if (titleSelection == 0) SelectOption(2); //Only Temporary While Load game doesnt exist
+					else SelectOption(titleSelection + 1);
                     scrollCooldownCounter = 0;
                 }
                 else if (inputAxis >= 1)
                 {
-                    if (titleSelection <= 0) SelectOption(3);
-                    else SelectOption(titleSelection - 1);
+					if (titleSelection <= 0) SelectOption(3);
+					else if (titleSelection == 2) SelectOption(0); //Only Temporary While Load game doesnt exist
+					else SelectOption(titleSelection - 1);
                     scrollCooldownCounter = 0;
                 }
             }
@@ -173,14 +175,14 @@ public class TitleScreen_Script : MonoBehaviour
             
 
             transition.FadeToSceneChange(false, NewGameSceneID);
-        }
+        }/*
         else if (optionNum == 1)
         {
             selectionImageGroup.SetActive(false);
             optionsPanel.SetActive(false);
             loadGamePanel.SetActive(true);
             state = TitleState.Load;
-        }
+        }*/
         else if (optionNum == 2)
         {
             

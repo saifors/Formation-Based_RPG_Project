@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -606,7 +606,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 137.15001}
+  m_AnchoredPosition: {x: 0, y: 90.10002}
   m_SizeDelta: {x: 595.9, y: 86.100006}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &208247248
@@ -1900,7 +1900,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -0.049987793, y: 42.850006}
+  m_AnchoredPosition: {x: -0.5, y: 50.85}
   m_SizeDelta: {x: -0.099975586, y: 86.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!225 &486307418
@@ -1953,8 +1953,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -641, y: -329}
-  m_SizeDelta: {x: 595, y: 360}
+  m_AnchoredPosition: {x: -642, y: -375}
+  m_SizeDelta: {x: 595, y: 265.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!225 &501515333
 CanvasGroup:
@@ -2255,7 +2255,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -0.049987793, y: -46}
+  m_AnchoredPosition: {x: 0.5, y: 4}
   m_SizeDelta: {x: -0.099975586, y: 86.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!225 &713015884
@@ -4307,7 +4307,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1538305894
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5508,7 +5508,9 @@ MonoBehaviour:
   soundVol: 0
   musicVol: 0
   soundCounter: 0
-  musicCounter: 0
+  cutsceneMusicCounter: 0
+  currentMusic: 0
+  newMusic: 0
 --- !u!1 &1863977228
 GameObject:
   m_ObjectHideFlags: 0
