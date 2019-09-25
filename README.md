@@ -17,3 +17,9 @@ Now you take control of this party in a strategy focused RPG as you coordinate a
 --- | ---
 Dion Schreuder | Main Programmer, Game Designer, some Concept art, UI Graphic Design.
 David Nicolas | 3D Modelling, Texture, Animation, Concept Art,
+
+
+## Controls:
+Z: accept
+X: Cancel
+Arrow Keys / WASD: Move (menus and in game movement as well)
