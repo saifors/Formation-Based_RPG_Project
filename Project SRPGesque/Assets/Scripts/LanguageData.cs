@@ -53,6 +53,9 @@ public class LanguageData
 			else if (systemLanguage == SystemLanguage.Dutch) currentLanguage = Language.Dutch;
 			else if (systemLanguage == SystemLanguage.German) currentLanguage = Language.German;		
 			else currentLanguage = Language.English;
+
+			currentLanguage = Language.English;
+
 			int langID = (int)currentLanguage;
 
 			PlayerPrefs.SetInt("gameLanguage", langID);

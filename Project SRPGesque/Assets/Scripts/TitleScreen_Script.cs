@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using DG.Tweening;
 
 public class TitleScreen_Script : MonoBehaviour
@@ -40,8 +41,11 @@ public class TitleScreen_Script : MonoBehaviour
 	float timeCounter;
 	bool musicStarted;
 
-    // Use this for initialization
-    void Start ()
+	public GraphicRaycaster rCaster;
+	private Vector3 lastMouseCoordinate;
+
+	// Use this for initialization
+	void Start ()
     {
 		titleCanvas = title.GetComponent<CanvasGroup>();
 		selectionGroupCanvasGroup = selectionImageGroup.GetComponent<CanvasGroup>();
@@ -55,6 +59,8 @@ public class TitleScreen_Script : MonoBehaviour
         unselectedAlpha = 0.6f;
 		animFinished = false;
 		optionsTrans = optionsPanel.GetComponent<RectTransform>();
+
+		rCaster = GetComponent<GraphicRaycaster>();
 
 		state = TitleState.Title;
 		CancelSelection();
@@ -89,14 +95,12 @@ public class TitleScreen_Script : MonoBehaviour
                 if (inputAxis <= -1)
                 {
 					if (titleSelection >= selectionOption.Length - 1) SelectOption(0);
-					else if (titleSelection == 0) SelectOption(2); //Only Temporary While Load game doesnt exist
 					else SelectOption(titleSelection + 1);
                     scrollCooldownCounter = 0;
                 }
                 else if (inputAxis >= 1)
                 {
 					if (titleSelection <= 0) SelectOption(3);
-					else if (titleSelection == 2) SelectOption(0); //Only Temporary While Load game doesnt exist
 					else SelectOption(titleSelection - 1);
                     scrollCooldownCounter = 0;
                 }
@@ -104,6 +108,24 @@ public class TitleScreen_Script : MonoBehaviour
             else scrollCooldownCounter += Time.deltaTime;
             if (Input.GetKey(KeyCode.Z)) ConfirmSelection(titleSelection);
             if(Input.GetKeyDown(KeyCode.Z))soundPlayer.PlaySound(0, true);
+
+			Vector3 mouseDelta = Input.mousePosition - lastMouseCoordinate;
+			// Check whther has moved
+			if (mouseDelta != Vector3.zero) 
+				{
+				GetMouseOverOption();
+			}
+			// Then we store our mousePosition so that we can check it again next frame.
+			lastMouseCoordinate = Input.mousePosition;
+
+			if (Input.GetKeyDown(KeyCode.Mouse0))
+			{
+				if(GetMouseOverOption())
+				{
+					ConfirmSelection(titleSelection);
+				}
+			}
+			
         }
         else if(state == TitleState.Load)
         {
@@ -175,14 +197,14 @@ public class TitleScreen_Script : MonoBehaviour
             
 
             transition.FadeToSceneChange(false, NewGameSceneID);
-        }/*
+        }
         else if (optionNum == 1)
         {
             selectionImageGroup.SetActive(false);
             optionsPanel.SetActive(false);
             loadGamePanel.SetActive(true);
             state = TitleState.Load;
-        }*/
+        }
         else if (optionNum == 2)
         {
             
@@ -228,4 +250,32 @@ public class TitleScreen_Script : MonoBehaviour
         resolutionText.text = options.resolutions[options.resolutionOption];
         qualityText.text = options.qualities[options.qualityOption];
     }
+
+	public bool GetMouseOverOption()
+	{
+		
+		//Set up the new Pointer Event
+		PointerEventData pointerData = new PointerEventData(EventSystem.current);
+		List<RaycastResult> results = new List<RaycastResult>();
+
+		//Raycast using the Graphics Raycaster and mouse click position
+		pointerData.position = Input.mousePosition;
+		this.rCaster.Raycast(pointerData, results);
+
+		bool floatingOverOption = false;
+		//For every result returned, output the name of the GameObject on the Canvas hit by the Ray
+		foreach (RaycastResult result in results)
+		{
+			for (int i = 0; i < selectionOption.Length; i++)
+			{
+				if (result.gameObject == selectionOption[i].gameObject)
+				{
+					SelectOption(i);
+					floatingOverOption = true;
+					break;
+				}
+			}
+		}
+		return floatingOverOption;
+	}
 }
