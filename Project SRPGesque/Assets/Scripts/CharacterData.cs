@@ -37,7 +37,7 @@ public class CharacterData
 	public List<int> attacksLearned;
 	public int attackAmount;
 
-
+	public CharacterData() { }
 	public CharacterData(string characterString, StatSpread statSpread)
 	{
 		//Debug.Log("test2.2");
@@ -67,6 +67,7 @@ public class CharacterData
 	
 }
 
+
 public class StatSpread
 {
 	[XmlAttribute("StatID")]
@@ -94,7 +95,7 @@ public class StatSpread
 	public int mpGrowth;
 	[XmlElement("AttackGrowth")]
 	public int attackGrowth;
-	[XmlElement("DefenseBase")]
+	[XmlElement("DefenseGrowth")]
 	public int defenseGrowth;
 	[XmlElement("ResistanceGrowth")]
 	public int resistanceGrowth;
@@ -106,6 +107,7 @@ public class StatSpread
 	[XmlElement("LevelAttacks")]
 	public List<int> levelAttacks;
 
+	public StatSpread() { }
 	public StatSpread(string statString)
 	{
 		string[] cols = statString.Split('\t');
@@ -147,6 +149,29 @@ public class StatSpread
 	}
 }
 
+public class MiscData
+{
+	public string saveName;
+	public List<int> partyMembers;
+	public int playtimeSeconds;
+	public int mapID;
+	public Vector3 pos;
+	public Quaternion rot;
+	public int gold;
+
+	public MiscData()
+	{
+		saveName = "Save File 1";
+		partyMembers = new List<int>();
+		partyMembers.Add(0);
+		playtimeSeconds = 0;
+		mapID = 0;
+		pos = Vector3.zero;
+		rot = new Quaternion(0,0,0,0);
+		gold = 0;
+	}
+}
+
 public class EnemyData
 {
 	[XmlAttribute("EnemyID")]
@@ -181,6 +206,7 @@ public class EnemyData
 	[XmlElement("Drops")]
 	public int[] itemDrops;
 
+	public EnemyData() { }
 	public EnemyData(string monsterString)
 	{
 		string[] cols = monsterString.Split('\t');
@@ -243,6 +269,7 @@ public class AttackData
 	[XmlElement("SFX")]
 	public int soundID;
 
+	public AttackData() { }
 	public AttackData(string attackString)
 	{
 		string[] cols = attackString.Split('\t');
@@ -295,6 +322,7 @@ public class ItemData
 	[XmlElement("Rarity")]
 	public int rarity;
 
+	public ItemData() { }
 	public ItemData(string itemString)
 	{
 		string[] cols = itemString.Split('\t');
@@ -318,6 +346,7 @@ public class InventoryData
 	/*[XmlElement("Item")]
 	public ItemData item;*/
 
+	public InventoryData() { }
 	public InventoryData(string inventoryString)
 	{
 		string[] cols = inventoryString.Split('\t');
@@ -340,6 +369,8 @@ public class FormationData
 	public Vector2 tiles;
 	[XmlElement("TileID")]
 	public int tileID;
+
+	public FormationData() { }
 	public FormationData(string formString)
 	{
 		//Debug.Log(formString);
@@ -376,6 +407,7 @@ public class FullFormationData
 	[XmlElement("Music")]
 	public int music;
 
+	public FullFormationData() { }
 	public FullFormationData(string uniFormString, int formCount)
 	{
 		//Debug.Log(uniFormString);
@@ -416,6 +448,8 @@ public class EncounterMap
 	public int battleMusicID;
 	[XmlElement("OverworldMusic")]
 	public int owMusicID;
+
+	public EncounterMap() { }
 	public EncounterMap(string encounterString)
 	{
 		string[] cols = encounterString.Split('\t');
@@ -443,6 +477,8 @@ public class ExpRequirements
 	public int level;
 	[XmlElement("experience")]
 	public int exp;
+
+	public ExpRequirements() { }
 	public ExpRequirements(string expString)
 	{
 		string[] cols = expString.Split('\t');
@@ -456,6 +492,8 @@ public class EventData
 {
 	public int id;
 	public bool hasBeenTriggered;
+
+	public EventData() { }
 	public EventData(string eventsString)
 	{
 		string[] cols = eventsString.Split('\t');

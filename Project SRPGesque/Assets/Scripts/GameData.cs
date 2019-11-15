@@ -8,7 +8,9 @@ using System.IO;
 //[System.Serializable]
 public class GameData
 {
-
+	//Miscelaneuos
+	//[Xml("Miscelaneuos")]
+	public MiscData Misc;
 	//Party
 	[XmlArray("Party")]
 	[XmlArrayItem("Character")]
@@ -64,6 +66,8 @@ public class GameData
 
 	public GameData()
 	{
+		LoadMiscData();
+		
 		//Debug.Log("test1");
 		LoadStatSpread();
 		//Debug.Log("test2");
@@ -92,6 +96,11 @@ public class GameData
 		LoadSpeakers();
 		LoadSpeakerPortraits();
 		LoadEvents();
+	}
+
+	public void LoadMiscData()
+	{
+		Misc = new MiscData();
 	}
 
 	public void LoadStatSpread()
@@ -290,9 +299,14 @@ public static class GameDataManager
 		string path = Application.persistentDataPath + "/Data";
 		if (File.Exists(path + "/" + fileName))
 		{
+			Debug.Log(fileName + " Exists");
 			return true;
 		}
-		else return false;
+		else
+		{
+			Debug.Log(fileName + " Doesn't exist");
+			return false;
+		}
 	}
 }
 

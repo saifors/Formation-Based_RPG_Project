@@ -13,6 +13,7 @@ public class DialogueData
 	public int dialogueSpeakerR;
 	public bool[] speakerDirection; // false = L. true = R
 
+	public DialogueData() { }
 	public DialogueData(string diaString)
 	{
 		string[] cols = diaString.Split('\t');
@@ -49,6 +50,8 @@ public class SpeakerData
 	public int speakerID;
 	public string nameKey;
 	public int portraitID;
+
+	public SpeakerData() { }
 	public SpeakerData(string speakString)
 	{
 		string[] cols = speakString.Split('\t');

@@ -131,11 +131,12 @@ public class GameManager : MonoBehaviour
 	// Use this for initialization
 	void Start()
 	{
+		
 		fileName = PlayerPrefs.GetString("CurrentFile", "spelEen.od");
 		cacheName = "spelQuick.od";
 
-		gameData = GameDataManager.Load(fileName);
-		GameDataManager.Save(gameData, cacheName);
+		gameData = GameDataManager.Load(cacheName);
+		GameDataManager.Save(gameData, fileName);
 
 		LanguageManager.LoadLanguage();
 
