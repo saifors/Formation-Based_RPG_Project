@@ -9,7 +9,7 @@ using System.IO;
 public class GameData
 {
 	//Miscelaneuos
-	//[Xml("Miscelaneuos")]
+	[XmlElement("Miscellaneuos")]
 	public MiscData Misc;
 	//Party
 	[XmlArray("Party")]
@@ -50,6 +50,9 @@ public class GameData
 	[XmlArray("Inventory")]
 	[XmlArrayItem("InventorySlot")]
 	public List<InventoryData> ItemInventory;
+
+	//---------TextData------------------------------
+
 	//Dialogue
 	[XmlArray("Dialogues")]
 	[XmlArrayItem("Dialogue")]
@@ -58,7 +61,8 @@ public class GameData
 	[XmlArray("Speakers")]
 	[XmlArrayItem("Speaker")]
 	public List<SpeakerData> SpeakerCol;
-	public Sprite[] speakerPortrait;
+
+	//public Sprite[] speakerPortrait;
 	//Events
 	[XmlArray("Events")]
 	[XmlArrayItem("Event")]
@@ -94,7 +98,7 @@ public class GameData
 
 		LoadDialogue();
 		LoadSpeakers();
-		LoadSpeakerPortraits();
+		//LoadSpeakerPortraits();
 		LoadEvents();
 	}
 
@@ -223,7 +227,7 @@ public class GameData
 		for (int i = 1; i < linesText.Length; i++) EventCollection.Add(new EventData(linesText[i]));
 	}
 
-	public void LoadSpeakerPortraits()
+	/*public void LoadSpeakerPortraits()
 	{
 		
 		object[] loadedSprites = Resources.LoadAll<Sprite>("Sprites/SpeakerPortraits");
@@ -232,7 +236,7 @@ public class GameData
 		{
 			speakerPortrait[i] = (Sprite)loadedSprites[i];
 		}
-	}
+	}*/
 }
 
 
@@ -259,6 +263,26 @@ public static class GameDataManager
 		}
 
 	}
+	public static void SaveXml(GameData data, string fileName) //Other alternatives to string filename is an int slot and have a local string filenname that uses slot int
+	{
+		Debug.Log("[GameDataManager] Save");
+
+		string path = Application.persistentDataPath + "/Data";
+		Debug.Log("[GameDataManager] path " + path);
+
+		try //try doing the following
+		{
+			DataManager.SaveToXML<GameData>(data, fileName, path);
+			//DataManager.SaveToText<GameData>(data, fileName, path);
+			Debug.Log("[GameDataManager] Save successful");
+		}
+		catch (Exception e) //in case of failure get what the issue is
+		{
+			Debug.LogError("[GameDataManager] Save error" + e);
+		}
+
+	}
+
 	public static GameData Load(string fileName)
 	{
 		Debug.Log("[GameDataManager] Load");

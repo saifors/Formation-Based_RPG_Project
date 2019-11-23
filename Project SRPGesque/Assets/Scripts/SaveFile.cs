@@ -6,8 +6,11 @@ using TMPro;
 
 public class SaveFile : MonoBehaviour
 {
+	public SaveLoad saveLoad;
 	public GameObject empty;
 	public GameObject existingFile;
+
+	public GameData gameData;
 
 	public TextMeshProUGUI saveName;
 	public TextMeshProUGUI location;
@@ -18,19 +21,30 @@ public class SaveFile : MonoBehaviour
 
 	public string fileName;
 
+	public bool exists;
+
 	// Start is called before the first frame update
-    void Start()
+    public void Init(SaveLoad SLoad)
     {
+		saveLoad = SLoad;
 		//Debug.Log("Yo");
 		if (GameDataManager.ExistsGame(fileName))
 		{
+			exists = true;
 			empty.SetActive(false);
 			existingFile.SetActive(true);
-			GameData gameData = GameDataManager.Load(fileName);
+			gameData = GameDataManager.Load(fileName);
 
 			saveName.text = gameData.Misc.saveName;
-			playtime.text = "Playtime: " + gameData.Misc.playtimeSeconds;
-			location.text = "Location: " + gameData.Misc.mapID;
+
+			gameData.Misc.playtimeSeconds = 2354523;
+
+			int hours = Mathf.FloorToInt(gameData.Misc.playtimeSeconds / 3600);
+			int minutes = Mathf.FloorToInt((gameData.Misc.playtimeSeconds % 3600) / 60);
+			int seconds = Mathf.FloorToInt((gameData.Misc.playtimeSeconds % 3600) % 60);
+			playtime.text = "Playtime: " + hours + ":" + minutes.ToString("00") + ":" + seconds.ToString("00");
+
+			location.text = "Location: " + LanguageManager.langData.mapNames[gameData.MapEncounterCollection[gameData.Misc.mapID].nameKey]; 
 
 			if (gameData.Misc.partyMembers.Count < 3)
 			{
@@ -51,14 +65,9 @@ public class SaveFile : MonoBehaviour
 		}
 		else
 		{
+			exists = false;
 			empty.SetActive(true);
 			existingFile.SetActive(false);
 		}
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

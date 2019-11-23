@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.IO;
 using System;
+using System.Xml;
+using System.Xml.Serialization;
 using UnityEngine;
 
-//[System.Serializable]
+[System.Serializable]
 public class LanguageData
 {
 	public enum Language { English, Spanish, Dutch, German };
@@ -17,6 +19,8 @@ public class LanguageData
 	public Dictionary<string, string> itemDesc;
 	public Dictionary<string, string> actions;
 	public Dictionary<string, string> stats;
+
+	public Dictionary<string, string> mapNames;
 
 	public Dictionary<int, string> dialogue;
 	//--------------------
@@ -70,6 +74,8 @@ public class LanguageData
 		actions = new Dictionary<string, string>();
 		stats = new Dictionary<string, string>();
 
+		mapNames = new Dictionary<string, string>();
+
 		dialogue = new Dictionary<int, string>();
 }
 }
@@ -90,6 +96,8 @@ public static class LanguageManager
 
 		LoadActionCommands();
 		LoadStats();
+
+		LoadMapNames();
 
 		LoadDialogue();
 	}
@@ -331,6 +339,48 @@ public static class LanguageManager
 						break;
 					case LanguageData.Language.German:
 						langData.stats.Add(rows[0], rows[4]);
+						break;
+					default:
+						break;
+				}
+			}
+
+		}
+		catch (Exception e)
+		{
+			Debug.LogError("Load from error: " + e);
+		}
+	}
+
+	public static void LoadMapNames()
+	{
+		try
+		{
+			langData.mapNames = new Dictionary<string, string>(); //reinitializing because like this it gets overwritten every time its loaded which is helpful when the language is changed during runtime.
+
+			string fullText = DataManager.LoadTextFromFile("TextData/MapNames"); //No need to put Resources as it´s already loading from inside Resources 
+																				  //Debug.Log(fullText);
+																				  //Now we need to seperate the text into lines so:
+			string[] linesText = DataManager.ReadLinesFromString(fullText);
+			//Debug.Log(linesText[0]);
+			for (int i = 1; i < linesText.Length; i++) //i is 1 because line 0 is not info for the program
+			{
+				//langData.form //Dictionary, it´s already loaded inside Language Data
+				string[] rows = linesText[i].Split('\t'); //Splits it by tabs inside of the string.
+
+				switch (langData.currentLanguage)
+				{
+					case LanguageData.Language.English:
+						langData.mapNames.Add(rows[0], rows[1]);
+						break;
+					case LanguageData.Language.Spanish:
+						langData.mapNames.Add(rows[0], rows[2]);
+						break;
+					case LanguageData.Language.Dutch:
+						langData.mapNames.Add(rows[0], rows[3]);
+						break;
+					case LanguageData.Language.German:
+						langData.mapNames.Add(rows[0], rows[4]);
 						break;
 					default:
 						break;

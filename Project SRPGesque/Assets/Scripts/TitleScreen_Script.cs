@@ -29,7 +29,7 @@ public class TitleScreen_Script : MonoBehaviour
     public float scrollCooldownCounter;
     public int NewGameSceneID;
     private TransitionManager transition;
-    public enum TitleState { Title, Load, Options};
+    public enum TitleState { Title, Load, Options, Wait};
     public TitleState state;
 
     public Text resolutionText;
@@ -43,6 +43,8 @@ public class TitleScreen_Script : MonoBehaviour
 
 	public GraphicRaycaster rCaster;
 	private Vector3 lastMouseCoordinate;
+
+	public GameData gameData;
 
 	// Use this for initialization
 	void Start ()
@@ -62,8 +64,13 @@ public class TitleScreen_Script : MonoBehaviour
 
 		rCaster = GetComponent<GraphicRaycaster>();
 
+		//CancelSelection();
+		selectionImageGroup.SetActive(true);
+		optionsPanel.SetActive(false);
+		optionsTrans.DOAnchorPosX(1500, 1, true).WaitForCompletion();
+		loadGamePanel.SetActive(false);
 		state = TitleState.Title;
-		CancelSelection();
+		
 		SelectOption(0);
 		arrowTween = arrows.DORotate(new Vector3(180, 0, 0), 1).SetDelay(1).SetLoops(-1, LoopType.Incremental);
 		arrowTween.Pause();
@@ -190,42 +197,69 @@ public class TitleScreen_Script : MonoBehaviour
     }
     public void ConfirmSelection(int optionNum)
     {
-        
+		
         if (optionNum == 0) //New Game
         {
-            
-            
+			NewGame();
 
             transition.FadeToSceneChange(false, NewGameSceneID);
         }
         else if (optionNum == 1)
         {
-            selectionImageGroup.SetActive(false);
+			state = TitleState.Wait;
+			
+			selectionImageGroup.SetActive(false);
             optionsPanel.SetActive(false);
             loadGamePanel.SetActive(true);
-            state = TitleState.Load;
+			if (titleCanvas.alpha == 1) titleCanvas.DOFade(0, 0.5f).OnComplete(CompleteTransition);
+            //state = TitleState.Load;
         }
         else if (optionNum == 2)
         {
-            
-            selectionImageGroup.SetActive(false);
+			state = TitleState.Wait;
+			
+			selectionImageGroup.SetActive(false);
             optionsPanel.SetActive(true);
 			optionsTrans.DOAnchorPosX(0, 1, true).WaitForCompletion();
             loadGamePanel.SetActive(false);
             UpdateVideoSettingsText();
-            state = TitleState.Options;
+			if (titleCanvas.alpha == 1) titleCanvas.DOFade(0, 0.5f).OnComplete(CompleteTransition);
+            //state = TitleState.Options;
         }
         else if (optionNum == 3) Application.Quit();
     }
+
+	public void NewGame()
+	{
+		gameData = new GameData();
+		//gameData = GameDataManager.Load("spelQuick.od");
+		NewGameSceneID = gameData.Misc.mapID + 3;
+		gameData.Misc.pos = new Vector3(0,0.5f,0);
+		Debug.Log("New Game" + gameData.Misc.pos);
+		//gameData.Misc.pos.y = 0.5f;
+		gameData.Misc.partyMembers.Add(0);
+		gameData.Misc.gold = 2000;
+		GameDataManager.Save(gameData, "spelQuick.od");
+		//gameData.Misc.rot = Vector3.zero;
+	}
+
+	public void CompleteTransition()
+	{
+		if (loadGamePanel.activeSelf) state = TitleState.Load;
+		else if (optionsPanel.activeSelf) state = TitleState.Options;
+		else state = TitleState.Title;
+	}
+
     public void CancelSelection()
     {
-        
-        state = TitleState.Title;
+		
+		state = TitleState.Wait;
         selectionImageGroup.SetActive(true);
         optionsPanel.SetActive(false);
 		optionsTrans.DOAnchorPosX(1500, 1, true).WaitForCompletion();
         loadGamePanel.SetActive(false);
-    }
+		if (titleCanvas.alpha == 0) titleCanvas.DOFade(1, 0.5f).OnComplete(CompleteTransition);
+	}
 
 	public void LoadGameSlot(int slot)
 	{

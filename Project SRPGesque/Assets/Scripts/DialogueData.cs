@@ -4,7 +4,7 @@ using UnityEngine;
 using System.Xml;
 using System.Xml.Serialization;
 
-[System.Serializable]
+//[System.Serializable]
 public class DialogueData
 {
 	public int dialogueID;
@@ -45,6 +45,7 @@ public class DialogueData
 	}
 }
 
+//[System.Serializable]
 public class SpeakerData
 {
 	public int speakerID;

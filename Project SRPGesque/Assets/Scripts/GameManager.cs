@@ -125,18 +125,17 @@ public class GameManager : MonoBehaviour
 	//Game Data 
 	public GameData gameData;
 	public string fileName;
-	public string cacheName;
+	public string cacheName = "spelQuick.od";
 
 	//Start
 	// Use this for initialization
 	void Start()
 	{
-		
-		fileName = PlayerPrefs.GetString("CurrentFile", "spelEen.od");
-		cacheName = "spelQuick.od";
+		gameData = new GameData();
 
-		gameData = GameDataManager.Load(cacheName);
-		GameDataManager.Save(gameData, fileName);
+		playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<OWPlayerController>();
+
+		LoadCurrentSaveData();
 
 		LanguageManager.LoadLanguage();
 
@@ -153,8 +152,6 @@ public class GameManager : MonoBehaviour
 
 		//Initialization of Objects
 		cam_T = GameObject.FindGameObjectWithTag("CamTarget").GetComponent<Transform>();
-
-		playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<OWPlayerController>();
 
 		cam_T.position = playerController.trans.position;
 
@@ -297,6 +294,17 @@ public class GameManager : MonoBehaviour
 
 
 	}
+
+	public void LoadCurrentSaveData()
+	{
+		cacheName = "spelQuick.od";
+		//GameDataManager.SaveXml(gameData, "spelQuick.xml");
+		gameData = GameDataManager.Load(cacheName);
+		Debug.Log(gameData.Misc.pos);
+		playerController.trans.position = gameData.Misc.pos;
+		GameDataManager.Save(gameData, cacheName);
+	}
+
 	//Data
 	public void UpdateStats(int characterID)
 	{

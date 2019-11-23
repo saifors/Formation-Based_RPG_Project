@@ -67,7 +67,7 @@ public class CharacterData
 	
 }
 
-
+[System.Serializable]
 public class StatSpread
 {
 	[XmlAttribute("StatID")]
@@ -149,6 +149,7 @@ public class StatSpread
 	}
 }
 
+[System.Serializable]
 public class MiscData
 {
 	public string saveName;
@@ -172,6 +173,7 @@ public class MiscData
 	}
 }
 
+[System.Serializable]
 public class EnemyData
 {
 	[XmlAttribute("EnemyID")]
@@ -246,6 +248,7 @@ public class EnemyData
 	}
 }
 
+[System.Serializable]
 public class AttackData
 {
 	[XmlAttribute("AttackID")]
@@ -308,6 +311,7 @@ public class AttackData
 	}
 }
 
+[System.Serializable]
 public class ItemData
 {
 	public enum ItemEffect { Heal20_F, Heal50_F, Heal100_F, Heal200_F, Heal500_F, Heal50_P, Heal100_P, Recover50_F, Recover100_F, Recover300_F, Recover50_P, Recover100_P, CurePoison, None };//Heal is HP, Recover is MP Cure is Status effect
@@ -335,6 +339,7 @@ public class ItemData
 	}
 }
 
+[System.Serializable]
 public class InventoryData
 {
 	[XmlAttribute("SlotID")]
@@ -357,6 +362,7 @@ public class InventoryData
 	}
 }
 
+[System.Serializable]
 public class FormationData
 {
 	[XmlAttribute("FormationCharID")]
@@ -394,6 +400,7 @@ public class FormationData
 	}
 }
 
+[System.Serializable]
 public class FullFormationData
 {
 	//Complication: is this shit even doable, should I make a seperate Formation Data?
@@ -438,6 +445,7 @@ public class FullFormationData
 	}
 }
 
+[System.Serializable]
 public class EncounterMap
 {
 	[XmlAttribute("MapEncountersID")]
@@ -448,6 +456,8 @@ public class EncounterMap
 	public int battleMusicID;
 	[XmlElement("OverworldMusic")]
 	public int owMusicID;
+	[XmlElement("NameKey")]
+	public string nameKey;
 
 	public EncounterMap() { }
 	public EncounterMap(string encounterString)
@@ -468,9 +478,11 @@ public class EncounterMap
 
 		battleMusicID = int.Parse(cols[2]);
 		owMusicID = int.Parse(cols[3]);
+		nameKey = cols[4];
 	}
 }
 
+[System.Serializable]
 public class ExpRequirements
 {
 	[XmlAttribute("level")]
@@ -488,6 +500,7 @@ public class ExpRequirements
 	}
 }
 
+[System.Serializable]
 public class EventData
 {
 	public int id;

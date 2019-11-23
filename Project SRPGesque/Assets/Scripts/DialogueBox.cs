@@ -37,16 +37,28 @@ public class DialogueBox : MonoBehaviour
 		speakerPositions = new Vector2[2];
 		speakerPositions[0] = new Vector2(-545, 20);
 		speakerPositions[1] = new Vector2(545, 20);
-		
-		portSprites = new Sprite[gameManager.gameData.speakerPortrait.Length];
+
+		LoadSpeakerPortraits();
+		/*portSprites = new Sprite[gameManager.gameData.speakerPortrait.Length];
 		for (int i = 0; i < portSprites.Length; i++)
 		{
 			portSprites[i] = gameManager.gameData.speakerPortrait[i];
-		}
+		}*/
 
 		speakerName = speakerBox.GetComponentInChildren<TextMeshProUGUI>();
 
 		
+	}
+
+	public void LoadSpeakerPortraits()
+	{
+
+		object[] loadedSprites = Resources.LoadAll<Sprite>("Sprites/SpeakerPortraits");
+		portSprites = new Sprite[loadedSprites.Length];
+		for (int i = 0; i < loadedSprites.Length; i++)
+		{
+			portSprites[i] = (Sprite)loadedSprites[i];
+		}
 	}
 
 	public void StartDialogue(int diaID)

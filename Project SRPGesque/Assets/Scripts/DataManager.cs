@@ -78,9 +78,10 @@ public static class DataManager //Rmember static will be during entire game so n
 	{
 		//Read a file´s text (load)
 		string textData = "";
-
+		
 		StreamReader reader = new StreamReader(path + "/" + fileName);
 		//reader.ReadLine() //For only a line
+		
 		textData = reader.ReadToEnd();
 		reader.Close();
 
@@ -94,6 +95,8 @@ public static class DataManager //Rmember static will be during entire game so n
 		//Decrypt
 		textData = Decrypt(textData);
 		Debug.Log(textData);
+		
+
 		//Convert String to my data
 		object data = DeserializeFromString<T>(textData);
 
@@ -104,6 +107,7 @@ public static class DataManager //Rmember static will be during entire game so n
 	public static string SerializeToString<T>(object data) //This is so we can enrypt the data.
 	{
 		Debug.Log("[DataManager] Serialize to string");
+		
 		XmlSerializer serializer = new XmlSerializer(typeof(T));
 		using (StringWriter writer = new StringWriter())
 		{
@@ -115,8 +119,7 @@ public static class DataManager //Rmember static will be during entire game so n
 	{
 		Debug.Log("[DataManager] Deserialize from string");
 		XmlSerializer serializer = new XmlSerializer(typeof(T));
-
-		return serializer.Deserialize(new StringReader(text));
+		return serializer.Deserialize(new StringReader(text)); //HERE IS WHERE MY NIGHTMARES EXIST
 	}
 	//ENCRYPT
 	private static string Encrypt(string text)
