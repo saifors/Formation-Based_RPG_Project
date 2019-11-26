@@ -263,7 +263,7 @@ public static class GameDataManager
 		}
 
 	}
-	public static void SaveXml(GameData data, string fileName) //Other alternatives to string filename is an int slot and have a local string filenname that uses slot int
+	/*public static void SaveXml(GameData data, string fileName) //Other alternatives to string filename is an int slot and have a local string filenname that uses slot int
 	{
 		Debug.Log("[GameDataManager] Save");
 
@@ -281,7 +281,7 @@ public static class GameDataManager
 			Debug.LogError("[GameDataManager] Save error" + e);
 		}
 
-	}
+	}*/
 
 	public static GameData Load(string fileName)
 	{

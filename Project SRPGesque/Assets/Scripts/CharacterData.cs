@@ -154,7 +154,7 @@ public class MiscData
 {
 	public string saveName;
 	public List<int> partyMembers;
-	public int playtimeSeconds;
+	public float playtimeSeconds;
 	public int mapID;
 	public Vector3 pos;
 	public Quaternion rot;

@@ -59,6 +59,7 @@ public class VictoryPanel : MonoBehaviour
 		goldGains = gameManager.totalGold;
 		itemGains = gameManager.allItems.ToArray();
 
+		gameManager.gameData.Misc.gold += goldGains;
 		goldText.text = goldGains.ToString();
 		expText.text = expGains.ToString();
 

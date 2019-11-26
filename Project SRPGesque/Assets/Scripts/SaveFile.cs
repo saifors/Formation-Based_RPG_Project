@@ -37,7 +37,7 @@ public class SaveFile : MonoBehaviour
 
 			saveName.text = gameData.Misc.saveName;
 
-			gameData.Misc.playtimeSeconds = 2354523;
+			//gameData.Misc.playtimeSeconds = 2354523;
 
 			int hours = Mathf.FloorToInt(gameData.Misc.playtimeSeconds / 3600);
 			int minutes = Mathf.FloorToInt((gameData.Misc.playtimeSeconds % 3600) / 60);

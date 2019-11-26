@@ -26,7 +26,7 @@ public class SaveLoad : MonoBehaviour
 
 	public void LoadFile(int fileNum)
 	{
-		if (files[fileNum].exists) return;
+		if (!files[fileNum].exists) return;
 
 		switch (fileNum)
 		{

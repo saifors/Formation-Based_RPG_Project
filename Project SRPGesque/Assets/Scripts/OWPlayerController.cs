@@ -73,7 +73,7 @@ public class OWPlayerController : PhysicsCollision
 
 		if (gameManager.gameState == GameManager.GameState.Overworld)
 		{
-			if ((axis.x != 0 || axis.y != 0)) // How to minimize slide (Input Lag?)?
+			if ((axis.x != 0 || axis.y != 0) && !gameManager.isPaused) // How to minimize slide (Input Lag?)?
 			{
 				/*trans.position*/
 				if(isTouchingWall && (facing == FacingDirection.NorthEast || facing == FacingDirection.NorthWest || facing == FacingDirection.SouthEast || facing == FacingDirection.SouthWest) )
@@ -108,34 +108,7 @@ public class OWPlayerController : PhysicsCollision
 	// Update is called once per frame
 	void Update ()
     {
-        if (gameManager.isPaused) return;
-        if (isRunning) speed = runSpeed;
-        else speed = walkSpeed;
-
-        if(gameManager.gameState == GameManager.GameState.Overworld)
-        {
-            if(trans.rotation != targetRotation)
-            {
-                isRotating = true;
-				//Flip();
-            }
-            else isRotating = false;
-
-            Rotate();
-			
-
-			//Still has some kinks to work out
-			/*if ((axis.x != 0 || axis.y != 0) ) // How to minimize slide (Input Lag?)?
-            {
-                trans.position += movementIndicator * speed * Time.deltaTime;
-                isMoving = true;
-            }
-            else isMoving = false;*/
-
-
-			/*DetermineDirection();
-            previousAxis = axis; //Store axis of last frame*/
-		}
+        
 		//Animation
 
 		if (isMoving == false)
@@ -175,8 +148,24 @@ public class OWPlayerController : PhysicsCollision
 					timeCounter = 0;
 				}
 			}
-		} 
-		//------
+		}
+		//------Movement related things
+		if (gameManager.isPaused) return;
+        if (isRunning) speed = runSpeed;
+        else speed = walkSpeed;
+
+        if(gameManager.gameState == GameManager.GameState.Overworld)
+        {
+            if(trans.rotation != targetRotation)
+            {
+                isRotating = true;
+				//Flip();
+            }
+            else isRotating = false;
+
+            Rotate();
+			
+		}
     }
 
 	public void OnTriggerEnter(Collider collision)

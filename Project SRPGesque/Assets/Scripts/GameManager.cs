@@ -218,8 +218,11 @@ public class GameManager : MonoBehaviour
 	// Update
 	void Update()
 	{
+		gameData.Misc.playtimeSeconds += Time.deltaTime;
+
 
 		if (isPaused) return;
+		
 
 		if (gameState == GameState.Overworld)
 		{
