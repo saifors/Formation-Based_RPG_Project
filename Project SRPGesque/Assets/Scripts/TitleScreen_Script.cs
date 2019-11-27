@@ -232,12 +232,17 @@ public class TitleScreen_Script : MonoBehaviour
 	public void NewGame()
 	{
 		gameData = new GameData();
+		transition.gameData = gameData;
 		//gameData = GameDataManager.Load("spelQuick.od");
 		NewGameSceneID = gameData.Misc.mapID + 3;
 		gameData.Misc.pos = new Vector3(0,0.5f,0);
 		Debug.Log("New Game" + gameData.Misc.pos);
 		//gameData.Misc.pos.y = 0.5f;
+		gameData.Misc.partyMembers = new List<int>();
 		gameData.Misc.partyMembers.Add(0);
+		gameData.Misc.partyMembers.Add(1);
+		//Debug.Log(gameData.Misc.partyMembers.Count);
+		gameData.Misc.partyMembers.Add(2);
 		gameData.Misc.gold = 2000;
 		GameDataManager.Save(gameData, "spelQuick.od");
 		//gameData.Misc.rot = Vector3.zero;
@@ -261,23 +266,7 @@ public class TitleScreen_Script : MonoBehaviour
 		if (titleCanvas.alpha == 0) titleCanvas.DOFade(1, 0.5f).OnComplete(CompleteTransition);
 	}
 
-	public void LoadGameSlot(int slot)
-	{
-		switch(slot)
-		{
-			case 0:
-				PlayerPrefs.SetString("CurrentFile", "spelEen.od"); // OD : Opslag Data
-				break;
-			case 1:
-				PlayerPrefs.SetString("CurrentFile", "spelTwee.od");
-				break;
-			case 2:
-				PlayerPrefs.SetString("CurrentFile", "spelDrie.od");
-				break;
-			default:
-				break;
-		}
-	}
+	
     
     public void UpdateVideoSettingsText()
     {

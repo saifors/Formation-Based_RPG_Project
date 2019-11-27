@@ -316,7 +316,7 @@ public class BattleUI : MonoBehaviour
 
             playerInfoBox[i] = obj.GetComponent<PlayerInfoBox>();
             playerInfoBox[i].levelNum.text = "Lv." + gameManager.charControl[i].level.ToString();
-			playerInfoBox[i].portrait.sprite = portraitSprites[i];
+			playerInfoBox[i].portrait.sprite = portraitSprites[gameManager.gameData.Party[i].portraitId];
 
         }
 

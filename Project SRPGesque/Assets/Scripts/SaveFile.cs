@@ -50,7 +50,7 @@ public class SaveFile : MonoBehaviour
 			{
 				for (int i = 0; i < gameData.Misc.partyMembers.Count; i++)
 				{
-					portraits[i].sprite = portSprites[gameData.Misc.partyMembers[i]];
+					portraits[i].sprite = portSprites[gameData.Party[i].portraitId];
 					portraits[i].color = Color.white;
 				}
 			}
@@ -58,7 +58,7 @@ public class SaveFile : MonoBehaviour
 			{
 				for (int i = 0; i < 3; i++)
 				{
-					portraits[i].sprite = portSprites[gameData.Misc.partyMembers[i]];
+					portraits[i].sprite = portSprites[gameData.Party[i].portraitId];
 					portraits[i].color = Color.white;
 				}
 			}

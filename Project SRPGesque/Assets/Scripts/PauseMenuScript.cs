@@ -5,6 +5,8 @@ using UnityEngine.UI;
 using TMPro;
 using DG.Tweening;
 
+public enum PauseState { Main, Party, Item, Quest, Save, Load, Quit,  Exit};
+
 public class PauseMenuScript : MonoBehaviour
 {
 	private GameManager gameManager;
@@ -21,6 +23,7 @@ public class PauseMenuScript : MonoBehaviour
 
     public bool isAnimating;
 
+	public TextMeshProUGUI locationText;
 	public TextMeshProUGUI goldText;
 	public TextMeshProUGUI playtimeText;
 	
@@ -30,6 +33,16 @@ public class PauseMenuScript : MonoBehaviour
 	private Vector2 axis;
 	public float scrollCooldownCounter;
 	public float scrollCooldown;
+
+	public Sprite[] portraitSprites;
+	public GameObject cInfoPrefab;
+	public CharMenuInfo[] charInfo;
+	public Transform cInfoBox;
+	
+	public PauseState state;
+
+	public GameObject saveBox;
+	public GameObject LoadBox;
 
 	// Start is called before the first frame update
 	public void Init(GameManager gM)
@@ -57,13 +70,13 @@ public class PauseMenuScript : MonoBehaviour
 		if (axis.y < 0 && scrollCooldownCounter >= scrollCooldown)
 		{
 			
-			SelectOption(selectedOption + 1);
+			if(state == PauseState.Main)SelectOption(selectedOption + 1);
 			scrollCooldownCounter = 0;
 
 		}
 		else if (axis.y > 0 && scrollCooldownCounter >= scrollCooldown)
 		{
-			SelectOption(selectedOption - 1);
+			if (state == PauseState.Main) SelectOption(selectedOption - 1);
 			scrollCooldownCounter = 0;
 		}
 	}
@@ -75,6 +88,43 @@ public class PauseMenuScript : MonoBehaviour
 
 	public void UpdateInfo()
 	{
+		if (gameManager.gameData.Misc.partyMembers.Count < 3)
+		{
+			charInfo = new CharMenuInfo[gameManager.gameData.Misc.partyMembers.Count];
+			for (int i = 0; i < gameManager.gameData.Misc.partyMembers.Count; i++)
+			{
+				GameObject obj = Instantiate(cInfoPrefab);
+				obj.transform.SetParent(cInfoBox);
+				obj.transform.localScale = new Vector3(1, 1, 1);
+				obj.transform.localPosition = new Vector3(0, -i * (180 + 5), 0);
+				charInfo[i] = obj.GetComponent<CharMenuInfo>();
+				charInfo[i].SetUp(gameManager.gameData.Party[gameManager.gameData.Misc.partyMembers[i]], portraitSprites, gameManager);
+
+				//pos.y = -i*(180+5);
+			}
+		}
+		else
+		{
+			charInfo = new CharMenuInfo[3];
+			for (int i = 0; i < 3; i++)
+			{
+				GameObject obj = Instantiate(cInfoPrefab);
+				obj.transform.SetParent(cInfoBox);
+				obj.transform.localScale = new Vector3(1, 1, 1);
+				RectTransform objTrans = obj.GetComponent<RectTransform>();
+				objTrans.anchoredPosition = new Vector3(0, -i * (180 + 5), 0);
+				charInfo[i] = obj.GetComponent<CharMenuInfo>();
+				charInfo[i].SetUp(gameManager.gameData.Party[gameManager.gameData.Misc.partyMembers[i]], portraitSprites, gameManager);
+			}
+		}
+
+		for (int i = 0; i < charInfo.Length; i++)
+		{
+			charInfo[i].SetUp(gameManager.gameData.Party[gameManager.gameData.Misc.partyMembers[i]], portraitSprites, gameManager);
+		}
+
+		locationText.text = LanguageManager.langData.mapNames[gameManager.gameData.MapEncounterCollection[gameManager.gameData.Misc.mapID].nameKey];
+
 		goldText.text = "Gold: " + gameManager.gameData.Misc.gold;
 
 		float pS = gameManager.gameData.Misc.playtimeSeconds;
@@ -118,27 +168,35 @@ public class PauseMenuScript : MonoBehaviour
 
 	public void ConfirmOption()
 	{
-		switch (selectedOption)
+		
+		if (state == PauseState.Main)
 		{
-			case 0:
-				Party();
-				break;
-			case 1:
-				Item();
-				break;
-			case 2:
-				Save();
-				break;
-			case 3:
-				Load();
-				break;
-			case 4:
-				Exit();
-				break;
-			case 5:
-				break;
-			default:
-				break;
+			switch (selectedOption)
+			{
+				case 0:
+					Party();
+					break;
+				case 1:
+					Item();
+					break;
+				case 2:
+					Quest();
+					break;
+				case 3:
+					Save();
+					break;
+				case 4:
+					Load();
+					break;
+				case 5:
+					Quit();
+					break;
+				case 6:
+					Exit();
+					break;
+				default:
+					break;
+			}
 		}
 	}
 
@@ -151,10 +209,15 @@ public class PauseMenuScript : MonoBehaviour
 	{
 
 	}
+	public void Quest()
+	{
+
+	}
 
 	public void Save()
 	{
-
+		state = PauseState.Save;
+		saveBox.SetActive(true);
 	}
 
 	public void Load()
@@ -162,8 +225,19 @@ public class PauseMenuScript : MonoBehaviour
 
 	}
 
+	public void Quit()
+	{
+		
+	}
+
 	public void Exit()
 	{
 		gameManager.PauseToggle();
+	}
+
+	public void Cancel()
+	{
+		state = PauseState.Main;
+		saveBox.SetActive(false);
 	}
 }

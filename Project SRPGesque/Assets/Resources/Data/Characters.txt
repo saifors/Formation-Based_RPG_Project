@@ -1,5 +1,5 @@
-ID	Name	Level	Exp	HP	MP	Atk	Def	Res	Spd	CurrentHP	CurrentMP	Model ID	Attacks Learned
-0	A'en	1	0	200	150	45	85	35	55	200	150	0	0,1,2
-1	Leech	1	0	120	250	20	50	90	25	120	250	1	0
-2	Fenia	1	0	360	180	80	65	60	90	360	180	2	0
-3	Bonsai	1	0	10	10	10	10	10	10	10	10	3	0
+ID	Name	Level	Exp	HP	MP	Atk	Def	Res	Spd	CurrentHP	CurrentMP	Model ID	Attacks Learned	portraitID
+0	A'en	1	0	200	150	45	85	35	55	200	150	0	0,1,2	0
+1	Leech	1	0	120	250	20	50	90	25	120	250	1	0	1
+2	Fenia	1	0	360	180	80	65	60	90	360	180	2	0	2
+3	Bonsai	1	0	10	10	10	10	10	10	10	10	3	0	3

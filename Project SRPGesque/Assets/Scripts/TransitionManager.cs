@@ -25,10 +25,12 @@ public class TransitionManager : MonoBehaviour
 	public float fadeSpeed;
 
 	private int transitionSceneID;
+	public GameData gameData;
 
 	// Use this for initialization
 	void Start () 
 	{
+		
 		canvas = GameObject.FindGameObjectWithTag("UI");
 		fadeSpeed = 0.5f;
 
@@ -93,6 +95,7 @@ public class TransitionManager : MonoBehaviour
 		if(fadeToSceneChange)
 		{
 			PlayerPrefs.SetInt("fadedFrom", 1);
+			
 			SceneManager.LoadScene(transitionSceneID);
 		}
 		else
@@ -120,6 +123,7 @@ public class TransitionManager : MonoBehaviour
 	public void FadeToSceneChange(bool fadeColor, int sceneNum)
 	{
 		fadeToSceneChange = true;
+		gameData.Misc.mapID = sceneNum - 3;
 		transitionSceneID = sceneNum;
 		//Debug.Log("FadeToSceneChanged" + fadeColor + sceneNum);
 		if (fadeColor == false)

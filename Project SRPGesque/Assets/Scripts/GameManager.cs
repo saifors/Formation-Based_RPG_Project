@@ -136,10 +136,10 @@ public class GameManager : MonoBehaviour
 		playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<OWPlayerController>();
 
 		LoadCurrentSaveData();
+		
 
 		LanguageManager.LoadLanguage();
 
-		
 
 		gameState = GameState.Overworld;
 		randomEcountersOn = true;//Depending on the area. Maybe a scene database indicating whether true or false?.
@@ -149,6 +149,7 @@ public class GameManager : MonoBehaviour
 		cam = Camera.main;
 
 		transition = GetComponent<TransitionManager>();
+		transition.gameData = gameData;
 
 		//Initialization of Objects
 		cam_T = GameObject.FindGameObjectWithTag("CamTarget").GetComponent<Transform>();
@@ -297,18 +298,23 @@ public class GameManager : MonoBehaviour
 
 
 	}
-
+	
+	//Data
 	public void LoadCurrentSaveData()
 	{
 		cacheName = "spelQuick.od";
 		//GameDataManager.SaveXml(gameData, "spelQuick.xml");
 		gameData = GameDataManager.Load(cacheName);
-		Debug.Log(gameData.Misc.pos);
-		playerController.trans.position = gameData.Misc.pos;
+		//Debug.Log(gameData.Misc.partyMembers.Count + "BITCH" );
 		GameDataManager.Save(gameData, cacheName);
 	}
 
-	//Data
+	public void AddLocationToGameData()
+	{
+		gameData.Misc.pos = playerController.trans.position;
+		gameData.Misc.rot = playerController.trans.rotation;
+	}
+	
 	public void UpdateStats(int characterID)
 	{
 		int lvMultiplier = gameData.Party[characterID].level - 1;

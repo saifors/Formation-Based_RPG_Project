@@ -37,7 +37,7 @@ public class InputManager : MonoBehaviour
 		if (gameManager.isPaused)
 		{
 			gameManager.pauseMenu.SetAxis(inputAxis);
-			return;
+			//return;
 		}
 
         
@@ -84,7 +84,8 @@ public class InputManager : MonoBehaviour
             }
 			else if (gameManager.gameState == GameManager.GameState.Overworld)
 			{
-				gameManager.eventManager.Interact();
+				if (gameManager.isPaused) gameManager.pauseMenu.ConfirmOption();
+				else gameManager.eventManager.Interact();
 			}
 			else if (gameManager.gameState == GameManager.GameState.Text)
 			{
@@ -107,7 +108,8 @@ public class InputManager : MonoBehaviour
         
         if(gameManager.gameState == GameManager.GameState.Overworld)
         {
-			playerController.SetAxis(inputAxis);
+			if(!gameManager.isPaused) playerController.SetAxis(inputAxis);
+			
 		
         }
         else if(gameManager.gameState == GameManager.GameState.Battle)

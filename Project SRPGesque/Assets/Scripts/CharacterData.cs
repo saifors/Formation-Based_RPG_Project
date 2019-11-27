@@ -11,10 +11,12 @@ public class CharacterData
 	public int id;
 	[XmlElement("Name")]
 	public string name;
+	
 	[XmlElement("Level")]
 	public int level;
 	[XmlElement("Exp")]
 	public int exp;
+	
 	[XmlElement("HP")]
 	public int hp;
 	[XmlElement("MP")]
@@ -36,6 +38,8 @@ public class CharacterData
 	[XmlElement("Attacks")]
 	public List<int> attacksLearned;
 	public int attackAmount;
+	[XmlElement("Portrait")]
+	public int portraitId;
 
 	public CharacterData() { }
 	public CharacterData(string characterString, StatSpread statSpread)
@@ -62,6 +66,8 @@ public class CharacterData
 		attacksLearned = statSpread.baseAttacks;
 		//Debug.Log("test6");
 		attackAmount = attacksLearned.Count;
+
+		portraitId = int.Parse(cols[14]);
 		//Debug.Log("test7");
 	}
 	
@@ -164,7 +170,7 @@ public class MiscData
 	{
 		saveName = "Save File 1";
 		partyMembers = new List<int>();
-		partyMembers.Add(0);
+		//partyMembers.Add(0);
 		playtimeSeconds = 0;
 		mapID = 0;
 		pos = Vector3.zero;
