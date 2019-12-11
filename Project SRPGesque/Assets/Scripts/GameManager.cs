@@ -131,12 +131,14 @@ public class GameManager : MonoBehaviour
 	// Use this for initialization
 	void Start()
 	{
-		gameData = new GameData();
+		gameData = GameDataManager.Load(PlayerPrefs.GetString("CurrentFile"));
 
 		playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<OWPlayerController>();
 
-		LoadCurrentSaveData();
-		
+		LoadMiscData();
+		playerController.transform.position = gameData.Misc.pos;
+		playerController.transform.localRotation = gameData.Misc.rot;
+		//Debug.Log("Start Event Trigger " + gameData.EventCollection[0].hasBeenTriggered);
 
 		LanguageManager.LoadLanguage();
 
@@ -299,20 +301,27 @@ public class GameManager : MonoBehaviour
 
 	}
 	
-	//Data
-	public void LoadCurrentSaveData()
-	{
-		cacheName = "spelQuick.od";
-		//GameDataManager.SaveXml(gameData, "spelQuick.xml");
-		gameData = GameDataManager.Load(cacheName);
-		//Debug.Log(gameData.Misc.partyMembers.Count + "BITCH" );
-		GameDataManager.Save(gameData, cacheName);
-	}
+	
 
-	public void AddLocationToGameData()
+	public void AddMiscToGameData()
 	{
+		
 		gameData.Misc.pos = playerController.trans.position;
 		gameData.Misc.rot = playerController.trans.rotation;
+	}
+
+	public void LoadMiscData()
+	{
+		if (!gameData.Misc.newGame)
+		{
+			playerController.transform.position = gameData.Misc.pos;
+			playerController.transform.localRotation = gameData.Misc.rot;
+		}
+		else
+		{
+			Debug.Log("started a new game");
+			gameData.Misc.newGame = false;
+		}
 	}
 	
 	public void UpdateStats(int characterID)
@@ -639,11 +648,14 @@ public class GameManager : MonoBehaviour
 	}
 	public void EndItem()
 	{
-		gameData.ItemInventory[battleUI.itemBox.selected].amount--;
-		if(gameData.ItemInventory[battleUI.itemBox.selected].amount <= 0)
+		List<InventoryData> ItemL = new List<InventoryData>(gameData.ItemInventory);
+
+		ItemL[battleUI.itemBox.selected].amount--;
+		if(ItemL[battleUI.itemBox.selected].amount <= 0)
 		{
-			gameData.ItemInventory.Remove(gameData.ItemInventory[battleUI.itemBox.selected]);
+			ItemL.Remove(gameData.ItemInventory[battleUI.itemBox.selected]);
 		}
+		gameData.ItemInventory = ItemL.ToArray();
 		battleUI.itemBox.DestroyItemText();
 		Invoke("EndTurn", 2);
 	}

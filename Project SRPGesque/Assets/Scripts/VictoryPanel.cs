@@ -107,30 +107,35 @@ public class VictoryPanel : MonoBehaviour
 	public void ItemCalc() // For Item Rewards
 	{
 		itemText.text = "";
+
+		List<InventoryData> ItemL = new List<InventoryData>(gameManager.gameData.ItemInventory);
+
 		for (int i = 0; i < itemGains.Length; i++)
 		{
 			itemText.text += LanguageManager.langData.itemName[gameManager.gameData.ItemsCollection[itemGains[i]].name] + '\n';
 
 			bool cont = true;
 
-			for (int e = 0; e < gameManager.gameData.ItemInventory.Count; e++)
+			for (int e = 0; e < ItemL.Count; e++)
 			{
 				if (cont)
 				{
-					if (itemGains[i] == gameManager.gameData.ItemInventory[e].itemId) //You already have one of this item in your inventory
+					if (itemGains[i] == ItemL[e].itemId) //You already have one of this item in your inventory
 					{
-						gameManager.gameData.ItemInventory[e].amount++;
+						ItemL[e].amount++;
 						break;
 					}
-					else if (e == gameManager.gameData.ItemInventory.Count - 1) //final of the loop and still no match with items in inevntory
+					else if (e == ItemL.Count - 1) //final of the loop and still no match with items in inevntory
 					{
-						string newItem = gameManager.gameData.ItemInventory.Count.ToString() + '\t' + gameManager.gameData.ItemsCollection[itemGains[i]].id.ToString() + '\t' + 1;
-						gameManager.gameData.ItemInventory.Add(new InventoryData(newItem));
+						string newItem = ItemL.Count.ToString() + '\t' + gameManager.gameData.ItemsCollection[itemGains[i]].id.ToString() + '\t' + 1;
+						ItemL.Add(new InventoryData(newItem));
 						cont = false;
 					}
 				}
 			}
 		}
+		gameManager.gameData.ItemInventory = ItemL.ToArray();
+
 	}
 
 	public void SwitchToLevelAnim()

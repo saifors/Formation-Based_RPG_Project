@@ -112,6 +112,7 @@ public class EventManager : MonoBehaviour
 
 	public void MapStartEvent(EventScript receiveEvent)
 	{
+		if (receiveEvent.hasBeenTriggered) return;
 		currentEvent = receiveEvent.ID;
 		playerController.isMoving = false;
 		playerController.isRunning = false;
@@ -168,6 +169,7 @@ public class EventManager : MonoBehaviour
 	{
 		if(trigger) events[currentEvent].hasBeenTriggered = true;
 		gameManager.gameData.EventCollection[events[currentEvent].eventTriggerID].hasBeenTriggered = events[currentEvent].hasBeenTriggered;
+		//Debug.Log("[EVENT CHANGE] " + events[currentEvent].eventTriggerID + " trigger " + gameManager.gameData.EventCollection[events[currentEvent].eventTriggerID].hasBeenTriggered);
 
 		gameManager.gameState = GameManager.GameState.Overworld;
 	}
@@ -216,20 +218,23 @@ public class EventManager : MonoBehaviour
 	}
 	public void GainItem(int id)
 	{
-		for (int e = 0; e < gameManager.gameData.ItemInventory.Count; e++)
+		List<InventoryData> ItemL = new List<InventoryData>(gameManager.gameData.ItemInventory);
+
+		for (int e = 0; e < ItemL.Count; e++)
 		{
-			if (id == gameManager.gameData.ItemInventory[e].itemId) //You already have one of this item in your inventory
+			if (id == ItemL[e].itemId) //You already have one of this item in your inventory
 			{
-				gameManager.gameData.ItemInventory[e].amount++;
+				ItemL[e].amount++;
 				break;	
 			}
-			else if (e == gameManager.gameData.ItemInventory.Count - 1) //final of the loop and still no match with items in inevntory
+			else if (e == ItemL.Count - 1) //final of the loop and still no match with items in inevntory
 			{
-				string newItem = gameManager.gameData.ItemInventory.Count.ToString() + '\t' + id.ToString() + '\t' + 1;
-				gameManager.gameData.ItemInventory.Add(new InventoryData(newItem));
+				string newItem = ItemL.Count.ToString() + '\t' + id.ToString() + '\t' + 1;
+				ItemL.Add(new InventoryData(newItem));
 					
 			}
 		}
+		gameManager.gameData.ItemInventory = ItemL.ToArray();
 		StartCoroutine(WaitForItemNotif(id));
 	}
 
@@ -237,22 +242,24 @@ public class EventManager : MonoBehaviour
 	{
 		events[currentEvent].anim.Play("Open");
 		gameManager.soundPlayer.PlaySound(18, true);
-		
-		for (int e = 0; e < gameManager.gameData.ItemInventory.Count; e++)
+
+		List<InventoryData> ItemL = new List<InventoryData>(gameManager.gameData.ItemInventory);
+
+		for (int e = 0; e < ItemL.Count; e++)
 		{
-			if (id == gameManager.gameData.ItemInventory[e].itemId) //You already have one of this item in your inventory
+			if (id == ItemL[e].itemId) //You already have one of this item in your inventory
 			{
-				gameManager.gameData.ItemInventory[e].amount++;
+				ItemL[e].amount++;
 				break;
 			}
-			else if (e == gameManager.gameData.ItemInventory.Count - 1) //final of the loop and still no match with items in inevntory
+			else if (e == ItemL.Count - 1) //final of the loop and still no match with items in inevntory
 			{
-				string newItem = gameManager.gameData.ItemInventory.Count.ToString() + '\t' + id.ToString() + '\t' + 1;
-				gameManager.gameData.ItemInventory.Add(new InventoryData(newItem));
+				string newItem = ItemL.Count.ToString() + '\t' + id.ToString() + '\t' + 1;
+				ItemL.Add(new InventoryData(newItem));
 
 			}
 		}
-
+		gameManager.gameData.ItemInventory = ItemL.ToArray();
 		StartCoroutine(WaitForChest(id, events[currentEvent].anim.GetCurrentAnimatorStateInfo(0).length));
 		
 	}

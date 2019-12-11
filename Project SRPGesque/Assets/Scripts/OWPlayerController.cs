@@ -54,6 +54,8 @@ public class OWPlayerController : PhysicsCollision
 	protected override void Start ()
     {
 		base.Start();
+		trans = transform.parent;
+		transform.localPosition = new Vector3(0, 0.5f, 0);
         gameManager = GameObject.FindGameObjectWithTag("Manager").GetComponent<GameManager>();
 		overlap = GetComponent<InteractionOverlapCollider>();
 		overlap.Init(this, gameManager);

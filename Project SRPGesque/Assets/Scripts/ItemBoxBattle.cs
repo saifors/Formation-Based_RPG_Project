@@ -32,7 +32,7 @@ public class ItemBoxBattle : MonoBehaviour
 
     public void CalculateItemBox()
 	{
-		itemTexts = new ItemTextContents[gameManager.gameData.ItemInventory.Count];
+		itemTexts = new ItemTextContents[gameManager.gameData.ItemInventory.Length];
 		itemTrans = new RectTransform[itemTexts.Length];
 
 		//Calculate size of the inventoryPanel

@@ -12,6 +12,8 @@ public class SaveFile : MonoBehaviour
 
 	public GameData gameData;
 
+	//public GameData gameData;
+
 	public TextMeshProUGUI saveName;
 	public TextMeshProUGUI location;
 	public TextMeshProUGUI playtime;
@@ -27,24 +29,31 @@ public class SaveFile : MonoBehaviour
     public void Init(SaveLoad SLoad)
     {
 		saveLoad = SLoad;
-		//Debug.Log("Yo");
+		
+		if (!GameDataManager.ExistsGame(fileName)) return;
+		gameData = GameDataManager.Load(fileName);
+		UpdateInfo();
+    }
+	public void UpdateInfo()
+	{
 		if (GameDataManager.ExistsGame(fileName))
 		{
 			exists = true;
 			empty.SetActive(false);
 			existingFile.SetActive(true);
-			gameData = GameDataManager.Load(fileName);
+			//gameData = GameDataManager.Load(fileName);
 
 			saveName.text = gameData.Misc.saveName;
 
 			//gameData.Misc.playtimeSeconds = 2354523;
+			float pS = gameData.Misc.playtimeSeconds;
 
-			int hours = Mathf.FloorToInt(gameData.Misc.playtimeSeconds / 3600);
-			int minutes = Mathf.FloorToInt((gameData.Misc.playtimeSeconds % 3600) / 60);
-			int seconds = Mathf.FloorToInt((gameData.Misc.playtimeSeconds % 3600) % 60);
+			int hours = Mathf.FloorToInt(pS / 3600);
+			int minutes = Mathf.FloorToInt((pS % 3600) / 60);
+			int seconds = Mathf.FloorToInt((pS % 3600) % 60);
 			playtime.text = "Playtime: " + hours + ":" + minutes.ToString("00") + ":" + seconds.ToString("00");
 
-			location.text = "Location: " + LanguageManager.langData.mapNames[gameData.MapEncounterCollection[gameData.Misc.mapID].nameKey]; 
+			location.text = "Location: " + LanguageManager.langData.mapNames[gameData.MapEncounterCollection[gameData.Misc.mapID].nameKey];
 
 			if (gameData.Misc.partyMembers.Count < 3)
 			{
@@ -62,6 +71,7 @@ public class SaveFile : MonoBehaviour
 					portraits[i].color = Color.white;
 				}
 			}
+			Debug.Log("Updated Save " + gameData.Misc.saveName);
 		}
 		else
 		{
@@ -69,5 +79,5 @@ public class SaveFile : MonoBehaviour
 			empty.SetActive(true);
 			existingFile.SetActive(false);
 		}
-    }
+	}
 }

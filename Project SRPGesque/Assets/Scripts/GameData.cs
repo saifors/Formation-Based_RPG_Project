@@ -5,24 +5,23 @@ using System.Xml.Serialization;
 using System;
 using System.IO;
 
-//[System.Serializable]
+
 public class GameData
 {
-	//Miscelaneuos
-	[XmlElement("Miscellaneuos")]
-	public MiscData Misc;
+	
 	//Party
 	[XmlArray("Party")]
 	[XmlArrayItem("Character")]
-	public List<CharacterData> Party;
+	public CharacterData[] Party;
+	//public List<CharacterData> Party;
 	//Party
 	[XmlArray("Stats")]
 	[XmlArrayItem("Char")]
 	public List<StatSpread> CharStats;
 	//Party Formation
-	[XmlArray("PartyFormation")]
-	[XmlArrayItem("Member")]
-	public List<FormationData> Formation;
+	//[XmlArray("PartyFormation")]
+	//[XmlArrayItem("Member")]
+	//public FormationData[] Formation;
 	//Monsters
 	[XmlArray("Monsters")]
 	[XmlArrayItem("Monster")]
@@ -47,9 +46,9 @@ public class GameData
 	[XmlArray("Items")]
 	[XmlArrayItem("Item")]
 	public List<ItemData> ItemsCollection;
-	[XmlArray("Inventory")]
+	//[XmlArray("Inventory")]
 	[XmlArrayItem("InventorySlot")]
-	public List<InventoryData> ItemInventory;
+	public InventoryData[] ItemInventory;
 
 	//---------TextData------------------------------
 
@@ -66,11 +65,16 @@ public class GameData
 	//Events
 	[XmlArray("Events")]
 	[XmlArrayItem("Event")]
-	public List<EventData> EventCollection;
+	public EventData[] EventCollection;
+	
+	//Miscelaneuos
+	[XmlElement("Miscellaneuos")]
+	public MiscData Misc;
 
 	public GameData()
 	{
-		LoadMiscData();
+		LoadEvents();
+		
 		
 		//Debug.Log("test1");
 		LoadStatSpread();
@@ -99,7 +103,7 @@ public class GameData
 		LoadDialogue();
 		LoadSpeakers();
 		//LoadSpeakerPortraits();
-		LoadEvents();
+		LoadMiscData();
 	}
 
 	public void LoadMiscData()
@@ -117,12 +121,13 @@ public class GameData
 
 	public void LoadCharacters()
 	{
-		Party = new List<CharacterData>();
+		List<CharacterData> PartyL = new List<CharacterData>();
 		string fullText = DataManager.LoadTextFromFile("Data/Characters"); //No need to put Resources as it´s already loading from inside Resources 
 																		   //Debug.Log(fullText);
 																		   //Now we need to seperate the text into lines so:
 		string[] linesText = DataManager.ReadLinesFromString(fullText);
-		for (int i = 1; i < linesText.Length; i++) Party.Add(new CharacterData(linesText[i], CharStats[i-1]));
+		for (int i = 1; i < linesText.Length; i++) PartyL.Add(new CharacterData(linesText[i], CharStats[i-1]));
+		Party = PartyL.ToArray();
 	}
 
 	public void LoadMonsters()
@@ -193,11 +198,12 @@ public class GameData
 
 	public void LoadInventory()
 	{
-		ItemInventory = new List<InventoryData>();
+		List<InventoryData> ItemInventoryL = new List<InventoryData>();
 		string fullText = DataManager.LoadTextFromFile("Data/Inventory");
 
 		string[] linesText = DataManager.ReadLinesFromString(fullText);
-		for (int i = 1; i < linesText.Length; i++) ItemInventory.Add(new InventoryData(linesText[i]));
+		for (int i = 1; i < linesText.Length; i++) ItemInventoryL.Add(new InventoryData(linesText[i]));
+		ItemInventory = ItemInventoryL.ToArray();
 	}
 
 	public void LoadDialogue()
@@ -220,23 +226,14 @@ public class GameData
 
 	public void LoadEvents()
 	{
-		EventCollection = new List<EventData>();
+		List<EventData> EventCollectionL = new List<EventData>();
 		string fullText = DataManager.LoadTextFromFile("Data/Events");
 
 		string[] linesText = DataManager.ReadLinesFromString(fullText);
-		for (int i = 1; i < linesText.Length; i++) EventCollection.Add(new EventData(linesText[i]));
+		for (int i = 1; i < linesText.Length; i++) EventCollectionL.Add(new EventData(linesText[i]));
+		EventCollection = EventCollectionL.ToArray();
 	}
-
-	/*public void LoadSpeakerPortraits()
-	{
-		
-		object[] loadedSprites = Resources.LoadAll<Sprite>("Sprites/SpeakerPortraits");
-		speakerPortrait = new Sprite[loadedSprites.Length];
-		for (int i = 0; i < loadedSprites.Length; i++)
-		{
-			speakerPortrait[i] = (Sprite)loadedSprites[i];
-		}
-	}*/
+	
 }
 
 
@@ -263,7 +260,7 @@ public static class GameDataManager
 		}
 
 	}
-	/*public static void SaveXml(GameData data, string fileName) //Other alternatives to string filename is an int slot and have a local string filenname that uses slot int
+	public static void SaveXml(GameData data, string fileName) //Other alternatives to string filename is an int slot and have a local string filenname that uses slot int
 	{
 		Debug.Log("[GameDataManager] Save");
 
@@ -280,8 +277,8 @@ public static class GameDataManager
 		{
 			Debug.LogError("[GameDataManager] Save error" + e);
 		}
-
-	}*/
+	
+	}
 
 	public static GameData Load(string fileName)
 	{
@@ -295,6 +292,7 @@ public static class GameDataManager
 		{
 			//data = (GameData)DataManager.LoadFromXML<GameData>(fileName, path);
 			data = (GameData)DataManager.LoadFromText<GameData>(fileName, path);
+
 			Debug.Log("Load Successful");
 		}
 		catch (Exception e)
@@ -305,6 +303,9 @@ public static class GameDataManager
 
 		return data;
 	}
+
+
+
 	public static GameData NewGame()
 	{
 		return new GameData();

@@ -25,11 +25,12 @@ public class EventScript : MonoBehaviour
 
 	public void Init(EventManager eM, GameManager gM, int index)
     {
-		eM = eventManager;
+		eventManager = eM;
 		gameManager = gM;
 		ID = index;
 		trans = transform;
 		if (typeEvent.Length != typeEventID.Length) Debug.LogError("Event " + ID + "'s array lengths or Events and event IDs don't align");
+		//Debug.Log("[EVENT LOAD] " + gameManager.gameData.EventCollection[eventTriggerID].id + " trigger " + gameManager.gameData.EventCollection[eventTriggerID].hasBeenTriggered);
 		hasBeenTriggered = gameManager.gameData.EventCollection[eventTriggerID].hasBeenTriggered;
 
 		for (int i = 0; i < typeEvent.Length; i++)

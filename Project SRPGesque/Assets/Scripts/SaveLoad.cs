@@ -7,7 +7,7 @@ public class SaveLoad : MonoBehaviour
 	public SaveFile[] files;
 	private TransitionManager transition;
 	string cacheName = "spelQuick.od";
-	GameManager gameManager;
+	public GameManager gameManager;
 	
 	// Start is called before the first frame update
     void Start()
@@ -28,7 +28,6 @@ public class SaveLoad : MonoBehaviour
 
 	public void SaveFile(int fileNum)
 	{
-		if (!files[fileNum].exists) return;
 
 		switch (fileNum)
 		{
@@ -44,7 +43,20 @@ public class SaveLoad : MonoBehaviour
 			default:
 				break;
 		}
-		gameManager.AddLocationToGameData();
+		
+		gameManager.AddMiscToGameData();
+
+		
+		GameDataManager.Save(gameManager.gameData, PlayerPrefs.GetString("CurrentFile"));
+		
+
+		//GameDataManager.SaveXml(gameManager.gameData, "readabledata.txt");
+		files[fileNum].gameData = gameManager.gameData;
+		files[fileNum].UpdateInfo();
+		
+
+		//Debug.Log("Event " + gameManager.gameData.EventCollection[0].hasBeenTriggered);
+		PlayerPrefs.SetString("CurrentFile", cacheName);
 		GameDataManager.Save(gameManager.gameData, PlayerPrefs.GetString("CurrentFile"));
 	}
 
@@ -67,10 +79,13 @@ public class SaveLoad : MonoBehaviour
 				break;
 		}
 
-		GameData gameData = files[fileNum].gameData;
+
+		GameData gameData = GameDataManager.Load(PlayerPrefs.GetString("CurrentFile"));
 		transition.gameData = gameData;
-		GameDataManager.Save(gameData, cacheName);
+		
 		int cacheGameSceneID = 3 + gameData.Misc.mapID;
+		//PlayerPrefs.SetString("CurrentFile", cacheName);
+		GameDataManager.Save(gameData, PlayerPrefs.GetString("CurrentFile", cacheName));
 		transition.FadeToSceneChange(false, cacheGameSceneID);
 		//
 	}

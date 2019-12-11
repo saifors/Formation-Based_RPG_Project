@@ -166,6 +166,8 @@ public class MiscData
 	public Quaternion rot;
 	public int gold;
 
+	public bool newGame;
+
 	public MiscData()
 	{
 		saveName = "Save File 1";
@@ -176,6 +178,7 @@ public class MiscData
 		pos = Vector3.zero;
 		rot = new Quaternion(0,0,0,0);
 		gold = 0;
+		newGame = true;
 	}
 }
 

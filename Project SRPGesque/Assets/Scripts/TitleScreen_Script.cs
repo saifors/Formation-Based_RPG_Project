@@ -49,6 +49,8 @@ public class TitleScreen_Script : MonoBehaviour
 	// Use this for initialization
 	void Start ()
     {
+		
+
 		titleCanvas = title.GetComponent<CanvasGroup>();
 		selectionGroupCanvasGroup = selectionImageGroup.GetComponent<CanvasGroup>();
 		selectionCanvasGroup = new CanvasGroup[selectionOption.Length];
@@ -231,12 +233,12 @@ public class TitleScreen_Script : MonoBehaviour
 
 	public void NewGame()
 	{
-		gameData = new GameData();
+		gameData = GameDataManager.NewGame();
 		transition.gameData = gameData;
 		//gameData = GameDataManager.Load("spelQuick.od");
 		NewGameSceneID = gameData.Misc.mapID + 3;
-		gameData.Misc.pos = new Vector3(0,0.5f,0);
-		Debug.Log("New Game" + gameData.Misc.pos);
+		/*gameData.Misc.pos = new Vector3(0,0.5f,0);
+		Debug.Log("New Game" + gameData.Misc.pos);*/
 		//gameData.Misc.pos.y = 0.5f;
 		gameData.Misc.partyMembers = new List<int>();
 		gameData.Misc.partyMembers.Add(0);
@@ -244,7 +246,8 @@ public class TitleScreen_Script : MonoBehaviour
 		//Debug.Log(gameData.Misc.partyMembers.Count);
 		gameData.Misc.partyMembers.Add(2);
 		gameData.Misc.gold = 2000;
-		GameDataManager.Save(gameData, "spelQuick.od");
+		PlayerPrefs.SetString("CurrentFile", "spelQuick.od");
+		GameDataManager.Save(gameData, PlayerPrefs.GetString("CurrentFile"));
 		//gameData.Misc.rot = Vector3.zero;
 	}
 
