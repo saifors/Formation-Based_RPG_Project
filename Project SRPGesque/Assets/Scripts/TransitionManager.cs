@@ -123,7 +123,7 @@ public class TransitionManager : MonoBehaviour
 	public void FadeToSceneChange(bool fadeColor, int sceneNum)
 	{
 		fadeToSceneChange = true;
-		gameData.Misc.mapID = sceneNum - 3;
+		if(sceneNum >= 3) gameData.Misc.mapID = sceneNum - 3;
 		transitionSceneID = sceneNum;
 		//Debug.Log("FadeToSceneChanged" + fadeColor + sceneNum);
 		if (fadeColor == false)

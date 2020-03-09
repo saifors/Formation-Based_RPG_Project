@@ -49,18 +49,21 @@ public class OWPlayerController : PhysicsCollision
     public bool isRunning;
 	bool isRotating;// make it so it can't move when rotating and only starts moving when completed rotation.
 
+	public Transform container;
+
 
 	// Use this for initialization
 	protected override void Start ()
     {
 		base.Start();
-		trans = transform.parent;
-		transform.localPosition = new Vector3(0, 0.5f, 0);
         gameManager = GameObject.FindGameObjectWithTag("Manager").GetComponent<GameManager>();
 		overlap = GetComponent<InteractionOverlapCollider>();
 		overlap.Init(this, gameManager);
         anim = GetComponentInChildren<Animator>();
-    }
+		
+		trans.localPosition = new Vector3(0, 0.5f, 0);
+
+	}
 
 	protected override void FixedUpdate()
 	{
